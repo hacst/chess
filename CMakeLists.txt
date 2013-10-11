@@ -17,6 +17,12 @@ if (MSVC)
           string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
        endif(${flag_var} MATCHES "/MD")
     endforeach(flag_var)
+elseif(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	# Enable C++11 and stricter warning handling. Also enable debug symbols.
+	set(MY_FLAGS "--std=c++11 -pedantic -Werror -Wall -g")
+
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MY_FLAGS}")
 endif()
 
 # Sources in the 3dchess project
