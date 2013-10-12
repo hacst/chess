@@ -191,7 +191,7 @@ int SDL_tolower(int x) { return ((x) >= 'A') && ((x) <= 'Z') ? ('a'+((x)-'A')) :
 #ifndef HAVE_LIBC
 /* These are some C runtime intrinsics that need to be defined */
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && 0  // Seems like this doesn't play well with the CRT so disable it
 
 /* The optimizer on Visual Studio 2010/2012 generates memcpy() calls */
 #if _MSC_VER >= 1600 && defined(_WIN64) && !defined(_DEBUG)
@@ -229,7 +229,7 @@ void * memcpy ( void * destination, const void * source, size_t num )
     return destination;
 }
 #endif /* _MSC_VER == 1600 && defined(_WIN64) && !defined(_DEBUG) */
-#if 0 // Seems like this doesn't play well with the CRT
+
 #ifdef _M_IX86
 
 void
@@ -893,7 +893,7 @@ RETZERO:
 }
 
 #endif /* _M_IX86 */
-#endif
+
 #endif /* MSC_VER */
 
 #endif /* !HAVE_LIBC */
