@@ -24,7 +24,6 @@ elseif(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	set(MY_FLAGS "--std=c++11 -pedantic -Werror -Wall -g")
 
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MY_FLAGS}")
 endif()
 
 # SDL 2.0 doesn't seem to be widespread under Linux hence build
@@ -48,7 +47,7 @@ set(HEADERS
 find_package(OpenGL REQUIRED)
 
 # 3rd-Party headers
-include_directories(
+include_directories(SYSTEM
 	${SDL2_SOURCE_DIR}/include
 	${OpenGL_INCLUDE_DIRS}
 )

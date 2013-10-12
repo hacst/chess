@@ -1,9 +1,12 @@
 #include <iostream>
 #include <SDL.h>
+#include <cmath>
+
 #ifdef _WIN32
 #include <windows.h>
-#include <gl/GL.h>
 #endif
+
+#include <GL/gl.h>
 
 using namespace std;
 
@@ -32,8 +35,6 @@ int main(int argn, char **argv) {
 	SDL_GLContext ogl = SDL_GL_CreateContext(window);
 	
 	SDL_GL_SetSwapInterval(1);
-
-
 
 	bool quit = false;
 	SDL_Event evt;
@@ -68,6 +69,7 @@ int main(int argn, char **argv) {
 		}
 	}
 
+	SDL_GL_DeleteContext(ogl);
 	SDL_DestroyWindow(window);
 
 	SDL_Quit();
