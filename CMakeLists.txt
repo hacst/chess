@@ -11,6 +11,8 @@ if (MSVC)
     # Ensure we use the multithreaded runtime
     # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace
     foreach(flag_var
+            CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
+            CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO
             CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
             CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
        if(${flag_var} MATCHES "/MD")
@@ -25,6 +27,14 @@ elseif(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MY_FLAGS}")
 endif()
 
+# SDL 2.0 doesn't seem to be widespread under Linux hence build
+# it in-tree. Build only what we need though.
+SET(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
+SET(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
+
+add_subdirectory(3rdparty/SDL-2.0.1-7804)
+
+
 # Sources in the 3dchess project
 set(SOURCES
     src/3dchess.cpp
@@ -32,9 +42,22 @@ set(SOURCES
 
 # Headers in the 3dchess project
 set(HEADERS
+
 )
 
+find_package(OpenGL REQUIRED)
+
+# 3rd-Party headers
+include_directories(
+	${SDL2_SOURCE_DIR}/include
+	${OpenGL_INCLUDE_DIRS}
+)
+
+link_directories(${OpenGL_LIBRARY_DIRS})
+add_definitions(${OpenGL_DEFINITIONS})
+
 add_executable(3dchess ${SOURCES} ${HEADERS})
+target_link_libraries(3dchess SDL2-static SDL2main ${OPENGL_LIBRARIES})
 
 if (TEST)
     # The officially recommended way of integrating these is to compile
