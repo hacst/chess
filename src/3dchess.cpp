@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <cmath>
+#include <fstream>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -8,9 +9,72 @@
 
 #include <GL/gl.h>
 
+#include <boost/program_options.hpp>
+#include <boost/signals2.hpp>
+
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/utility.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
+namespace po = boost::program_options;
+
 using namespace std;
 
+class SerialExample {
+public:
+	SerialExample() : myint(0), mybool(false), myfloat(0.5) {}
+
+private:
+	friend class boost::serialization::access;
+
+	template <class Archive>
+	void serialize(Archive& ar, const unsigned int /*version*/) {
+
+		ar & BOOST_SERIALIZATION_NVP(myint);
+		ar & BOOST_SERIALIZATION_NVP(mybool);
+		ar & BOOST_SERIALIZATION_NVP(myfloat);
+	}
+
+	int myint;
+	bool mybool;
+	float myfloat;
+};
+
 int main(int argn, char **argv) {
+
+	po::options_description desc("Test");
+	desc.add_options()
+			("help", "Print help message")
+			("width", po::value<int>()->default_value(640), "Horizontal resolution")
+			("height", po::value<int>()->default_value(480), "Vertical resolution")
+			("fullscreen", "If set program runs in fullscreen")
+			;
+
+	po::variables_map vm;
+	po::store(po::parse_command_line(argn, argv, desc), vm);
+
+	if (vm.count("help")) {
+		cerr << desc << endl;
+		return 1;
+	}
+
+	SerialExample inst;
+
+	{
+		ofstream ofs("test.xml");
+		boost::archive::xml_oarchive xmlo(ofs);
+		xmlo << boost::serialization::make_nvp("test", inst);
+	}
+
+	const int width = vm["width"].as<int>();
+	const int height = vm["height"].as<int>();
+	const bool fullscreen = vm.count("fullscreen");
+
+	cout << "Width:         " << width << endl;
+	cout << "Height:        " << height << endl;
+	cout << "Fullscreen:    " << fullscreen << endl;
+
 	SDL_Window *window;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -21,11 +85,13 @@ int main(int argn, char **argv) {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+	const int additional_config_flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+
 	window = SDL_CreateWindow("Hello chess",
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		640, 480,
-		SDL_WINDOW_OPENGL);
+							  SDL_WINDOWPOS_UNDEFINED,
+							  SDL_WINDOWPOS_UNDEFINED,
+							  width, height,
+							  SDL_WINDOW_OPENGL | additional_config_flags);
 
 	if (window == nullptr) {
 		cerr << "Failed to create window: " << SDL_GetError() << endl;
@@ -62,7 +128,10 @@ int main(int argn, char **argv) {
 				quit = true;
 				break;
 			case SDL_KEYDOWN:
-				cout << "Keydown" << endl;
+				if (evt.key.keysym.sym == SDLK_ESCAPE) {
+					quit = true;
+				}
+				cout << "Keydown: " << evt.key.keysym.sym << endl;
 				break;
 			default: break;
 			}
@@ -73,5 +142,5 @@ int main(int argn, char **argv) {
 	SDL_DestroyWindow(window);
 
 	SDL_Quit();
-    return 0;
+	return 0;
 }

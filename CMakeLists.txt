@@ -44,19 +44,31 @@ set(HEADERS
 
 )
 
+
 find_package(OpenGL REQUIRED)
+
+set(Boost_USE_STATIC_LIBS        ON)
+set(Boost_USE_MULTITHREADED      ON)
+
+find_package(Boost REQUIRED COMPONENTS signals program_options serialization)
 
 # 3rd-Party headers
 include_directories(SYSTEM
-	${SDL2_SOURCE_DIR}/include
-	${OpenGL_INCLUDE_DIRS}
+    ${SDL2_SOURCE_DIR}/include
+    ${OpenGL_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
 )
 
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 
 add_executable(3dchess ${SOURCES} ${HEADERS})
-target_link_libraries(3dchess SDL2-static SDL2main ${OPENGL_LIBRARIES})
+target_link_libraries(3dchess
+    SDL2-static
+    SDL2main
+    ${OPENGL_LIBRARIES}
+    ${Boost_LIBRARIES}
+)
 
 if (TEST)
     # The officially recommended way of integrating these is to compile
