@@ -17,7 +17,13 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 
+#include "helper.h"
+#include "AbstractGameLogic.h"
+#include "AbstractObserver.h"
+#include "AbstractPlayer.h"
+
 namespace po = boost::program_options;
+namespace sig = boost::signals2;
 
 using namespace std;
 
@@ -41,7 +47,114 @@ private:
 	float myfloat;
 };
 
+class FooThread : public ServiceDispatcherThread {
+public:
+	void someFoo(int val) {
+		post([this, val]() {
+			cout << "Foo called with " << val << endl;
+		});
+	}
+
+	future<int> someFooWithResult() {
+		return postPromise([]() {
+			return 10;
+		});
+	}
+
+private:
+};
+
+class ConsolePlayer : public AbstractPlayer, ServiceDispatcherThread {
+public:
+	virtual void onSetColor(PlayerColor color) {
+		post([color, this]() {
+			cout << "You will be playing " << color << endl;
+			m_color = color;
+		});
+	}
+
+	virtual void onGameStart(State state) override {
+		post([state]() {
+			cout << "Game started" << endl;
+			cout << state << endl;
+		});
+	}
+
+	virtual future<Turn> doMakeTurn(State state) override {
+		return postPromise([state]() {
+			cout << "Your turn" << endl;
+			// Dummy
+			return Turn();
+		});
+	}
+
+	virtual void onTurn(PlayerColor color, Turn turn, State newState) {
+		post([this, color, turn, newState]() {
+			if (color != m_color) {
+				cout << turn << endl;
+			}
+			cout << newState << endl;
+		});
+	}
+
+	virtual void doAbortTurn() override {
+		cout << endl << "Please end your turn" << endl;
+	}
+
+	virtual void onGameOver(State state, PlayerColor winner) override {
+		cout << "Game over: ";
+
+		if (winner == None) {
+			cout << "Draw" << endl;
+		} else if (winner == m_color) {
+			cout << "You won" << endl;
+		} else {
+			cout << "You lost" << endl;
+		}
+	}
+
+private:
+	PlayerColor m_color;
+};
+
+class GameLogic : public AbstractGameLogic, ServiceDispatcherThread {
+public:
+	GameLogic(AbstractPlayerPtr &white, AbstractPlayerPtr &black)
+		: m_white(white)
+		, m_black(black) {
+		addObserver(white);
+		addObserver(black);
+	}
+
+	AbstractPlayerPtr getWhite() const {
+		return m_white;
+	}
+
+	AbstractPlayerPtr getBlack() const {
+		return m_black;
+	}
+
+	void addObserver(AbstractGameObserverPtr observer) override {
+		m_observers.push_back(observer);
+	}
+
+	virtual void start() override {
+
+	}
+
+	bool isGameOver() const override {
+		return false;
+	}
+
+private:
+	vector<AbstractGameObserverPtr> m_observers;
+	AbstractPlayerPtr m_white;
+	AbstractPlayerPtr m_black;
+	State m_gameState;
+};
+
 int main(int argn, char **argv) {
+	// Boost program options for commandline parsing
 
 	po::options_description desc("Test");
 	desc.add_options()
@@ -59,6 +172,17 @@ int main(int argn, char **argv) {
 		return 1;
 	}
 
+	FooThread foo;
+	foo.start();
+	foo.someFoo(5);
+	foo.someFoo(10);
+	auto result = foo.someFooWithResult();
+	foo.stop();
+
+	cout << "Result from other thread: " << result.get() << endl;
+
+
+	// Boost serialization for object de/serialization
 	SerialExample inst;
 
 	{
@@ -67,6 +191,7 @@ int main(int argn, char **argv) {
 		xmlo << boost::serialization::make_nvp("test", inst);
 	}
 
+	// SDL2/OpenGL for graphics
 	const int width = vm["width"].as<int>();
 	const int height = vm["height"].as<int>();
 	const bool fullscreen = vm.count("fullscreen");
@@ -131,6 +256,7 @@ int main(int argn, char **argv) {
 				if (evt.key.keysym.sym == SDLK_ESCAPE) {
 					quit = true;
 				}
+
 				cout << "Keydown: " << evt.key.keysym.sym << endl;
 				break;
 			default: break;

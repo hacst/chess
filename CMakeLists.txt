@@ -28,8 +28,8 @@ endif()
 
 # SDL 2.0 doesn't seem to be widespread under Linux hence build
 # it in-tree. Build only what we need though.
-SET(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
-SET(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
+set(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
+set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
 
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
 
@@ -41,7 +41,11 @@ set(SOURCES
 
 # Headers in the 3dchess project
 set(HEADERS
-
+    src/helper.h
+    src/chesstypes.h
+    src/AbstractObserver.h
+    src/AbstractPlayer.h
+    src/AbstractGameLogic.h
 )
 
 
@@ -50,7 +54,7 @@ find_package(OpenGL REQUIRED)
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 
-find_package(Boost REQUIRED COMPONENTS signals program_options serialization)
+find_package(Boost REQUIRED COMPONENTS system program_options serialization)
 
 # 3rd-Party headers
 include_directories(SYSTEM
