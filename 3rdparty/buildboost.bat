@@ -1,0 +1,1 @@
+cd boost && bootstrap.bat && b2 --toolset=msvc-12.0 --prefix=../boost-build --build-type=complete -j4 debug release install 

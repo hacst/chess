@@ -8,6 +8,9 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 endif()
 
 if (MSVC)
+    # Add windows target version (Windows XP)
+    add_definitions(-D_WIN32_WINNT=0x0501)
+    
     # Ensure we use the multithreaded runtime
     # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace
     foreach(flag_var
@@ -64,6 +67,7 @@ find_package(OpenGL REQUIRED)
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME     ON) 
 
 find_package(Boost REQUIRED COMPONENTS system program_options serialization)
 

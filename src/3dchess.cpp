@@ -3,12 +3,6 @@
 #include <cmath>
 #include <fstream>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-#include <GL/gl.h>
-
 #include <boost/program_options.hpp>
 #include <boost/signals2.hpp>
 
@@ -16,6 +10,12 @@
 #include "GameLogic.h"
 #include "ConsolePlayer.h"
 #include "GameConfiguration.h"
+
+#ifdef _WIN32
+#include <windows.h> // Needed for gl.h
+#endif
+
+#include <GL/gl.h>
 
 namespace po = boost::program_options;
 namespace sig = boost::signals2;
@@ -80,7 +80,7 @@ int main(int argn, char **argv) {
 	// SDL2/OpenGL for graphics
 	const int width = vm["width"].as<int>();
 	const int height = vm["height"].as<int>();
-	const bool fullscreen = vm.count("fullscreen");
+	const bool fullscreen = (vm.count("fullscreen") != 0);
 
 	cout << "Width:         " << width << endl;
 	cout << "Height:        " << height << endl;
