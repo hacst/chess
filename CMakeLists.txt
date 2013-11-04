@@ -37,6 +37,12 @@ add_subdirectory(3rdparty/SDL-2.0.1-7804)
 # Sources in the 3dchess project
 set(SOURCES
     src/3dchess.cpp
+    src/ConsolePlayer.cpp
+    src/GameLogic.cpp
+    src/chesstypes.cpp
+    src/ConsolePlayer.cpp
+    src/ConsoleObserver.cpp
+    src/GameConfiguration.cpp
 )
 
 # Headers in the 3dchess project
@@ -46,6 +52,11 @@ set(HEADERS
     src/AbstractObserver.h
     src/AbstractPlayer.h
     src/AbstractGameLogic.h
+    src/ConsolePlayer.h
+    src/GameLogic.h
+    src/ConsolePlayer.h
+    src/ConsoleObserver.h
+    src/GameConfiguration.h
 )
 
 

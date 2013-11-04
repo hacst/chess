@@ -7,13 +7,15 @@
 
 class AbstractGameLogic {
 public:
-	virtual ~AbstractGameLogic() = 0;
+	virtual ~AbstractGameLogic() { /* Nothing */ }
 
 	virtual AbstractPlayerPtr getWhite() const = 0;
 	virtual AbstractPlayerPtr getBlack() const = 0;
 
 	virtual void addObserver(AbstractGameObserverPtr observer) = 0;
 	virtual bool isGameOver() const = 0;
+	virtual PlayerColor getWinner() const = 0;
+	virtual GameConfiguration getConfiguration() const = 0;
 	virtual void start() = 0;
 	virtual void stop() = 0;
 };

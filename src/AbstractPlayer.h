@@ -7,7 +7,7 @@
 
 class AbstractPlayer : public AbstractGameObserver {
 public:
-	virtual ~AbstractPlayer() = 0; // Purely virtual
+	virtual ~AbstractPlayer() { /* Nothing */ }
 
 	virtual void onSetColor(PlayerColor /*color*/) { /* Nothing */ }
 	virtual std::future<Turn> doMakeTurn(State state) = 0;

@@ -12,40 +12,15 @@
 #include <boost/program_options.hpp>
 #include <boost/signals2.hpp>
 
-#include <boost/serialization/nvp.hpp>
-#include <boost/serialization/utility.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/archive/xml_oarchive.hpp>
-
 #include "helper.h"
-#include "AbstractGameLogic.h"
-#include "AbstractObserver.h"
-#include "AbstractPlayer.h"
+#include "GameLogic.h"
+#include "ConsolePlayer.h"
+#include "GameConfiguration.h"
 
 namespace po = boost::program_options;
 namespace sig = boost::signals2;
 
 using namespace std;
-
-class SerialExample {
-public:
-	SerialExample() : myint(0), mybool(false), myfloat(0.5) {}
-
-private:
-	friend class boost::serialization::access;
-
-	template <class Archive>
-	void serialize(Archive& ar, const unsigned int /*version*/) {
-
-		ar & BOOST_SERIALIZATION_NVP(myint);
-		ar & BOOST_SERIALIZATION_NVP(mybool);
-		ar & BOOST_SERIALIZATION_NVP(myfloat);
-	}
-
-	int myint;
-	bool mybool;
-	float myfloat;
-};
 
 class FooThread : public ServiceDispatcherThread {
 public:
@@ -62,95 +37,6 @@ public:
 	}
 
 private:
-};
-
-class ConsolePlayer : public AbstractPlayer, ServiceDispatcherThread {
-public:
-	virtual void onSetColor(PlayerColor color) {
-		post([color, this]() {
-			cout << "You will be playing " << color << endl;
-			m_color = color;
-		});
-	}
-
-	virtual void onGameStart(State state) override {
-		post([state]() {
-			cout << "Game started" << endl;
-			cout << state << endl;
-		});
-	}
-
-	virtual future<Turn> doMakeTurn(State state) override {
-		return postPromise([state]() {
-			cout << "Your turn" << endl;
-			// Dummy
-			return Turn();
-		});
-	}
-
-	virtual void onTurn(PlayerColor color, Turn turn, State newState) {
-		post([this, color, turn, newState]() {
-			if (color != m_color) {
-				cout << turn << endl;
-			}
-			cout << newState << endl;
-		});
-	}
-
-	virtual void doAbortTurn() override {
-		cout << endl << "Please end your turn" << endl;
-	}
-
-	virtual void onGameOver(State state, PlayerColor winner) override {
-		cout << "Game over: ";
-
-		if (winner == None) {
-			cout << "Draw" << endl;
-		} else if (winner == m_color) {
-			cout << "You won" << endl;
-		} else {
-			cout << "You lost" << endl;
-		}
-	}
-
-private:
-	PlayerColor m_color;
-};
-
-class GameLogic : public AbstractGameLogic, ServiceDispatcherThread {
-public:
-	GameLogic(AbstractPlayerPtr &white, AbstractPlayerPtr &black)
-		: m_white(white)
-		, m_black(black) {
-		addObserver(white);
-		addObserver(black);
-	}
-
-	AbstractPlayerPtr getWhite() const {
-		return m_white;
-	}
-
-	AbstractPlayerPtr getBlack() const {
-		return m_black;
-	}
-
-	void addObserver(AbstractGameObserverPtr observer) override {
-		m_observers.push_back(observer);
-	}
-
-	virtual void start() override {
-
-	}
-
-	bool isGameOver() const override {
-		return false;
-	}
-
-private:
-	vector<AbstractGameObserverPtr> m_observers;
-	AbstractPlayerPtr m_white;
-	AbstractPlayerPtr m_black;
-	State m_gameState;
 };
 
 int main(int argn, char **argv) {
@@ -181,14 +67,14 @@ int main(int argn, char **argv) {
 
 	cout << "Result from other thread: " << result.get() << endl;
 
+	GameConfiguration config;
+	config.save("config.xml");
 
-	// Boost serialization for object de/serialization
-	SerialExample inst;
-
-	{
-		ofstream ofs("test.xml");
-		boost::archive::xml_oarchive xmlo(ofs);
-		xmlo << boost::serialization::make_nvp("test", inst);
+	auto configl = GameConfiguration::load("config.xml");
+	if (!configl) {
+		cout << "Failed to load" << endl;
+	} else {
+		cout << "Dur: " << (configl->maximumTurnTimeInSeconds) << "s" << endl;
 	}
 
 	// SDL2/OpenGL for graphics

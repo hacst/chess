@@ -5,6 +5,7 @@
 #include <memory>
 #include <future>
 #include <type_traits>
+#include <ostream>
 #include <boost/asio/io_service.hpp>
 
 /**
@@ -89,11 +90,13 @@ public:
 	static constexpr bool value = std::is_same<decltype(test<T>(0)),yes>::value;
 };
 
+namespace std {
 template<typename T>
 typename std::enable_if<has_toString<T>::value, std::ostream&>::type
-std::operator <<(std::ostream& stream, const T& t) {
+operator<<(std::ostream& stream, const T& t) {
 	stream << t.toString();
 	return stream;
+}
 }
 
 

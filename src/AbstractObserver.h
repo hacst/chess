@@ -2,14 +2,19 @@
 #define ABSTRACTOBSERVER_H
 
 #include <memory>
+#include <chrono>
+
 #include "chesstypes.h"
+#include "GameConfiguration.h"
 
 class AbstractGameObserver {
 public:
-	virtual ~AbstractGameObserver() = 0;
+	virtual ~AbstractGameObserver() { /* Nothing */ }
 
-	virtual void onGameStart(State /*state*/) { /* Nothing */ }
-	virtual void onTurn(PlayerColor /*who*/, Turn /*turn*/, State /*newState*/) { /* Nothing */ }
+	virtual void onGameStart(State /*state*/, GameConfiguration /*config*/ ) { /* Nothing */ }
+	virtual void onTurnStart(PlayerColor /*who*/ ) { /* Nothing */ }
+	virtual void onTurnEnd(PlayerColor /*who*/, Turn /*turn*/, State /*newState*/) { /* Nothing */ }
+	virtual void onTurnTimeout(PlayerColor /*who*/, std::chrono::seconds /*timeout*/ ) { /* Nothing */ }
 	virtual void onGameOver(State /*state*/, PlayerColor /*winner*/) { /* Nothing */ }
 };
 
