@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <chrono>
+#include <future>
 
 #include "AbstractGameLogic.h"
 #include "helper.h"
@@ -35,7 +36,7 @@ private:
 			const auto waitLeft = waitInMs - waited;
 			const std::chrono::milliseconds iterTime = std::min(waitLeft, m_tickLength);
 
-			if (fut.wait_for(iterTime) == future_status::ready) {
+			if (fut.wait_for(iterTime) == std::future_status::ready) {
 				return true;
 			}
 
