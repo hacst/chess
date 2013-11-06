@@ -20,4 +20,7 @@ Build requirements (Linux):
  - gcc >= 4.7
  - pthreads
  - Python 2.7
- - Boost
+ - Boost >= 1.54
+
+Ubuntu < 14.04:
+ Boost ppa ppa:boost-latest/ppa

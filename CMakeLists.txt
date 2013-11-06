@@ -57,6 +57,7 @@ set(HEADERS
     src/AbstractGameLogic.h
     src/ConsolePlayer.h
     src/GameLogic.h
+    src/DummyPlayer.h
     src/ConsolePlayer.h
     src/ConsoleObserver.h
     src/GameConfiguration.h
@@ -69,7 +70,7 @@ set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME     ON) 
 
-find_package(Boost REQUIRED COMPONENTS system program_options serialization)
+find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
 
 # 3rd-Party headers
 include_directories(SYSTEM

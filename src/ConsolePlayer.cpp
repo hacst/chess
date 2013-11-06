@@ -4,6 +4,10 @@
 
 using namespace std;
 
+ConsolePlayer::~ConsolePlayer() {
+	stop(true);
+}
+
 void ConsolePlayer::onSetColor(PlayerColor color) {
 	post([=]() {
 		cout << "You will be playing " << color << endl;
@@ -21,8 +25,8 @@ void ConsolePlayer::onGameStart(State state, GameConfiguration config) {
 
 future<Turn> ConsolePlayer::doMakeTurn(State state) {
 	return postPromise([=]() {
-		cout << "Your turn" << endl;
-		// Dummy
+		cout << "Your turn (press enter)" << endl;
+		cin.get();
 		return Turn();
 	});
 }
@@ -37,7 +41,7 @@ void ConsolePlayer::onTurnEnd(PlayerColor color, Turn turn, State newState) {
 }
 
 void ConsolePlayer::doAbortTurn() {
-	cout << endl << "Please end your turn" << endl;
+	cout << endl << "Please end your turn (press enter)" << endl;
 }
 
 void ConsolePlayer::onGameOver(State state, PlayerColor winner) {

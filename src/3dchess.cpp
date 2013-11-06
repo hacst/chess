@@ -9,6 +9,8 @@
 #include "helper.h"
 #include "GameLogic.h"
 #include "ConsolePlayer.h"
+#include "ConsoleObserver.h"
+#include "DummyPlayer.h"
 #include "GameConfiguration.h"
 
 #ifdef _WIN32
@@ -57,6 +59,18 @@ int main(int argn, char **argv) {
 		cerr << desc << endl;
 		return 1;
 	}
+	
+	auto firstPlayer = make_shared<DummyPlayer>();
+	firstPlayer->start();
+	auto secondPlayer = make_shared<DummyPlayer>();
+	secondPlayer->start();
+
+	auto observer = make_shared<ConsoleObserver>();
+
+	AbstractGameLogicPtr gameLogic = make_shared<GameLogic>(firstPlayer, secondPlayer);
+	gameLogic->addObserver(observer);
+
+	gameLogic->start();
 
 	FooThread foo;
 	foo.start();

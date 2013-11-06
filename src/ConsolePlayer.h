@@ -4,8 +4,10 @@
 #include "AbstractPlayer.h"
 #include "helper.h"
 
-class ConsolePlayer : public AbstractPlayer, ServiceDispatcherThread {
+class ConsolePlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:
+	virtual ~ConsolePlayer();
+
 	virtual void onSetColor(PlayerColor color) override;
 	virtual void onGameStart(State state, GameConfiguration config) override;
 	virtual std::future<Turn> doMakeTurn(State state) override;

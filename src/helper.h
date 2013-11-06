@@ -7,6 +7,9 @@
 #include <type_traits>
 #include <ostream>
 #include <boost/asio/io_service.hpp>
+#include <boost/log/trivial.hpp>
+
+#define LOG	BOOST_LOG_TRIVIAL
 
 /**
  * @brief Provides functionality for safely running operations in a thread
