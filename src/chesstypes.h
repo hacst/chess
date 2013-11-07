@@ -96,15 +96,15 @@ struct State {
 			return fields[x][y];
 		}
 
-		Board() : fields{{
-			{ Field::BlackInitialRook, Field::BlackKnight, Field::BlackBishop, Field::BlackInitialKing, Field::BlackQueen, Field::BlackBishop, Field::BlackKnight, Field::BlackInitialRook },
-			{ Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn },
-			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
-			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
-			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
-			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
-			{ Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn },
-			{ Field::WhiteInitialRook, Field::WhiteKnight, Field::WhiteBishop, Field::WhiteQueen, Field::BlackInitialKing, Field::WhiteBishop, Field::WhiteKnight, Field::WhiteInitialRook }}} {
+		Board() : fields({{
+			{{ Field::BlackInitialRook, Field::BlackKnight, Field::BlackBishop, Field::BlackInitialKing, Field::BlackQueen, Field::BlackBishop, Field::BlackKnight, Field::BlackInitialRook }},
+			{{ Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn }},
+			{{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty }},
+			{{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty }},
+			{{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty }},
+			{{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty }},
+			{{ Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn }},
+			{{ Field::WhiteInitialRook, Field::WhiteKnight, Field::WhiteBishop, Field::WhiteQueen, Field::BlackInitialKing, Field::WhiteBishop, Field::WhiteKnight, Field::WhiteInitialRook }} }}) {
 		}
 		
 		std::string toString() const;
