@@ -59,8 +59,7 @@ private:
 		}
 	}
 
-	AbstractPlayerPtr& currentPlayer();
-	AbstractPlayerPtr& togglePlayer();
+	AbstractPlayerPtr& getCurrentPlayer();
 
 	// Interval in which the GameLogic should check for 
 	std::chrono::milliseconds m_tickLength;
@@ -71,7 +70,6 @@ private:
 	AbstractPlayerPtr m_white;
 	AbstractPlayerPtr m_black;
 	State m_gameState;
-	PlayerColor m_currentColor;
 	GameConfiguration m_configuration;
 };
 

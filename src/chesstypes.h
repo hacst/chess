@@ -8,6 +8,15 @@
 #include <sstream>
 #include <stdint.h>
 
+#include "helper.h"
+
+
+enum PlayerColor {
+	None,
+	White,
+	Black
+};
+
 struct Position {
 	int x,y;
 
@@ -69,7 +78,8 @@ struct State {
 			WhiteInitialPawn,
 			WhitePawn,
 
-			BlackInitialKing = 0xA,
+			// Use the lower 4bit for white and the upper for black
+			BlackInitialKing = 0x11, 
 			BlackKing,
 			BlackQueen,
 			BlackInitialRook,
@@ -80,44 +90,65 @@ struct State {
 			BlackPawn
 		};
 
-		std::array<Field,64> fields;
+		std::array<std::array<Field,8>,8> fields;
 
-		inline Field operator()(int x, int y) {
-			return fields[x + 8 * y];
+		inline Field& operator()(int x, int y) {
+			return fields[x][y];
 		}
 
 		Board() : fields{{
-			Field::BlackInitialRook, Field::BlackKnight, Field::BlackBishop, Field::BlackInitialKing, Field::BlackQueen, Field::BlackBishop, Field::BlackKnight, Field::BlackInitialRook,
-			Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn,
-			Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty,
-			Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty,
-			Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty,
-			Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty,
-			Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn,
-			Field::WhiteInitialRook, Field::WhiteKnight, Field::WhiteBishop, Field::WhiteQueen, Field::BlackInitialKing, Field::WhiteBishop, Field::WhiteKnight, Field::WhiteInitialRook }} {
+			{ Field::BlackInitialRook, Field::BlackKnight, Field::BlackBishop, Field::BlackInitialKing, Field::BlackQueen, Field::BlackBishop, Field::BlackKnight, Field::BlackInitialRook },
+			{ Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn, Field::BlackInitialPawn },
+			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
+			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
+			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
+			{ Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty, Field::Empty },
+			{ Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn, Field::WhiteInitialPawn },
+			{ Field::WhiteInitialRook, Field::WhiteKnight, Field::WhiteBishop, Field::WhiteQueen, Field::BlackInitialKing, Field::WhiteBishop, Field::WhiteKnight, Field::WhiteInitialRook }}} {
 		}
+		
+		std::string toString() const;
+		
 	} board;
 
-	// Board, ...
+	PlayerColor nextTurn;
 
+	State()
+	    : board(),
+	      nextTurn(PlayerColor::White) {}
+	
 	bool apply(const Turn& turn) {
-		board(turn.from.x, turn.from.y);
-		//TODO: Implement this
+		//TODO: Implement this properly
+		if (turn.action == Turn::Move) {
+			auto& from = board(turn.from.x, turn.from.y);
+			auto& to = board(turn.to.x, turn.to.y);
+			
+			if (to != Board::Field::Empty) {
+				LOG(trace) << from << " strikes " << to;
+			}
+			
+			to = from;
+			from = Board::Field::Empty;
+		} else if (turn.action == Turn::Forfeit) {
+			//TODO: Do something
+		} else {
+			// Assume passed
+		}
+		
+		nextTurn = (nextTurn == PlayerColor::White)
+		        ? PlayerColor::Black
+		        : PlayerColor::White;
+		
 		return true;
 	}
 
-	std::string toString() const {
-		return "A state";
-	}
+	std::string toString() const;
 };
 
-enum PlayerColor {
-	None,
-	White,
-	Black
-};
-
+namespace std {
 std::ostream& operator <<(std::ostream& stream, const PlayerColor c);
+std::ostream& operator <<(std::ostream& stream, const State::Board::Field f);
+}
 
 
 #endif // CHESSTYPES_H

@@ -49,19 +49,21 @@ void GameLogic::run() {
 	m_white->onSetColor(White);
 	m_black->onSetColor(Black);
 
+	assert(m_gameState.nextTurn == PlayerColor::White);
+	
 	LOG(info) << "Game start";
 	notify([&](AbstractGameObserverPtr& obs) {
 		obs->onGameStart(m_gameState, m_configuration);
 	});
 
-	m_currentColor = Black;
-
 	while (!isGameOver()) {
-		auto& currentPlayer = togglePlayer();
-		LOG(debug) << m_currentColor << "'s turn";
+		auto& currentPlayer = getCurrentPlayer();
+		const PlayerColor currentColor = m_gameState.nextTurn;
+		
+		LOG(debug) << currentColor << "'s turn";
 
 		notify([&](AbstractGameObserverPtr& obs) {
-			obs->onTurnStart(m_currentColor);
+			obs->onTurnStart(currentColor);
 		});
 
 		LOG(trace) << "Asking for turn";
@@ -81,7 +83,7 @@ void GameLogic::run() {
 
 			LOG(debug) << "Turn timed out";
 			notify([&](AbstractGameObserverPtr& obs) {
-				obs->onTurnTimeout(m_currentColor, maximumTurnTime);
+				obs->onTurnTimeout(currentColor, maximumTurnTime);
 			});
 
 			currentPlayer->doAbortTurn();
@@ -90,15 +92,15 @@ void GameLogic::run() {
 			turn = futureTurn.get();
 		}
 
-		LOG(trace) << m_currentColor << "'s turn: " << turn;
+		LOG(trace) << currentColor << "'s turn: " << turn;
 
 		m_gameState.apply(turn);
 
 		notify([&](AbstractGameObserverPtr& obs) {
-			obs->onTurnEnd(m_currentColor, turn, m_gameState);
+			obs->onTurnEnd(currentColor, turn, m_gameState);
 		});
 
-		LOG(debug) << m_currentColor << " ended its turn";
+		LOG(debug) << currentColor << " ended its turn";
 	}
 
 	LOG(info) << "Game over";
@@ -115,16 +117,9 @@ PlayerColor GameLogic::getWinner() const {
 	return None;
 }
 
-AbstractPlayerPtr& GameLogic::currentPlayer() {
-	return (m_currentColor == White)
+AbstractPlayerPtr& GameLogic::getCurrentPlayer() {
+	return (m_gameState.nextTurn == White)
 		? m_white
 		: m_black;
 }
 
-AbstractPlayerPtr& GameLogic::togglePlayer() {
-	m_currentColor = (m_currentColor == White)
-		? Black
-		: White;
-
-	return currentPlayer();
-}
