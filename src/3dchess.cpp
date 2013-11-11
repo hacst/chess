@@ -62,6 +62,7 @@ int main(int argn, char **argv) {
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 		);
+	(void)tex_2d;
 
 	po::variables_map vm;
 	po::store(po::parse_command_line(argn, argv, desc), vm);
