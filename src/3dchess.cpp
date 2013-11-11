@@ -19,6 +19,8 @@
 
 #include <GL/gl.h>
 
+#include <SOIL.h>
+
 namespace po = boost::program_options;
 namespace sig = boost::signals2;
 
@@ -51,6 +53,14 @@ int main(int argn, char **argv) {
 			("height", po::value<int>()->default_value(480), "Vertical resolution")
 			("fullscreen", "If set program runs in fullscreen")
 			;
+
+	GLuint tex_2d = SOIL_load_OGL_texture
+		(
+		"img.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		);
 
 	po::variables_map vm;
 	po::store(po::parse_command_line(argn, argv, desc), vm);

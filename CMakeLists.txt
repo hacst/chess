@@ -35,6 +35,7 @@ set(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
 set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
 
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
+add_subdirectory(3rdparty/SOIL)
 
 
 # Sources in the 3dchess project
@@ -77,6 +78,7 @@ include_directories(SYSTEM
     ${SDL2_SOURCE_DIR}/include
     ${OpenGL_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}
+    ${SOIL_SOURCE_DIR}/include
 )
 
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -88,6 +90,7 @@ target_link_libraries(3dchess
     SDL2main
     ${OPENGL_LIBRARIES}
     ${Boost_LIBRARIES}
+    SOIL
 )
 
 if (TEST)
