@@ -1,5 +1,5 @@
-#ifndef ABSTRACTOBSERVER_H
-#define ABSTRACTOBSERVER_H
+#ifndef ABSTRACTGAMEOBSERVER_H
+#define ABSTRACTGAMEOBSERVER_H
 
 #include <memory>
 #include <chrono>
@@ -20,4 +20,4 @@ public:
 
 using AbstractGameObserverPtr = std::shared_ptr<AbstractGameObserver>;
 
-#endif // ABSTRACTOBSERVER_H
+#endif // ABSTRACTGAMEOBSERVER_H

@@ -1,7 +1,7 @@
 #ifndef CONSOLEOBSERVER_H
 #define CONSOLEOBSERVER_H
 
-#include "AbstractObserver.h"
+#include "AbstractGameObserver.h"
 
 class ConsoleObserver: public AbstractGameObserver {
 public:

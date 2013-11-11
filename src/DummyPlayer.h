@@ -2,6 +2,7 @@
 #define DUMMYPLAYER_H
 
 #include "AbstractPlayer.h"
+#include "ServiceDispatcherThread.h"
 #include "helper.h"
 
 #include <random>

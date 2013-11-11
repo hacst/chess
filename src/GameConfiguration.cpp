@@ -40,6 +40,10 @@ bool GameConfiguration::save(const std::string &path) const {
 	return save(*this, path);
 }
 
+bool GameConfiguration::operator==(const GameConfiguration& other) const {
+	return maximumTurnTimeInSeconds == other.maximumTurnTimeInSeconds;
+}
+
 namespace std {
 ostream& operator<<(ostream& stream, const GameConfiguration &config) {
 	stream << "GameConfiguration:" << endl

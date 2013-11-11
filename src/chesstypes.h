@@ -20,6 +20,11 @@ enum PlayerColor {
 struct Position {
 	int x,y;
 
+	bool operator==(const Position& other) const {
+		return x == other.x
+		        && y == other.y;
+	}
+
 	std::string toString() const;
 };
 
@@ -58,6 +63,12 @@ struct Turn {
 
 	static Turn pass() {
 		return Turn(Position(), Position(), Pass);
+	}
+	
+	bool operator==(const Turn& other) const {
+		return from == other.from
+		        && to == other.to
+		        && action == other.action;
 	}
 
 	std::string toString() const;
@@ -107,6 +118,10 @@ struct State {
 			{{ Field::WhiteInitialRook, Field::WhiteKnight, Field::WhiteBishop, Field::WhiteQueen, Field::BlackInitialKing, Field::WhiteBishop, Field::WhiteKnight, Field::WhiteInitialRook }} }}) {
 		}
 		
+		bool operator==(const Board& other) const {
+			return fields == other.fields;
+		}
+		
 		std::string toString() const;
 		
 	} board;
@@ -142,6 +157,11 @@ struct State {
 		return true;
 	}
 
+	bool operator==(const State& other) const {
+		return nextTurn == other.nextTurn
+		        && board == other.board;
+	}
+	
 	std::string toString() const;
 };
 

@@ -53,7 +53,7 @@ set(SOURCES
 set(HEADERS
     src/helper.h
     src/chesstypes.h
-    src/AbstractObserver.h
+    src/AbstractGameObserver.h
     src/AbstractPlayer.h
     src/AbstractGameLogic.h
     src/ConsolePlayer.h
@@ -62,6 +62,9 @@ set(HEADERS
     src/ConsolePlayer.h
     src/ConsoleObserver.h
     src/GameConfiguration.h
+    src/ServiceDispatcherThread.h
+    src/ServiceDispatcher.h
+    src/PlayerDispatcherProxy.h
 )
 
 
@@ -79,6 +82,10 @@ include_directories(SYSTEM
     ${OpenGL_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}
     ${SOIL_SOURCE_DIR}/include
+)
+
+include_directories(
+    src
 )
 
 link_directories(${OpenGL_LIBRARY_DIRS})
@@ -101,10 +108,21 @@ if (TEST)
 
     enable_testing()
 
-    include_directories(${gtest_SOURCE_DIR}/include)
+    include_directories(${gtest_SOURCE_DIR}/include
+                        ${gmock_SOURCE_DIR}/include)
 
     add_executable(ai_test test/ai_test.cpp)
     target_link_libraries(ai_test gmock_main)
 
     add_test(NAME AI-Testset COMMAND ai_test)
+
+
+    add_executable(misc_test test/misc_test.cpp
+                             src/chesstypes.cpp
+                             src/GameConfiguration.cpp)
+
+    target_link_libraries(misc_test gmock_main ${Boost_LIBRARIES})
+
+    add_test(NAME MISC-Testset COMMAND misc_test)
+
 endif()

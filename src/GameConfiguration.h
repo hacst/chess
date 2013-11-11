@@ -18,6 +18,9 @@ public:
 	static bool save(const GameConfiguration& config, const std::string& path);
 
 	bool save(const std::string& path) const;
+	
+	bool operator==(const GameConfiguration& other) const;
+
 private:
 	friend class boost::serialization::access;
 

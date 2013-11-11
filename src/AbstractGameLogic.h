@@ -3,7 +3,7 @@
 
 #include "chesstypes.h"
 #include "AbstractPlayer.h"
-#include "AbstractObserver.h"
+#include "AbstractGameObserver.h"
 
 class AbstractGameLogic {
 public:

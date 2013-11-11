@@ -2,6 +2,7 @@
 #define CONSOLEPLAYER_H
 
 #include "AbstractPlayer.h"
+#include "ServiceDispatcherThread.h"
 #include "helper.h"
 
 class ConsolePlayer : public AbstractPlayer, public ServiceDispatcherThread {
