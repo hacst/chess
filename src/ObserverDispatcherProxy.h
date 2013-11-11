@@ -46,4 +46,6 @@ private:
 	AbstractGameObserverPtr m_observer;
 };
 
+using ObserverDispatcherProxyPtr = std::shared_ptr<ObserverDispatcherProxy>;
+
 #endif // OBSERVERDISPATCHERPROXY_H

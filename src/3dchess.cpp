@@ -12,6 +12,7 @@
 #include "ConsoleObserver.h"
 #include "DummyPlayer.h"
 #include "GameConfiguration.h"
+#include "ObserverDispatcherProxy.h"
 
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h
@@ -79,18 +80,11 @@ int main(int argn, char **argv) {
 
 	AbstractGameLogicPtr gameLogic = make_shared<GameLogic>(firstPlayer, secondPlayer);
 	gameLogic->addObserver(observer);
-
+	auto observerProxy = make_shared<ObserverDispatcherProxy>(observer);
+	gameLogic->addObserver(observerProxy);
+	
 	gameLogic->start();
-
-	FooThread foo;
-	foo.start();
-	foo.someFoo(5);
-	foo.someFoo(10);
-	auto result = foo.someFooWithResult();
-	foo.stop();
-
-	cout << "Result from other thread: " << result.get() << endl;
-
+	
 	GameConfiguration config;
 	config.save("config.xml");
 
@@ -151,7 +145,6 @@ int main(int argn, char **argv) {
 		const float g = cosf(elapsed * (2 * pi) / (cycletime + 1));
 		const float b = sinf(elapsed * (2 * pi) / (cycletime + 2) + pi / 2);
 
-
 		glClearColor(r,g,b, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		SDL_GL_SwapWindow(window);
@@ -172,6 +165,9 @@ int main(int argn, char **argv) {
 			default: break;
 			}
 		}
+		
+		// Execute all pending calls from the observer
+		observerProxy->poll();
 	}
 
 	SDL_GL_DeleteContext(ogl);
