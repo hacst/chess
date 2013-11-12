@@ -47,6 +47,10 @@ set(SOURCES
     src/ConsolePlayer.cpp
     src/ConsoleObserver.cpp
     src/GameConfiguration.cpp
+	src/AnimationHelper.cpp
+	src/GuiWindow.cpp
+	src/Menu2D.cpp
+	src/Menu2DItem.cpp
 )
 
 # Headers in the 3dchess project
@@ -65,6 +69,10 @@ set(HEADERS
     src/ServiceDispatcherThread.h
     src/ServiceDispatcher.h
     src/PlayerDispatcherProxy.h
+	src/AnimationHelper.h
+	src/GuiWindow.h
+	src/Menu2D.h
+	src/Menu2DItem.h
 )
 
 
