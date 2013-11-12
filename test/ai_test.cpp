@@ -7,3 +7,8 @@ TEST(WorldSanityChecks, CheckOneEqualsOne) {
 TEST(WorldSanityChecks, CheckOneNotEqualsTwo) {
     EXPECT_NE(1,2);
 }
+
+// Will be removed later
+TEST(TestThatFails, ThisFails) {
+	EXPECT_EQ(1,2);
+}

@@ -37,10 +37,17 @@ set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
 add_subdirectory(3rdparty/SOIL)
 
+find_package(OpenGL REQUIRED)
+
+set(Boost_USE_STATIC_LIBS        ON)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME     ON) 
+
+find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
+
 
 # Sources in the 3dchess project
 set(SOURCES
-    src/3dchess.cpp
     src/ConsolePlayer.cpp
     src/GameLogic.cpp
     src/chesstypes.cpp
@@ -75,14 +82,13 @@ set(HEADERS
     src/Menu2DItem.h
 )
 
-
-find_package(OpenGL REQUIRED)
-
-set(Boost_USE_STATIC_LIBS        ON)
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME     ON) 
-
-find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
+# Library dependencies
+set(LIBRARIES
+    SDL2-static
+    ${OPENGL_LIBRARIES}
+    ${Boost_LIBRARIES}
+    SOIL
+)
 
 # 3rd-Party headers
 include_directories(SYSTEM
@@ -99,14 +105,8 @@ include_directories(
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 
-add_executable(3dchess ${SOURCES} ${HEADERS})
-target_link_libraries(3dchess
-    SDL2-static
-    SDL2main
-    ${OPENGL_LIBRARIES}
-    ${Boost_LIBRARIES}
-    SOIL
-)
+add_executable(3dchess src/3dchess.cpp ${SOURCES} ${HEADERS})
+target_link_libraries(3dchess SDL2main ${LIBRARIES})
 
 if (TEST)
     # The officially recommended way of integrating these is to compile
@@ -116,21 +116,22 @@ if (TEST)
 
     enable_testing()
 
-    include_directories(${gtest_SOURCE_DIR}/include
+    include_directories(SYSTEM
+                        ${gtest_SOURCE_DIR}/include
                         ${gmock_SOURCE_DIR}/include)
 
-    add_executable(ai_test test/ai_test.cpp)
-    target_link_libraries(ai_test gmock_main)
-
+    add_executable(ai_test test/ai_test.cpp ${SOURCES} ${HEADERS})
+    target_link_libraries(ai_test gmock_main ${LIBRARIES})
     add_test(NAME AI-Testset COMMAND ai_test)
 
 
-    add_executable(misc_test test/misc_test.cpp
-                             src/chesstypes.cpp
-                             src/GameConfiguration.cpp)
+    add_executable(misc_test test/misc_test.cpp ${SOURCES} ${HEADERS})
+    target_link_libraries(misc_test gmock_main ${LIBRARIES})
+    add_test(NAME Misc-Testset COMMAND misc_test)
 
-    target_link_libraries(misc_test gmock_main ${Boost_LIBRARIES})
 
-    add_test(NAME MISC-Testset COMMAND misc_test)
+    add_executable(logic_test test/logic_test.cpp ${SOURCES} ${HEADERS})
+    target_link_libraries(logic_test gmock_main ${LIBRARIES})
+    add_test(NAME Logic-Testset COMMAND logic_test)
 
 endif()
