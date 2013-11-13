@@ -162,6 +162,10 @@ struct State {
 		        && board == other.board;
 	}
 	
+	bool operator!=(const State& other) const {
+		return !(*this == other);
+	}
+	
 	std::string toString() const;
 };
 

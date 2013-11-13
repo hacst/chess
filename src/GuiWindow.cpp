@@ -1,5 +1,5 @@
 #include "GuiWindow.h"
-
+#include <cmath>
 using namespace std;
 
 GuiWindow::GuiWindow(const char* title, const bool fullscreen, const int width, const int height) {
@@ -97,9 +97,6 @@ void GuiWindow::exec() {
 	glEnable(GL_BLEND);
 	glClearColor(0.6, 0.21, 0, 0.0);					// set background color
 
-	const uint32_t start = SDL_GetTicks();
-	const float pi = static_cast<float>(M_PI);
-
 	int fpsCount = 0;
 	unsigned int startTime = SDL_GetTicks();
 	while (!this->quit) {
@@ -138,20 +135,20 @@ void GuiWindow::set2DMode() {
 
 void GuiWindow::set3DMode() {
 	glMatrixMode(GL_PROJECTION);	// Kamera-Matrix
-	glLoadIdentity();				// ... zurücksetzen
+	glLoadIdentity();				// ... zurÃ¼cksetzen
 
 	this->makeFrustum(60, this->conf.width / this->conf.height, 0.1, 128);	// perspektivischer Sichtbereich
 
-	glRotatef(22.5, 1.0, 0.0, 0.0);	// Neigungswinkel der Kamera 22,5° ("nach unten")
+	glRotatef(22.5, 1.0, 0.0, 0.0);	// Neigungswinkel der Kamera 22,5Â° ("nach unten")
 	glTranslatef(-cX, -cY, -cZ);	// move camera to the initial position out
 
 	glMatrixMode(GL_MODELVIEW); 	// Transformationsmatrix
-	glLoadIdentity();             	// zurücksetzen
+	glLoadIdentity();             	// zurÃ¼cksetzen
 }
 
 void GuiWindow::resetModelViewMatrix() {
 	glMatrixMode(GL_MODELVIEW); 	// Transformationsmatrix
-	glLoadIdentity();             	// zurücksetzen
+	glLoadIdentity();             	// zurÃ¼cksetzen
 }
 
 void GuiWindow::makeFrustum(double fovY, double aspectRatio, double front, double back) {

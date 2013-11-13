@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "PlayerDispatcherProxy.h"
+#include "GameConfiguration.h"
 
 using namespace std;
 
@@ -117,4 +118,22 @@ TEST(ObserverDispatchProxy, checkPollingBehavior) {
 	EXPECT_CALL(*mockObserver, onGameOver(s, PlayerColor::Black)).Times(1);
 
 	proxy.poll();
+}
+
+TEST(GameConfiguration, roundTrip) {
+	GameConfiguration config;
+	config.maximumTurnTimeInSeconds = 10;
+	
+	std::string s = "GameConfigurationRoundTrip.xml";
+	
+	config.save(s);
+	
+	auto loadedConfig = config.load(s);
+	ASSERT_TRUE(loadedConfig);
+	
+	ASSERT_EQ(config, *loadedConfig);
+	ASSERT_EQ(config.maximumTurnTimeInSeconds, loadedConfig->maximumTurnTimeInSeconds);
+	
+	auto nonExistingConfig = config.load("doesnotexists.xml");
+	ASSERT_FALSE(nonExistingConfig);
 }

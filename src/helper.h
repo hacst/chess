@@ -16,7 +16,7 @@ private:
 	typedef std::true_type yes;
 	typedef std::false_type no;
 
-	template<typename U> static auto test(int) -> decltype(std::declval<U>().toString() == "", yes());
+	template<typename U> static auto test(int) -> decltype((void)(std::declval<U>().toString() == ""), yes());
 	template<typename> static no test(...);
 
 public:
