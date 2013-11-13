@@ -36,6 +36,7 @@ set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
 
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
 add_subdirectory(3rdparty/SOIL)
+add_subdirectory(3rdparty/freetype2)
 
 find_package(OpenGL REQUIRED)
 
@@ -88,6 +89,7 @@ set(LIBRARIES
     ${OPENGL_LIBRARIES}
     ${Boost_LIBRARIES}
     SOIL
+    freetype
 )
 
 # 3rd-Party headers
@@ -96,6 +98,7 @@ include_directories(SYSTEM
     ${OpenGL_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIRS}
     ${SOIL_SOURCE_DIR}/include
+    ${freetype_SOURCE_DIR}/include
 )
 
 include_directories(
