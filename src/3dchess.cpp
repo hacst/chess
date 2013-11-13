@@ -3,7 +3,6 @@
 #include <fstream>
 
 #include <boost/program_options.hpp>
-#include <boost/signals2.hpp>
 
 #include "helper.h"
 #include "GameLogic.h"
@@ -15,26 +14,8 @@
 #include "GuiWindow.h"
 
 namespace po = boost::program_options;
-namespace sig = boost::signals2;
 
 using namespace std;
-
-class FooThread : public ServiceDispatcherThread {
-public:
-	void someFoo(int val) {
-		post([this, val]() {
-			cout << "Foo called with " << val << endl;
-		});
-	}
-
-	future<int> someFooWithResult() {
-		return postPromise([]() {
-			return 10;
-		});
-	}
-
-private:
-};
 
 int main(int argn, char **argv) {
 	// Boost program options for commandline parsing
