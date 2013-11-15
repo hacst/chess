@@ -5,8 +5,8 @@
 #include <chrono>
 #include <future>
 
-#include "AbstractGameLogic.h"
-#include "helper.h"
+#include "logic/interface/AbstractGameLogic.h"
+#include "misc/helper.h"
 
 class GameLogic : public AbstractGameLogic {
 public:

@@ -4,7 +4,7 @@
 
 #include "SOIL.h"
 
-#include "AnimationHelper.h"
+#include "gui/AnimationHelper.h"
 
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h

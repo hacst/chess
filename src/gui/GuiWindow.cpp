@@ -1,5 +1,5 @@
 #include "GuiWindow.h"
-#include "helper.h"
+#include "misc/helper.h"
 
 using namespace std;
 

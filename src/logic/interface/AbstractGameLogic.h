@@ -1,9 +1,9 @@
 #ifndef ABSTRACTGAMELOGIC_H
 #define ABSTRACTGAMELOGIC_H
 
-#include "chesstypes.h"
-#include "AbstractPlayer.h"
-#include "AbstractGameObserver.h"
+#include "logic/chesstypes.h"
+#include "logic/interface/AbstractPlayer.h"
+#include "logic/interface/AbstractGameObserver.h"
 
 class AbstractGameLogic {
 public:

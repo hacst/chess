@@ -1,7 +1,7 @@
 #include <sstream>
 
 #include "chesstypes.h"
-#include "helper.h"
+#include "misc/helper.h"
 
 using namespace std;
 

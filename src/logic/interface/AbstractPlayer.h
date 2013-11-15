@@ -2,7 +2,7 @@
 #define ABSTRACTPLAYER_H
 
 #include <future>
-#include "AbstractGameObserver.h"
+#include "logic/interface/AbstractGameObserver.h"
 
 
 class AbstractPlayer : public AbstractGameObserver {

@@ -1,7 +1,7 @@
 #ifndef CONSOLEOBSERVER_H
 #define CONSOLEOBSERVER_H
 
-#include "AbstractGameObserver.h"
+#include "logic/interface/AbstractGameObserver.h"
 
 class ConsoleObserver: public AbstractGameObserver {
 public:

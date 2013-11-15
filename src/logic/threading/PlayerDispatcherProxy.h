@@ -1,8 +1,8 @@
 #ifndef PLAYERDISPATCHERPROXY_H
 #define PLAYERDISPATCHERPROXY_H
 
-#include "AbstractPlayer.h"
-#include "ObserverDispatcherProxy.h"
+#include "logic/interface/AbstractPlayer.h"
+#include "logic/threading/ObserverDispatcherProxy.h"
 
 class PlayerDispatcherProxy : public AbstractPlayer, public ServiceDispatcher {
 public:

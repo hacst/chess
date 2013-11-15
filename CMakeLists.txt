@@ -46,40 +46,87 @@ set(ASSIMP_BUILD_ASSIMP_TOOLS      OFF CACHE BOOL "Don't build tools")
 
 add_subdirectory(3rdparty/assimp)
 
-# Sources in the 3dchess project
-set(SOURCES
-    src/ConsolePlayer.cpp
-    src/GameLogic.cpp
-    src/chesstypes.cpp
-    src/ConsolePlayer.cpp
-    src/ConsoleObserver.cpp
-    src/GameConfiguration.cpp
-    src/AnimationHelper.cpp
-    src/GuiWindow.cpp
-    src/Menu2D.cpp
-    src/Menu2DItem.cpp
+# Contains GUI related sources and headers
+set(GUI_SOURCES
+    src/gui/AnimationHelper.h
+    src/gui/GuiWindow.h
+    src/gui/Menu2D.h
+    src/gui/Menu2DItem.h
+
+    src/gui/AnimationHelper.cpp
+    src/gui/GuiWindow.cpp
+    src/gui/Menu2D.cpp
+    src/gui/Menu2DItem.cpp
 )
 
-# Headers in the 3dchess project
-set(HEADERS
-    src/helper.h
-    src/chesstypes.h
-    src/AbstractGameObserver.h
-    src/AbstractPlayer.h
-    src/AbstractGameLogic.h
-    src/ConsolePlayer.h
-    src/GameLogic.h
-    src/DummyPlayer.h
-    src/ConsolePlayer.h
-    src/ConsoleObserver.h
-    src/GameConfiguration.h
-    src/ServiceDispatcherThread.h
-    src/ServiceDispatcher.h
-    src/PlayerDispatcherProxy.h
-    src/AnimationHelper.h
-    src/GuiWindow.h
-    src/Menu2D.h
-    src/Menu2DItem.h
+source_group(gui FILES ${GUI_SOURCES})
+
+# Contains various helpers and other small things
+set(MISC_SOURCES
+    src/misc/ConsolePlayer.h
+    src/misc/ConsolePlayer.cpp
+
+    src/misc/ConsoleObserver.h
+    src/misc/ConsoleObserver.cpp
+
+    src/misc/DummyPlayer.h
+)
+
+source_group(misc FILES ${MISC_SOURCES})
+
+# Game logic sources and headers
+set(LOGIC_SOURCES
+    src/logic/GameLogic.h
+    src/logic/GameLogic.cpp
+
+    src/logic/chesstypes.h
+    src/logic/chesstypes.cpp
+)
+
+source_group(logic FILES ${LOGIC_SOURCES})
+
+# Interfaces for the game logic
+set(LOGIC_INTERFACE_SOURCES
+    src/logic/interface/AbstractGameObserver.h
+    src/logic/interface/AbstractPlayer.h
+    src/logic/interface/AbstractGameLogic.h
+)
+
+source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})
+
+# Threaded related tooling for game logic
+set(LOGIC_THREADING_SOURCES
+    src/logic/threading/ServiceDispatcherThread.h
+    src/logic/threading/ServiceDispatcher.h
+    src/logic/threading/ObserverDispatcherProxy.h
+    src/logic/threading/PlayerDispatcherProxy.h
+)
+
+source_group(logic\\threading FILES ${LOGIC_THREADING_SOURCES})
+
+# Core functionality outside of the three big classes
+set(CORE_SOURCES
+    src/core/GameConfiguration.h
+    src/core/GameConfiguration.cpp
+)
+
+source_group(core FILES ${CORE_SOURCES})
+
+# Artificial intelligence headers and sources
+set(AI_SOURCES
+)
+
+source_group(core FILES ${AI_SOURCES})
+
+# Sources in the 3dchess project
+set(SOURCES
+    ${GUI_SOURCES}
+    ${MISC_SOURCES}
+    ${LOGIC_SOURCES}
+    ${LOGIC_INTERFACE_SOURCES}
+    ${LOGIC_THREADING_SOURCES}
+    ${CORE_SOURCES}
+    ${AI_SOURCES}
 )
 
 # Library dependencies
@@ -117,7 +164,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
 endif()
 
-add_executable(3dchess src/3dchess.cpp ${SOURCES} ${HEADERS})
+add_executable(3dchess src/3dchess.cpp ${SOURCES})
 target_link_libraries(3dchess SDL2main ${LIBRARIES})
 
 if (TEST)
