@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 project (3dchess)
 
 option(TEST "If on tests for the project are built." ON)
@@ -22,21 +22,12 @@ if (MSVC)
           string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
        endif(${flag_var} MATCHES "/MD")
     endforeach(flag_var)
-elseif(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	# Enable C++11 and stricter warning handling. Also enable debug symbols.
-	set(MY_FLAGS "--std=c++11 -pedantic -Werror -Wall -g")
-
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 endif()
 
 # SDL 2.0 doesn't seem to be widespread under Linux hence build
 # it in-tree. Build only what we need though.
 set(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
 set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
-
-add_subdirectory(3rdparty/SDL-2.0.1-7804)
-add_subdirectory(3rdparty/SOIL)
-add_subdirectory(3rdparty/freetype2)
 
 find_package(OpenGL REQUIRED)
 
@@ -46,6 +37,14 @@ set(Boost_USE_STATIC_RUNTIME     ON)
 
 find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
 
+add_subdirectory(3rdparty/SDL-2.0.1-7804)
+add_subdirectory(3rdparty/SOIL)
+add_subdirectory(3rdparty/freetype2)
+
+set(ASSIMP_BUILD_STATIC_LIB     ON)
+set(ASSIMP_BUILD_ASSIMP_TOOLS   OFF)
+
+add_subdirectory(3rdparty/assimp)
 
 # Sources in the 3dchess project
 set(SOURCES
@@ -90,6 +89,7 @@ set(LIBRARIES
     ${Boost_LIBRARIES}
     SOIL
     freetype
+    assimp
 )
 
 # 3rd-Party headers
@@ -110,6 +110,12 @@ file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
+
+if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    # Enable C++11 and stricter warning handling. Also enable debug symbols.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -g")
+
+endif()
 
 add_executable(3dchess src/3dchess.cpp ${SOURCES} ${HEADERS})
 target_link_libraries(3dchess SDL2main ${LIBRARIES})
