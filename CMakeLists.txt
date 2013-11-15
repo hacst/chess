@@ -105,6 +105,9 @@ include_directories(
     src
 )
 
+# copy resources folders
+file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
 
