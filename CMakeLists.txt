@@ -22,11 +22,6 @@ if (MSVC)
           string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
        endif(${flag_var} MATCHES "/MD")
     endforeach(flag_var)
-elseif(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	# Enable C++11 and stricter warning handling. Also enable debug symbols.
-	set(MY_FLAGS "--std=c++11 -pedantic -Werror -Wall -g")
-
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_FLAGS}")
 endif()
 
 # SDL 2.0 doesn't seem to be widespread under Linux hence build
@@ -47,6 +42,7 @@ add_subdirectory(3rdparty/SOIL)
 add_subdirectory(3rdparty/freetype2)
 
 set(ASSIMP_BUILD_STATIC_LIB     ON)
+set(ASSIMP_BUILD_ASSIMP_TOOLS   OFF)
 
 add_subdirectory(3rdparty/assimp)
 
@@ -111,6 +107,12 @@ include_directories(
 
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
+
+if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    # Enable C++11 and stricter warning handling. Also enable debug symbols.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -g")
+
+endif()
 
 add_executable(3dchess src/3dchess.cpp ${SOURCES} ${HEADERS})
 target_link_libraries(3dchess SDL2main ${LIBRARIES})
