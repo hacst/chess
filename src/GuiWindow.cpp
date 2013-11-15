@@ -1,9 +1,18 @@
 #include "GuiWindow.h"
-#include <cmath>
+#include "helper.h"
+
 using namespace std;
 
-GuiWindow::GuiWindow(const char* title, const bool fullscreen, const int width, const int height) {
-	this->conf = { (char *)title, fullscreen, width, height };
+GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height) {
+	m_title = title;
+	m_fullscreen = fullscreen;
+	m_width = width;
+	m_height = height;
+
+	// initial position of the camera
+	m_cX = -10.0;
+	m_cY = 10.0;
+	m_cZ = 20.0;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		cerr << "Failed to init SDL: " << SDL_GetError() << endl;
@@ -12,23 +21,21 @@ GuiWindow::GuiWindow(const char* title, const bool fullscreen, const int width, 
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
-	menu = new Menu2D(this->conf.width, this->conf.height);
 }
 
 void GuiWindow::handleEvents() {
-	while (SDL_PollEvent(&this->evt)) {
-		switch (this->evt.type) {
+	while (SDL_PollEvent(&evt)) {
+		switch (evt.type) {
 			case SDL_QUIT:
 				cout << "Quit" << endl;
-				this->quit = true;
+				m_quit = true;
 				break;
 			case SDL_KEYDOWN:
-				if (this->evt.key.keysym.sym == SDLK_ESCAPE) {
-					this->quit = true;
+				if (evt.key.keysym.sym == SDLK_ESCAPE) {
+					m_quit = true;
 				}
 
-				cout << "Keydown: " << this->evt.key.keysym.sym << endl;
+				LOG(debug) << "Keydown: " << evt.key.keysym.sym;
 				break;
 			case SDL_MOUSEMOTION:
 				int mouseX, mouseY;
@@ -48,22 +55,24 @@ void GuiWindow::handleEvents() {
 }
 
 void GuiWindow::exec() {
-	const int additional_config_flags = this->conf.fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+	const int additional_config_flags = m_fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
 
-	this->window = SDL_CreateWindow(this->conf.title,
+	window = SDL_CreateWindow(m_title.c_str(),
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		this->conf.width, this->conf.height,
+		m_width, m_height,
 		SDL_WINDOW_OPENGL | additional_config_flags);
 
-	if (this->window == nullptr) {
+	if (window == nullptr) {
 		cerr << "Failed to create window: " << SDL_GetError() << endl;
 		//return 1;
 	}
 
-	this->ogl = SDL_GL_CreateContext(this->window);
+	ogl = SDL_GL_CreateContext(window);
 
 	SDL_GL_SetSwapInterval(1);
+
+	menu = make_shared<Menu2D>(m_width, m_height, *this);
 
 	// init OpenGL
 	//this->resetProjection();
@@ -83,7 +92,7 @@ void GuiWindow::exec() {
 	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
 
 	// ambient + diffuse + specular = illumination
-	GLfloat light_ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+	GLfloat light_ambient[] = { 0.9, 0.9, 0.9, 1.0 };
 	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
@@ -99,7 +108,7 @@ void GuiWindow::exec() {
 
 	int fpsCount = 0;
 	unsigned int startTime = SDL_GetTicks();
-	while (!this->quit) {
+	while (!m_quit) {
 		//this->clearScreen();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	  // Clear Screen and Depth Buffer
 		glLoadIdentity();
@@ -112,15 +121,16 @@ void GuiWindow::exec() {
 			startTime = SDL_GetTicks();
 		}
 
-		this->draw2D();
+		draw2D();
+		// here should the state machine be ... State(enter, run, leave ...)
 
-		SDL_GL_SwapWindow(this->window);
+		SDL_GL_SwapWindow(window);
 
-		this->handleEvents();
+		handleEvents();
 	}
 
-	SDL_GL_DeleteContext(this->ogl);
-	SDL_DestroyWindow(this->window);
+	SDL_GL_DeleteContext(ogl);
+	SDL_DestroyWindow(window);
 
 	SDL_Quit();
 }
@@ -128,27 +138,27 @@ void GuiWindow::exec() {
 void GuiWindow::set2DMode() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, this->conf.width, this->conf.height, 0, 0, 128);
+	glOrtho(0, m_width, m_height, 0, 0, 128);
 
 	glTranslatef(0, 0, 0);	// move camera to the initial position out
 }
 
 void GuiWindow::set3DMode() {
 	glMatrixMode(GL_PROJECTION);	// Kamera-Matrix
-	glLoadIdentity();				// ... zurÃ¼cksetzen
+	glLoadIdentity();				// ... zurücksetzen
 
-	this->makeFrustum(60, this->conf.width / this->conf.height, 0.1, 128);	// perspektivischer Sichtbereich
+	this->makeFrustum(60, m_width / m_height, 0.1, 128);	// perspektivischer Sichtbereich
 
-	glRotatef(22.5, 1.0, 0.0, 0.0);	// Neigungswinkel der Kamera 22,5Â° ("nach unten")
-	glTranslatef(-cX, -cY, -cZ);	// move camera to the initial position out
+	glRotatef(22.5, 1.0, 0.0, 0.0);		// Neigungswinkel der Kamera 22,5° ("nach unten")
+	glTranslatef(-m_cX, -m_cY, -m_cZ);	// move camera to the initial position out
 
 	glMatrixMode(GL_MODELVIEW); 	// Transformationsmatrix
-	glLoadIdentity();             	// zurÃ¼cksetzen
+	glLoadIdentity();             	// zurücksetzen
 }
 
 void GuiWindow::resetModelViewMatrix() {
 	glMatrixMode(GL_MODELVIEW); 	// Transformationsmatrix
-	glLoadIdentity();             	// zurÃ¼cksetzen
+	glLoadIdentity();             	// zurücksetzen
 }
 
 void GuiWindow::makeFrustum(double fovY, double aspectRatio, double front, double back) {

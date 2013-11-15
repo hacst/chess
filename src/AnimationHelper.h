@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <memory>
 
 using namespace std;
 
@@ -18,13 +19,16 @@ public:
 	float easeOutSine(const float lowerBound, const float upperBound);
 
 private:
-	int duration = 1000;			// duration in ms
-	int startTime = 0;				// start time 
-	unsigned int elapsedTime = 0;	// time in ms since helper is running
-	float completeness = 0.0;		// percent / 100
-	float easingResult = 0.0;		// the calculated result of the animation
+	int m_duration = 1000;			// duration in ms
+
+	unsigned int m_startTime = 0;	// start time 
+	unsigned int m_elapsedTime = 0;	// time in ms since helper is running
+	float m_completeness = 0.0;		// percent / 100
+	float m_easingResult = 0.0;		// the calculated result of the animation
 
 	int getElapsedTime();
 };
+
+using AnimationHelperPtr = std::shared_ptr<AnimationHelper>;
 
 #endif // ANIMATIONHELPER_H

@@ -2,30 +2,30 @@
 
 using namespace std;
 
-AnimationHelper::AnimationHelper(const int duration) {
-	this->duration = duration;
+AnimationHelper::AnimationHelper(int duration) {
+	m_duration = duration;
 }
 
 void AnimationHelper::setStartNowOrKeepIt() {
-	if (startTime == 0) {
-		startTime = SDL_GetTicks();
+	if (m_startTime == 0) {
+		m_startTime = SDL_GetTicks();
 	}
 }
 
 int AnimationHelper::getElapsedTime() {
-	return SDL_GetTicks() - startTime;
+	return SDL_GetTicks() - m_startTime;
 }
 
 float AnimationHelper::easeLinear(const float lowerBound, const float upperBound) {
 	// check if this function is called after the maximum animation duration is exceeded
-	if (getElapsedTime() > duration) {
-		return easingResult;
+	if (getElapsedTime() > m_duration) {
+		return m_easingResult;
 	}
 
-	completeness = (getElapsedTime() / static_cast<float>(duration));
-	easingResult = lowerBound + ((upperBound - lowerBound) * completeness);
+	m_completeness = (getElapsedTime() / static_cast<float>(m_duration));
+	m_easingResult = lowerBound + ((upperBound - lowerBound) * m_completeness);
 
-	return easingResult;
+	return m_easingResult;
 }
 
 float AnimationHelper::easeOutSine(const float lowerBound, const float upperBound) {

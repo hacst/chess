@@ -1,3 +1,6 @@
+#ifndef GUIWINDOW_H
+#define GUIWINDOW_H
+
 #include <SDL.h>
 #include <iostream>
 #include "Menu2D.h"
@@ -8,14 +11,11 @@
 
 #include <GL/gl.h>
 
-#ifndef GUIWINDOW_H
-#define GUIWINDOW_H
-
 class GuiWindow {
 public:
 	virtual ~GuiWindow() { /* Nothing */ }
 
-	GuiWindow(const char* title, const bool fullscreen, const int width, const int height);
+	GuiWindow(std::string title, bool fullscreen, int width, int height);
 	void exec();
 
 private:
@@ -33,21 +33,21 @@ private:
 	void draw2D();
 	void draw3D();
 
+	// SDL variables
 	SDL_Window *window;
 	SDL_Event evt;
 	SDL_GLContext ogl;
-	
-	float cX = -10.0, cY = 10.0, cZ = 20.0;       // initial position of the camera
-	bool quit = false;
 
-	Menu2D* menu;
+	// menu smart pointer handle
+	Menu2DPtr menu;
 
-	struct config {
-		char* title;
-		bool fullscreen;
-		int width;
-		int height;
-	} conf;
+	// member variables
+	float m_cX, m_cY, m_cZ;       // position of the camera
+	bool m_quit = false;
+	std::string m_title;
+	bool m_fullscreen;
+	int m_width;
+	int m_height;
 };
 
 #endif // GUIWINDOW_H
