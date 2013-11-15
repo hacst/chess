@@ -12,6 +12,8 @@ Building on Windows:
  - Run buildboost.bat in the same directory from a
    Visual Studio 2013 command prompt (this will take
    a while)
+ - Add all git submodules (before running runcmake.bat):
+     - To setup run 'git submodule init' then 'git submodule update'
  - Run runcmake.bat in the root directory to generate project
    files.
  - Open .sln projectfile in build/ and build all
