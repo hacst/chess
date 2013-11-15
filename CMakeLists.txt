@@ -59,6 +59,13 @@ set(SOURCES
     src/GuiWindow.cpp
     src/Menu2D.cpp
     src/Menu2DItem.cpp
+
+    src/gui/Graphics.cpp
+    src/gui/Point2d.cpp
+    src/gui/Rect.cpp
+    src/gui/Widget.cpp
+    src/gui/Menu.cpp
+    src/gui/Button.cpp
 )
 
 # Headers in the 3dchess project
@@ -81,6 +88,13 @@ set(HEADERS
     src/GuiWindow.h
     src/Menu2D.h
     src/Menu2DItem.h
+
+    src/gui/Graphics.h
+    src/gui/Point2d.h
+    src/gui/Rect.h
+    src/gui/Widget.h
+    src/gui/Menu.h
+    src/gui/Button.h
 )
 
 # Library dependencies
