@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 project (3dchess)
 
 option(TEST "If on tests for the project are built." ON)
@@ -34,10 +34,6 @@ endif()
 set(SDL_SHARED OFF CACHE BOOL "Build SDL2 with shared library support")
 set(DIRECTX OFF CACHE BOOL "Build SDL2 with DirectX support")
 
-add_subdirectory(3rdparty/SDL-2.0.1-7804)
-add_subdirectory(3rdparty/SOIL)
-add_subdirectory(3rdparty/freetype2)
-
 find_package(OpenGL REQUIRED)
 
 set(Boost_USE_STATIC_LIBS        ON)
@@ -46,6 +42,13 @@ set(Boost_USE_STATIC_RUNTIME     ON)
 
 find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
 
+add_subdirectory(3rdparty/SDL-2.0.1-7804)
+add_subdirectory(3rdparty/SOIL)
+add_subdirectory(3rdparty/freetype2)
+
+set(ASSIMP_BUILD_STATIC_LIB     ON)
+
+add_subdirectory(3rdparty/assimp)
 
 # Sources in the 3dchess project
 set(SOURCES
@@ -90,6 +93,7 @@ set(LIBRARIES
     ${Boost_LIBRARIES}
     SOIL
     freetype
+    assimp
 )
 
 # 3rd-Party headers

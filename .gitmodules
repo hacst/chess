@@ -1,3 +1,6 @@
 [submodule "3rdparty/freetype2"]
 	path = 3rdparty/freetype2
 	url = http://git.sv.nongnu.org/r/freetype/freetype2.git
+[submodule "3rdparty/assimp"]
+	path = 3rdparty/assimp
+	url = https://github.com/assimp/assimp.git
