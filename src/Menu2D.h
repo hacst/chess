@@ -1,8 +1,11 @@
 #include <iostream>
 #include <array>
 #include <string>
+#ifndef MENU2D_H
+#define MENU2D_H
+
 #include <vector>
-#include "SOIL.h"
+#include <memory>
 
 #include "Menu2DItem.h"
 #include "AnimationHelper.h"
@@ -13,12 +16,11 @@
 
 #include <GL/gl.h>
 
-#ifndef MENU2D_H
-#define MENU2D_H
+class GuiWindow;
 
 class Menu2D {
 public:
-	Menu2D(const int windowWidth, const int windowHeight);
+	Menu2D(int windowWidth, int windowHeight, GuiWindow& guiWindow);
 	virtual ~Menu2D() { /* Nothing */ }
 
 	void draw();
@@ -31,31 +33,33 @@ private:
 	const int ITEM_STATE_TYPE_RELEASED = 2;
 	const int ITEM_STATE_TYPE_MOVED = 3;
 
-	std::vector<Menu2DItem*> items;
+	std::vector<Menu2DItemPtr> items;
 	std::vector<string> menuOptions;	// 2 dim. array
 
 	// config
-	const int buttonWidth = 200;
-	const int buttonHeight = 50;
-	const int buttonMargin = 10;
-	const int animationDuration = 2000;
+	const int m_buttonWidth = 200;
+	const int m_buttonHeight = 50;
+	const int m_buttonMargin = 10;
+	const int m_animationDuration = 2000;
 
-	int height;						// menu height in total with margin
-	int width;
-	int marginLeft;					// distance from left
-	int marginTop;					// distance from top
+	GuiWindow &m_window;
+	int m_height;						// menu height in total with margin
+	int m_width;
+	int m_marginLeft;					// distance from left
+	int m_marginTop;					// distance from top
 
 	struct mouseState {
 		int x;
 		int y;
 		bool pressed;
 	} mouseState;
-
-	Menu2DItem* activeButton;
-	AnimationHelper* animationHelper;
+	
+	Menu2DItemPtr activeButton;
+	AnimationHelperPtr animationHelper;
 
 	void changeItemState(const int type);
-	int LoadGLTextures();
 };
+
+using Menu2DPtr = std::shared_ptr<Menu2D>;
 
 #endif // MENU2D_H
