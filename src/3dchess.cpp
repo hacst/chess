@@ -36,20 +36,6 @@ int main(int argn, char **argv) {
 		return 1;
 	}
 	
-	auto firstPlayer = make_shared<DummyPlayer>();
-	firstPlayer->start();
-	auto secondPlayer = make_shared<DummyPlayer>();
-	secondPlayer->start();
-
-	auto observer = make_shared<ConsoleObserver>();
-
-	AbstractGameLogicPtr gameLogic = make_shared<GameLogic>(firstPlayer, secondPlayer);
-	gameLogic->addObserver(observer);
-	auto observerProxy = make_shared<ObserverDispatcherProxy>(observer);
-	gameLogic->addObserver(observerProxy);
-	
-	gameLogic->start();
-	
 	GameConfiguration config;
 	config.save("config.xml");
 
@@ -69,8 +55,8 @@ int main(int argn, char **argv) {
 	cout << "Height:        " << height << endl;
 	cout << "Fullscreen:    " << fullscreen << endl;
 
-	GuiWindow *window = new GuiWindow("3D Chess", fullscreen, width, height);
-	window->exec();
+	GuiWindow window("3D Chess", fullscreen, width, height);
+	window.exec();
 
 	return 0;
 }
