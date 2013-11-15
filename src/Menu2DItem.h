@@ -1,4 +1,9 @@
 #include <string>
+#include <memory>
+#include <iostream>
+
+#include "SOIL.h"
+
 #include "AnimationHelper.h"
 
 #ifdef _WIN32
@@ -34,15 +39,22 @@ public:
 	void setActiveState(bool flag);
 
 private:
-	int index;
-	string descr;
-	int positionX;
-	int positionY;
-	int width;
-    int height;
+	// member variables
+	int m_index;
+	std::string m_descr;
+	int m_positionX;
+	int m_positionY;
+	int m_width;
+    int m_height;
 
-	bool hovered, activated = false;
-	AnimationHelper* animationHelper;
+	GLuint m_texture[3];
+
+	bool m_hovered;
+	bool m_activated = false;
+
+	AnimationHelperPtr animationHelper;
 };
+
+using Menu2DItemPtr = std::shared_ptr<Menu2DItem>;
 
 #endif // MENU2DITEM_H
