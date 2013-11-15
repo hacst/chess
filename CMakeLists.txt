@@ -41,8 +41,8 @@ add_subdirectory(3rdparty/SDL-2.0.1-7804)
 add_subdirectory(3rdparty/SOIL)
 add_subdirectory(3rdparty/freetype2)
 
-set(ASSIMP_BUILD_STATIC_LIB     ON)
-set(ASSIMP_BUILD_ASSIMP_TOOLS   OFF)
+set(ASSIMP_BUILD_STATIC_LIB        ON  CACHE BOOL "Build as static lib")
+set(ASSIMP_BUILD_ASSIMP_TOOLS      OFF CACHE BOOL "Don't build tools")
 
 add_subdirectory(3rdparty/assimp)
 
