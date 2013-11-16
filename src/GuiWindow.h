@@ -21,6 +21,7 @@ public:
 private:
 	void handleEvents();
 	void display();
+	void exit();
 	
 	void resetProjection();
 	void resetModelViewMatrix();

@@ -4,13 +4,11 @@
 
 using namespace std;
 
-Menu2DItem::Menu2DItem(int index, string descr, int positionX, int positionY, int width, int height, int animationDuration) {
-	m_index = index;
-	m_positionX = positionX;
-	m_positionY = positionY;
-	m_width = width;
-	m_height = height;
-	m_descr = descr;
+Menu2DItem::Menu2DItem(int index, std::string descr, int width, int height, int animationDuration)
+	: m_index(index)
+	, m_width(width)
+	, m_height(height)
+	, m_descr(descr) {
 
 	// create an animation object
 	animationHelper = make_shared<AnimationHelper>(animationDuration);
@@ -38,36 +36,18 @@ Menu2DItem::Menu2DItem(int index, string descr, int positionX, int positionY, in
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
-
-
-	// @todo: check if file exists
 }
 
-Menu2DItem::boundingBox Menu2DItem::getBoundingBox() {
-	boundingBox bb = {
-		m_positionY,
-		m_positionX + m_width,
-		m_positionY + m_height,
-		m_positionX
-	};
-
-	return bb;
+void Menu2DItem::setPosition(int x, int y) {
+	m_positionX = x;
+	m_positionY = y;
 }
 
-string Menu2DItem::getDescription() {
-	return m_descr;
-}
+bool Menu2DItem::inBoundingBox() {
+	bool inX = m_mousePosX >= m_positionX && m_mousePosX <= m_positionX + m_width;
+	bool inY = m_mousePosY >= m_positionY && m_mousePosY <= m_positionY + m_height;
 
-int Menu2DItem::getIndex() {
-	return m_index;
-}
-
-void Menu2DItem::setHoverState(bool flag) {
-	m_hovered = flag;
-}
-
-void Menu2DItem::setActiveState(bool flag) {
-	m_activated = flag;
+	return inX && inY;
 }
 
 void Menu2DItem::draw() {
@@ -76,13 +56,10 @@ void Menu2DItem::draw() {
 	// add texture
 	int state_index;
 	if (m_hovered) {
-		//glColor4f(0, 0, 1, animationHelper->easeLinear(0, 1));
 		state_index = 1;
 	} else if (m_activated) {
-		//glColor4f(1, 0, 0, animationHelper->easeLinear(0, 1));
 		state_index = 2;
 	} else {
-		//glColor4f(0, 1, 0, animationHelper->easeLinear(0, 1));
 		state_index = 0;
 	}
 
@@ -99,4 +76,43 @@ void Menu2DItem::draw() {
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
+}
+
+void Menu2DItem::mouseMoved(int x, int y) {
+	m_mousePosX = x;
+	m_mousePosY = y;
+
+	if (inBoundingBox()) {
+		m_hovered = true;
+		m_activated = false;
+	} else {
+		m_hovered = false;
+		m_activated = false;
+	}
+}
+
+void Menu2DItem::mousePressed(int x, int y) {
+	m_mousePosX = x;
+	m_mousePosY = y;
+
+	if (inBoundingBox()) {
+		m_hovered = false;
+		m_activated = true;
+	}
+}
+
+void Menu2DItem::mouseReleased(int x, int y) {
+	m_mousePosX = x;
+	m_mousePosY = y;
+
+	if (inBoundingBox()) {
+		m_hovered = true;
+		m_activated = false;
+
+		m_clicked();	// boost signal
+	}
+}
+
+void Menu2DItem::onClick(const boost::function<void()>& slot) {
+	m_clicked.connect(slot);
 }

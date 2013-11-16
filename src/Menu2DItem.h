@@ -1,9 +1,12 @@
+#ifndef MENU2DITEM_H
+#define MENU2DITEM_H
+
 #include <string>
 #include <memory>
 #include <iostream>
+#include <boost/signals2.hpp>
 
 #include "SOIL.h"
-
 #include "AnimationHelper.h"
 
 #ifdef _WIN32
@@ -14,9 +17,6 @@
 
 using namespace std;
 
-#ifndef MENU2DITEM_H
-#define MENU2DITEM_H
-
 class Menu2DItem {
 public:
 	struct boundingBox {
@@ -26,17 +26,17 @@ public:
 		int left;
 	} bb;
 
-	Menu2DItem(int index, string descr, int positionX, int positionY, int width, int height, int animationDuration);
+	Menu2DItem(int index, std::string descr, int width, int height, int animationDuration);
 	virtual ~Menu2DItem() { /* Nothing */ }
 
-	Menu2DItem::boundingBox getBoundingBox();
-	int getIndex();
-	string getDescription();
-
+	void setPosition(int x, int y);
 	void draw();
 
-	void setHoverState(bool flag);
-	void setActiveState(bool flag);
+	void mouseMoved(int x, int y);
+	void mousePressed(int x, int y);
+	void mouseReleased(int x, int y);
+
+	void onClick(const boost::function<void()>& slot);
 
 private:
 	// member variables
@@ -47,12 +47,20 @@ private:
 	int m_width;
     int m_height;
 
+	int m_mousePosX = 0;
+	int m_mousePosY = 0;
+
 	GLuint m_texture[3];
 
 	bool m_hovered;
 	bool m_activated = false;
 
+	bool inBoundingBox();
+
 	AnimationHelperPtr animationHelper;
+
+	using Signal = boost::signals2::signal<void()>;
+	Signal m_clicked;
 };
 
 using Menu2DItemPtr = std::shared_ptr<Menu2DItem>;

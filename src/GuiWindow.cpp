@@ -27,8 +27,7 @@ void GuiWindow::handleEvents() {
 	while (SDL_PollEvent(&evt)) {
 		switch (evt.type) {
 			case SDL_QUIT:
-				cout << "Quit" << endl;
-				m_quit = true;
+				exit();
 				break;
 			case SDL_KEYDOWN:
 				if (evt.key.keysym.sym == SDLK_ESCAPE) {
@@ -44,7 +43,7 @@ void GuiWindow::handleEvents() {
 				menu->mouseMoved(mouseX, mouseY);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				menu->mouseClicked();
+				menu->mousePressed();
 				break;
 			case SDL_MOUSEBUTTONUP:
 				menu->mouseReleased();
@@ -52,6 +51,10 @@ void GuiWindow::handleEvents() {
 			default: break;
 		}
 	}
+}
+
+void GuiWindow::exit() {
+	m_quit = true;
 }
 
 void GuiWindow::exec() {
@@ -72,7 +75,12 @@ void GuiWindow::exec() {
 
 	SDL_GL_SetSwapInterval(1);
 
-	menu = make_shared<Menu2D>(m_width, m_height, *this);
+	// main menu
+	menu = make_shared<Menu2D>(m_width, m_height);
+	menu->addButton("Neues Spiel");
+	menu->addButton("Spiel laden");
+	menu->addButton("Optionen");
+	menu->addButton("Spiel beenden")->onClick(boost::bind(&GuiWindow::exit, this));
 
 	// init OpenGL
 	//this->resetProjection();
@@ -122,7 +130,7 @@ void GuiWindow::exec() {
 		}
 
 		draw2D();
-		// here should the state machine be ... State(enter, run, leave ...)
+		
 
 		SDL_GL_SwapWindow(window);
 

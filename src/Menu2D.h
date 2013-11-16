@@ -1,11 +1,13 @@
-#include <iostream>
-#include <array>
-#include <string>
 #ifndef MENU2D_H
 #define MENU2D_H
 
+#include <iostream>
+#include <array>
+#include <string>
+
 #include <vector>
 #include <memory>
+#include "boost/bind.hpp"
 
 #include "Menu2DItem.h"
 #include "AnimationHelper.h"
@@ -20,12 +22,13 @@ class GuiWindow;
 
 class Menu2D {
 public:
-	Menu2D(int windowWidth, int windowHeight, GuiWindow& guiWindow);
+	Menu2D(int windowWidth, int windowHeight);
 	virtual ~Menu2D() { /* Nothing */ }
 
+	Menu2DItemPtr& addButton(std::string name);
 	void draw();
 	void mouseMoved(const int x, const int y);
-	void mouseClicked();
+	void mousePressed();
 	void mouseReleased();
 
 private:
@@ -34,7 +37,6 @@ private:
 	const int ITEM_STATE_TYPE_MOVED = 3;
 
 	std::vector<Menu2DItemPtr> items;
-	std::vector<string> menuOptions;	// 2 dim. array
 
 	// config
 	const int m_buttonWidth = 200;
@@ -42,7 +44,9 @@ private:
 	const int m_buttonMargin = 10;
 	const int m_animationDuration = 2000;
 
-	GuiWindow &m_window;
+	int m_windowHeight;
+	int m_windowWidth;
+	int m_btCount;
 	int m_height;						// menu height in total with margin
 	int m_width;
 	int m_marginLeft;					// distance from left
@@ -56,8 +60,9 @@ private:
 	
 	Menu2DItemPtr activeButton;
 	AnimationHelperPtr animationHelper;
-
-	void changeItemState(const int type);
+	
+	// methods
+	void Menu2D::updateAbsolutePosition();
 };
 
 using Menu2DPtr = std::shared_ptr<Menu2D>;
