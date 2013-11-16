@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "chesstypes.h"
+#include "logic/chesstypes.h"
 
 TEST(State, equality) {
 	State a,b;

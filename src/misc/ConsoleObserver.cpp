@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "ConsoleObserver.h"
-#include "helper.h"
+#include "misc/helper.h"
 #include <thread>
 
 using namespace std;

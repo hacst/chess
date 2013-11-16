@@ -4,14 +4,16 @@
 
 #include <boost/program_options.hpp>
 
-#include "helper.h"
-#include "GameLogic.h"
-#include "ConsolePlayer.h"
-#include "ConsoleObserver.h"
-#include "DummyPlayer.h"
-#include "GameConfiguration.h"
-#include "ObserverDispatcherProxy.h"
-#include "GuiWindow.h"
+#include "logic/GameLogic.h"
+#include "logic/threading/ObserverDispatcherProxy.h"
+
+#include "gui/GuiWindow.h"
+
+#include "misc/helper.h"
+#include "misc/ConsolePlayer.h"
+#include "misc/ConsoleObserver.h"
+#include "misc/DummyPlayer.h"
+#include "core/GameConfiguration.h"
 
 namespace po = boost::program_options;
 

@@ -4,8 +4,8 @@
 #include <memory>
 #include <chrono>
 
-#include "chesstypes.h"
-#include "GameConfiguration.h"
+#include "logic/chesstypes.h"
+#include "core/GameConfiguration.h"
 
 class AbstractGameObserver {
 public:

@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 #include <iostream>
-#include "Menu2D.h"
+#include "gui/Menu2D.h"
 
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h

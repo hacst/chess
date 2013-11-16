@@ -8,7 +8,7 @@
 #include <sstream>
 #include <stdint.h>
 
-#include "helper.h"
+#include "misc/helper.h"
 
 
 enum PlayerColor {

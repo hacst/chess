@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "PlayerDispatcherProxy.h"
-#include "GameConfiguration.h"
+#include "logic/threading/PlayerDispatcherProxy.h"
+#include "core/GameConfiguration.h"
 
 using namespace std;
 

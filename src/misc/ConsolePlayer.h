@@ -1,9 +1,9 @@
 #ifndef CONSOLEPLAYER_H
 #define CONSOLEPLAYER_H
 
-#include "AbstractPlayer.h"
-#include "ServiceDispatcherThread.h"
-#include "helper.h"
+#include "logic/interface/AbstractPlayer.h"
+#include "logic/threading/ServiceDispatcherThread.h"
+#include "misc/helper.h"
 
 class ConsolePlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:

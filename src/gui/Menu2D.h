@@ -9,8 +9,8 @@
 #include <memory>
 #include "boost/bind.hpp"
 
-#include "Menu2DItem.h"
-#include "AnimationHelper.h"
+#include "gui/Menu2DItem.h"
+#include "gui/AnimationHelper.h"
 
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h

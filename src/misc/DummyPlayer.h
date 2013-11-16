@@ -1,9 +1,9 @@
 #ifndef DUMMYPLAYER_H
 #define DUMMYPLAYER_H
 
-#include "AbstractPlayer.h"
-#include "ServiceDispatcherThread.h"
-#include "helper.h"
+#include "logic/interface/AbstractPlayer.h"
+#include "logic/threading/ServiceDispatcherThread.h"
+#include "misc/helper.h"
 
 #include <random>
 #include <thread>

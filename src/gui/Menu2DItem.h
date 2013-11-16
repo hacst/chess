@@ -7,7 +7,10 @@
 #include <boost/signals2.hpp>
 
 #include "SOIL.h"
+#include "Menu2DItem.h"
 #include "AnimationHelper.h"
+
+#include "gui/AnimationHelper.h"
 
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h

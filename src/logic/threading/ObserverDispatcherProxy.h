@@ -1,8 +1,8 @@
 #ifndef OBSERVERDISPATCHERPROXY_H
 #define OBSERVERDISPATCHERPROXY_H
 
-#include "AbstractGameObserver.h"
-#include "ServiceDispatcher.h"
+#include "logic/interface/AbstractGameObserver.h"
+#include "logic/threading/ServiceDispatcher.h"
 
 class ObserverDispatcherProxy : public AbstractGameObserver, public ServiceDispatcher {
 public:
