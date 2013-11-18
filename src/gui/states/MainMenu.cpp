@@ -11,7 +11,7 @@ void MainMenu::enter() {
 
 AbstractState* MainMenu::run() {
 	SDL_Delay(1000);
-	std::cout << "run main menu!" << std::endl;
+	std::cout << "run main menu! (sleep 1000ms)" << std::endl;
 
 	return this;
 }
