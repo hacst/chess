@@ -1,5 +1,5 @@
-#include "Menu2D.h"
-#include "GuiWindow.h"
+#include "gui/Menu2D.h"
+#include "gui/GuiWindow.h"
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "AnimationHelper.h"
+#include "gui/AnimationHelper.h"
 
 using namespace std;
 
