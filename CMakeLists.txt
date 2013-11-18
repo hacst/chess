@@ -52,11 +52,16 @@ set(GUI_SOURCES
     src/gui/GuiWindow.h
     src/gui/Menu2D.h
     src/gui/Menu2DItem.h
+	src/gui/StateMachine.h
+	src/gui/interface/AbstractState.h
+	src/gui/states/MainMenu.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
     src/gui/Menu2D.cpp
     src/gui/Menu2DItem.cpp
+	src/gui/StateMachine.cpp
+	src/gui/states/MainMenu.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})
