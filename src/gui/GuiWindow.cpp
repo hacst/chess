@@ -81,8 +81,6 @@ void GuiWindow::exec() {
 
 	SDL_GL_SetSwapInterval(1);
 
-	StateMachine::getInstance().run();
-
 	// main menu
 	menu = make_shared<Menu2D>(m_width, m_height);
 	menu->addButton("Neues Spiel");
@@ -137,7 +135,7 @@ void GuiWindow::exec() {
 			startTime = SDL_GetTicks();
 		}
 
-		//fsm.run();
+		StateMachine::getInstance().run();
 		draw2D();
 		
 
