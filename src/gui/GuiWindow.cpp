@@ -1,13 +1,15 @@
-#include "GuiWindow.h"
+#include "gui/GuiWindow.h"
+
 #include "misc/helper.h"
+
 
 using namespace std;
 
-GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height) {
-	m_title = title;
-	m_fullscreen = fullscreen;
-	m_width = width;
-	m_height = height;
+GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height)
+	: m_title(title)
+	, m_fullscreen(fullscreen)
+	, m_width(width)
+	, m_height(height) {
 
 	// initial position of the camera
 	m_cX = -10.0;
@@ -21,6 +23,10 @@ GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height) {
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+	// init finite state machine
+	AbstractState* startState = new MainMenu();
+	StateMachine::getInstance().setStartState(startState);
 }
 
 void GuiWindow::handleEvents() {
@@ -129,6 +135,7 @@ void GuiWindow::exec() {
 			startTime = SDL_GetTicks();
 		}
 
+		StateMachine::getInstance().run();
 		draw2D();
 		
 

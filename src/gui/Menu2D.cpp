@@ -1,11 +1,11 @@
-#include "Menu2D.h"
-#include "GuiWindow.h"
+#include "gui/Menu2D.h"
+#include "gui/GuiWindow.h"
 
 using namespace std;
 
 Menu2D::Menu2D(int windowWidth, int windowHeight)
-	: m_windowWidth(windowWidth)
-	, m_windowHeight(windowHeight)
+	: m_windowHeight(windowHeight)
+	, m_windowWidth(windowWidth)
 	, m_btCount(0) {
 
 	//m_height = menuOptions.size() * (m_buttonHeight + m_buttonMargin);
@@ -29,7 +29,7 @@ Menu2D::Menu2D(int windowWidth, int windowHeight)
 	animationHelper = make_shared<AnimationHelper>(m_animationDuration);
 }
 
-Menu2DItemPtr& Menu2D::addButton(std::string name) {
+Menu2DItemPtr Menu2D::addButton(std::string name) {
 	updateAbsolutePosition();	// update absolute menu position
 	
 	// we don't know how many buttons will be added in total, so we must update the position later (before drawing)
