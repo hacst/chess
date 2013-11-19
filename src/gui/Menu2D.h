@@ -25,7 +25,7 @@ public:
 	Menu2D(int windowWidth, int windowHeight);
 	virtual ~Menu2D() { /* Nothing */ }
 
-	Menu2DItemPtr& addButton(std::string name);
+	Menu2DItemPtr addButton(std::string name);
 	void draw();
 	void mouseMoved(const int x, const int y);
 	void mousePressed();
@@ -62,7 +62,7 @@ private:
 	AnimationHelperPtr animationHelper;
 	
 	// methods
-	void Menu2D::updateAbsolutePosition();
+	void updateAbsolutePosition();
 };
 
 using Menu2DPtr = std::shared_ptr<Menu2D>;
