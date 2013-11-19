@@ -12,9 +12,9 @@
 
 
 enum PlayerColor {
-	None,
-	White,
-	Black
+    None,
+    White,
+    Black
 };
 
 struct Position {
@@ -29,49 +29,49 @@ struct Position {
 };
 
 struct Turn {
-	Position from, to;
+    Position from, to;
 
-	enum Action {
-		Move,
-		Forfeit,
-		Castle,
-		Pass
-	} action;
+    enum Action {
+        Move,
+        Forfeit,
+        Castle,
+        Pass
+    } action;
 
-	Turn()
-		: from()
-		, to()
-		, action(Pass) {}
+    Turn()
+        : from()
+        , to()
+        , action(Pass) {}
 
-	Turn(Position from, Position to, Action action)
-		: from(from)
-		, to(to)
-		, action(action) {}
+    Turn(Position from, Position to, Action action)
+        : from(from)
+        , to(to)
+        , action(action) {}
 
-	static Turn move(Position from, Position to) {
-		return Turn(from, to, Move);
-	}
+    static Turn move(Position from, Position to) {
+        return Turn(from, to, Move);
+    }
 
-	static Turn forfeit() {
-		return Turn(Position(), Position(), Forfeit);
-	}
+    static Turn forfeit() {
+        return Turn(Position(), Position(), Forfeit);
+    }
 
-	static Turn castle(Position king, Position rook) {
-		const int castleOffset = (king.x < rook.x) ? -2 : 2;
-		return Turn(king, Position {king.x + castleOffset, king.y}, Castle);
-	}
+    static Turn castle(Position king, Position rook) {
+        const int castleOffset = (king.x < rook.x) ? -2 : 2;
+        return Turn(king, Position {king.x + castleOffset, king.y}, Castle);
+    }
 
-	static Turn pass() {
-		return Turn(Position(), Position(), Pass);
-	}
-	
-	bool operator==(const Turn& other) const {
-		return from == other.from
-		        && to == other.to
-		        && action == other.action;
-	}
+    static Turn pass() {
+        return Turn(Position(), Position(), Pass);
+    }
 
-	std::string toString() const;
+    bool operator==(const Turn& other) const {
+        return from == other.from
+                && to == other.to
+                && action == other.action;
+    }
+
+    std::string toString() const;
 };
 
 struct State {

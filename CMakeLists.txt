@@ -81,6 +81,17 @@ set(LOGIC_SOURCES
 
     src/logic/chesstypes.h
     src/logic/chesstypes.cpp
+
+    src/logic/GameState.h
+    src/logic/GameState.cpp
+    src/logic/ChessBoard.h
+    src/logic/ChessBoard.cpp
+    src/logic/TurnGenerator.h
+    src/logic/TurnGenerator.cpp
+    src/logic/Turn.h
+    src/logic/Turn.cpp
+    src/logic/Evaluater.h
+    src/logic/Evaluater.cpp
 )
 
 source_group(logic FILES ${LOGIC_SOURCES})
