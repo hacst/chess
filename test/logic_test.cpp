@@ -1,26 +1,76 @@
 #include <gtest/gtest.h>
+#include "logic/GameState.h"
 
-#include "logic/chesstypes.h"
+TEST(GameState, equality) {
+    GameState a, b;
+    EXPECT_EQ(a, b);
 
-TEST(State, equality) {
-	State a,b;
-	EXPECT_EQ(a,b);
-	a.apply(Turn::move({2,0}, {4,0}));
-	EXPECT_NE(a,b);
+    Turn t = Turn::move(Piece::WhitePawn, Field::B4, Field::C4);
+    a.applyTurn(t);
+    //EXPECT_NE(a,b);
+    EXPECT_NE(a.getNextPlayer(), b.getNextPlayer());
+    EXPECT_NE(a.getChessBoard(), b.getChessBoard());
+
+    b.applyTurn(t);
+    EXPECT_EQ(a.getNextPlayer(), b.getNextPlayer());
+    EXPECT_EQ(a.getChessBoard(), b.getChessBoard());
+
+    Turn t2 = Turn::move(Piece::WhitePawn, Field::B3, Field::C3);
+    b.applyTurn(t2);
+    EXPECT_NE(a.getNextPlayer(), b.getNextPlayer());
+    EXPECT_NE(a.getChessBoard(), b.getChessBoard());
 }
 
-TEST(State, applyPass) {
-	State s;
+TEST(TurnGenerator, calcKingTurns) {
+    TurnGenerator tGen;
+    BitBoard a = tGen.calcKingTurns(1024, 0);
+    LOG(trace) << bitBoardToString(a);
+
+    //BitBoard b = 12345;
+    //EXPECT_EQ(a, b);
+}
+
+
+TEST(TurnGenerator, generateBitBoards) {
+    TurnGenerator tGen;
+    GameState g;
+
+    tGen.generateBitBoards(g.getChessBoard());
+
+    LOG(trace) << bitBoardToString(tGen.m_allPieces[White]);
+    LOG(trace) << bitBoardToString(tGen.m_allPieces[Black]);
+    LOG(trace) << bitBoardToString(tGen.m_allPieces[None]);
+
+    //LOG(trace) << bitBoardToString(tGen.m_pawns[White]);
+    //g.applyTurn(Turn::move(WhitePawn, B3, C3));
+    //tGen.generateBitBoards(g.getChessBoard());
+    //LOG(trace) << bitBoardToString(tGen.m_pawns[White]);
+}
+
+
+TEST(BitBoard, toString) {
+    //BitBoard a = 0;
+    //BitBoard b = 2;
+    //BitBoard c = 10;
+    //LOG(trace) << bitBoardToString(a);
+    //LOG(trace) << bitBoardToString(b);
+    //LOG(trace) << bitBoardToString(c);
+}
+
+/*
+TEST(GameState, applyPass) {
+    GameState s;
 	Turn t;
-	State sc = s;
-	s.apply(t);
+    GameState sc = s;
+    s.applyTurn(t);
 	
-	EXPECT_EQ(s.board, sc.board);
-	EXPECT_EQ(s.nextTurn, PlayerColor::Black);
+    EXPECT_EQ(s.getChessBoard(), sc.getChessBoard());
+    EXPECT_EQ(s.getNextPlayer(), PlayerColor::Black);
 }
 
-TEST(State, defaultState) {
-	State s;
-	EXPECT_EQ(s.nextTurn, PlayerColor::White);
-	EXPECT_EQ(s.board, State::Board());
+TEST(GameState, defaultState) {
+    GameState s;
+    EXPECT_EQ(s.getNextPlayer(), PlayerColor::White);
+    EXPECT_EQ(s.getChessBoard(), GameState::GameState());
 }
+*/

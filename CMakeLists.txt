@@ -84,9 +84,8 @@ set(LOGIC_SOURCES
     src/logic/GameLogic.h
     src/logic/GameLogic.cpp
 
-    src/logic/chesstypes.h
-    src/logic/chesstypes.cpp
-
+    src/logic/ChessTypes.h
+    src/logic/ChessTypes.cpp
     src/logic/GameState.h
     src/logic/GameState.cpp
     src/logic/ChessBoard.h
@@ -106,6 +105,7 @@ set(LOGIC_INTERFACE_SOURCES
     src/logic/interface/AbstractGameObserver.h
     src/logic/interface/AbstractPlayer.h
     src/logic/interface/AbstractGameLogic.h
+    src/logic/interface/AbstractTurnGenerator.h
 )
 
 source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})
