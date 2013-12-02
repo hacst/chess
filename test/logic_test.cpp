@@ -74,3 +74,21 @@ TEST(GameState, defaultState) {
     EXPECT_EQ(s.getChessBoard(), GameState::GameState());
 }
 */
+
+
+TEST(Evaluator, getMaterialWorth) {
+	ChessBoard board;
+	Evaluator eval;
+	EXPECT_EQ(0, eval.getMaterialWorth(White,board));
+	EXPECT_EQ(0, eval.getMaterialWorth(Black,board));
+	
+	//TODO: Once a easy way is available to create custom board states finish this
+}
+
+TEST(Evaluator, getScore) {
+	GameState state;
+	Evaluator eval;
+	EXPECT_EQ(0, eval.getScore(state));
+	
+	//TODO: Once a easy way is available to create custom board states finish this
+}

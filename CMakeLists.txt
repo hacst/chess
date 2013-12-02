@@ -75,6 +75,8 @@ set(MISC_SOURCES
     src/misc/ConsoleObserver.cpp
 
     src/misc/DummyPlayer.h
+
+    src/misc/helper.h
 )
 
 source_group(misc FILES ${MISC_SOURCES})
@@ -94,8 +96,8 @@ set(LOGIC_SOURCES
     src/logic/TurnGenerator.cpp
     src/logic/Turn.h
     src/logic/Turn.cpp
-    src/logic/Evaluater.h
-    src/logic/Evaluater.cpp
+    src/logic/Evaluator.h
+    src/logic/Evaluator.cpp
 )
 
 source_group(logic FILES ${LOGIC_SOURCES})
@@ -130,6 +132,10 @@ source_group(core FILES ${CORE_SOURCES})
 
 # Artificial intelligence headers and sources
 set(AI_SOURCES
+    src/ai/AIPlayer.h
+    src/ai/AIPlayer.cpp
+    src/ai/Negamax.h
+    src/ai/Negamax.cpp
 )
 
 source_group(core FILES ${AI_SOURCES})

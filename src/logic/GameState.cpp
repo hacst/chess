@@ -26,7 +26,12 @@ PlayerColor GameState::getNextPlayer() const {
 }
 
 const ChessBoard& GameState::getChessBoard() const {
-    return m_chessBoard;
+	return m_chessBoard;
+}
+
+bool GameState::isGameOver() {
+	//TODO: Impl. me
+	return getTurnList().empty();
 }
 
 bool GameState::operator==(const GameState& other) const {

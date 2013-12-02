@@ -34,7 +34,10 @@ enum PlayerColor {
     None
 };
 
-
+inline PlayerColor togglePlayerColor(PlayerColor color) {
+	assert(White == 1 && Black == 2);
+	return static_cast<PlayerColor>(static_cast<int>(color) ^ 0x3);
+}
 
 enum File {
     A, B, C, D, E, F, G, H
