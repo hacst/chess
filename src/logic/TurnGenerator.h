@@ -1,66 +1,53 @@
 #ifndef TURNGENERATOR_H
 #define TURNGENERATOR_H
 
-#include "interface/AbstractTurnGenerator.h"
+//#include "interface/AbstractTurnGenerator.h"
+//#include "GameState.h"
+
+
+#include "ChessTypes.h"
+#include "ChessBoard.h"
+
+
+enum File {
+    A, B, C, D, E, F, G, H
+};
+
+enum Rank {
+    One, Two, Three, Four, Five, Six, Seven, Eight
+};
 
 
 
-#define BIT_SET(bitBoard, field) (bitBoard |=   (BitBoard)1 << (field))
-#define BIT_CLEAR(bitBoard, field) (bitBoard &= ~((BitBoard)1 << (field)))
-#define BIT_TOGGLE(bitBoard, field) (bitBoard ^=   (BitBoard)1 << (field))
-#define BIT_ISSET(bitBoard, field) (bitBoard & (  (BitBoard)1 << (field)))
-
-using BitBoard = uint64_t; // unsigned long;
-std::string bitBoardToString(BitBoard b);
 
 
 
 //class BitBoardTurnGen
-class TurnGenerator : public AbstractTurnGenerator {
+class TurnGenerator { //: public AbstractTurnGenerator {
 public:
-    virtual std::vector<Turn> generateTurns(
-                PlayerColor player,
-                const ChessBoard& chessBoard
-            ) override;
-
-    //TODO: method for updating interal board representation
-    // on GameState.applyTurn?
-    //virtual void applyTurn() or update()
+    virtual std::vector<Turn> generateTurns(PlayerColor player, const ChessBoard& cb); // override;
 
 //private:
-    // for internal turn calculation bit boards are used
-    // at least 12 bit boards are needed for a complete board
-    // representation
-    BitBoard m_pawns[2];
-    BitBoard m_rooks[2];
-    BitBoard m_knights[2];
-    BitBoard m_bishops[2];
-    BitBoard m_queens[2];
-    BitBoard m_king[2];
-    // some additional bit boards for turn calculation
-    BitBoard m_allPieces[3];
-
-    //virtual void initBitBoards();
-    //virtual void updateBitBoards();
-    void generateBitBoards(const ChessBoard& chessBoard);
-
-    static BitBoard maskRank(Rank rank);
-    static BitBoard maskFile(File file);
-    static BitBoard clearRank(Rank rank);
-    static BitBoard clearFile(File file);
 
 
-    virtual std::array<BitBoard, 6> calcTurns(PlayerColor player);
-    // sliding pieces
-    //virtual BitBoard calcQueenTurns(BitBoard queen, BitBoard allPieces);
-    //virtual BitBoard calcBishopTurns(BitBoard bishop, BitBoard allPieces);
-    //virtual BitBoard calcRookTurns(BitBoard rook, BitBoard allPieces);
+    virtual std::array<BitBoard, 6> calcTurns(PlayerColor player, const ChessBoard& cb);
+    virtual std::vector<Turn> bitBoardToTurns(Piece piece, BitBoard bbTurns, BitBoard bbPiece);
+
+
     // nonsliding pieces
-    virtual BitBoard calcKingTurns(BitBoard king, BitBoard allOwnPieces);
-    //virtual BitBoard calcKnightTurns(BitBoard knight, BitBoard allPieces);
-    //virtual BitBoard calcPawnTurns(BitBoard pawn, BitBoard allPieces);
+    virtual BitBoard calcKingTurns  (BitBoard king,    BitBoard allOwnPieces);
+    virtual BitBoard calcKnightTurns(BitBoard knights, BitBoard allOwnPieces);
+    virtual BitBoard calcPawnTurns  (BitBoard pawns,   BitBoard allOppPieces,
+                                     BitBoard allPieces, PlayerColor player);
+    // sliding pieces
+    virtual BitBoard calcQueenTurns (BitBoard queens,  BitBoard allOwnPieces);
+    virtual BitBoard calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces);
+    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOwnPieces);
 
-    virtual std::vector<Turn> bitBoardToTurns(BitBoard b);
+    virtual BitBoard maskRank (Rank rank);
+    virtual BitBoard clearRank(Rank rank);
+    virtual BitBoard maskFile (File file);
+    virtual BitBoard clearFile(File file);
 };
 
 using TurnGeneratorPtr = std::shared_ptr<TurnGenerator>;

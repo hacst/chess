@@ -47,7 +47,7 @@ void ConsolePlayer::doAbortTurn() {
 void ConsolePlayer::onGameOver(GameState state, PlayerColor winner) {
 	cout << "Game over: ";
 
-    if (winner == None) {
+    if (winner == NoPlayer) {
 		cout << "Draw" << endl;
 	} else if (winner == m_color) {
 		cout << "You won" << endl;

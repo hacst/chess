@@ -5,24 +5,23 @@ GameState::GameState() {
 }
 
 void GameState::init() {
-    m_nextPlayer = PlayerColor::White;
+    m_actPlayer = PlayerColor::White;
+    // TODO: init ChessBoard from savegame
 }
 
 
 
 std::vector<Turn> GameState::getTurnList() {
-    return m_turnGen.generateTurns(m_nextPlayer, m_chessBoard);
+    return m_turnGen.generateTurns(getActPlayer(), getChessBoard());
 }
 
-void GameState::applyTurn(const Turn& t) {
-    // TODO: hier auch die bitboards im TurnGen updaten?
-
-    m_chessBoard.applyTurn(t);
-    m_nextPlayer = (m_nextPlayer == White) ? Black : White;
+void GameState::applyTurn(const Turn& turn) {
+    m_chessBoard.applyTurn(turn);
+    m_actPlayer = (m_actPlayer == White) ? Black : White;
 }
 
-PlayerColor GameState::getNextPlayer() const {
-    return m_nextPlayer;
+PlayerColor GameState::getActPlayer() const {
+    return m_actPlayer;
 }
 
 const ChessBoard& GameState::getChessBoard() const {
@@ -30,7 +29,7 @@ const ChessBoard& GameState::getChessBoard() const {
 }
 
 bool GameState::operator==(const GameState& other) const {
-    return m_nextPlayer == other.getNextPlayer()
+    return m_actPlayer == other.getActPlayer()
             && m_chessBoard == other.getChessBoard();
 }
 

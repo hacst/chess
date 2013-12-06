@@ -4,7 +4,7 @@
 #include "ChessTypes.h"
 #include "ChessBoard.h"
 #include "TurnGenerator.h"
-#include "Evaluater.h"
+//#include "Evaluater.h"
 
 
 class GameState {
@@ -14,23 +14,20 @@ public:
     //virtual void init(SaveGame* sg);
 
     virtual std::vector<Turn>   getTurnList();
-    virtual void                applyTurn(const Turn& t);
-
-
-    virtual PlayerColor getNextPlayer() const;
-    virtual const ChessBoard& getChessBoard() const;
-    //virtual TurnGeneratorPtr    getTurnGenerator() const;
+    virtual void                applyTurn(const Turn& turn);
+    virtual PlayerColor         getActPlayer() const;
+    virtual const ChessBoard&   getChessBoard() const;
 
     bool operator==(const GameState& other) const;
     bool operator!=(const GameState& other) const;
     std::string toString() const;
 
 private:
-    PlayerColor     m_nextPlayer;
+    PlayerColor     m_actPlayer;
     ChessBoard      m_chessBoard;
-    TurnGenerator   m_turnGen; // TODO: replace with AbstractTurnGenerator
+    TurnGenerator   m_turnGen;
+    // TODO: replace with AbstractTurnGenerator
     //AbstractTurnGenerator m_turnGen;
-    //EvaluaterPtr     m_evalualter; // TODO: do we need this here?
 };
 
 using GameStatePtr = std::shared_ptr<GameState>;

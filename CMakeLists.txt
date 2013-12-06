@@ -204,8 +204,12 @@ if (TEST)
     target_link_libraries(misc_test gmock_main ${LIBRARIES})
     add_test(NAME Misc-Testset COMMAND misc_test)
 
-
-    add_executable(logic_test test/logic_test.cpp ${SOURCES} ${HEADERS})
+    set(LOGIC_TEST_SOURCES
+        test/logic/GameState_test.cpp
+        test/logic/ChessBoard_test.cpp
+        test/logic/TurnGenerator_test.cpp
+    )
+    add_executable(logic_test ${LOGIC_TEST_SOURCES} ${SOURCES} ${HEADERS})
     target_link_libraries(logic_test gmock_main ${LIBRARIES})
     add_test(NAME Logic-Testset COMMAND logic_test)
 

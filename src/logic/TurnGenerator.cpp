@@ -1,16 +1,15 @@
 #include "TurnGenerator.h"
 
-std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBoard& chessBoard) {
+std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBoard& cb) {
+    std::array<BitBoard, 6> bbTurns = calcTurns(player, cb);
+    std::vector<Turn>       turns, allTurns;
 
-    //TODO: updating bitboards or generating bitboards from chessboard
-    // oder in eigener applyTurn Methode
-    generateBitBoards(chessBoard);
+    Piece piece;
+    for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
+        piece.type   = (PieceType) pieceType;
+        piece.player = player;
 
-    std::array<BitBoard, 6> bitBoards = calcTurns(player);
-    std::vector<Turn> turns, allTurns;
-
-    for (BitBoard b: bitBoards) {
-        turns = bitBoardToTurns(b);
+        turns = bitBoardToTurns(piece, bbTurns[pieceType], cb.bb[player][pieceType]);
         allTurns.insert(allTurns.end(), turns.begin(), turns.end());
     }
 
@@ -20,116 +19,59 @@ std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBo
 
 
 
-/*
+std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbTurns, BitBoard bbPiece) {
+    std::vector<Turn> turns;
+    Field from, to;
 
-void TurnGenerator::initBitBoards() {
-    // set BitBoards to start positions
+    from = BB_SCAN(bbPiece);
 
-    BIT_SET(m_king[White], 5);
+    while (bbTurns != 0) {
+        to = BB_SCAN(bbTurns);
+        BIT_CLEAR(bbTurns, to);
 
-
-    BIT_SET(m_king[White], Field::E1);
-    BIT_SET(m_queens[White], Field::D1);
-    BIT_SET(m_bishops[White], Field::C1); // TODO: do this in 1 step
-    BIT_SET(m_bishops[White], Field::F1);
-    BIT_SET(m_knights[White], Field::B1);
-    BIT_SET(m_knights[White], Field::G1);
-    BIT_SET(m_pawns[White], Field::A2);
-    BIT_SET(m_pawns[White], Field::B2);
-    BIT_SET(m_pawns[White], Field::C2);
-    BIT_SET(m_pawns[White], Field::D2);
-    BIT_SET(m_pawns[White], Field::E2);
-    BIT_SET(m_pawns[White], Field::F2);
-    BIT_SET(m_pawns[White], Field::G2);
-    BIT_SET(m_pawns[White], Field::H2);
-
-    BIT_SET(m_king[Black], E8);
-    BIT_SET(m_queens[Black], D8);
-    BIT_SET(m_bishops[Black], C8);
-    BIT_SET(m_bishops[Black], F8);
-    BIT_SET(m_knights[Black], B8);
-    BIT_SET(m_knights[Black], G8);
-    BIT_SET(m_pawns[Black], A7);
-    BIT_SET(m_pawns[Black], B7);
-    BIT_SET(m_pawns[Black], C7);
-    BIT_SET(m_pawns[Black], D7);
-    BIT_SET(m_pawns[Black], E7);
-    BIT_SET(m_pawns[Black], F7);
-    BIT_SET(m_pawns[Black], G7);
-    BIT_SET(m_pawns[Black], H7);
-
-    updateBitBoards();
-}
-*/
-
-void TurnGenerator::generateBitBoards(const ChessBoard& chessBoard) {
-    int i;
-    std::array<Piece, 64> board = chessBoard.getBoard();
-
-    for (i = 0; i < 2; i++) {
-        m_pawns[i] = 0;
-        m_rooks[i] = 0;
-        m_knights[i] = 0;
-        m_bishops[i] = 0;
-        m_queens[i] = 0;
-        m_king[i] = 0;
+        turns.push_back(Turn::move(piece, from, to));
     }
 
-    for (i = 0; i < 64; i++) {
-        switch (board[i]) {
-        case WhiteKing: BIT_SET(m_king[White], i); break;
-        case BlackKing: BIT_SET(m_king[Black], i); break;
-        case WhiteQueen: BIT_SET(m_queens[White], i); break;
-        case BlackQueen: BIT_SET(m_queens[Black], i); break;
-        case WhiteBishop: BIT_SET(m_bishops[White], i); break;
-        case BlackBishop: BIT_SET(m_bishops[Black], i); break;
-        case WhiteKnight: BIT_SET(m_knights[White], i); break;
-        case BlackKnight: BIT_SET(m_knights[Black], i); break;
-        case WhiteRook: BIT_SET(m_rooks[White], i); break;
-        case BlackRook: BIT_SET(m_rooks[Black], i); break;
-        case WhitePawn: BIT_SET(m_pawns[White], i); break;
-        case BlackPawn: BIT_SET(m_pawns[Black], i); break;
-        case Empty: break;
-        default: break;
-        }
-    }
-
-    m_allPieces[White] = m_pawns[White] | m_rooks[White] | m_knights[White] |
-                         m_bishops[White] | m_queens[White] | m_king[White];
-    m_allPieces[Black] = m_pawns[Black] | m_rooks[Black] | m_knights[Black] |
-                         m_bishops[Black] | m_queens[Black] | m_king[Black];
-    m_allPieces[None]  = m_allPieces[White] | m_allPieces[Black];
+    return turns;
 }
 
 
+std::array<BitBoard, 6> TurnGenerator::calcTurns(PlayerColor player, const ChessBoard& cb) {
+    std::array<BitBoard, 6> bbTurns;
+    PlayerColor opp = (player == White) ? Black : White;
 
+    bbTurns[King]   = calcKingTurns  (cb.bb[player][King],   cb.bb[player][AllPieces]);
+    bbTurns[Queen]  = calcQueenTurns (cb.bb[player][Queen],  cb.bb[player][AllPieces]);
+    bbTurns[Bishop] = calcBishopTurns(cb.bb[player][Bishop], cb.bb[player][AllPieces]);
+    bbTurns[Knight] = calcKnightTurns(cb.bb[player][Knight], cb.bb[player][AllPieces]);
+    bbTurns[Rook]   = calcRookTurns  (cb.bb[player][Rook],   cb.bb[player][AllPieces]);
+    bbTurns[Pawn]   = calcPawnTurns  (cb.bb[player][Pawn],   cb.bb[opp][AllPieces],
+                                      cb.bb[player][AllPieces] | cb.bb[opp][AllPieces],
+                                      player);
 
+    // TODO: Am Ende pruefen, ob der gegnerische King Schach oder Schachmatt
+    // gesetzt wurde -> gs.check(White)
 
-std::array<BitBoard, 6> TurnGenerator::calcTurns(PlayerColor player) {
-    std::array<BitBoard, 6> bitBoards;
-
-    bitBoards[0] = 0; // calcQueenTurns(m_queens[player], m_allPieces[player]);
-    bitBoards[1] = 0; // calcBishopTurns(m_bishops[player], board->m_allPieces[player]);
-    bitBoards[2] = 0; // calcRookTurns(m_rooks[player], m_allPieces[player]);
-    bitBoards[3] = calcKingTurns(m_king[player], m_allPieces[player]);
-    bitBoards[4] = 0; // calcKnightTurns(m_knights[player], m_allPieces[player]);
-    bitBoards[5] = 0; // calcPawnTurns(m_pawns[player], m_allPieces[player]);
-
-    return bitBoards;
+    return bbTurns;
 }
+
+
 
 BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
-    //king = king & ChessBoard::clearFile(File.A);
-    //king = king & ChessBoard::clearFile(File.H);
 
-    BitBoard turn1 = king << 9;
-    BitBoard turn2 = king << 8;
-    BitBoard turn3 = king << 7;
-    BitBoard turn4 = king << 1;
-    BitBoard turn5 = king >> 1;
-    BitBoard turn6 = king >> 7;
-    BitBoard turn7 = king >> 8;
-    BitBoard turn8 = king >> 9;
+    // TODO: Steht der King im schach? Nur Zuege berechnen, um aus dem
+    // schach rauszukommen -> wenn keine moeglichen zuege gefunden -> sieger?
+    // TODO: patt?
+
+    BitBoard turn1 = (king & clearFile(H)) << 9;
+    BitBoard turn2 = king                  << 8;
+    BitBoard turn3 = (king & clearFile(A)) << 7;
+    BitBoard turn4 = (king & clearFile(H)) << 1;
+
+    BitBoard turn5 = (king & clearFile(A)) >> 1;
+    BitBoard turn6 = (king & clearFile(H)) >> 7;
+    BitBoard turn7 = king                  >> 8;
+    BitBoard turn8 = (king & clearFile(A)) >> 9;
 
     BitBoard kingTurns = turn1 | turn2 | turn3 | turn4 |
                          turn5 | turn6 | turn7 | turn8;
@@ -137,7 +79,8 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
 
     // TODO: Rochade
 
-    // TODO: schach pruefen
+    // TODO: steht der (eigene) king nach einem der ermittelten zuege
+    // im schach? <- Diese zuege entfernen
     // dazu alle möeglichen zuege des anderen spielers berechnen
     // (in einem bb) und dann verunden mit king bb. ergebniss bb
     // enthaelt felder, die der king nicht betreten darf, also
@@ -146,30 +89,131 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
     return kingTurns;
 }
 
-std::vector<Turn> TurnGenerator::bitBoardToTurns(BitBoard b) {
-    std::vector<Turn> turns;
+BitBoard TurnGenerator::calcKnightTurns(BitBoard knights, BitBoard allOwnPieces) {
+    BitBoard turn1 = (knights & (clearFile(A) & clearFile(B))) << 6;
+    BitBoard turn2 = (knights & (clearFile(A)))                << 15;
+    BitBoard turn3 = (knights & (clearFile(H)))                << 17;
+    BitBoard turn4 = (knights & (clearFile(H) & clearFile(G))) << 10;
 
-    //turns.push_back(Turn::);
+    BitBoard turn5 = (knights & (clearFile(H) & clearFile(G))) >> 6;
+    BitBoard turn6 = (knights & (clearFile(H)))                >> 15;
+    BitBoard turn7 = (knights & (clearFile(A)))                >> 17;
+    BitBoard turn8 = (knights & (clearFile(A) & clearFile(B))) >> 10;
 
-    return turns;
+    BitBoard knightTurns = turn1 | turn2 | turn3 | turn4 |
+                           turn5 | turn6 | turn7 | turn8;
+    knightTurns &= ~allOwnPieces;
+
+    return knightTurns;
 }
 
-std::string bitBoardToString(BitBoard b) {
-    stringstream ss;
-    int i, j;
-    int bits = sizeof(b) * 8;
+BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
+                                      BitBoard allPieces, PlayerColor player) {
 
-    ss << endl << "decimal: " << b;
-    for (i = bits; i > 0; i -= 8) {
-        if (!(i % 8)) ss << endl;
-        for (j = 0; j < 8; j++) {
-            if (BIT_ISSET(b, j+(i-8))) {
-                ss << 1;
-            } else {
-                ss << 0;
-            }
-        }
+    // TODO: en passant
+
+    // Pawn Moves
+    BitBoard oneStep;
+    BitBoard twoSteps;
+    if (player == White) {
+        oneStep  = (pawns                       << 8) & ~allPieces;
+        twoSteps = ((oneStep & maskRank(Three)) << 8) & ~allPieces;
+    } else if (player == Black) {
+        oneStep  = (pawns                       >> 8) & ~allPieces;
+        twoSteps = ((oneStep & maskRank(Six))   >> 8) & ~allPieces;
     }
-    ss << endl;
-    return ss.str();
+    BitBoard pawnMoves = oneStep | twoSteps;
+
+    // Pawn Attacks
+    BitBoard leftAttacks;
+    BitBoard rightAttacks;
+    if (player == White) {
+        leftAttacks  = (pawns & clearFile(A)) << 7;
+        rightAttacks = (pawns & clearFile(H)) << 9;
+    } else if (player == Black) {
+        leftAttacks  = (pawns & clearFile(A)) >> 9;
+        rightAttacks = (pawns & clearFile(H)) >> 7;
+    }
+    BitBoard pawnAttacks = (leftAttacks | rightAttacks) & allOppPieces;
+
+    // valid moves + attacks
+    return pawnMoves | pawnAttacks;
+}
+
+BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOwnPieces) {
+    return 0;
+}
+
+BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces) {
+    return 0;
+}
+
+BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOwnPieces) {
+    return 0;
+}
+
+
+
+BitBoard TurnGenerator::maskRank(Rank rank) {
+    BitBoard bb = 0;
+    int offset = rank * 8;
+
+    BIT_SET(bb, offset);
+    BIT_SET(bb, offset + 1);
+    BIT_SET(bb, offset + 2);
+    BIT_SET(bb, offset + 3);
+    BIT_SET(bb, offset + 4);
+    BIT_SET(bb, offset + 5);
+    BIT_SET(bb, offset + 6);
+    BIT_SET(bb, offset + 7);
+
+    return bb;
+}
+
+BitBoard TurnGenerator::clearRank(Rank rank) {
+    BitBoard bb = ULLONG_MAX;
+    int offset = rank * 8;
+
+    BIT_CLEAR(bb, offset);
+    BIT_CLEAR(bb, offset + 1);
+    BIT_CLEAR(bb, offset + 2);
+    BIT_CLEAR(bb, offset + 3);
+    BIT_CLEAR(bb, offset + 4);
+    BIT_CLEAR(bb, offset + 5);
+    BIT_CLEAR(bb, offset + 6);
+    BIT_CLEAR(bb, offset + 7);
+
+    return bb;
+}
+
+BitBoard TurnGenerator::maskFile(File file) {
+    BitBoard bb = 0;
+
+    BIT_SET(bb, file);
+    BIT_SET(bb, file + 8);
+    BIT_SET(bb, file + 16);
+    BIT_SET(bb, file + 24);
+    BIT_SET(bb, file + 32);
+    BIT_SET(bb, file + 40);
+    BIT_SET(bb, file + 48);
+    BIT_SET(bb, file + 56);
+
+    return bb;
+}
+
+BitBoard TurnGenerator::clearFile(File file) {
+    BitBoard bb = ULLONG_MAX;
+
+    BIT_CLEAR(bb, file);
+    BIT_CLEAR(bb, file + 8);
+    BIT_CLEAR(bb, file + 16);
+    BIT_CLEAR(bb, file + 24);
+    BIT_CLEAR(bb, file + 32);
+    BIT_CLEAR(bb, file + 40);
+    BIT_CLEAR(bb, file + 48);
+    BIT_CLEAR(bb, file + 56);
+
+    return bb;
+    // TODO: Gehts so auch?
+    //bitBoard &= ~((BitBoard)1 << file << file + 8 << file + 16);
 }
