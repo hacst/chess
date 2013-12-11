@@ -49,8 +49,8 @@ void GameLogic::run() {
 	m_white->onSetColor(White);
 	m_black->onSetColor(Black);
 
-    assert(m_gameState.getActPlayer() == PlayerColor::White);
-	
+	assert(m_gameState.getNextPlayer() == PlayerColor::White);
+
 	LOG(info) << "Game start";
 	notify([&](AbstractGameObserverPtr& obs) {
 		obs->onGameStart(m_gameState, m_configuration);
@@ -58,8 +58,8 @@ void GameLogic::run() {
 
 	while (!isGameOver()) {
 		auto& currentPlayer = getCurrentPlayer();
-        const PlayerColor currentColor = m_gameState.getActPlayer();
-		
+		const PlayerColor currentColor = m_gameState.getNextPlayer();
+
 		LOG(debug) << currentColor << "'s turn";
 
 		notify([&](AbstractGameObserverPtr& obs) {
@@ -94,7 +94,7 @@ void GameLogic::run() {
 
 		LOG(trace) << currentColor << "'s turn: " << turn;
 
-        m_gameState.applyTurn(turn);
+		m_gameState.applyTurn(turn);
 
 		notify([&](AbstractGameObserverPtr& obs) {
 			obs->onTurnEnd(currentColor, turn, m_gameState);
@@ -114,10 +114,10 @@ bool GameLogic::isGameOver() const {
 }
 
 PlayerColor GameLogic::getWinner() const {
-    return PlayerColor::NoPlayer;
+	return PlayerColor::NoPlayer;
 }
 
 AbstractPlayerPtr& GameLogic::getCurrentPlayer() {
-    return (m_gameState.getActPlayer() == White) ? m_black : m_white;
+	return (m_gameState.getNextPlayer() == White) ? m_black : m_white;
 }
 
