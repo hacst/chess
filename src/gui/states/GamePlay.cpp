@@ -92,6 +92,12 @@ void GamePlay::enter() {
 	// ===== create a whole ChessSet =====
 	chessSet = make_shared<ChessSet>();
 
+	m_resourcesLoaded = 0;
+	m_resourcesTotal = chessSet->getResourcesCount();
+
+	chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
+	chessSet->loadResources();
+
 	// ===== create OGL lists =====
 	m_cube1 = ObjectHelper::createCubeList(4, m_lightpos1[0], m_lightpos1[1], m_lightpos1[2]);
 	m_cube2 = ObjectHelper::createCubeList(4, m_lightpos2[0], m_lightpos2[1], m_lightpos2[2]);
@@ -105,6 +111,42 @@ void GamePlay::enter() {
 	// debug
 	debugText = "light 0 on";
 	//cameraView = 0;
+}
+
+void GamePlay::onBeforeLoadNextResource(string resourceName) {
+	// swap the frame buffer for the first time to
+	if (m_resourcesLoaded == 0) {
+		fsm.window->swapFrameBufferNow();
+	}
+
+	// print what is loaded (resource name + progress bar)
+	++m_resourcesLoaded;
+
+	int windowWidth = fsm.window->getWidth();
+	float percentLoaded = m_resourcesLoaded / static_cast<float>(m_resourcesTotal);
+
+	array<float, 2> topLeftVertex		= { 0.0f, 10.0f	};
+	array<float, 2> topRightVertex		= { windowWidth * percentLoaded, 10.0f };
+	array<float, 2> bottomRightVertex	= { windowWidth * percentLoaded, 0.0f };
+	array<float, 2> bottomLeftVertex	= { 0.0f, 0.0f };
+
+	fsm.window->set2DMode();
+
+	glPushMatrix();
+		glBegin(GL_QUADS);
+			glColor3f(0.6f, 0.5f, 0.8f);
+
+			glVertex3f(topLeftVertex[0],		topLeftVertex[1],		-1.0f);
+			glVertex3f(topRightVertex[0],		topRightVertex[1],		-1.0f);
+			glVertex3f(bottomRightVertex[0],	bottomRightVertex[1],	-1.0f);
+			glVertex3f(bottomLeftVertex[0],		bottomLeftVertex[1],	-1.0f);
+		glEnd();
+	glPopMatrix();
+
+	fsm.window->printText(10, fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
+
+	// we must now swap the frame buffer
+	fsm.window->swapFrameBufferNow();
 }
 
 AbstractState* GamePlay::run() {
@@ -280,7 +322,6 @@ AbstractState* GamePlay::run() {
 void GamePlay::draw() {
 	// 2D
 	fsm.window->set2DMode();
-	fsm.window->printText(10, fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, "Game has been started ...");
 
 	// 3D
 	fsm.window->set3DMode();

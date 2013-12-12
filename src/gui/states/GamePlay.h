@@ -18,6 +18,8 @@ public:
 
 	// draw method
 	void draw();
+	
+	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 
 	// state methods
 	void onBackToMenu();
@@ -41,6 +43,9 @@ private:
 
 	int m_rotateFrom, m_rotateTo;
 	bool moveCamera;
+
+	int m_resourcesTotal;
+	int m_resourcesLoaded;
 
 	// debug
 	int cameraView;

@@ -208,7 +208,6 @@ void GuiWindow::exec() {
 	while (!m_quit) {
 		unsigned int start = SDL_GetTicks();
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// clear Screen and Depth Buffer
 		glMatrixMode(GL_PROJECTION);							// switch to projection mode
 		glLoadIdentity();										// and reset matrix
 
@@ -225,7 +224,7 @@ void GuiWindow::exec() {
 			m_quit = true;
 		}
 
-		SDL_GL_SwapWindow(window);
+		swapFrameBufferNow();
 		handleEvents();											// we handle events after the first frame is drawn
 
 		// limit the fps rate
@@ -237,6 +236,11 @@ void GuiWindow::exec() {
 	}
 
 	this->terminate();
+}
+
+void GuiWindow::swapFrameBufferNow() {
+	SDL_GL_SwapWindow(window);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// clear Screen and Depth Buffer
 }
 
 void GuiWindow::set2DMode() {
@@ -313,7 +317,8 @@ void GuiWindow::printSubHeadline(std::string text) {
 
 void GuiWindow::printTextCenter(float red, float green, float blue, std::string text) {
 	fontObject fo = {
-		(m_width / 2) - ((strlen(text.c_str()) * fontSize::TEXT) / 2) /* x */, (m_height / 2) - (fontSize::TEXT / 2) /* y */,
+        (m_width / 2) - (((int)strlen(text.c_str()) * fontSize::TEXT) / 2) /* x */,
+        (m_height / 2) - (fontSize::TEXT / 2) /* y */,
 		red, green, blue,
 		fontSize::TEXT,
 		fontText,

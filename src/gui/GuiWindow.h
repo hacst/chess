@@ -30,6 +30,8 @@ public:
 	void set2DMode();
 	void set3DMode();
 
+	void swapFrameBufferNow();
+
 	enum WindowMode {
 		FULLSCREEN,
 		WINDOW
