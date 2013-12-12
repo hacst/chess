@@ -1,7 +1,8 @@
+#include "gui/states/MenuMain.h"
+
 #include <iostream>
 #include <SDL.h>
 
-#include "gui/states/MenuMain.h"
 #include "gui/Menu2DItem.h"
 #include "gui/StateMachine.h"
 #include "gui/GuiWindow.h"
@@ -17,49 +18,22 @@ MenuMain::MenuMain() : fsm(StateMachine::getInstance()) {
 }
 
 void MenuMain::enter() {
-	std::cout << "entered MenuMain menu! " << std::endl;
-	
 	// switch to 2D mode
 	fsm.window->set2DMode();
 
-	// set background color
+	// set background color to orange
 	glClearColor(0.6, 0.21, 0, 0.0);
 
+	// create the menu
 	menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
 	menu->addButton("NewGame.png")->onClick(boost::bind(&MenuMain::onNewGame, this));
 	menu->addButton("LoadGame.png")->onClick(boost::bind(&MenuMain::onLoadGame, this));
 	menu->addButton("Options.png")->onClick(boost::bind(&MenuMain::onOptions, this));
 	menu->addButton("ExitGame.png")->onClick(boost::bind(&MenuMain::onExitGame, this));
 
-	// ===== init OpenGL =====
-	glClearDepth(1.0f);
-
-	glEnable(GL_DEPTH_TEST);									// activate depth testing with Z-buffer
-	glDepthFunc(GL_LEQUAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// specify implementation-specific hints
+	// init OpenGL
 	glEnable(GL_COLOR_MATERIAL);
-
-	// ===== config the lights =====
-	GLfloat lightpos[] = { 0.0f, 0.0f, 0.0f, 1.0f };			// light position
-	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);				// using first light (GL_LIGHT0)
-
-	// ambient + diffuse + specular = illumination
-	GLfloat light_ambient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-
-	// activate the lightning
-	glEnable(GL_LIGHTING);										// enable general lighting in this OpenGL context
-	glEnable(GL_LIGHT0);										// enable previously configured light (GL_LIGHT0)
-
-	// smoothing the light
-	glShadeModel(GL_SMOOTH);									// Shading models: GL_SMOOTH, GL_FLAT
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);			// enable transparency (alpha)
-	glEnable(GL_BLEND);											// enable color mixing (http://wiki.delphigl.com/index.php/glBlendFunc)
+	glEnable(GL_BLEND);
 }
 
 AbstractState* MenuMain::run() {
@@ -111,17 +85,14 @@ void MenuMain::draw() {
 }
 
 void MenuMain::onNewGame() {
-	std::cout << "start new game!" << std::endl;
 	m_nextState = States::NEW_GAME;
 }
 
 void MenuMain::onLoadGame() {
-	std::cout << "load a game!" << std::endl;
 	m_nextState = States::LOAD_GAME;
 }
 
 void MenuMain::onOptions() {
-	std::cout << "show options" << std::endl;
 	m_nextState = States::OPTIONS;
 }
 
@@ -130,5 +101,6 @@ void MenuMain::onExitGame() {
 }
 
 void MenuMain::exit() {
-	std::cout << "left MenuMain menu!" << std::endl;
+	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_BLEND);
 }
