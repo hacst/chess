@@ -33,7 +33,7 @@ Menu2D::~Menu2D() {
 	items.clear();
 }
 
-Menu2DItemPtr& Menu2D::addButton(std::string filename) {
+Menu2DItemPtr Menu2D::addButton(std::string filename) {
 	updateAbsolutePosition();	// update absolute menu position
 	
 	// we don't know how many buttons will be added in total, so we must update the position later (before drawing)

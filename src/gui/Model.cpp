@@ -14,11 +14,11 @@ Model::Model(string file) :	m_file(file) {
 	m_rotateY = 0;
 
 	m_position = { 0, 0, 0 };
-};
+}
 
-void Model::setCorrectionValues(int localX, int localY, int localZ, 
+void Model::setCorrectionValues(float localX, float localY, float localZ,
 								float scaleFactor,
-								int rotateX, int rotateY, int rotateZ) {
+								float rotateX, float rotateY, float rotateZ) {
 	m_correctPosition = { localX, localY, localZ };
 	m_correctScaling = scaleFactor;
 	m_correctRotation = { rotateX, rotateY, rotateY };

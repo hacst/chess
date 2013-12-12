@@ -9,6 +9,8 @@ public:
 	virtual AbstractState* run() = 0;
 	virtual void exit() = 0;
 	virtual void draw() = 0;
+
+    virtual ~AbstractState() {}
 };
 
 #endif // ABSTRACTSTATE_H
