@@ -22,13 +22,10 @@ public:
 			score *= -1;
 		}
 
-		bool operator<(const Result& other) {
-			return score < other.score;
-		}
-
-		bool operator>(const Result &other) {
-			return score > other.score;
-		}
+		bool operator<(const Result& other) { return score < other.score; }
+		bool operator<=(const Result& other) { return score <= other.score; }
+		bool operator>=(const Result& other) { return score >= other.score; }
+		bool operator>(const Result &other) { return score > other.score; }
 	};
 
 	template<typename TGameState = GameState>

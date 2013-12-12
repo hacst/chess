@@ -172,6 +172,7 @@ set(AI_SOURCES
 
 source_group(core FILES ${AI_SOURCES})
 
+# Sources in the 3dchess project
 set(EVERYTHINGBUTGUI_SOURCES
     ${MISC_SOURCES}
     ${LOGIC_SOURCES}
@@ -181,7 +182,6 @@ set(EVERYTHINGBUTGUI_SOURCES
     ${AI_SOURCES}
 )
 
-# Sources in the 3dchess project
 set(SOURCES
     ${GUI_SOURCES}
     ${GUI_INTERFACE_SOURCES}
@@ -191,13 +191,17 @@ set(SOURCES
 )
 
 # Library dependencies
+set(EVERYTHINGBUTGUI_LIBRARIES
+    ${Boost_LIBRARIES}
+)
+
 set(LIBRARIES
     SDL2-static
     ${OPENGL_LIBRARIES}
-    ${Boost_LIBRARIES}
     SOIL
     freetype
     assimp
+    ${EVERYTHINGBUTGUI_LIBRARIES}
 )
 
 # 3rd-Party headers
@@ -235,10 +239,9 @@ if (TEST)
     set(CONSOLECHESS_SOURCES
         test/other/consolechess.cpp
     )
-    source_group(test\\other FILES ${CONSOLECHESS_SOURCES})
 
     add_executable(consolechess ${CONSOLECHESS_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
-    target_link_libraries(consolechess ${Boost_LIBRARIES})
+    target_link_libraries(consolechess ${EVERYTHINGBUTGUI_LIBRARIES})
 
 
     # The officially recommended way of integrating these is to compile
@@ -252,36 +255,52 @@ if (TEST)
                         ${gtest_SOURCE_DIR}/include
                         ${gmock_SOURCE_DIR}/include)
 
+    #
+    # MISC tests for the odd helper things in the project
+    #
     set(MISC_TEST_SOURCES
         test/misc_test.cpp
     )
     source_group(test FILES ${MISC_TEST_SOURCES})
 
-    add_executable(misc_test ${MISC_TEST_SOURCES} ${SOURCES} ${HEADERS})
-    target_link_libraries(misc_test gmock_main ${LIBRARIES})
+    add_executable(misc_test ${MISC_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
+    target_link_libraries(misc_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
     add_test(NAME Misc-Testset COMMAND misc_test)
 
-
+    #
+    # AI tests for testing the AI algorithms
+    #
     set(AI_TEST_SOURCES
         test/ai/AIPlayer_test.cpp
         test/ai/Negamax_test.cpp
     )
-    source_group(test\\ai FILES ${AI_TEST_SOURCES})
 
-    add_executable(ai_test ${AI_TEST_SOURCES} ${SOURCES} ${HEADERS})
-    target_link_libraries(ai_test gmock_main ${LIBRARIES})
+    add_executable(ai_test ${AI_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
+    target_link_libraries(ai_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
     add_test(NAME AI-Testset COMMAND ai_test)
 
-
+    #
+    # LOGIC tests for testing game logic, turn generation etc.
+    #
     set(LOGIC_TEST_SOURCES
         test/logic/GameState_test.cpp
         test/logic/ChessBoard_test.cpp
         test/logic/TurnGenerator_test.cpp
     )
-    source_group(test\\logic FILES ${LOGIC_TEST_SOURCES})
 
-    add_executable(logic_test ${LOGIC_TEST_SOURCES} ${SOURCES} ${HEADERS})
-    target_link_libraries(logic_test gmock_main ${LIBRARIES})
+    add_executable(logic_test ${LOGIC_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
+    target_link_libraries(logic_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
     add_test(NAME Logic-Testset COMMAND logic_test)
+
+    #
+    # INTEGRATION tests for testing several components in conjunction
+    #
+    set(INTEGRATION_TEST_SOURCES
+        test/integration/Gen_Alg_Eval_test.cpp
+    )
+
+    add_executable(integration_test ${INTEGRATION_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
+    target_link_libraries(integration_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
+    add_test(NAME Integration_test-Testset COMMAND integration_test)
 
 endif()
