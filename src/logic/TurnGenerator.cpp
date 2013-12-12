@@ -223,18 +223,5 @@ BitBoard TurnGenerator::maskFile(File file) {
 }
 
 BitBoard TurnGenerator::clearFile(File file) {
-    BitBoard bb = ULLONG_MAX;
-
-    BIT_CLEAR(bb, file);
-    BIT_CLEAR(bb, file + 8);
-    BIT_CLEAR(bb, file + 16);
-    BIT_CLEAR(bb, file + 24);
-    BIT_CLEAR(bb, file + 32);
-    BIT_CLEAR(bb, file + 40);
-    BIT_CLEAR(bb, file + 48);
-    BIT_CLEAR(bb, file + 56);
-
-    return bb;
-    // TODO: Gehts so auch?
-    //bitBoard &= ~((BitBoard)1 << file << file + 8 << file + 16);
+    return ~(0x0101010101010101 << static_cast<int>(file));
 }

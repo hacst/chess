@@ -7,9 +7,41 @@
 //#include "ChessTypes.h"
 #include "Turn.h"
 
-#define BB_SCAN(bb)    static_cast<Field>(static_cast<int>(log2((double)bb))) /* returns the field of MS1B */
-#define BB_SET( field) (pow(2, (int)field))    /* returns the value 2^field */
+#ifdef WIN32
+#include <intrin.h>
 
+#ifdef _WIN64
+#pragma intrinsic(_BitScanForward64)
+
+inline int bitScanForward(uint64_t x) {
+    unsigned long index = 0;
+    _BitScanForward64(&index, x);
+    return static_cast<int>(index);
+}
+#else
+#pragma intrinsic(_BitScanForward)
+
+inline int bitScanForward(__int64 mask) {
+    unsigned long index = 0;
+    assert(mask != 0);
+    if (_BitScanForward(&index, static_cast<unsigned long>(mask)) == 0) {
+        _BitScanForward(&index, static_cast<unsigned long>(mask >> 32));
+        index += 32;
+    }
+    return static_cast<int>(index);
+}
+#endif
+
+#define BB_SCAN(bb) static_cast<Field>(bitScanForward(bb))
+
+#elif _GNU_SOURCE
+#include <string.h>
+#define BB_SCAN(bb) static_cast<Field>(ffsll(bb)) /* returns the field of MS1B */
+#else
+#define BB_SCAN(bb) static_cast<Field>(static_cast<int>(log2((double)bb))) // Should never ever use this ever
+#endif
+
+#define BB_SET(field) static_cast<BitBoard>(1) << static_cast<int>(field)   /* returns the value 2^field */
 #define BIT_SET(   bb, field) (bb |=   (BitBoard)1 << (field))
 #define BIT_CLEAR( bb, field) (bb &= ~((BitBoard)1 << (field)))
 #define BIT_TOGGLE(bb, field) (bb ^=   (BitBoard)1 << (field))

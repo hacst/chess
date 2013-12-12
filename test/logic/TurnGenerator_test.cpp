@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "logic/TurnGenerator.h"
+#include "logic/ChessBoard.h"
 
 TurnGenerator tGen;
 

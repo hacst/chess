@@ -14,7 +14,7 @@ int main(void) {
 	cout << "Initial state" << endl;
 	cout << gameState.getChessBoard() << endl;
 
-	for (size_t i = 0;; ++i) {
+	for (size_t i = 0; i < 10; ++i) {
 		cout << "== " << gameState.getNextPlayer() << " ==" << endl;
 		cout << "Calculating turn " << i << "...";
 		cout.flush();

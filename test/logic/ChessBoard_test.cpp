@@ -49,3 +49,13 @@ TEST(ChessBoard, applyTurn) {
 
     EXPECT_EQ(cb1, cb2);
 }
+
+TEST(ChessBoard, BB_SCAN) {
+    uint64_t mask = 1;
+    Field field = A1;
+    do {
+        EXPECT_EQ(field, BB_SCAN(mask));
+        mask = mask << 1;
+        field = static_cast<Field>(static_cast<int>(field) +1);
+    } while (field < H8);
+}
