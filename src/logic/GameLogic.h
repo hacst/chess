@@ -5,6 +5,7 @@
 #include <chrono>
 #include <future>
 
+#include "GameState.h"
 #include "logic/interface/AbstractGameLogic.h"
 #include "misc/helper.h"
 
@@ -69,7 +70,7 @@ private:
 	std::vector<AbstractGameObserverPtr> m_observers;
 	AbstractPlayerPtr m_white;
 	AbstractPlayerPtr m_black;
-	State m_gameState;
+    GameState m_gameState;
 	GameConfiguration m_configuration;
 };
 

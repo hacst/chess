@@ -10,11 +10,11 @@ public:
 	virtual ~ConsolePlayer();
 
 	virtual void onSetColor(PlayerColor color) override;
-	virtual void onGameStart(State state, GameConfiguration config) override;
-	virtual std::future<Turn> doMakeTurn(State state) override;
-	virtual void onTurnEnd(PlayerColor color, Turn turn, State newState) override;
+    virtual void onGameStart(GameState state, GameConfiguration config) override;
+    virtual std::future<Turn> doMakeTurn(GameState state) override;
+    virtual void onTurnEnd(PlayerColor color, Turn turn, GameState newState) override;
 	virtual void doAbortTurn() override;
-	virtual void onGameOver(State state, PlayerColor winner) override;
+    virtual void onGameOver(GameState state, PlayerColor winner) override;
 private:
 	PlayerColor m_color;
 };

@@ -12,7 +12,7 @@ public:
 		// Nothing
 	}
 	
-	virtual void onGameStart(State state, GameConfiguration config ) override {
+    virtual void onGameStart(GameState state, GameConfiguration config ) override {
 		post([=] {
 			m_observer->onGameStart(state, config);
 		});
@@ -24,7 +24,7 @@ public:
 		});
 	}
 	
-	virtual void onTurnEnd(PlayerColor who, Turn turn, State newState) override {
+    virtual void onTurnEnd(PlayerColor who, Turn turn, GameState newState) override {
 		post([=] {
 			m_observer->onTurnEnd(who, turn, newState);
 		});
@@ -36,7 +36,7 @@ public:
 		});
 	}
 	
-	virtual void onGameOver(State state, PlayerColor winner) override {
+    virtual void onGameOver(GameState state, PlayerColor winner) override {
 		post([=] {
 			m_observer->onGameOver(state, winner);
 		});

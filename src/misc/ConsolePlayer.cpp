@@ -15,7 +15,7 @@ void ConsolePlayer::onSetColor(PlayerColor color) {
 	});
 }
 
-void ConsolePlayer::onGameStart(State state, GameConfiguration config) {
+void ConsolePlayer::onGameStart(GameState state, GameConfiguration config) {
 	post([=]() {
 		cout << "Game started" << endl;
 			 //<< state << endl
@@ -23,7 +23,7 @@ void ConsolePlayer::onGameStart(State state, GameConfiguration config) {
 	});
 }
 
-future<Turn> ConsolePlayer::doMakeTurn(State state) {
+future<Turn> ConsolePlayer::doMakeTurn(GameState state) {
 	return postPromise([=]() {
 		cout << "Your turn (press enter)" << endl;
 		cin.get();
@@ -31,7 +31,7 @@ future<Turn> ConsolePlayer::doMakeTurn(State state) {
 	});
 }
 
-void ConsolePlayer::onTurnEnd(PlayerColor color, Turn turn, State newState) {
+void ConsolePlayer::onTurnEnd(PlayerColor color, Turn turn, GameState newState) {
 	post([=]() {
 		if (color != m_color) {
 			cout << turn << endl;
@@ -44,10 +44,10 @@ void ConsolePlayer::doAbortTurn() {
 	cout << endl << "Please end your turn (press enter)" << endl;
 }
 
-void ConsolePlayer::onGameOver(State state, PlayerColor winner) {
+void ConsolePlayer::onGameOver(GameState state, PlayerColor winner) {
 	cout << "Game over: ";
 
-	if (winner == None) {
+    if (winner == NoPlayer) {
 		cout << "Draw" << endl;
 	} else if (winner == m_color) {
 		cout << "You won" << endl;

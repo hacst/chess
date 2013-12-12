@@ -10,7 +10,7 @@ public:
 	virtual ~AbstractPlayer() { /* Nothing */ }
 
 	virtual void onSetColor(PlayerColor /*color*/) { /* Nothing */ }
-	virtual std::future<Turn> doMakeTurn(State state) = 0;
+	virtual std::future<Turn> doMakeTurn(GameState state) = 0;
 	virtual void doAbortTurn() { /* Nothing */ }
 };
 

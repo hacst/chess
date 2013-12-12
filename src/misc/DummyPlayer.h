@@ -20,7 +20,7 @@ public:
 		stop(true);
 	}
 
-	virtual std::future<Turn> doMakeTurn(State state) override {
+    virtual std::future<Turn> doMakeTurn(GameState state) override {
 		// Always pass after a random amount of time
 		// Obviously can't be aborted
 		return postPromise([=]() {

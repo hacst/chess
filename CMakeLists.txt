@@ -106,6 +106,8 @@ set(MISC_SOURCES
     src/misc/ConsoleObserver.cpp
 
     src/misc/DummyPlayer.h
+
+    src/misc/helper.h
 )
 
 source_group(misc FILES ${MISC_SOURCES})
@@ -115,8 +117,18 @@ set(LOGIC_SOURCES
     src/logic/GameLogic.h
     src/logic/GameLogic.cpp
 
-    src/logic/chesstypes.h
-    src/logic/chesstypes.cpp
+    src/logic/ChessTypes.h
+    src/logic/ChessTypes.cpp
+    src/logic/GameState.h
+    src/logic/GameState.cpp
+    src/logic/ChessBoard.h
+    src/logic/ChessBoard.cpp
+    src/logic/TurnGenerator.h
+    src/logic/TurnGenerator.cpp
+    src/logic/Turn.h
+    src/logic/Turn.cpp
+    src/logic/Evaluator.h
+    src/logic/Evaluator.cpp
 )
 
 source_group(logic FILES ${LOGIC_SOURCES})
@@ -126,6 +138,7 @@ set(LOGIC_INTERFACE_SOURCES
     src/logic/interface/AbstractGameObserver.h
     src/logic/interface/AbstractPlayer.h
     src/logic/interface/AbstractGameLogic.h
+    src/logic/interface/AbstractTurnGenerator.h
 )
 
 source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})
@@ -150,6 +163,10 @@ source_group(core FILES ${CORE_SOURCES})
 
 # Artificial intelligence headers and sources
 set(AI_SOURCES
+    src/ai/AIPlayer.h
+    src/ai/AIPlayer.cpp
+    src/ai/Negamax.h
+    src/ai/Negamax.cpp
 )
 
 source_group(core FILES ${AI_SOURCES})
@@ -228,8 +245,12 @@ if (TEST)
     target_link_libraries(misc_test gmock_main ${LIBRARIES})
     add_test(NAME Misc-Testset COMMAND misc_test)
 
-
-    add_executable(logic_test test/logic_test.cpp ${SOURCES} ${HEADERS})
+    set(LOGIC_TEST_SOURCES
+        test/logic/GameState_test.cpp
+        test/logic/ChessBoard_test.cpp
+        test/logic/TurnGenerator_test.cpp
+    )
+    add_executable(logic_test ${LOGIC_TEST_SOURCES} ${SOURCES} ${HEADERS})
     target_link_libraries(logic_test gmock_main ${LIBRARIES})
     add_test(NAME Logic-Testset COMMAND logic_test)
 

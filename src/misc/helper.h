@@ -8,7 +8,6 @@
 
 #define LOG	BOOST_LOG_TRIVIAL
 
-
 template<typename T>
 struct has_toString
 {

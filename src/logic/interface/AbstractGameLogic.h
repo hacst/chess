@@ -1,7 +1,7 @@
 #ifndef ABSTRACTGAMELOGIC_H
 #define ABSTRACTGAMELOGIC_H
 
-#include "logic/chesstypes.h"
+#include "logic/ChessBoard.h"
 #include "logic/interface/AbstractPlayer.h"
 #include "logic/interface/AbstractGameObserver.h"
 
