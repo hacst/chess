@@ -244,6 +244,7 @@ TEST(TurnGenerator, generateTurns_2) {
 
     EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true);
 
+
     LOG(trace) << cb;
     LOG(trace) << turnVecToString(turns_calc);
 }

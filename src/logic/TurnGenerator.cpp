@@ -1,30 +1,37 @@
 #include "TurnGenerator.h"
 
 std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBoard& cb) {
-    std::array<BitBoard, 6> bbTurns = calcTurns(player, cb);
-    std::vector<Turn>       turns, allTurns;
-
+    std::vector<Turn> vecTurns, vecAllTurns;
+    BitBoard bbTurns, bbCurPieceType, bbCurPiece;
+    Field curPiecePos;
     Piece piece;
+
     for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
         piece.type   = (PieceType) pieceType;
         piece.player = player;
 
-        turns = bitBoardToTurns(piece, bbTurns[pieceType], cb.bb[player][pieceType]);
-        allTurns.insert(allTurns.end(), turns.begin(), turns.end());
+        bbCurPieceType = cb.bb[player][pieceType];
+        while (bbCurPieceType != 0) {
+            bbCurPiece  = 0;
+            curPiecePos = BB_SCAN(bbCurPieceType);
+            BIT_CLEAR(bbCurPieceType, curPiecePos);
+            BIT_SET  (bbCurPiece,     curPiecePos);
+
+            bbTurns  = calcTurns      (piece, bbCurPiece, cb);
+            vecTurns = bitBoardToTurns(piece, bbCurPiece, bbTurns);
+
+            vecAllTurns.insert(vecAllTurns.end(), vecTurns.begin(), vecTurns.end());
+        }
     }
 
-    return allTurns;
+    return vecAllTurns;
 }
 
-
-
-
-std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbTurns, BitBoard bbPiece) {
+std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns) {
     std::vector<Turn> turns;
     Field from, to;
 
     from = BB_SCAN(bbPiece);
-
     while (bbTurns != 0) {
         to = BB_SCAN(bbTurns);
         BIT_CLEAR(bbTurns, to);
@@ -35,7 +42,22 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbTurns, 
     return turns;
 }
 
+BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoard& cb) {
+    PlayerColor opp = (piece.player == White) ? Black : White;
 
+    switch (piece.type) {
+    case King:   return calcKingTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
+    case Queen:  return calcQueenTurns (bbPiece, cb.bb[piece.player][AllPieces]);
+    case Bishop: return calcBishopTurns(bbPiece, cb.bb[piece.player][AllPieces]);
+    case Knight: return calcKnightTurns(bbPiece, cb.bb[piece.player][AllPieces]);
+    case Rook:   return calcRookTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
+    case Pawn:   return calcPawnTurns  (bbPiece, cb.bb[piece.player][AllPieces],
+                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces], piece.player);
+    default:     return 0;
+    }
+}
+
+/*
 std::array<BitBoard, 6> TurnGenerator::calcTurns(PlayerColor player, const ChessBoard& cb) {
     std::array<BitBoard, 6> bbTurns;
     PlayerColor opp = (player == White) ? Black : White;
@@ -54,8 +76,7 @@ std::array<BitBoard, 6> TurnGenerator::calcTurns(PlayerColor player, const Chess
 
     return bbTurns;
 }
-
-
+*/
 
 BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
 
@@ -80,7 +101,7 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
     // TODO: Rochade
 
     // TODO: steht der (eigene) king nach einem der ermittelten zuege
-    // im schach? <- Diese zuege entfernen
+    // im schach? <- Diese zuege entfernenQt Creator 3.0
     // dazu alle möeglichen zuege des anderen spielers berechnen
     // (in einem bb) und dann verunden mit king bb. ergebniss bb
     // enthaelt felder, die der king nicht betreten darf, also
