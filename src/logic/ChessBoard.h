@@ -57,7 +57,7 @@ protected:
     // at least 12 bit boards are needed for a complete board
     // representation + some additional bit boards for turn
     // faster calculation
-    BitBoard bb[NUM_PLAYERS][NUM_PIECETYPES + 1];
+    std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> bb;
 
 private:
     virtual void initBitBoards(std::array<Piece, 64> board);

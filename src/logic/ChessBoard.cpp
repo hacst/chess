@@ -29,7 +29,9 @@ void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
 
     for (int field = 0; field < NUM_FIELDS; field++) {
         Piece piece = board[field];
-        BIT_SET(bb[piece.player][piece.type], field);
+        if (piece.player != NoPlayer) {
+            BIT_SET(bb[piece.player][piece.type], field);
+        }
     }
 
     updateBitBoards();
