@@ -3,6 +3,8 @@
 #include <chrono>
 #include <boost/log/attributes/constant.hpp>
 #include "misc/helper.h"
+#include "logic/Evaluators.h"
+#include <memory>
 
 using namespace std;
 using std::chrono::milliseconds;
@@ -14,6 +16,7 @@ AIPlayer::AIPlayer()
 	, m_gameConfig()
 	, m_color(PlayerColor::NoPlayer)
 	, m_log()
+	, m_algorithm(std::make_shared<MaterialEvaluator>())
 	, m_thread() {
 
 	m_log.add_attribute("Tag", boost::log::attributes::constant< std::string >("AIPlayer"));
@@ -64,9 +67,9 @@ void AIPlayer::doAbortTurn() {
 }
 
 void AIPlayer::play() {
-	const size_t DEPTH = 5;
+	const size_t DEPTH = 4;
 	BOOST_LOG(m_log) << "Starting search of depth " << DEPTH;
-	Negamax::Result result = m_algorithm.search(m_gameState, DEPTH);
+	auto result = m_algorithm.search(m_gameState, DEPTH);
 
 	if (result.turn) {
 		BOOST_LOG(m_log) << "Completed search, best score " << result.score << " with turn " << result.turn.get();

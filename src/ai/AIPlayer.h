@@ -44,7 +44,7 @@ private:
 
 	PlayerColor m_color;
 	boost::log::sources::logger m_log;
-	Negamax m_algorithm;
+	Negamax<> m_algorithm;
 	std::thread m_thread;
 };
 
