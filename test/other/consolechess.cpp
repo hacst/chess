@@ -1,36 +1,59 @@
 #include <iostream>
+#include <boost/program_options.hpp>
 
 #include "misc/helper.h"
 #include "logic/Evaluators.h"
 #include "ai/Negamax.h"
 
 using namespace std;
+namespace po = boost::program_options;
 
-int main(void) {
-	GameState gameState;
-	auto eval = make_shared<MaterialEvaluator>();
-	Negamax<> negamax(eval);
+using namespace std;
 
-	cout << "Initial state" << endl;
-	cout << gameState.getChessBoard() << endl;
+int main(int argn, char **argv) {
+    // Boost program options for commandline parsing
 
-	for (size_t i = 0; i < 10; ++i) {
-		cout << "== " << gameState.getNextPlayer() << " ==" << endl;
-		cout << "Calculating turn " << i << "...";
-		cout.flush();
+    po::options_description desc("consolechess");
+    desc.add_options()
+        ("help", "Print help message")
+        ("turns", po::value<int>()->default_value(numeric_limits<int>::max()), "Number of turns after which to abort game")
+        ;
 
-		auto result = negamax.search(gameState, 4);
-		cout << "Done" << endl;
-		cout.flush();
-		if (!result.turn)
-			break;
+    po::variables_map vm;
+    po::store(po::parse_command_line(argn, argv, desc), vm);
 
-		auto turn = result.turn.get();
-		cout << "Turn: " << turn << endl;
+    if (vm.count("help")) {
+        cerr << desc << endl;
+        return 1;
+    }
 
-		gameState.applyTurn(turn);
-		cout << gameState.getChessBoard() << endl << endl;
-	}
-	cout << "No more moves possible" << endl;
-	return 0;
+    const int turnlimit = vm["turns"].as<int>();
+    cout << "Turns limited to: " << turnlimit << endl;
+
+    GameState gameState;
+    auto eval = make_shared<MaterialEvaluator>();
+    Negamax<> negamax(eval);
+
+    cout << "Initial state" << endl;
+    cout << gameState.getChessBoard() << endl;
+
+    for (int i = 0; i < turnlimit; ++i) {
+        cout << "== " << gameState.getNextPlayer() << " ==" << endl;
+        cout << "Calculating turn " << i << "...";
+        cout.flush();
+
+        auto result = negamax.search(gameState, 4);
+        cout << "Done" << endl;
+        cout.flush();
+        if (!result.turn)
+            break;
+
+        auto turn = result.turn.get();
+        cout << "Turn: " << turn << endl;
+
+        gameState.applyTurn(turn);
+        cout << gameState.getChessBoard() << endl << endl;
+    }
+    cout << "No more moves possible" << endl;
+    return 0;
 }
