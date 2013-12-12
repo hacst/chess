@@ -125,21 +125,24 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 	int windowWidth = fsm.window->getWidth();
 	float percentLoaded = m_resourcesLoaded / static_cast<float>(m_resourcesTotal);
 
-	array<float, 2> topLeftVertex		= { 0.0f, 10.0f	};
-	array<float, 2> topRightVertex		= { windowWidth * percentLoaded, 10.0f };
-	array<float, 2> bottomRightVertex	= { windowWidth * percentLoaded, 0.0f };
-	array<float, 2> bottomLeftVertex	= { 0.0f, 0.0f };
+	array<float, 2> topLeftVertex		= { 0.0f, 0.0f	};
+	array<float, 2> bottomLeftVertex	= { 0.0f, 10.0f };
+	array<float, 2> bottomRightVertex	= { windowWidth * percentLoaded, 10.0f };
+	array<float, 2> topRightVertex		= { windowWidth * percentLoaded, 0.0f };
 
 	fsm.window->set2DMode();
 
 	glPushMatrix();
 		glBegin(GL_QUADS);
-			glColor3f(0.6f, 0.5f, 0.8f);
+			// left side is grey
+			glColor3f(0.6f, 0.6f, 0.6f);
+			glVertex3f(topLeftVertex[0], topLeftVertex[1], -0.1f);
+			glVertex3f(bottomLeftVertex[0], bottomLeftVertex[1], -0.1f);
 
-			glVertex3f(topLeftVertex[0],		topLeftVertex[1],		-1.0f);
-			glVertex3f(topRightVertex[0],		topRightVertex[1],		-1.0f);
-			glVertex3f(bottomRightVertex[0],	bottomRightVertex[1],	-1.0f);
-			glVertex3f(bottomLeftVertex[0],		bottomLeftVertex[1],	-1.0f);
+			// right side is white
+			glColor3f(1.0f, 1.0f, 1.0f); 
+			glVertex3f(bottomRightVertex[0], bottomRightVertex[1], -0.1f);
+			glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
 		glEnd();
 	glPopMatrix();
 

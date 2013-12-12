@@ -10,7 +10,7 @@ endif()
 if (MSVC)
     # Add windows target version (Windows XP)
     add_definitions(-D_WIN32_WINNT=0x0501)
-    
+
     # Ensure we use the multithreaded runtime
     # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace
     foreach(flag_var
@@ -33,7 +33,7 @@ find_package(OpenGL REQUIRED)
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME     ON) 
+set(Boost_USE_STATIC_RUNTIME     ON)
 
 find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
 
@@ -52,25 +52,25 @@ set(GUI_SOURCES
     src/gui/GuiWindow.h
     src/gui/Menu2D.h
     src/gui/Menu2DItem.h
-	src/gui/StateMachine.h
-	src/gui/FreeType.h
-	src/gui/Mesh.h
-	src/gui/AssimpHelper.h
-	src/gui/ChessSet.h
-	src/gui/Model.h
-	src/gui/ObjectHelper.h
+    src/gui/StateMachine.h
+    src/gui/FreeType.h
+    src/gui/Mesh.h
+    src/gui/AssimpHelper.h
+    src/gui/ChessSet.h
+    src/gui/Model.h
+    src/gui/ObjectHelper.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
     src/gui/Menu2D.cpp
     src/gui/Menu2DItem.cpp
-	src/gui/StateMachine.cpp
-	src/gui/FreeType.cpp
-	src/gui/Mesh.cpp
-	src/gui/AssimpHelper.cpp
-	src/gui/ChessSet.cpp
-	src/gui/Model.cpp
-	src/gui/ObjectHelper.cpp
+    src/gui/StateMachine.cpp
+    src/gui/FreeType.cpp
+    src/gui/Mesh.cpp
+    src/gui/AssimpHelper.cpp
+    src/gui/ChessSet.cpp
+    src/gui/Model.cpp
+    src/gui/ObjectHelper.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})
@@ -85,14 +85,14 @@ source_group(gui\\interface FILES ${GUI_INTERFACE_SOURCES})
 # States for the gui
 set(GUI_STATE_SOURCES
     src/gui/states/MenuMain.h
-	src/gui/states/MenuLoadGame.h
-	src/gui/states/MenuOptions.h
-	src/gui/states/GamePlay.h
+    src/gui/states/MenuLoadGame.h
+    src/gui/states/MenuOptions.h
+    src/gui/states/GamePlay.h
 
-	src/gui/states/MenuMain.cpp
-	src/gui/states/MenuLoadGame.cpp
-	src/gui/states/MenuOptions.cpp
-	src/gui/states/GamePlay.cpp
+    src/gui/states/MenuMain.cpp
+    src/gui/states/MenuLoadGame.cpp
+    src/gui/states/MenuOptions.cpp
+    src/gui/states/GamePlay.cpp
 )
 
 source_group(gui\\states FILES ${GUI_STATE_SOURCES})
@@ -127,8 +127,8 @@ set(LOGIC_SOURCES
     src/logic/TurnGenerator.cpp
     src/logic/Turn.h
     src/logic/Turn.cpp
-    src/logic/Evaluator.h
-    src/logic/Evaluator.cpp
+    src/logic/Evaluators.h
+    src/logic/Evaluators.cpp
 )
 
 source_group(logic FILES ${LOGIC_SOURCES})
@@ -139,6 +139,7 @@ set(LOGIC_INTERFACE_SOURCES
     src/logic/interface/AbstractPlayer.h
     src/logic/interface/AbstractGameLogic.h
     src/logic/interface/AbstractTurnGenerator.h
+    src/logic/interface/AbstractEvaluator.h
 )
 
 source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})
@@ -171,18 +172,22 @@ set(AI_SOURCES
 
 source_group(core FILES ${AI_SOURCES})
 
-# Sources in the 3dchess project
-set(SOURCES
-    ${GUI_SOURCES}
-	${GUI_INTERFACE_SOURCES}
-	${GUI_STATE_SOURCES}
-	${GUI_FIGURE_SOURCES}
+set(EVERYTHINGBUTGUI_SOURCES
     ${MISC_SOURCES}
     ${LOGIC_SOURCES}
     ${LOGIC_INTERFACE_SOURCES}
     ${LOGIC_THREADING_SOURCES}
     ${CORE_SOURCES}
     ${AI_SOURCES}
+)
+
+# Sources in the 3dchess project
+set(SOURCES
+    ${GUI_SOURCES}
+    ${GUI_INTERFACE_SOURCES}
+    ${GUI_STATE_SOURCES}
+    ${GUI_FIGURE_SOURCES}
+    ${EVERYTHINGBUTGUI_SOURCES}
 )
 
 # Library dependencies
@@ -202,7 +207,7 @@ include_directories(SYSTEM
     ${Boost_INCLUDE_DIRS}
     ${SOIL_SOURCE_DIR}/include
     ${freetype_SOURCE_DIR}/include
-	${assimp_SOURCE_DIR}/include
+    ${assimp_SOURCE_DIR}/include
 )
 
 include_directories(
@@ -225,6 +230,17 @@ add_executable(3dchess src/3dchess.cpp ${SOURCES})
 target_link_libraries(3dchess SDL2main ${LIBRARIES})
 
 if (TEST)
+
+    # Consolechess binary
+    set(CONSOLECHESS_SOURCES
+        test/other/consolechess.cpp
+    )
+    source_group(test\\other FILES ${CONSOLECHESS_SOURCES})
+
+    add_executable(consolechess ${CONSOLECHESS_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
+    target_link_libraries(consolechess ${Boost_LIBRARIES})
+
+
     # The officially recommended way of integrating these is to compile
     # them with your project instead of relying on them being available
     # externally so do that
@@ -236,20 +252,34 @@ if (TEST)
                         ${gtest_SOURCE_DIR}/include
                         ${gmock_SOURCE_DIR}/include)
 
-    add_executable(ai_test test/ai_test.cpp ${SOURCES} ${HEADERS})
+    set(MISC_TEST_SOURCES
+        test/misc_test.cpp
+    )
+    source_group(test FILES ${MISC_TEST_SOURCES})
+
+    add_executable(misc_test ${MISC_TEST_SOURCES} ${SOURCES} ${HEADERS})
+    target_link_libraries(misc_test gmock_main ${LIBRARIES})
+    add_test(NAME Misc-Testset COMMAND misc_test)
+
+
+    set(AI_TEST_SOURCES
+        test/ai/AIPlayer_test.cpp
+        test/ai/Negamax_test.cpp
+    )
+    source_group(test\\ai FILES ${AI_TEST_SOURCES})
+
+    add_executable(ai_test ${AI_TEST_SOURCES} ${SOURCES} ${HEADERS})
     target_link_libraries(ai_test gmock_main ${LIBRARIES})
     add_test(NAME AI-Testset COMMAND ai_test)
 
-
-    add_executable(misc_test test/misc_test.cpp ${SOURCES} ${HEADERS})
-    target_link_libraries(misc_test gmock_main ${LIBRARIES})
-    add_test(NAME Misc-Testset COMMAND misc_test)
 
     set(LOGIC_TEST_SOURCES
         test/logic/GameState_test.cpp
         test/logic/ChessBoard_test.cpp
         test/logic/TurnGenerator_test.cpp
     )
+    source_group(test\\logic FILES ${LOGIC_TEST_SOURCES})
+
     add_executable(logic_test ${LOGIC_TEST_SOURCES} ${SOURCES} ${HEADERS})
     target_link_libraries(logic_test gmock_main ${LIBRARIES})
     add_test(NAME Logic-Testset COMMAND logic_test)

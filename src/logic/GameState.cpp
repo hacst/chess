@@ -4,12 +4,16 @@ GameState::GameState() {
 	init();
 }
 
+GameState::GameState(const ChessBoard &chessBoard, PlayerColor nextPlayer)
+	: m_nextPlayer(nextPlayer)
+	, m_chessBoard(chessBoard) {
+	// Empty
+}
+
 void GameState::init() {
 	m_nextPlayer = PlayerColor::White;
 	// TODO: init ChessBoard from savegame
 }
-
-
 
 std::vector<Turn> GameState::getTurnList() {
 	return m_turnGen.generateTurns(getNextPlayer(), getChessBoard());
