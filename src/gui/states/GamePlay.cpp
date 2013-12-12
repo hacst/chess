@@ -87,7 +87,7 @@ void GamePlay::enter() {
 	glLightfv(GL_LIGHT3, GL_POSITION, m_lightpos4);
 
 	// smoothing the light
-	glShadeModel(GL_SMOOTH);									// Shading models: GL_SMOOTH, GL_FLAT
+	glShadeModel(GL_SMOOTH);
 
 	// ===== create a whole ChessSet =====
 	chessSet = make_shared<ChessSet>();

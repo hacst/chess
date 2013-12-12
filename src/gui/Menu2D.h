@@ -63,7 +63,7 @@ private:
 	AnimationHelperPtr animationHelper;
 	
 	// methods
-	void Menu2D::updateAbsolutePosition();
+	void updateAbsolutePosition();
 };
 
 using Menu2DPtr = std::shared_ptr<Menu2D>;
