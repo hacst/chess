@@ -2,19 +2,12 @@
 #define CHESSBOARD_H
 
 #include <stdarg.h>
+#include <array>
 
 //#include "ChessTypes.h"
 #include "Turn.h"
 
-
-
-
-
-
-
-
-
-#define BB_SCAN(bb)    (Field)log2((double)bb) /* returns the field of MS1B */
+#define BB_SCAN(bb)    static_cast<Field>(static_cast<int>(log2((double)bb))) /* returns the field of MS1B */
 #define BB_SET( field) (pow(2, (int)field))    /* returns the value 2^field */
 
 #define BIT_SET(   bb, field) (bb |=   (BitBoard)1 << (field))
