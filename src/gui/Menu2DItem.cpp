@@ -4,18 +4,18 @@
 
 using namespace std;
 
-Menu2DItem::Menu2DItem(int index, std::string descr, int width, int height, int animationDuration)
+Menu2DItem::Menu2DItem(int index, std::string filename, int width, int height, int animationDuration)
 	: m_index(index)
 	, m_width(width)
 	, m_height(height)
-	, m_descr(descr) {
+	, m_filename(filename) {
 
 	// create an animation object
 	animationHelper = make_shared<AnimationHelper>(animationDuration);
 
 	// load normal state texture
 	m_texture[0] = SOIL_load_OGL_texture(
-		("resources/bt" + to_string(m_index) + "n.png").c_str(),
+		("resources/bt_n" + m_filename).c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
@@ -23,7 +23,7 @@ Menu2DItem::Menu2DItem(int index, std::string descr, int width, int height, int 
 
 	// load hover state texture
 	m_texture[1] = SOIL_load_OGL_texture(
-		("resources/bt" + to_string(m_index) + "h.png").c_str(),
+		("resources/bt_h" + m_filename).c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
@@ -31,11 +31,15 @@ Menu2DItem::Menu2DItem(int index, std::string descr, int width, int height, int 
 
 	// load active state texture
 	m_texture[2] = SOIL_load_OGL_texture(
-		("resources/bt" + to_string(m_index) + "a.png").c_str(),
+		("resources/bt_a" + m_filename).c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
+}
+
+Menu2DItem::~Menu2DItem() {
+	m_clicked.disconnect_all_slots();
 }
 
 void Menu2DItem::setPosition(int x, int y) {
@@ -115,4 +119,8 @@ void Menu2DItem::mouseReleased(int x, int y) {
 
 void Menu2DItem::onClick(const boost::function<void()>& slot) {
 	m_clicked.connect(slot);
+}
+
+void Menu2DItem::unClick() {
+	m_clicked.disconnect_all_slots();
 }

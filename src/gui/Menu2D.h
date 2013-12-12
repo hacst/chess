@@ -23,9 +23,10 @@ class GuiWindow;
 class Menu2D {
 public:
 	Menu2D(int windowWidth, int windowHeight);
-	virtual ~Menu2D() { /* Nothing */ }
+	virtual ~Menu2D();
 
-	Menu2DItemPtr& addButton(std::string name);
+	Menu2DItemPtr& addButton(std::string filename);
+
 	void draw();
 	void mouseMoved(const int x, const int y);
 	void mousePressed();
@@ -42,7 +43,7 @@ private:
 	const int m_buttonWidth = 200;
 	const int m_buttonHeight = 50;
 	const int m_buttonMargin = 10;
-	const int m_animationDuration = 2000;
+	const int m_animationDuration = 1500;
 
 	int m_windowHeight;
 	int m_windowWidth;

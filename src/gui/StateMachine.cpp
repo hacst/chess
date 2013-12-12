@@ -7,10 +7,15 @@ void StateMachine::setStartState(AbstractState* startState) {
 
 AbstractState* StateMachine::run() {
 	AbstractState *nextState = m_currentState->run();
-
+	
 	if (nextState != m_currentState) {
 		m_currentState->exit();
-		nextState->enter();
+		delete m_currentState;	// free memory
+
+		if (nextState != nullptr) {
+			nextState->enter();
+			m_currentState = nextState;
+		}
 	}
 
 	return nextState;

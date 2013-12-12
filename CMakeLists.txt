@@ -53,18 +53,49 @@ set(GUI_SOURCES
     src/gui/Menu2D.h
     src/gui/Menu2DItem.h
 	src/gui/StateMachine.h
-	src/gui/interface/AbstractState.h
-	src/gui/states/MainMenu.h
+	src/gui/FreeType.h
+	src/gui/Mesh.h
+	src/gui/AssimpHelper.h
+	src/gui/ChessSet.h
+	src/gui/Model.h
+	src/gui/ObjectHelper.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
     src/gui/Menu2D.cpp
     src/gui/Menu2DItem.cpp
 	src/gui/StateMachine.cpp
-	src/gui/states/MainMenu.cpp
+	src/gui/FreeType.cpp
+	src/gui/Mesh.cpp
+	src/gui/AssimpHelper.cpp
+	src/gui/ChessSet.cpp
+	src/gui/Model.cpp
+	src/gui/ObjectHelper.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})
+
+# Interfaces for the gui
+set(GUI_INTERFACE_SOURCES
+    src/gui/interface/AbstractState.h
+)
+
+source_group(gui\\interface FILES ${GUI_INTERFACE_SOURCES})
+
+# States for the gui
+set(GUI_STATE_SOURCES
+    src/gui/states/MenuMain.h
+	src/gui/states/MenuLoadGame.h
+	src/gui/states/MenuOptions.h
+	src/gui/states/GamePlay.h
+
+	src/gui/states/MenuMain.cpp
+	src/gui/states/MenuLoadGame.cpp
+	src/gui/states/MenuOptions.cpp
+	src/gui/states/GamePlay.cpp
+)
+
+source_group(gui\\states FILES ${GUI_STATE_SOURCES})
 
 # Contains various helpers and other small things
 set(MISC_SOURCES
@@ -126,6 +157,9 @@ source_group(core FILES ${AI_SOURCES})
 # Sources in the 3dchess project
 set(SOURCES
     ${GUI_SOURCES}
+	${GUI_INTERFACE_SOURCES}
+	${GUI_STATE_SOURCES}
+	${GUI_FIGURE_SOURCES}
     ${MISC_SOURCES}
     ${LOGIC_SOURCES}
     ${LOGIC_INTERFACE_SOURCES}
@@ -151,6 +185,7 @@ include_directories(SYSTEM
     ${Boost_INCLUDE_DIRS}
     ${SOIL_SOURCE_DIR}/include
     ${freetype_SOURCE_DIR}/include
+	${assimp_SOURCE_DIR}/include
 )
 
 include_directories(

@@ -29,11 +29,15 @@ Menu2D::Menu2D(int windowWidth, int windowHeight)
 	animationHelper = make_shared<AnimationHelper>(m_animationDuration);
 }
 
-Menu2DItemPtr& Menu2D::addButton(std::string name) {
+Menu2D::~Menu2D() {
+	items.clear();
+}
+
+Menu2DItemPtr& Menu2D::addButton(std::string filename) {
 	updateAbsolutePosition();	// update absolute menu position
 	
 	// we don't know how many buttons will be added in total, so we must update the position later (before drawing)
-	Menu2DItemPtr item = make_shared<Menu2DItem>(m_btCount, name, m_buttonWidth, m_buttonHeight, m_animationDuration * 2);
+	Menu2DItemPtr item = make_shared<Menu2DItem>(m_btCount, filename, m_buttonWidth, m_buttonHeight, m_animationDuration * 2);
 	items.push_back(item);
 
 	++m_btCount;
@@ -48,6 +52,8 @@ void Menu2D::updateAbsolutePosition() {
 }
 
 void Menu2D::draw() {
+	glPushMatrix();
+
 	// now we know how many buttons are on our list, so we can position them right now
 	int index = 0;
 	for (auto& item : items) {
@@ -60,7 +66,7 @@ void Menu2D::draw() {
 
 	// draw a transparent background for the menu with an animation
 	animationHelper->setStartNowOrKeepIt();
-	glColor4f(1.0, 0.0, 0.0, animationHelper->easeLinear(0.1, 1.0));
+	glColor4f(0.2, 0.2, 0.2, animationHelper->easeLinear(0.1, 1.0));
 
 	glBegin(GL_QUADS);
 		glVertex2f(m_marginLeft - 20,					m_marginTop - 20			);
@@ -73,6 +79,8 @@ void Menu2D::draw() {
 	for (auto& item : items) {
 		item->draw();
 	}
+
+	glPopMatrix();
 }
 
 void Menu2D::mouseMoved(const int x, const int y) {

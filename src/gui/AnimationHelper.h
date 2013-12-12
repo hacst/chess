@@ -1,10 +1,10 @@
+#ifndef ANIMATIONHELPER_H
+#define ANIMATIONHELPER_H
+
 #include <SDL.h>
 #include <memory>
 
 using namespace std;
-
-#ifndef ANIMATIONHELPER_H
-#define ANIMATIONHELPER_H
 
 class AnimationHelper {
 public:
@@ -13,10 +13,14 @@ public:
 
 	// config methods
 	void setStartNowOrKeepIt();
+	void reset();
 
 	// ease functions
 	float easeLinear(const float lowerBound, const float upperBound);
 	float easeOutSine(const float lowerBound, const float upperBound);
+
+	// status methods
+	bool hasStopped();
 
 private:
 	int m_duration = 1000;			// duration in ms

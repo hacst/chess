@@ -27,8 +27,8 @@ public:
 		int left;
 	} bb;
 
-	Menu2DItem(int index, std::string descr, int width, int height, int animationDuration);
-	virtual ~Menu2DItem() { /* Nothing */ }
+	Menu2DItem(int index, std::string filename, int width, int height, int animationDuration);
+	virtual ~Menu2DItem();
 
 	void setPosition(int x, int y);
 	void draw();
@@ -38,11 +38,12 @@ public:
 	void mouseReleased(int x, int y);
 
 	void onClick(const boost::function<void()>& slot);
+	void unClick();
 
 private:
 	// member variables
 	int m_index;
-	std::string m_descr;
+	std::string m_filename;
 	int m_positionX;
 	int m_positionY;
 	int m_width;

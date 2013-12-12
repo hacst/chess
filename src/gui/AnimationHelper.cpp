@@ -1,4 +1,6 @@
 #include "gui/AnimationHelper.h"
+#include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -12,22 +14,43 @@ void AnimationHelper::setStartNowOrKeepIt() {
 	}
 }
 
+void AnimationHelper::reset() {
+	m_startTime = SDL_GetTicks();
+}
+
+bool AnimationHelper::hasStopped() {
+	bool hasStarted = m_startTime;
+	bool hasEnded = getElapsedTime() > m_duration;
+	
+	return hasStarted && hasEnded;
+}
+
 int AnimationHelper::getElapsedTime() {
 	return SDL_GetTicks() - m_startTime;
 }
 
 float AnimationHelper::easeLinear(const float lowerBound, const float upperBound) {
 	// check if this function is called after the maximum animation duration is exceeded
-	if (getElapsedTime() > m_duration) {
+	unsigned int elapsed_time = getElapsedTime();
+	if (elapsed_time > m_duration) {
 		return m_easingResult;
 	}
 
-	m_completeness = (getElapsedTime() / static_cast<float>(m_duration));
+	m_completeness = (elapsed_time / static_cast<float>(m_duration));
 	m_easingResult = lowerBound + ((upperBound - lowerBound) * m_completeness);
 
 	return m_easingResult;
 }
 
 float AnimationHelper::easeOutSine(const float lowerBound, const float upperBound) {
-	return 0.0;
+	// check if this function is called after the maximum animation duration is exceeded
+	unsigned int elapsed_time = getElapsedTime();
+	if (elapsed_time > m_duration) {
+		return m_easingResult;
+	}
+
+	m_completeness = sin(elapsed_time / static_cast<float>(m_duration)* (M_PI / 2));
+	m_easingResult = lowerBound + ((upperBound - lowerBound) * m_completeness);
+
+	return m_easingResult;
 }
