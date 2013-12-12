@@ -19,6 +19,7 @@ public:
 	// draw method
 	void draw();
 	
+	void createChessSet();
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 
 	// state methods

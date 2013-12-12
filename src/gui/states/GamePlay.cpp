@@ -16,23 +16,24 @@ GamePlay::GamePlay() : fsm(StateMachine::getInstance()) {
 }
 
 void GamePlay::enter() {
-	std::cout << "entered GamePlay" << std::endl;
-
-	// ===== set background color =====
+	// set background color to black
 	glClearColor(0.0, 0.0, 0, 1);
 
-	// ===== AnimationHelper =====
+	// create a whole new ChessSet (2x 6 models + board)
+	createChessSet();
+
+	// create a new AnimationHelper for camera movement
 	animationHelper = make_shared<AnimationHelper>(1000);
 
-	// ===== init OpenGL =====
+	// init OpenGL lighting (after creating ChessSet) to not destroy the lighting used there
 	glClearDepth(1.0f);
 
-	glEnable(GL_DEPTH_TEST);									// activate depth testing with Z-buffer
+	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// specify implementation-specific hints
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glEnable(GL_COLOR_MATERIAL);
 
-	// ===== config the lights =====
+	// config the single lights
 	glEnable(GL_LIGHTING);
 
 	// Create light components.
@@ -89,15 +90,6 @@ void GamePlay::enter() {
 	// smoothing the light
 	glShadeModel(GL_SMOOTH);
 
-	// ===== create a whole ChessSet =====
-	chessSet = make_shared<ChessSet>();
-
-	m_resourcesLoaded = 0;
-	m_resourcesTotal = chessSet->getResourcesCount();
-
-	chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
-	chessSet->loadResources();
-
 	// ===== create OGL lists =====
 	m_cube1 = ObjectHelper::createCubeList(4, m_lightpos1[0], m_lightpos1[1], m_lightpos1[2]);
 	m_cube2 = ObjectHelper::createCubeList(4, m_lightpos2[0], m_lightpos2[1], m_lightpos2[2]);
@@ -111,6 +103,16 @@ void GamePlay::enter() {
 	// debug
 	debugText = "light 0 on";
 	//cameraView = 0;
+}
+
+void GamePlay::createChessSet() {
+	chessSet = make_shared<ChessSet>();
+
+	m_resourcesLoaded = 0;
+	m_resourcesTotal = chessSet->getResourcesCount();
+
+	chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
+	chessSet->loadResources();
 }
 
 void GamePlay::onBeforeLoadNextResource(string resourceName) {
