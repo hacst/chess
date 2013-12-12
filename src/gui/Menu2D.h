@@ -25,7 +25,7 @@ public:
 	Menu2D(int windowWidth, int windowHeight);
 	virtual ~Menu2D();
 
-	Menu2DItemPtr& addButton(std::string filename);
+    Menu2DItemPtr addButton(std::string filename);
 
 	void draw();
 	void mouseMoved(const int x, const int y);
@@ -45,8 +45,8 @@ private:
 	const int m_buttonMargin = 10;
 	const int m_animationDuration = 1500;
 
+    int m_windowWidth;
 	int m_windowHeight;
-	int m_windowWidth;
 	int m_btCount;
 	int m_height;						// menu height in total with margin
 	int m_width;
@@ -63,7 +63,7 @@ private:
 	AnimationHelperPtr animationHelper;
 	
 	// methods
-	void Menu2D::updateAbsolutePosition();
+    void updateAbsolutePosition();
 };
 
 using Menu2DPtr = std::shared_ptr<Menu2D>;

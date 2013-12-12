@@ -31,7 +31,7 @@ int AnimationHelper::getElapsedTime() {
 
 float AnimationHelper::easeLinear(const float lowerBound, const float upperBound) {
 	// check if this function is called after the maximum animation duration is exceeded
-	unsigned int elapsed_time = getElapsedTime();
+    int elapsed_time = getElapsedTime();
 	if (elapsed_time > m_duration) {
 		return m_easingResult;
 	}
@@ -44,7 +44,7 @@ float AnimationHelper::easeLinear(const float lowerBound, const float upperBound
 
 float AnimationHelper::easeOutSine(const float lowerBound, const float upperBound) {
 	// check if this function is called after the maximum animation duration is exceeded
-	unsigned int elapsed_time = getElapsedTime();
+    int elapsed_time = getElapsedTime();
 	if (elapsed_time > m_duration) {
 		return m_easingResult;
 	}

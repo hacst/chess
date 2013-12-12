@@ -6,7 +6,7 @@
 
 
 //Include our header file.
-#include "freetype.h"
+#include "FreeType.h"
 
 namespace freetype {
 
@@ -68,7 +68,7 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 
 
 	//Now we just setup some texture paramaters.
-    glBindTexture( GL_TEXTURE_2D, tex_base[ch]);
+    glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 
@@ -84,7 +84,7 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//So now we can create the display list
 	glNewList(list_base+ch,GL_COMPILE);
 
-	glBindTexture(GL_TEXTURE_2D,tex_base[ch]);
+    glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
 
 	glPushMatrix();
 
@@ -277,7 +277,7 @@ void print(const font_data &ft_font, float x, float y, const char *fmt, ...)  {
 	//down by h. This is because when each character is
 	//draw it modifies the current matrix so that the next character
 	//will be drawn immediatly after it.  
-	for(int i=0;i<lines.size();i++) {
+    for(size_t i=0;i<lines.size();i++) {
 		
 
 		glPushMatrix();

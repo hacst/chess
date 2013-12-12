@@ -313,7 +313,8 @@ void GuiWindow::printSubHeadline(std::string text) {
 
 void GuiWindow::printTextCenter(float red, float green, float blue, std::string text) {
 	fontObject fo = {
-		(m_width / 2) - ((strlen(text.c_str()) * fontSize::TEXT) / 2) /* x */, (m_height / 2) - (fontSize::TEXT / 2) /* y */,
+        (m_width / 2) - (((int)strlen(text.c_str()) * fontSize::TEXT) / 2) /* x */,
+        (m_height / 2) - (fontSize::TEXT / 2) /* y */,
 		red, green, blue,
 		fontSize::TEXT,
 		fontText,

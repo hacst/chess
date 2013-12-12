@@ -9,7 +9,9 @@
 #include <fttrigon.h>
 
 //OpenGL Headers 
+#ifdef _WIN32
 #include <windows.h>		//(the GL headers need it)
+#endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -25,7 +27,9 @@
 
 //MSVC will spit out all sorts of useless warnings if
 //you create vectors of strings, this pragma gets rid of them.
+#ifdef _WIN32
 #pragma warning(disable: 4786) 
+#endif
 
 ///Wrap everything in a namespace, that we can use common
 ///function names like "print" without worrying about
