@@ -7,7 +7,7 @@
 #include <memory>
 
 using namespace std;
-using std::chrono::milliseconds;
+using namespace std::chrono;
 
 AIPlayer::AIPlayer()
     : m_promisedTurn()
@@ -70,9 +70,21 @@ void AIPlayer::doAbortTurn() {
 
 void AIPlayer::play() {
     const size_t DEPTH = 4;
+
+    auto start = high_resolution_clock::now();
     BOOST_LOG(m_log) << "Starting search of depth " << DEPTH;
     auto result = m_algorithm.search(m_gameState, DEPTH);
 
+    // Delay if we were too fast. This is to make AI-Actions seem more natural
+    auto end = high_resolution_clock::now();
+    auto dur = duration_cast<nanoseconds>(end - start);
+    if (m_gameConfig.minimumTurnTimeInSeconds > 0) {
+        if (dur < seconds(m_gameConfig.minimumTurnTimeInSeconds)) {
+            this_thread::sleep_for(seconds(m_gameConfig.minimumTurnTimeInSeconds) - dur);
+        }
+    }
+
+    // Pass on result for turn
     if (result.turn) {
         BOOST_LOG(m_log) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
         m_promisedTurn.set_value(result.turn.get());
@@ -80,6 +92,7 @@ void AIPlayer::play() {
         BOOST_LOG(m_log) << "Aborted search, no turn possible";
         m_promisedTurn.set_value(Turn());
     }
+
     changeState(PONDERING);
 }
 
