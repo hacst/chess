@@ -52,6 +52,8 @@ void Menu2D::updateAbsolutePosition() {
 }
 
 void Menu2D::draw() {
+	glEnable(GL_BLEND);
+
 	glPushMatrix();
 
 	// now we know how many buttons are on our list, so we can position them right now
@@ -81,6 +83,8 @@ void Menu2D::draw() {
 	}
 
 	glPopMatrix();
+
+	glDisable(GL_BLEND);
 }
 
 void Menu2D::mouseMoved(const int x, const int y) {

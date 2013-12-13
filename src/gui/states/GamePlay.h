@@ -1,6 +1,11 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
+#include "logic/GameLogic.h"
+#include "misc/ConsoleObserver.h"
+#include "logic/threading/ObserverDispatcherProxy.h"
+#include "ai/AIPlayer.h"
+
 #include "gui/interface/AbstractState.h"
 #include "gui/Menu2D.h"
 #include "gui/ChessSet.h"
@@ -19,6 +24,7 @@ public:
 	// draw method
 	void draw();
 	
+	void createChessSet();
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 
 	// state methods
@@ -46,6 +52,11 @@ private:
 
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
+
+	AIPlayerPtr m_firstPlayer, m_secondPlayer;
+	AbstractGameLogicPtr m_gameLogic;
+	ConsoleObserverPtr m_observer;
+	ObserverDispatcherProxyPtr m_observerProxy;
 
 	// debug
 	int cameraView;

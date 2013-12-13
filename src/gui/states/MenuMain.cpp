@@ -1,3 +1,5 @@
+#include "gui/states/GamePlay.h"
+
 #include "gui/states/MenuMain.h"
 
 #include <iostream>
@@ -7,7 +9,6 @@
 #include "gui/StateMachine.h"
 #include "gui/GuiWindow.h"
 
-#include "gui/states/GamePlay.h"
 #include "gui/states/MenuLoadGame.h"
 #include "gui/states/MenuOptions.h"
 
@@ -33,7 +34,6 @@ void MenuMain::enter() {
 
 	// init OpenGL
 	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_BLEND);
 }
 
 AbstractState* MenuMain::run() {
@@ -102,5 +102,4 @@ void MenuMain::onExitGame() {
 
 void MenuMain::exit() {
 	glDisable(GL_COLOR_MATERIAL);
-	glDisable(GL_BLEND);
 }

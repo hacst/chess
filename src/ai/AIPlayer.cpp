@@ -54,6 +54,7 @@ void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
 
 future<Turn> AIPlayer::doMakeTurn(GameState state) {
 	BOOST_LOG(m_log) << "Asked to make turn";
+	assert(m_playerState != PLAYING);
 
 	m_promisedTurn = promise<Turn>();
 	m_gameState = state;
@@ -63,7 +64,9 @@ future<Turn> AIPlayer::doMakeTurn(GameState state) {
 }
 
 void AIPlayer::doAbortTurn() {
-	changeState(PONDERING);
+	if (m_playerState == PLAYING) {
+		changeState(PONDERING);
+	}
 }
 
 void AIPlayer::play() {
@@ -78,6 +81,7 @@ void AIPlayer::play() {
 		BOOST_LOG(m_log) << "Aborted search, no turn possible";
 		m_promisedTurn.set_value(Turn());
 	}
+	changeState(PONDERING);
 }
 
 void AIPlayer::ponder() {
@@ -93,6 +97,7 @@ void AIPlayer::run() {
 		default: break;
 		}
 	}
+	BOOST_LOG(m_log) << "AIPlayer stopped";
 }
 
 void AIPlayer::onGameOver(GameState, PlayerColor) {
