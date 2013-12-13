@@ -117,7 +117,7 @@ void GamePlay::enter() {
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	GameConfigurationPtr config = make_shared<GameConfiguration>();
-	config->minimumTurnTimeInSeconds = 3;
+	config->timeBetweenTurnsInSeconds = 3;
     m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
 	m_gameLogic->addObserver(m_observer);
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);

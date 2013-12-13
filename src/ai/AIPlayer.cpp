@@ -1,10 +1,10 @@
 #include "AIPlayer.h"
 
-#include <chrono>
 #include <boost/log/attributes/constant.hpp>
 #include "misc/helper.h"
 #include "logic/Evaluators.h"
 #include <memory>
+#include <chrono>
 
 using namespace std;
 using namespace std::chrono;
@@ -71,18 +71,8 @@ void AIPlayer::doAbortTurn() {
 void AIPlayer::play() {
     const size_t DEPTH = 4;
 
-    auto start = high_resolution_clock::now();
     BOOST_LOG(m_log) << "Starting search of depth " << DEPTH;
     auto result = m_algorithm.search(m_gameState, DEPTH);
-
-    // Delay if we were too fast. This is to make AI-Actions seem more natural
-    auto end = high_resolution_clock::now();
-    auto dur = duration_cast<nanoseconds>(end - start);
-    if (m_gameConfig.minimumTurnTimeInSeconds > 0) {
-        if (dur < seconds(m_gameConfig.minimumTurnTimeInSeconds)) {
-            this_thread::sleep_for(seconds(m_gameConfig.minimumTurnTimeInSeconds) - dur);
-        }
-    }
 
     // Pass on result for turn
     if (result.turn) {

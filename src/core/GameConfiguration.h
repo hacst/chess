@@ -15,7 +15,7 @@ struct GameConfiguration {
 public:
     GameConfiguration();
 
-    int minimumTurnTimeInSeconds; // Minimum time between turns for AI
+    int timeBetweenTurnsInSeconds; // Minimum time between turns for display purposes
     int maximumTurnTimeInSeconds;
 
     static boost::optional<GameConfiguration> load(const std::string& path);
@@ -32,7 +32,7 @@ private:
 
     template <class Archive>
     void serialize(Archive& ar, const unsigned int /*version*/) {
-        ar & BOOST_SERIALIZATION_NVP(minimumTurnTimeInSeconds);
+        ar & BOOST_SERIALIZATION_NVP(timeBetweenTurnsInSeconds);
         ar & BOOST_SERIALIZATION_NVP(maximumTurnTimeInSeconds);
     }
 };

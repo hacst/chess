@@ -10,7 +10,7 @@ using namespace std;
 using namespace chrono;
 
 GameConfiguration::GameConfiguration()
-    : minimumTurnTimeInSeconds(0)
+    : timeBetweenTurnsInSeconds(0)
     , maximumTurnTimeInSeconds(60) {
     // Empty
 }
@@ -51,7 +51,7 @@ string GameConfiguration::toString() const {
     stringstream ss;
     ss << "GameConfiguration:" << endl
        << "  Maximum turn time: " << maximumTurnTimeInSeconds << "s" << endl
-       << "  Minimum turn time: " << minimumTurnTimeInSeconds << "s";
+       << "  Minimum turn time: " << timeBetweenTurnsInSeconds << "s";
     return ss.str();
 }
 

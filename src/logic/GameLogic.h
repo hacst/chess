@@ -48,6 +48,11 @@ private:
         return false;
     }
 
+    /**
+     * @brief Abortable wait
+     */
+    void wait(std::chrono::milliseconds waitInMs) const;
+
     /// Function to call a given function on all attached observers.
     ///
     /// Usage:	notify([&](AbstractGameObserverPtr& obs) {

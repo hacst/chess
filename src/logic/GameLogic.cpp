@@ -3,7 +3,7 @@
 #include "GameLogic.h"
 
 using namespace std;
-using namespace chrono;
+using namespace std::chrono;
 
 GameLogic::GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config)
     : m_tickLength(500)
@@ -102,12 +102,27 @@ void GameLogic::run() {
         });
 
         LOG(debug) << currentColor << " ended its turn";
+
+        // Add in a delay between turns
+        wait(seconds(m_config->timeBetweenTurnsInSeconds));
     }
 
     LOG(info) << "Game over";
     notify([&](AbstractGameObserverPtr& obs) {
         obs->onGameOver(m_gameState, getWinner());
     });
+}
+
+void GameLogic::wait(std::chrono::milliseconds waitInMs) const {
+    std::chrono::milliseconds waited(0);
+    while (waited < waitInMs && !m_abort) {
+        const auto waitLeft = waitInMs - waited;
+        const std::chrono::milliseconds iterTime = std::min(waitLeft, m_tickLength);
+
+        this_thread::sleep_for(iterTime);
+
+        waited += iterTime;
+    }
 }
 
 bool GameLogic::isGameOver() const {
