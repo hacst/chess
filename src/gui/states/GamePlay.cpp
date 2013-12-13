@@ -117,7 +117,7 @@ void GamePlay::enter() {
 	
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
-	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer);
+    m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, make_shared<GameConfiguration>());
 	m_gameLogic->addObserver(m_observer);
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
 	m_gameLogic->addObserver(m_observerProxy);
@@ -162,7 +162,7 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 			glVertex3f(bottomLeftVertex[0], bottomLeftVertex[1], -0.1f);
 
 			// right side is white
-			glColor3f(1.0f, 1.0f, 1.0f); 
+            glColor3f(1.0f, 1.0f, 1.0f);
 			glVertex3f(bottomRightVertex[0], bottomRightVertex[1], -0.1f);
 			glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
 		glEnd();
@@ -181,7 +181,7 @@ AbstractState* GamePlay::run() {
 	}
 
 	if (fsm.eventmap.keyRight) {
-		
+
 	}
 
 	if (fsm.eventmap.keyDown) {
@@ -197,11 +197,11 @@ AbstractState* GamePlay::run() {
 	}
 
 	if (fsm.eventmap.mouseMoved) {
-		
+
 	}
 
 	if (fsm.eventmap.mouseDown) {
-		
+
 	}
 
 	if (fsm.eventmap.mouseUp) {
@@ -318,7 +318,7 @@ void GamePlay::rotateCamera() {
 
 void GamePlay::onBackToMenu() {
 	std::cout << "go back to menu" << std::endl;
-	
+
 	m_nextState = States::BACK_TO_MENU;
 }
 

@@ -23,6 +23,14 @@ std::string Turn::toString() const {
 
 
 bool turnVecCompare(const std::vector<Turn>& left, const std::vector<Turn>& right) {
+
+    if (left.size() != right.size()) return false;
+
+
+    //for (auto )
+
+
+
     auto leftIter  = left.begin();
     auto rightIter = right.begin();
     bool found = false;

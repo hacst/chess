@@ -1,51 +1,53 @@
 #ifndef AIPLAYER_H
 #define AIPLAYER_H
 
+#include <mutex>
 #include <boost/log/sources/logger.hpp>
 #include "logic/interface/AbstractPlayer.h"
 #include "ai/Negamax.h"
 
 class AIPlayer: public AbstractPlayer {
 public:
-	AIPlayer();
-	~AIPlayer();
+    AIPlayer();
+    ~AIPlayer();
 
-	void start();
+    void start();
 
-	virtual void onSetColor(PlayerColor color) override;
-	virtual void onGameStart(GameState state, GameConfiguration config) override;
-	virtual std::future<Turn> doMakeTurn(GameState state) override;
-	virtual void doAbortTurn() override;
-	virtual void onGameOver(GameState, PlayerColor) override;
+    virtual void onSetColor(PlayerColor color) override;
+    virtual void onGameStart(GameState state, GameConfiguration config) override;
+    virtual std::future<Turn> doMakeTurn(GameState state) override;
+    virtual void doAbortTurn() override;
+    virtual void onGameOver(GameState, PlayerColor) override;
 
-	enum States {
-		PREPARATION, // Game preparation phase
-		PONDERING, // Pondering during enemies turn
-		PLAYING, // Playing own turn
-		STOPPED
-	};
+    enum States {
+        PREPARATION, // Game preparation phase
+        PONDERING, // Pondering during enemies turn
+        PLAYING, // Playing own turn
+        STOPPED
+    };
 
-	States getState() const;
+    States getState() const;
 
 private:
-	void run();
+    void run();
 
-	void play();
-	void ponder();
+    void play();
+    void ponder();
 
-	void changeState(States newState);
+    void changeState(States newState);
 
-	std::promise<Turn> m_promisedTurn;
+    std::promise<Turn> m_promisedTurn;
 
-	States m_playerState;
+    States m_playerState;
+    std::mutex m_stateMutex;
 
-	GameState m_gameState;
-	GameConfiguration m_gameConfig;
+    GameState m_gameState;
+    GameConfiguration m_gameConfig;
 
-	PlayerColor m_color;
-	boost::log::sources::logger m_log;
-	Negamax<> m_algorithm;
-	std::thread m_thread;
+    PlayerColor m_color;
+    boost::log::sources::logger m_log;
+    Negamax<> m_algorithm;
+    std::thread m_thread;
 };
 
 namespace std {

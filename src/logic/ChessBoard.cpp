@@ -12,6 +12,21 @@ ChessBoard::ChessBoard() {
           Piece(Black, Rook), Piece(Black, Knight), Piece(Black, Bishop), Piece(Black, King), Piece(Black, Queen), Piece(Black, Bishop), Piece(Black, Knight), Piece(Black, Rook) }
     };
 
+    /*
+white_pawns = 0x000000000000ff00
+black_pawns = 0x00ff000000000000
+white_knights = 0x000000000000042
+black_knights = 0x4200000000000000
+white_bishops =0x000000000000024
+black_bishops = 0x2400000000000000
+white_rooks = 0x000000000000081
+black_rooks = 0x8100000000000000
+white_queens = 0x0000000000000008
+black_queens = 0x0800000000000000
+white_king = 0x0000000000000010
+black_king = 0x1000000000000000
+*/
+
     initBitBoards(board);
 }
 

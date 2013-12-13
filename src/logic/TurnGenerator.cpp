@@ -51,8 +51,8 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     case Bishop: return calcBishopTurns(bbPiece, cb.bb[piece.player][AllPieces]);
     case Knight: return calcKnightTurns(bbPiece, cb.bb[piece.player][AllPieces]);
     case Rook:   return calcRookTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
-    case Pawn:   return calcPawnTurns  (bbPiece, cb.bb[piece.player][AllPieces],
-                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces], piece.player);
+    case Pawn:   return calcPawnTurns  (bbPiece, cb.bb[opp][AllPieces],
+                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces], piece.player);
     default:     return 0;
     }
 }
@@ -134,8 +134,8 @@ BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
     // TODO: en passant
 
     // Pawn Moves
-    BitBoard oneStep;
-    BitBoard twoSteps;
+    BitBoard oneStep = 0;
+    BitBoard twoSteps = 0;
     if (player == White) {
         oneStep  = (pawns                       << 8) & ~allPieces;
         twoSteps = ((oneStep & maskRank(Three)) << 8) & ~allPieces;
@@ -146,8 +146,8 @@ BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
     BitBoard pawnMoves = oneStep | twoSteps;
 
     // Pawn Attacks
-    BitBoard leftAttacks;
-    BitBoard rightAttacks;
+    BitBoard leftAttacks = 0;
+    BitBoard rightAttacks = 0;
     if (player == White) {
         leftAttacks  = (pawns & clearFile(A)) << 7;
         rightAttacks = (pawns & clearFile(H)) << 9;
@@ -170,6 +170,10 @@ BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces)
 }
 
 BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOwnPieces) {
+
+
+
+
     return 0;
 }
 
