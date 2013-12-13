@@ -19,7 +19,7 @@ Score MaterialEvaluator::getMaterialWorth(const PlayerColor player, const ChessB
 		3,    // White bishop
 		3,    // White knight
 		5,    // White rook
-		2,    // White pawn
+		1,    // White pawn
 		0,    // WTF
 		0,    // Empty
 	};
