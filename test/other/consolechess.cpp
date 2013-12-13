@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <boost/program_options.hpp>
 #include <boost/log/trivial.hpp>
 
@@ -9,6 +11,7 @@
 #include "ai/Negamax.h"
 
 using namespace std;
+using namespace std::chrono;
 namespace po = boost::program_options;
 
 using namespace std;
@@ -20,6 +23,9 @@ int main(int argn, char **argv) {
     desc.add_options()
         ("help", "Print help message")
         ("turns", po::value<int>()->default_value(numeric_limits<int>::max()), "Number of turns after which to abort game")
+        ("depthw", po::value<int>()->default_value(6), "Search depth for Negamax search for White player")
+        ("depthb", po::value<int>()->default_value(6), "Search depth for Negamax search for Black player")
+        ("delay", po::value<int>()->default_value(0), "Sleep in ms between moves")
         ;
 
     po::variables_map vm;
@@ -31,7 +37,13 @@ int main(int argn, char **argv) {
     }
 
     const int turnlimit = vm["turns"].as<int>();
+    const int depthWhite = vm["depthw"].as<int>();
+    const int depthBlack = vm["depthb"].as<int>();
+    const int delay  = vm["delay"].as<int>();
+
     LOG(info) << "Turns limited to: " << turnlimit;
+    LOG(info) << "Depth limited to: " << depthWhite << " for White";
+    LOG(info) << "Depth limited to: " << depthBlack << " for Black";
 
     GameState gameState;
     auto eval = make_shared<MaterialEvaluator>();
@@ -44,7 +56,8 @@ int main(int argn, char **argv) {
         LOG(info) << "== " << gameState.getNextPlayer() << " ==";
         LOG(info) << "Calculating turn " << i << "...";
 
-        auto result = negamax.search(gameState, 4);
+        const int depth = (gameState.getNextPlayer() == White) ? depthWhite : depthBlack;
+        auto result = negamax.search(gameState, depth);
         LOG(info) << "Completed calculation";
 
         if (!result.turn) {
@@ -57,6 +70,10 @@ int main(int argn, char **argv) {
 
         gameState.applyTurn(turn);
         LOG(debug) << gameState.getChessBoard();
+
+        if (delay != 0) {
+            this_thread::sleep_for(milliseconds(delay));
+        }
     }
 
     LOG(info) << "Finale state: ";
