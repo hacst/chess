@@ -1,5 +1,8 @@
 #include <iostream>
 #include <boost/program_options.hpp>
+#include <boost/log/trivial.hpp>
+
+#define LOG	BOOST_LOG_TRIVIAL
 
 #include "misc/helper.h"
 #include "logic/Evaluators.h"
@@ -28,32 +31,36 @@ int main(int argn, char **argv) {
     }
 
     const int turnlimit = vm["turns"].as<int>();
-    cout << "Turns limited to: " << turnlimit << endl;
+    LOG(info) << "Turns limited to: " << turnlimit;
 
     GameState gameState;
     auto eval = make_shared<MaterialEvaluator>();
     Negamax<> negamax(eval);
 
-    cout << "Initial state" << endl;
-    cout << gameState.getChessBoard() << endl;
+    LOG(info) << "Initial state";
+    LOG(info) << gameState.getChessBoard();
 
     for (int i = 0; i < turnlimit; ++i) {
-        cout << "== " << gameState.getNextPlayer() << " ==" << endl;
-        cout << "Calculating turn " << i << "...";
-        cout.flush();
+        LOG(info) << "== " << gameState.getNextPlayer() << " ==";
+        LOG(info) << "Calculating turn " << i << "...";
 
         auto result = negamax.search(gameState, 4);
-        cout << "Done" << endl;
-        cout.flush();
-        if (!result.turn)
+        LOG(info) << "Completed calculation";
+
+        if (!result.turn) {
+            LOG(info) << "No more moves possible";
             break;
+        }
 
         auto turn = result.turn.get();
-        cout << "Turn: " << turn << endl;
+        LOG(info) << "Turn: " << turn;
 
         gameState.applyTurn(turn);
-        cout << gameState.getChessBoard() << endl << endl;
+        LOG(debug) << gameState.getChessBoard();
     }
-    cout << "No more moves possible" << endl;
+
+    LOG(info) << "Finale state: ";
+    LOG(info) << gameState.getChessBoard();
+
     return 0;
 }
