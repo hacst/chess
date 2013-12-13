@@ -16,12 +16,12 @@ Model::Model(string file) :	m_file(file) {
 	m_position = { 0, 0, 0 };
 }
 
-void Model::setCorrectionValues(float localX, float localY, float localZ,
+void Model::setCorrectionValues(int localX, int localY, int localZ,
 								float scaleFactor,
-								float rotateX, float rotateY, float rotateZ) {
+								int rotateX, int rotateY, int rotateZ) {
 	m_correctPosition = { localX, localY, localZ };
 	m_correctScaling = scaleFactor;
-	m_correctRotation = { rotateX, rotateY, rotateY };
+	m_correctRotation = { rotateX, rotateY, rotateZ };
 }
 
 void Model::setColor(Color color) {
@@ -44,7 +44,7 @@ void Model::loadScene() {
 void Model::draw() {
 	glPushMatrix();
 		// see http://www.opengl.org/sdk/docs/man2/xhtml/glMaterial.xml
-		
+
 		GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		GLfloat ambient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		if (m_color == Color::BLACK) {
@@ -56,8 +56,8 @@ void Model::draw() {
 			ambient[1] = 1.0f;
 			ambient[2] = 1.0f;
 		}
-		
-		
+
+
 		GLfloat diffuse[] = { 1.0f, 0.0f, 0.0f, 1.f };
 		GLfloat specular[] = { 1.0f, 1.0f, 0.5f, 1.f };
 
@@ -65,11 +65,11 @@ void Model::draw() {
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 		glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-		
+
 		GLfloat shininess[] = { 120 };
 		glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
-		glTranslatef(m_position.x, m_position.y, m_position.z);							// global position	
+		glTranslatef(m_position.x, m_position.y, m_position.z);							// global position
 		glTranslatef(m_correctPosition.x, m_correctPosition.y, m_correctPosition.z);	// correct local origin
 		glRotatef(m_correctRotation.x, 1, 0, 0);										// correct rotation
 		glRotatef(m_correctRotation.y, 0, 1, 0);
