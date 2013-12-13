@@ -245,10 +245,54 @@ TEST(TurnGenerator, generateTurns_2) {
     EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true);
 
 
-    LOG(trace) << cb;
-    LOG(trace) << turnVecToString(turns_calc);
+    //LOG(trace) << cb;
+    //LOG(trace) << turnVecToString(turns_calc);
 }
 
+
+TEST(TurnGenerator, generateTurns_3) {
+    ChessBoard cb(generateChessBoard(PoF(Piece(White, Pawn), C5),
+                                     PoF(Piece(White, Pawn), D6),
+                                     PoF(Piece(), ERR)));
+    turns_calc = tGen.generateTurns(White, cb);
+
+    turns_fine.clear();
+    turns_fine.push_back(Turn::move(Piece(White, Pawn), C5, C6));
+    turns_fine.push_back(Turn::move(Piece(White, Pawn), D6, D7));
+
+    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine));
+
+    LOG(trace) << cb;
+    LOG(trace) << turnVecToString(turns_calc);
+
+}
+
+
+/*
+TEST(TurnGenerator, calcPawnTurns_AttackWhite_5) {
+    bbPawns = generateBitBoard(F4, G5, ERR);
+    bbOppPieces = 0; //generateBitBoard(D6, ERR);
+    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
+                                 bbPawns | bbOppPieces, White);
+    bb_fine = generateBitBoard(F5, G6, ERR);
+    EXPECT_EQ(bb_calc, bb_fine);
+
+    LOG(trace) << bitBoardToString(bb_calc);
+    LOG(trace) << bitBoardToString(bb_fine);
+}
+
+TEST(TurnGenerator, calcPawnTurns_AttackWhite_6) {
+    bbPawns = generateBitBoard(F4, ERR);
+    bbOppPieces = generateBitBoard(G5, ERR);
+    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
+                                 bbPawns | bbOppPieces, White);
+    bb_fine = generateBitBoard(F5, G5, ERR);
+    EXPECT_EQ(bb_calc, bb_fine);
+
+    LOG(trace) << bitBoardToString(bb_calc);
+    LOG(trace) << bitBoardToString(bb_fine);
+}
+*/
 
 /*
 LOG(trace) << cb;
