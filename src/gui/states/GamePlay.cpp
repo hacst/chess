@@ -101,7 +101,6 @@ void GamePlay::enter() {
 	m_cube3 = ObjectHelper::createCubeList(4, m_lightpos3[0], m_lightpos3[1], m_lightpos3[2]);
 	m_cube4 = ObjectHelper::createCubeList(4, m_lightpos4[0], m_lightpos4[1], m_lightpos4[2]);
 
-	moveCamera = false;
 	m_rotateFrom = 0;
 	m_rotateTo = 180;
 
@@ -117,7 +116,9 @@ void GamePlay::enter() {
 	
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
-    m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, make_shared<GameConfiguration>());
+	GameConfigurationPtr config = make_shared<GameConfiguration>();
+	config->minimumTurnTimeInSeconds = 3;
+    m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
 	m_gameLogic->addObserver(m_observer);
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
 	m_gameLogic->addObserver(m_observerProxy);
@@ -189,11 +190,6 @@ AbstractState* GamePlay::run() {
 	}
 
 	if (fsm.eventmap.keyLeft) {
-		// avoid multiple triggering
-		if (!moveCamera) {
-			animationHelper->reset();
-			moveCamera = true;
-		}
 	}
 
 	if (fsm.eventmap.mouseMoved) {
@@ -250,6 +246,8 @@ void GamePlay::draw() {
 	// chessboard and models
 	m_chessSet->draw();
 
+	rotateCamera();
+
 	// visualize light position
 	glCallList(m_cube1);
 	glCallList(m_cube2);
@@ -295,17 +293,11 @@ void GamePlay::rotateCamera() {
 	animationHelper->setStartNowOrKeepIt();
 
 	if (animationHelper->hasStopped()) {
-		moveCamera = false;
-
-		m_rotateFrom = (m_rotateFrom + 180) % 360;
-		m_rotateTo = (m_rotateFrom + 180) % 360;
 		return;
 	}
 
 	float angleDegree = animationHelper->easeOutSine(m_rotateFrom, m_rotateTo);
 	float angleRadian = angleDegree * (M_PI / 180.0);
-
-	std::cout << m_rotateFrom << " -> " << m_rotateTo << " @ " << angleDegree << std::endl;
 
 	float newCameraX = sinf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
 	float newCameraZ = cosf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
@@ -314,6 +306,14 @@ void GamePlay::rotateCamera() {
 	fsm.window->m_cameraAngleY = rotationY;
 	fsm.window->m_cX = newCameraX;
 	fsm.window->m_cZ = newCameraZ;
+}
+
+void GamePlay::startCameraRotation() {
+	animationHelper->reset();
+
+	// also set the coordinates to the opposite
+	m_rotateFrom = (m_rotateFrom + 180) % 360;
+	m_rotateTo = (m_rotateFrom + 180) % 360;
 }
 
 void GamePlay::onBackToMenu() {

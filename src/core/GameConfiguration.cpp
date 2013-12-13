@@ -10,7 +10,7 @@ using namespace std;
 using namespace chrono;
 
 GameConfiguration::GameConfiguration()
-    : minimumTurnTimeInSeconds(2)
+    : minimumTurnTimeInSeconds(0)
     , maximumTurnTimeInSeconds(60) {
     // Empty
 }

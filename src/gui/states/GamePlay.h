@@ -26,6 +26,7 @@ public:
 	void draw();
 	
 	void rotateCamera();
+	void startCameraRotation();
 	void createChessSet();
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 
@@ -50,7 +51,6 @@ private:
 	GLuint m_cube1, m_cube2, m_cube3, m_cube4;
 
 	int m_rotateFrom, m_rotateTo;
-	bool moveCamera;
 
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
