@@ -103,6 +103,21 @@ void GamePlay::enter() {
 	// debug
 	debugText = "light 0 on";
 	//cameraView = 0;
+
+	// player observer
+	m_firstPlayer = make_shared<AIPlayer>();
+	m_firstPlayer->start();
+	m_secondPlayer = make_shared<AIPlayer>();
+	m_secondPlayer->start();
+
+	m_observer = make_shared<ConsoleObserver>();
+
+	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer);
+	m_gameLogic->addObserver(m_observer);
+	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
+	m_gameLogic->addObserver(m_observerProxy);
+
+	m_gameLogic->start();
 }
 
 void GamePlay::createChessSet() {
@@ -305,6 +320,9 @@ AbstractState* GamePlay::run() {
 	if (fsm.eventmap.keyEscape) {
 		onBackToMenu();
 	}
+
+	// Execute all pending calls from the observer
+	m_observerProxy->poll();
 
 	this->draw();
 
