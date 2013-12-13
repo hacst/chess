@@ -9,7 +9,7 @@ using namespace std;
 using namespace chrono;
 
 GameConfiguration::GameConfiguration()
-	: maximumTurnTimeInSeconds(5) {
+	: maximumTurnTimeInSeconds(60) {
 }
 
 boost::optional<GameConfiguration> GameConfiguration::load(const std::string &path) {

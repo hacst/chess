@@ -1,3 +1,5 @@
+#include "gui/states/GamePlay.h"
+
 #include "gui/states/MenuMain.h"
 
 #include <iostream>
@@ -7,7 +9,6 @@
 #include "gui/StateMachine.h"
 #include "gui/GuiWindow.h"
 
-#include "gui/states/GamePlay.h"
 #include "gui/states/MenuLoadGame.h"
 #include "gui/states/MenuOptions.h"
 
