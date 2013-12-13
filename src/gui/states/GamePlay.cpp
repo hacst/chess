@@ -1,13 +1,18 @@
 #include <iostream>
 #include <SDL.h>
 
+// ObsDisProx include Must be first to be before all windows.h
+// includes in other headers to satisfy the angry gods
+#include "logic/threading/ObserverDispatcherProxy.h" 
+
 #include "gui/states/GamePlay.h"
+#include "gui/GuiObserver.h"
 #include "gui/Menu2DItem.h"
 #include "gui/StateMachine.h"
-#include "gui/GuiWindow.h"
 #include "gui/AssimpHelper.h"
 #include "gui/AnimationHelper.h"
 #include "gui/ObjectHelper.h"
+#include "gui/GuiWindow.h"
 
 using namespace std;
 
@@ -104,13 +109,13 @@ void GamePlay::enter() {
 	debugText = "light 0 on";
 	//cameraView = 0;
 
-	// player observer
+	// connection gui with ai and logic
 	m_firstPlayer = make_shared<AIPlayer>();
 	m_firstPlayer->start();
 	m_secondPlayer = make_shared<AIPlayer>();
 	m_secondPlayer->start();
-
-	m_observer = make_shared<ConsoleObserver>();
+	
+	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer);
 	m_gameLogic->addObserver(m_observer);
@@ -121,13 +126,13 @@ void GamePlay::enter() {
 }
 
 void GamePlay::createChessSet() {
-	chessSet = make_shared<ChessSet>();
+	m_chessSet = make_shared<ChessSet>();
 
 	m_resourcesLoaded = 0;
-	m_resourcesTotal = chessSet->getResourcesCount();
+	m_resourcesTotal = m_chessSet->getResourcesCount();
 
-	chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
-	chessSet->loadResources();
+	m_chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
+	m_chessSet->loadResources();
 }
 
 void GamePlay::onBeforeLoadNextResource(string resourceName) {
@@ -208,113 +213,6 @@ AbstractState* GamePlay::run() {
 			glEnable(GL_LIGHT0);
 			debugText = "light 0 on";
 		}
-		/*
-		if (debugText == "ambientLight") {
-			debugText = "diffuseLight";
-
-			ambientLight[0] = 0.0f;
-			ambientLight[1] = 0.0f;
-			ambientLight[2] = 0.0f;
-			ambientLight[3] = 1.0f;
-
-			diffuseLight[0] = 1.0f;
-			diffuseLight[1] = 1.0f;
-			diffuseLight[2] = 1.0f;
-			diffuseLight[3] = 1.0f;
-
-			specularLight[0] = 0.0f;
-			specularLight[1] = 0.0f;
-			specularLight[2] = 0.0f;
-			specularLight[3] = 1.0f;
-		}
-		else if (debugText == "diffuseLight") {
-			debugText = "specularLight";
-
-			ambientLight[0] = 0.0f;
-			ambientLight[1] = 0.0f;
-			ambientLight[2] = 0.0f;
-			ambientLight[3] = 0.0f;
-
-			diffuseLight[0] = 0.0f;
-			diffuseLight[1] = 0.0f;
-			diffuseLight[2] = 0.0f;
-			diffuseLight[3] = 1.0f;
-
-			specularLight[0] = 1.0f;
-			specularLight[1] = 1.0f;
-			specularLight[2] = 1.0f;
-			specularLight[3] = 1.0f;
-		}
-		else if (debugText == "specularLight") {
-			debugText = "ambientLight";
-
-			ambientLight[0] = 1.0f;
-			ambientLight[1] = 1.0f;
-			ambientLight[2] = 1.0f;
-			ambientLight[3] = 1.0f;
-
-			diffuseLight[0] = 0.0f;
-			diffuseLight[1] = 0.0f;
-			diffuseLight[2] = 0.0f;
-			diffuseLight[3] = 1.0f;
-
-			specularLight[0] = 0.0f;
-			specularLight[1] = 0.0f;
-			specularLight[2] = 0.0f;
-			specularLight[3] = 1.0f;
-		}
-
-		glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
-		glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
-		glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
-
-		glLightfv(GL_LIGHT2, GL_AMBIENT, ambientLight);
-		glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuseLight);
-		glLightfv(GL_LIGHT2, GL_SPECULAR, specularLight);
-
-		glLightfv(GL_LIGHT3, GL_AMBIENT, ambientLight);
-		glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuseLight);
-		glLightfv(GL_LIGHT3, GL_SPECULAR, specularLight);
-		*/
-
-		/* switch camera view
-		switch (cameraView) {
-		case 0:
-			// frontal
-			debugText = "front view";
-			fsm.window->m_cameraAngleY = 0;
-			fsm.window->m_cameraAngleX = 0;
-			fsm.window->m_cX = 0;
-			fsm.window->m_cY = 0;
-			fsm.window->m_cZ = 100;
-			break;
-		case 1:
-			// right
-			debugText = "right view";
-			fsm.window->m_cameraAngleY = -90;
-			fsm.window->m_cameraAngleX = 0;
-			fsm.window->m_cX = 100;
-			fsm.window->m_cY = 0;
-			fsm.window->m_cZ = 0;
-			break;
-		case 2:
-			// top
-			debugText = "top view";
-			fsm.window->m_cameraAngleY = 0;
-			fsm.window->m_cameraAngleX = 90;
-			fsm.window->m_cX = 0;
-			fsm.window->m_cY = 100;
-			fsm.window->m_cZ = 0;
-			break;
-		default:
-			break;
-		}
-
-		cameraView = ++cameraView % 3;*/
 	}
 
 	if (fsm.eventmap.keyEscape) {
@@ -349,18 +247,8 @@ void GamePlay::draw() {
 	// 3D
 	fsm.window->set3DMode();
 
-	// skybox: @todo
-
 	// chessboard and models
-	chessSet->draw();
-
-	// draw coordinate system
-	//drawCoordinateSystem();
-
-	// rotate camera
-	if (moveCamera) {
-		rotateCamera();
-	}
+	m_chessSet->draw();
 
 	// visualize light position
 	glCallList(m_cube1);

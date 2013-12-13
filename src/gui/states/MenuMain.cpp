@@ -1,5 +1,4 @@
 #include "gui/states/GamePlay.h"
-
 #include "gui/states/MenuMain.h"
 
 #include <iostream>
