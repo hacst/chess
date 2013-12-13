@@ -170,7 +170,7 @@ set(AI_SOURCES
     src/ai/Negamax.cpp
 )
 
-source_group(core FILES ${AI_SOURCES})
+source_group(ai FILES ${AI_SOURCES})
 
 # Sources in the 3dchess project
 set(EVERYTHINGBUTGUI_SOURCES
