@@ -21,7 +21,9 @@ public:
 	// interface methods
 	void loadScene();
 	void draw();
-	void setCorrectionValues(float localX, float localY, float localZ, float scaleFactor, float rotateX, float rotateY, float rotateZ);
+	void setCorrectionValues(int localX, int localY, int localZ,
+							 float scaleFactor,
+							 int rotateX, int rotateY, int rotateZ);
 	void rotateY(int degree);
 	void setColor(Color color);
 	void setPosition(int globalX, int globalY, int globalZ);
