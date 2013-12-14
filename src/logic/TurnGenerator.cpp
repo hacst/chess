@@ -50,7 +50,8 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     case Queen:  return calcQueenTurns (bbPiece, cb.bb[piece.player][AllPieces]);
     case Bishop: return calcBishopTurns(bbPiece, cb.bb[piece.player][AllPieces]);
     case Knight: return calcKnightTurns(bbPiece, cb.bb[piece.player][AllPieces]);
-    case Rook:   return calcRookTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
+    case Rook:   return calcRookTurns  (bbPiece, cb.bb[opp][AllPieces],
+                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
     case Pawn:   return calcPawnTurns  (bbPiece, cb.bb[opp][AllPieces],
                                         cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces], piece.player);
     default:     return 0;
@@ -169,12 +170,92 @@ BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces)
     return 0;
 }
 
-BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOwnPieces) {
+BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
+                                      BitBoard allPieces) {
+    BitBoard rightBits = getRightBits(rooks);
+    BitBoard leftBits  = getLeftBits (rooks);
+    BitBoard upperBits = getUpperBits(rooks);
+    BitBoard lowerBits = getLowerBits(rooks);
 
 
 
+    // right moves
+    BitBoard rightMoves = rightBits & allPieces;
+    rightMoves = (rightMoves << 1) | (rightMoves << 2) | (rightMoves << 3) |
+                 (rightMoves << 4) | (rightMoves << 5) | (rightMoves << 6) |
+                 (rightMoves << 7);
+    //rightMoves = 0xFE00000000000000 >> (56-LSB von rightMoves);
+    rightMoves &= rightBits;
+    rightMoves ^= rightBits;
+    rightMoves &= (allOppPieces | ~(allPieces));
 
-    return 0;
+
+
+    // left moves
+    BitBoard leftMoves = leftBits & allPieces;
+    leftMoves = 0xFE00000000000000 >> (64-BB_SCAN(leftMoves));
+    leftMoves &= leftBits;
+    leftMoves ^= leftBits;
+    leftMoves &= (allOppPieces | ~(allPieces));
+
+
+
+    // up moves
+    BitBoard upMoves = upperBits & allPieces;
+    upMoves = (upMoves <<  8) | (upMoves << 16) | (upMoves << 24) |
+              (upMoves << 32) | (upMoves << 40) | (upMoves << 48) |
+              (upMoves << 56);
+    //upMoves = 0x0101010101010100 << LSB;
+    upMoves &= upperBits;
+    upMoves ^= upperBits;
+    upMoves &= (allOppPieces | ~(allPieces));
+
+
+
+    // down moves
+    BitBoard downMoves = lowerBits & allPieces;
+    downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
+    downMoves &= lowerBits;
+    downMoves ^= lowerBits;
+    downMoves &= (allOppPieces | ~(allPieces));
+
+
+    return rightMoves | leftMoves | upMoves | downMoves;
+}
+
+
+BitBoard TurnGenerator::getRightBits(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0xFE00000000000000 >> (56-field);
+    bb &= maskRank(static_cast<Rank>(field / 8));
+
+    // TODO: GEHT NICHT?
+    //BitBoard bb = 0x00000000000000FE << 32;
+    //bb &= maskRank(static_cast<Rank>(field / 8));
+
+    return bb;
+}
+
+BitBoard TurnGenerator::getLeftBits(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0xFE00000000000000 >> (64-field);
+    bb &= maskRank(static_cast<Rank>(field / 8));
+
+    return bb;
+}
+
+BitBoard TurnGenerator::getUpperBits(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0x0101010101010100 << field;
+
+    return bb;
+}
+
+BitBoard TurnGenerator::getLowerBits(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0x0101010101010100 >> (64-field);
+
+    return bb;
 }
 
 

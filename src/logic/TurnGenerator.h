@@ -42,12 +42,18 @@ public:
     // sliding pieces
     virtual BitBoard calcQueenTurns (BitBoard queens,  BitBoard allOwnPieces);
     virtual BitBoard calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces);
-    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOwnPieces);
+    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOppPieces,
+                                     BitBoard allPieces);
 
     virtual BitBoard maskRank (Rank rank);
     virtual BitBoard clearRank(Rank rank);
     virtual BitBoard maskFile (File file);
     virtual BitBoard clearFile(File file);
+
+    virtual BitBoard getRightBits(BitBoard bbPiece);
+    virtual BitBoard getLeftBits (BitBoard bbPiece);
+    virtual BitBoard getUpperBits(BitBoard bbPiece);
+    virtual BitBoard getLowerBits(BitBoard bbPiece);
 };
 
 using TurnGeneratorPtr = std::shared_ptr<TurnGenerator>;
