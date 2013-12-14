@@ -2,15 +2,16 @@
 #define GAMEPLAY_H
 
 #include "logic/GameLogic.h"
-#include "misc/ConsoleObserver.h"
-#include "logic/threading/ObserverDispatcherProxy.h"
 #include "ai/AIPlayer.h"
+#include "gui/GuiObserver.h"
 
 #include "gui/interface/AbstractState.h"
 #include "gui/Menu2D.h"
 #include "gui/ChessSet.h"
 
 class StateMachine;
+class ObserverDispatcherProxy;
+using ObserverDispatcherProxyPtr = std::shared_ptr<ObserverDispatcherProxy>;
 
 class GamePlay : public AbstractState {
 public:
@@ -24,6 +25,8 @@ public:
 	// draw method
 	void draw();
 	
+	void rotateCamera();
+	void startCameraRotation();
 	void createChessSet();
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 
@@ -42,20 +45,19 @@ private:
 
 	// smart pointers
 	AnimationHelperPtr animationHelper;
-	ChessSetPtr chessSet;
+	ChessSetPtr m_chessSet;
 
 	GLfloat m_lightpos1[4], m_lightpos2[4], m_lightpos3[4], m_lightpos4[4];
 	GLuint m_cube1, m_cube2, m_cube3, m_cube4;
 
 	int m_rotateFrom, m_rotateTo;
-	bool moveCamera;
 
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
 
 	AIPlayerPtr m_firstPlayer, m_secondPlayer;
 	AbstractGameLogicPtr m_gameLogic;
-	ConsoleObserverPtr m_observer;
+	GuiObserverPtr m_observer;
 	ObserverDispatcherProxyPtr m_observerProxy;
 
 	// debug
@@ -67,7 +69,9 @@ private:
 	GLfloat specularLight[4];
 
 	// methods
-	void rotateCamera();
+	
 };
+
+using GamePlayPtr = std::shared_ptr<GamePlay>;
 
 #endif // GAMEPLAY_H

@@ -67,6 +67,7 @@ int main(int argn, char **argv) {
 
         auto turn = result.turn.get();
         LOG(info) << "Turn: " << turn;
+        LOG(info) << "Score: " << result.score;
 
         gameState.applyTurn(turn);
         LOG(debug) << gameState.getChessBoard();

@@ -1,19 +1,18 @@
 #ifndef CHESSSET_H
 #define CHESSSET_H
 
-#ifdef _WIN32
-#include <windows.h> // Needed for gl.h
-#endif
-
-#include <GL/gl.h>
-
 #include <boost/signals2.hpp>
 #include <array>
 
 #include "gui/AssimpHelper.h"
 #include "gui/Model.h"
+#include "logic/ChessTypes.h"
 
-using namespace std;
+#ifdef _WIN32
+#include <windows.h> // Needed for gl.h
+#endif
+
+#include <GL/gl.h>
 
 class ChessSet {
 public:
@@ -21,12 +20,31 @@ public:
 	~ChessSet();
 
 	void draw();
-	void update(int bitboard);
-	void makeDebug(int direction);
+	void setState(std::array<Piece, 64> state);
+	
 	int getResourcesCount();
+
 	// loads all the resources
 	void loadResources();
 	void registerLoadCallback(const boost::function<void(std::string)>& callback);
+
+	enum ModelType {
+		KING,
+		PAWN,
+		QUEEN,
+		BISHOP,
+		KNIGHT,
+		ROOK
+	};
+
+	enum ModelColor {
+		BLACK,
+		WHITE
+	};
+
+	enum BoardTile {
+
+	};
 
 private:
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard

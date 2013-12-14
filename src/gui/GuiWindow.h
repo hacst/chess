@@ -4,16 +4,16 @@
 #include <SDL.h>
 #include <iostream>
 
+#include "gui/StateMachine.h"
+#include "gui/states/MenuMain.h"
+#include "gui/interface/AbstractState.h"
+
 #ifdef _WIN32
 #include <windows.h> // Needed for gl.h
 #endif
 
 #include <GL/gl.h>
 #include <gui/FreeType.h>
-
-#include "gui/StateMachine.h"
-#include "gui/states/MenuMain.h"
-#include "gui/interface/AbstractState.h"
 
 class GuiWindow {
 public:

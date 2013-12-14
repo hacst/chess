@@ -12,21 +12,21 @@ ChessSet::ChessSet() {
 
 	// all external resources to load
 	extResources = {
-		"resources/3dmodels/bishop.3DS",
 		"resources/3dmodels/king.3DS",
-		"resources/3dmodels/knight.3DS",
-		"resources/3dmodels/pawn.3DS",
 		"resources/3dmodels/queen.3DS",
-		"resources/3dmodels/rook.3DS"
+		"resources/3dmodels/bishop.3DS",
+		"resources/3dmodels/knight.3DS",
+		"resources/3dmodels/rook.3DS",
+		"resources/3dmodels/pawn.3DS"
 	};
 
 	extCorrectionValues = {{
-		{ { 1,  19, 0, 1,   -90, 0, 0 } },
-		{ { 61, 11, 0, 1,   -90, 0, 0 } },
-		{ { 0,  0,  0, 0.4, -90, 0, 0 } },
-		{ { 0,  12, 0, 1,   -90, 0, 0 } },
-		{ { 40, 11, 0, 1,   -90, 0, 0 } },
-		{ { 20, 11, 0, 1,   -90, 0, 0 } }
+		{ { 61, 11, 0, 1, -90, 0, 0 } },	// king
+		{ { 40, 11, 0, 1, -90, 0, 0 } },	// queen
+		{ { 1,  19, 0, 1,   -90, 0, 0 } },	// bishop
+		{ { 0,  0,  0, 0.4, -90, 0, 0 } },	// knight
+		{ { 20, 11, 0, 1, -90, 0, 0 } },	// rook
+		{ { 0,  12, 0, 1,   -90, 0, 0 } }	// pawn
 	}};
 }
 
@@ -61,33 +61,10 @@ void ChessSet::loadResources() {
 
 		++i;
 	}
-	/*bishop = make_shared<Model>("resources/3dmodels/bishop.3DS");
-	m_loadCallback("bishop");
-	king = make_shared<Model>("resources/3dmodels/king.3DS");
-	m_loadCallback("king");
-	knight = make_shared<Model>("resources/3dmodels/knight.3DS");
-	m_loadCallback("knight");
-	pawn = make_shared<Model>("resources/3dmodels/pawn.3DS");
-	m_loadCallback("pawn");
-	queen = make_shared<Model>("resources/3dmodels/queen.3DS");
-	m_loadCallback("queen");
-	rook = make_shared<Model>("resources/3dmodels/rook.3DS");
-	m_loadCallback("rook");*/
-
-	// manual post process to correct
-	/*bishop->setCorrectionValues(1, 19, 0, 1, -90, 0, 0);
-	king->setCorrectionValues(61, 11, 0, 1, -90, 0, 0);
-	knight->setCorrectionValues(0, 0, 0, 0.4, -90, 0, 0);
-	pawn->setCorrectionValues(0, 12, 0, 1, -90, 0, 0);
-	queen->setCorrectionValues(40, 11, 0, 1, -90, 0, 0);
-	rook->setCorrectionValues(20, 11, 0, 1, -90, 0, 0);
-	*/
 
 	// prepare board list for faster rendering
 	m_loadCallback("Preparing chessboard and models ...");
 	createChessBoardList();
-
-	update(0);
 }
 
 // triggers the callback, when a new source has been loaded
@@ -95,8 +72,26 @@ void ChessSet::registerLoadCallback(const boost::function<void(std::string)>& sl
 	m_loadCallback.connect(slot);
 }
 
-// @todo: UPDATE here!
-void ChessSet::update(int bitboard) {
+void ChessSet::setState(std::array<Piece, 64> state) {
+	// set position for models and keep it in display list
+	glDeleteLists(m_modelsList, 1);
+	m_modelsList = glGenLists(1);
+	
+	glNewList(m_modelsList, GL_COMPILE);
+	int field = 0;
+	for (auto &p : state) {
+		if (p.type != PieceType::NoType) {
+			models[p.type]->setColor(p.player == PlayerColor::White ? Model::Color::WHITE : Model::Color::BLACK);
+			moveModelToTile(models[p.type], field % 8, field / 8);
+			models[p.type]->draw();
+		}
+		++field;
+	}
+	glEndList();
+}
+
+/*
+void ChessSet::updateModelPositions(std::array<Piece, 64> board) {
 	// set position for models and keep it in display list
 	m_modelsList = glGenLists(1);
 	
@@ -222,7 +217,7 @@ void ChessSet::update(int bitboard) {
 		moveModelToTile(models[5], 7, 7);
 		models[5]->draw();
 	glEndList();
-}
+}*/
 
 void ChessSet::draw() {
 	// models
@@ -233,15 +228,11 @@ void ChessSet::draw() {
 }
 
 void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
-	model->setPosition(((row - 4) * m_tileWidth) + (m_tileWidth / 2) /* x */, 0 /* y */, ((col - 4) * m_tileWidth) + (m_tileWidth / 2) /* z */);
-	/*glPushMatrix();
-		glTranslatef(
-			((row - 4) * m_tileWidth) + (m_tileWidth / 2), 
-			0,
-			((col - 4) * m_tileWidth) + (m_tileWidth / 2)
-		);
-		model->draw();
-	glPopMatrix();*/
+	model->setPosition(
+		((row - 4) * m_tileWidth) + (m_tileWidth / 2) /* x */,
+		0 /* y */,
+		((col - 4) * m_tileWidth) + (m_tileWidth / 2) /* z */
+	);
 }
 
 void ChessSet::createChessBoardList() {
@@ -333,26 +324,4 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 			glVertex3f(halfWidth, -halfHeight, -halfWidth);
 		glEnd();
 	glPopMatrix();
-}
-
-
-void ChessSet::makeDebug(int direction) {
-	switch (direction) {
-	case 1:
-		y += 1;
-		break;
-	case 2:
-		x += 1;
-		break;
-	case 3:
-		y -= 1;
-		break;
-	case 4:
-		x -= 1;
-		break;
-	default:
-		break;
-	}
-
-	std::cout << y << std::endl;
 }

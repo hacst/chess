@@ -9,7 +9,7 @@ endif()
 
 if (MSVC)
     # Add windows target version (Windows XP)
-    add_definitions(-D_WIN32_WINNT=0x0501)
+    add_definitions(-D_WIN32_WINNT=0x0501 -DNOMINMAX)
 
     # Ensure we use the multithreaded runtime
     # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace
@@ -59,6 +59,7 @@ set(GUI_SOURCES
     src/gui/ChessSet.h
     src/gui/Model.h
     src/gui/ObjectHelper.h
+	src/gui/GuiObserver.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
@@ -71,6 +72,7 @@ set(GUI_SOURCES
     src/gui/ChessSet.cpp
     src/gui/Model.cpp
     src/gui/ObjectHelper.cpp
+	src/gui/GuiObserver.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})
