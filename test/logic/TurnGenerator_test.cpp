@@ -118,7 +118,8 @@ BitBoard bbKing;
 BitBoard bbKnights;
 BitBoard bbPawns;
 BitBoard bbRooks;
-// ...
+BitBoard bbBishops;
+BitBoard bbQueens;
 BitBoard bbOwnPieces;
 BitBoard bbOppPieces;
 
@@ -251,6 +252,22 @@ TEST(TurnGenerator, calcPawnTurns_AttackBlack_3) {
 
 /* TESTING calcQueenTurns */
 /* TESTING calcBishopTurns */
+TEST(TurnGenerator, calcBishopTurns_allMoves) {
+    bbBishops = BB_SET(E3);
+    bbOppPieces = 0;
+    bb_calc = tGen.calcBishopTurns(bbBishops, bbOppPieces, bbRooks | bbOppPieces);
+    bb_fine = generateBitBoard(D4, E5, F6, G7, H8, /* NE */
+                               B4, A5,             /* NW */
+                               D2, E1,             /* SE */
+                               B2, A1, ERR);       /* SW */
+    EXPECT_EQ(bb_fine, bb_calc);
+
+    //LOG(trace) << bitBoardToString(bb_calc);
+    //LOG(trace) << bitBoardToString(bb_fine);
+}
+
+
+
 /* TESTING calcRookTurns */
 TEST(TurnGenerator, calcRookTurns_allMoves) {
     bbRooks = BB_SET(C3);
@@ -306,13 +323,49 @@ TEST(TurnGenerator, calcRookTurns_misc_2) {
                                G6, G7, G8,           /* up    */
                                G4, G3, G2, G1, ERR); /* down */
     EXPECT_EQ(bb_fine, bb_calc);
-
-    LOG(trace) << bitBoardToString(bb_fine);
-    LOG(trace) << bitBoardToString(bb_calc);
 }
+TEST(TurnGenerator, calcRookTurns_misc_3) {
+    bbRooks = BB_SET(A1);
+    bbOppPieces = generateBitBoard(A7, A8 ,ERR);
+    bbOwnPieces = generateBitBoard(A2, B1 ,ERR);
+    bb_calc = tGen.calcRookTurns(bbRooks, bbOppPieces,
+                                 bbRooks | bbOppPieces | bbOwnPieces);
+    bb_fine = 0;
+    EXPECT_EQ(bb_fine, bb_calc);
 
+    LOG(trace) << bitBoardToString(bb_calc);
+    LOG(trace) << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcRookTurns_misc_4) {
+    bbRooks = BB_SET(H8);
+    bbOppPieces = generateBitBoard(H2, H1 ,ERR);
+    bbOwnPieces = generateBitBoard(H7, G8 ,ERR);
+    bb_calc = tGen.calcRookTurns(bbRooks, bbOppPieces,
+                                 bbRooks | bbOppPieces | bbOwnPieces);
+    bb_fine = 0;
+    EXPECT_EQ(bb_fine, bb_calc);
 
-
+    LOG(trace) << bitBoardToString(bb_calc);
+    LOG(trace) << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcRookTurns_misc_5) {
+    bbRooks = BB_SET(H1);
+    bbOppPieces = generateBitBoard(H7, H8 ,ERR);
+    bbOwnPieces = generateBitBoard(H2, G1 ,ERR);
+    bb_calc = tGen.calcRookTurns(bbRooks, bbOppPieces,
+                                 bbRooks | bbOppPieces | bbOwnPieces);
+    bb_fine = 0;
+    EXPECT_EQ(bb_fine, bb_calc);
+}
+TEST(TurnGenerator, calcRookTurns_misc_6) {
+    bbRooks = BB_SET(A8);
+    bbOppPieces = generateBitBoard(A1, A2 ,ERR);
+    bbOwnPieces = generateBitBoard(A7, B8 ,ERR);
+    bb_calc = tGen.calcRookTurns(bbRooks, bbOppPieces,
+                                 bbRooks | bbOppPieces | bbOwnPieces);
+    bb_fine = 0;
+    EXPECT_EQ(bb_fine, bb_calc);
+}
 
 
 /*

@@ -47,8 +47,10 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
 
     switch (piece.type) {
     case King:   return calcKingTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
-    case Queen:  return calcQueenTurns (bbPiece, cb.bb[piece.player][AllPieces]);
-    case Bishop: return calcBishopTurns(bbPiece, cb.bb[piece.player][AllPieces]);
+    case Queen:  return calcQueenTurns (bbPiece, cb.bb[opp][AllPieces],
+                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
+    case Bishop: return calcBishopTurns(bbPiece, cb.bb[opp][AllPieces],
+                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
     case Knight: return calcKnightTurns(bbPiece, cb.bb[piece.player][AllPieces]);
     case Rook:   return calcRookTurns  (bbPiece, cb.bb[opp][AllPieces],
                                         cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
@@ -57,27 +59,6 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     default:     return 0;
     }
 }
-
-/*
-std::array<BitBoard, 6> TurnGenerator::calcTurns(PlayerColor player, const ChessBoard& cb) {
-    std::array<BitBoard, 6> bbTurns;
-    PlayerColor opp = (player == White) ? Black : White;
-
-    bbTurns[King]   = calcKingTurns  (cb.bb[player][King],   cb.bb[player][AllPieces]);
-    bbTurns[Queen]  = calcQueenTurns (cb.bb[player][Queen],  cb.bb[player][AllPieces]);
-    bbTurns[Bishop] = calcBishopTurns(cb.bb[player][Bishop], cb.bb[player][AllPieces]);
-    bbTurns[Knight] = calcKnightTurns(cb.bb[player][Knight], cb.bb[player][AllPieces]);
-    bbTurns[Rook]   = calcRookTurns  (cb.bb[player][Rook],   cb.bb[player][AllPieces]);
-    bbTurns[Pawn]   = calcPawnTurns  (cb.bb[player][Pawn],   cb.bb[opp][AllPieces],
-                                      cb.bb[player][AllPieces] | cb.bb[opp][AllPieces],
-                                      player);
-
-    // TODO: Am Ende pruefen, ob der gegnerische King Schach oder Schachmatt
-    // gesetzt wurde -> gs.check(White)
-
-    return bbTurns;
-}
-*/
 
 BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
 
@@ -162,12 +143,58 @@ BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
     return pawnMoves | pawnAttacks;
 }
 
-BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOwnPieces) {
-    return 0;
+BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOppPieces,
+                                       BitBoard allPieces) {
+    return calcRookTurns  (queens, allOppPieces, allPieces) |
+           calcBishopTurns(queens, allOppPieces, allPieces);
 }
 
-BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces) {
+BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
+                                        BitBoard allPieces) {
     return 0;
+
+    BitBoard bbNE = getBitsNE(bishops);
+    BitBoard bbNW = getBitsNW(bishops);
+    BitBoard bbSE = getBitsSE(bishops);
+    BitBoard bbSW = getBitsSW(bishops);
+
+
+    LOG(info) << bitBoardToString(bbNE);
+    //LOG(info) << bitBoardToString(bbNW);
+    //LOG(info) << bitBoardToString(bbSE);
+    //LOG(info) << bitBoardToString(bbSW);
+
+
+    // north east moves
+    BitBoard neMoves = bbNE & allPieces;
+    neMoves = (neMoves << 9) | (neMoves << 18) | (neMoves << 27) | (neMoves << 36) |
+              (neMoves << 45) | (neMoves << 54);
+    neMoves &= bbNE;
+    neMoves ^= bbNE;
+    neMoves &= (allOppPieces | ~(allPieces));
+
+    // north west moves
+    BitBoard nwMoves = bbNW & allPieces;
+
+    nwMoves &= bbNW;
+    nwMoves ^= bbNW;
+    nwMoves &= (allOppPieces | ~(allPieces));
+
+    // south east moves
+    BitBoard seMoves = bbSE & allPieces;
+
+    seMoves &= bbSE;
+    seMoves ^= bbSE;
+    seMoves &= (allOppPieces | ~(allPieces));
+
+    // south west moves
+    BitBoard swMoves = bbSW & allPieces;
+
+    swMoves &= bbSW;
+    swMoves ^= bbSW;
+    swMoves &= (allOppPieces | ~(allPieces));
+
+    return neMoves | nwMoves | seMoves | swMoves;
 }
 
 BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
@@ -176,8 +203,6 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
     BitBoard leftBits  = getLeftBits (rooks);
     BitBoard upperBits = getUpperBits(rooks);
     BitBoard lowerBits = getLowerBits(rooks);
-
-
 
     // right moves
     BitBoard rightMoves = rightBits & allPieces;
@@ -189,16 +214,12 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
     rightMoves ^= rightBits;
     rightMoves &= (allOppPieces | ~(allPieces));
 
-
-
     // left moves
     BitBoard leftMoves = leftBits & allPieces;
     leftMoves = 0xFE00000000000000 >> (64-BB_SCAN(leftMoves));
     leftMoves &= leftBits;
     leftMoves ^= leftBits;
     leftMoves &= (allOppPieces | ~(allPieces));
-
-
 
     // up moves
     BitBoard upMoves = upperBits & allPieces;
@@ -210,8 +231,6 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
     upMoves ^= upperBits;
     upMoves &= (allOppPieces | ~(allPieces));
 
-
-
     // down moves
     BitBoard downMoves = lowerBits & allPieces;
     downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
@@ -219,9 +238,35 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
     downMoves ^= lowerBits;
     downMoves &= (allOppPieces | ~(allPieces));
 
-
     return rightMoves | leftMoves | upMoves | downMoves;
 }
+
+
+
+BitBoard TurnGenerator::getBitsNE(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0x8040201008040200 << field;
+
+    return bb;
+}
+
+BitBoard TurnGenerator::getBitsNW(BitBoard bbPiece) {
+    return 0;
+}
+
+BitBoard TurnGenerator::getBitsSE(BitBoard bbPiece) {
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0x8040201008040200 >> (56-field);
+
+    return bb;
+}
+
+BitBoard TurnGenerator::getBitsSW(BitBoard bbPiece) {
+    return 0;
+}
+
+
+
 
 
 BitBoard TurnGenerator::getRightBits(BitBoard bbPiece) {
@@ -229,7 +274,7 @@ BitBoard TurnGenerator::getRightBits(BitBoard bbPiece) {
     BitBoard bb = 0xFE00000000000000 >> (56-field);
     bb &= maskRank(static_cast<Rank>(field / 8));
 
-    // TODO: GEHT NICHT?
+    // TODO: Shift mit mehr als 32 geht nicht?
     //BitBoard bb = 0x00000000000000FE << 32;
     //bb &= maskRank(static_cast<Rank>(field / 8));
 
