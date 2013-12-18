@@ -64,7 +64,7 @@ void GamePlay::enter() {
 
 	m_gameLogic->start();
 	
-	m_internalState == NOT_PAUSED;
+	m_internalState = NOT_PAUSED;
 
 	// debug
 	angle[0] = 45.0;
@@ -277,8 +277,8 @@ void GamePlay::fadeBackgroundForOneTime() {
 
 	// set background color to cool lime and fade in
 	glClearColor(
-		m_animationHelperBackground->easeLinear(0.0, 0.47),
-		m_animationHelperBackground->easeLinear(0.0, 0.64),
+		m_animationHelperBackground->easeLinear(0.0f, 0.47f),
+		m_animationHelperBackground->easeLinear(0.0f, 0.64f),
 		0.0,
 		1.0
 	);
@@ -291,12 +291,12 @@ void GamePlay::rotateCamera() {
 		return;
 	}
 
-	float angleDegree = m_animationHelperCamera->easeOutSine(m_rotateFrom, m_rotateTo);
-	float angleRadian = angleDegree * (M_PI / 180.0);
+	float angleDegree = m_animationHelperCamera->easeOutSine(static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
+	float angleRadian = angleDegree * (M_PI / 180.0f);
 
 	float newCameraX = sinf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
 	float newCameraZ = cosf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
-	float rotationY = (atan2(newCameraX, -newCameraZ) * 180 / M_PI) - 180;
+	float rotationY = (atan2(newCameraX, -newCameraZ) * 180.0f / M_PI) - 180.0f;
 
 	fsm.window->m_cameraAngleY = rotationY;
 	fsm.window->m_cX = newCameraX;

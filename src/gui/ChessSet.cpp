@@ -102,19 +102,12 @@ void ChessSet::draw() {
 	int field = 0;
 	for (auto &p : m_state) {
 		if (p.type != PieceType::NoType) {
-			int steps;
-			if (p.player == PlayerColor::White) {
-				steps = 0;
-			} else {
-				steps = 6;
-			}
-
 			int row = field % 8;
 			int col = field / 8;
 
 			glPushMatrix();
 				glTranslatef(((row - 4) * m_tileWidth) + (m_tileWidth / 2), 0, ((col - 4) * m_tileWidth) + (m_tileWidth / 2));
-				glCallList(m_modelList[p.type + steps]);
+				glCallList(m_modelList[p.type + (p.player == PlayerColor::Black ? 6 : 0)]);
 			glPopMatrix();
 		}
 		++field;
