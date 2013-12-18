@@ -20,19 +20,10 @@ ChessSet::ChessSet() {
 		"resources/3dmodels/pawn.3DS"
 	};
 
-	/*extCorrectionValues = {{
-		{ { 61, 11, 0, 1, -90, 0, 0 } },	// king
-		{ { 40, 11, 0, 1, -90, 0, 0 } },	// queen
-		{ { 1,  19, 0, 1,   -90, 0, 0 } },	// bishop
-		{ { 0,  0,  0, 0.4, -90, 0, 0 } },	// knight
-		{ { 20, 11, 0, 1, -90, 0, 0 } },	// rook
-		{ { 0,  12, 0, 1,   -90, 0, 0 } }	// pawn
-	}};*/
-
 	extCorrectionValues = { {
 		{ { 61, 11, 0, 1, -90, 0, 0 } },	// king
 		{ { 40, 11, 0, 1, -90, 0, 0 } },	// queen
-		{ { 1, 19, 0, 1, -90, 0, 0 } },	// bishop
+		{ { 1, 19, 0, 1, -90, 0, 0 } },		// bishop
 		{ { 0, 0, 0, 0.4, -90, 0, 0 } },	// knight
 		{ { 20, 11, 0, 1, -90, 0, 0 } },	// rook
 		{ { 0, 12, 0, 1, -90, 0, 0 } }		// pawn
@@ -68,6 +59,24 @@ void ChessSet::loadResources() {
 			extCorrectionValues[i][6]
 		);
 
+		// cache the model in a display list
+
+		// white models
+		models[i]->setColor(Model::Color::WHITE);
+		m_modelList[i] = glGenLists(1);
+
+		glNewList(m_modelList[i], GL_COMPILE);
+			models[i]->draw();
+		glEndList();
+
+		// black models
+		models[i]->setColor(Model::Color::BLACK);
+		m_modelList[i+6] = glGenLists(1);
+
+		glNewList(m_modelList[i+6], GL_COMPILE);
+			models[i]->draw();
+		glEndList();
+
 		++i;
 	}
 
@@ -82,42 +91,50 @@ void ChessSet::registerLoadCallback(const boost::function<void(std::string)>& sl
 }
 
 void ChessSet::setState(std::array<Piece, 64> state) {
-	// set position for models and keep it in display list
-	glDeleteLists(m_modelsList, 1);
-	m_modelsList = glGenLists(1);
-	
-	glNewList(m_modelsList, GL_COMPILE);
-	int field = 0;
-	for (auto &p : state) {
-		if (p.type != PieceType::NoType) {
-			if (p.player == PlayerColor::White) {
-				models[p.type]->setColor(Model::Color::WHITE);
-			} else {
-				models[p.type]->setColor(Model::Color::BLACK);
-			}
-
-			moveModelToTile(models[p.type], field % 8, field / 8);
-			models[p.type]->draw();
-		}
-		++field;
-	}
-	glEndList();
+	m_state = state;
 }
 
 void ChessSet::draw() {
-	// models
-	glCallList(m_modelsList);
+	// 1) drawing models which have not been modified in position at first
+
+	// 2) animating and drawing modified models here
+
+	int field = 0;
+	for (auto &p : m_state) {
+		if (p.type != PieceType::NoType) {
+			int steps;
+			if (p.player == PlayerColor::White) {
+				steps = 0;
+			} else {
+				steps = 6;
+			}
+
+			int row = field % 8;
+			int col = field / 8;
+
+			glPushMatrix();
+				glTranslatef(((row - 4) * m_tileWidth) + (m_tileWidth / 2), 0, ((col - 4) * m_tileWidth) + (m_tileWidth / 2));
+				glCallList(m_modelList[p.type + steps]);
+			glPopMatrix();
+		}
+		++field;
+	}
+
+	// DEPRECATED: models
+	//glCallList(m_modelsList);
 
 	// chessboard
 	glCallList(m_boardList);
 }
 
+// replace by translation
 void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
-	model->setPosition(
-		((row - 4) * m_tileWidth) + (m_tileWidth / 2) /* x */,
-		0 /* y */,
-		((col - 4) * m_tileWidth) + (m_tileWidth / 2) /* z */
-	);
+	/*model->setPosition(
+	((row - 4) * m_tileWidth) + (m_tileWidth / 2),
+	0,
+	((col - 4) * m_tileWidth) + (m_tileWidth / 2)
+	); */
+	glTranslatef(((row - 4) * m_tileWidth) + (m_tileWidth / 2), 0, ((col - 4) * m_tileWidth) + (m_tileWidth / 2));
 }
 
 void ChessSet::createChessBoardList() {
