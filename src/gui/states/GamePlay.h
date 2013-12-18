@@ -24,11 +24,13 @@ public:
 
 	// draw method
 	void draw();
-	
-	void rotateCamera();
 	void startCameraRotation();
-	void createChessSet();
+
+	// events and callbacks
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
+	void onResumeGame();
+	void onSaveGame();
+	void onLeaveGame();
 
 	// state methods
 	void onBackToMenu();
@@ -40,14 +42,19 @@ private:
 		KEEP_CURRENT,
 
 		BACK_TO_MENU
-	};
-	States m_nextState;
+	} m_nextState;
+
+	enum InternalState {
+		NOT_PAUSED,
+		PAUSED
+	} m_internalState;
 
 	// smart pointers
-	AnimationHelperPtr animationHelper;
+	AnimationHelperPtr m_animationHelperCamera, m_animationHelperBackground;
 	ChessSetPtr m_chessSet;
+	Menu2DPtr m_pauseMenu;
 
-	GLfloat m_lightpos1[4], m_lightpos2[4], m_lightpos3[4], m_lightpos4[4];
+	GLfloat m_lightpos0[4], m_lightpos1[4], m_lightpos2[4], m_lightpos3[4];
 	GLuint m_cube1, m_cube2, m_cube3, m_cube4;
 
 	int m_rotateFrom, m_rotateTo;
@@ -67,9 +74,14 @@ private:
 	GLfloat ambientLight[4];
 	GLfloat diffuseLight[4];
 	GLfloat specularLight[4];
+	GLfloat angle[1];
+	GLfloat exponent[1];
 
 	// methods
-	
+	void fadeBackgroundForOneTime();
+	void rotateCamera();
+	void setLights();
+	void createChessSet();
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

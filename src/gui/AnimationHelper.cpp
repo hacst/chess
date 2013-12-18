@@ -33,7 +33,7 @@ float AnimationHelper::easeLinear(const float lowerBound, const float upperBound
 	// check if this function is called after the maximum animation duration is exceeded
     int elapsed_time = getElapsedTime();
 	if (elapsed_time > m_duration) {
-		return m_easingResult;
+		return upperBound;
 	}
 
 	m_completeness = (elapsed_time / static_cast<float>(m_duration));
@@ -46,7 +46,7 @@ float AnimationHelper::easeOutSine(const float lowerBound, const float upperBoun
 	// check if this function is called after the maximum animation duration is exceeded
     int elapsed_time = getElapsedTime();
 	if (elapsed_time > m_duration) {
-		return m_easingResult;
+		return upperBound;
 	}
 
 	m_completeness = sin(elapsed_time / static_cast<float>(m_duration)* (M_PI / 2));
