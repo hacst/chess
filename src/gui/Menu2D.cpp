@@ -51,7 +51,7 @@ void Menu2D::draw() {
 
 	// draw a transparent background for the menu with an animation
 	animationHelper->setStartNowOrKeepIt();
-	glColor4f(0.2, 0.2, 0.3, animationHelper->easeLinear(0.1, 0.9));
+	glColor4f(0.2, 0.2, 0.3, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
 
 	glBegin(GL_QUADS);
 		glVertex2f(m_marginLeft - 20,					m_marginTop - 20			);

@@ -277,8 +277,8 @@ void GamePlay::fadeBackgroundForOneTime() {
 
 	// set background color to cool lime and fade in
 	glClearColor(
-		m_animationHelperBackground->easeLinear(0.0f, 0.47f),
-		m_animationHelperBackground->easeLinear(0.0f, 0.64f),
+		m_animationHelperBackground->ease(AnimationHelper::EASE_LINEAR, 0.0f, 0.47f),
+		m_animationHelperBackground->ease(AnimationHelper::EASE_LINEAR, 0.0f, 0.64f),
 		0.0,
 		1.0
 	);
@@ -291,7 +291,7 @@ void GamePlay::rotateCamera() {
 		return;
 	}
 
-	float angleDegree = m_animationHelperCamera->easeOutSine(static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
+	float angleDegree = m_animationHelperCamera->ease(AnimationHelper::EASE_OUTSINE, static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
 	float angleRadian = angleDegree * (M_PI / 180.0f);
 
 	float newCameraX = sinf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
