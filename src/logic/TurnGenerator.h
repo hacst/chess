@@ -40,14 +40,27 @@ public:
     virtual BitBoard calcPawnTurns  (BitBoard pawns,   BitBoard allOppPieces,
                                      BitBoard allPieces, PlayerColor player);
     // sliding pieces
-    virtual BitBoard calcQueenTurns (BitBoard queens,  BitBoard allOwnPieces);
-    virtual BitBoard calcBishopTurns(BitBoard bishops, BitBoard allOwnPieces);
-    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOwnPieces);
+    virtual BitBoard calcQueenTurns (BitBoard queens,  BitBoard allOppPieces,
+                                     BitBoard allPieces);
+    virtual BitBoard calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
+                                     BitBoard allPieces);
+    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOppPieces,
+                                     BitBoard allPieces);
 
     virtual BitBoard maskRank (Rank rank);
     virtual BitBoard clearRank(Rank rank);
     virtual BitBoard maskFile (File file);
     virtual BitBoard clearFile(File file);
+
+    virtual BitBoard getRightBits(BitBoard bbPiece);
+    virtual BitBoard getLeftBits (BitBoard bbPiece);
+    virtual BitBoard getUpperBits(BitBoard bbPiece);
+    virtual BitBoard getLowerBits(BitBoard bbPiece);
+
+    virtual BitBoard getBitsNE(BitBoard bbPiece);
+    virtual BitBoard getBitsNW(BitBoard bbPiece);
+    virtual BitBoard getBitsSE(BitBoard bbPiece);
+    virtual BitBoard getBitsSW(BitBoard bbPiece);
 };
 
 using TurnGeneratorPtr = std::shared_ptr<TurnGenerator>;
