@@ -156,6 +156,13 @@ BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
     BitBoard bbSE = getBitsSE(bishops);
     BitBoard bbSW = getBitsSW(bishops);
 
+
+    //LOG(info) << bitBoardToString(bbNE);
+    //LOG(info) << bitBoardToString(bbNW);
+    //LOG(info) << bitBoardToString(bbSE);
+    //LOG(info) << bitBoardToString(bbSW);
+
+
     // north east moves
     BitBoard neMoves = bbNE & allPieces;
     neMoves = (neMoves <<  9) | (neMoves << 18) | (neMoves << 27) |

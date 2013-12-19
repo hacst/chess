@@ -9,6 +9,7 @@
 #include "core/GameConfiguration.h"
 #include "logic/interface/AbstractGameLogic.h"
 #include "misc/helper.h"
+#include "core/Logging.h"
 
 class GameLogic : public AbstractGameLogic {
 public:
@@ -78,6 +79,7 @@ private:
     AbstractPlayerPtr m_black;
     GameState m_gameState;
     GameConfigurationPtr m_config;
+    Logging::Logger m_log;
 };
 
 #endif // GAMELOGIC_H

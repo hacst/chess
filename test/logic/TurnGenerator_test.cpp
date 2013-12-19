@@ -17,17 +17,11 @@ TEST(TurnGenerator, maskRank_Four) {
     bb_calc = tGen.maskRank(Four);
     bb_fine = generateBitBoard(A4, B4, C4, D4, E4, F4, G4, H4, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
-
-    LOG(trace) << bitBoardToString(bb_calc);
-    LOG(trace) << bitBoardToString(bb_fine);
 }
 TEST(TurnGenerator, maskRank_Six) {
     bb_calc = tGen.maskRank(Six);
     bb_fine = generateBitBoard(A6, B6, C6, D6, E6, F6, G6, H6, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
-
-    LOG(trace) << bitBoardToString(bb_calc);
-    LOG(trace) << bitBoardToString(bb_fine);
 }
 
 
@@ -539,10 +533,9 @@ std::vector<Turn> turns_calc;
 std::vector<Turn> turns_fine;
 
 TEST(TurnGenerator, generateTurns_1) {
-    ChessBoard cb(generateChessBoard(PoF(Piece(White, King), E1),
+    ChessBoard cb(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(White, Pawn), E2),
-                                     PoF(Piece(Black, Pawn), F2),
-                                     PoF(Piece(), ERR)));
+                                     PoF(Piece(Black, Pawn), F2)}));
     turns_calc = tGen.generateTurns(White, cb);
 
     turns_fine.clear();
@@ -563,10 +556,9 @@ TEST(TurnGenerator, generateTurns_1) {
     EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true);
 }
 TEST(TurnGenerator, generateTurns_2) {
-    ChessBoard cb(generateChessBoard(PoF(Piece(White, King), E1),
+    ChessBoard cb(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(White, Pawn), E2),
-                                     PoF(Piece(White, Pawn), F2),
-                                     PoF(Piece(), ERR)));
+                                     PoF(Piece(White, Pawn), F2)}));
     turns_calc = tGen.generateTurns(White, cb);
 
     turns_fine.clear();
@@ -587,9 +579,8 @@ TEST(TurnGenerator, generateTurns_2) {
 
 
 TEST(TurnGenerator, generateTurns_3) {
-    ChessBoard cb(generateChessBoard(PoF(Piece(White, Pawn), C5),
-                                     PoF(Piece(White, Pawn), D6),
-                                     PoF(Piece(), ERR)));
+    ChessBoard cb(generateChessBoard({PoF(Piece(White, Pawn), C5),
+                                     PoF(Piece(White, Pawn), D6)}));
     turns_calc = tGen.generateTurns(White, cb);
 
     turns_fine.clear();

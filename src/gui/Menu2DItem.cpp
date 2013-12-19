@@ -1,6 +1,7 @@
 #include "gui/Menu2DItem.h"
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -122,5 +123,11 @@ void Menu2DItem::onClick(const boost::function<void()>& slot) {
 }
 
 void Menu2DItem::unClick() {
-	m_clicked.disconnect_all_slots();
+    m_clicked.disconnect_all_slots();
+}
+
+string Menu2DItem::toString() const {
+    stringstream ss;
+    ss << "Nenu2DItem(index=" << m_index << ")";
+    return ss.str();
 }

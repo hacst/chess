@@ -1,5 +1,7 @@
 #include "Turn.h"
 
+using namespace std;
+
 bool Turn::operator==(const Turn& other) const {
     return piece == other.piece
             && from == other.from

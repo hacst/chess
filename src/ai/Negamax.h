@@ -2,21 +2,20 @@
 #define NEGAMAX_H
 
 #include <boost/optional/optional.hpp>
-#include <boost/log/sources/logger.hpp>
-#include <boost/log/attributes/constant.hpp>
 #include <string>
 #include <sstream>
 
 #include "misc/helper.h"
 #include "logic/interface/AbstractEvaluator.h"
 #include "logic/GameState.h"
+#include "core/Logging.h"
 
 template <typename TEvaluatorPtr = EvaluatorPtr>
 class Negamax {
 public:
     Negamax(TEvaluatorPtr evaluator)
-        : m_evaluator(evaluator) {
-        m_log.add_attribute("Tag", boost::log::attributes::constant< std::string >("Negamax"));
+        : m_evaluator(evaluator)
+        , m_log(Logging::initLogger("Negamax")) {
     }
 
     struct Result {
@@ -31,15 +30,27 @@ public:
         bool operator<=(const Result& other) { return score <= other.score; }
         bool operator>=(const Result& other) { return score >= other.score; }
         bool operator>(const Result &other) { return score > other.score; }
+
+        bool operator==(const Result& other) const {
+            return score == other.score && turn == other.turn;
+        }
+        std::string toString() const {
+            std::stringstream ss;
+            ss << "Result(Score=" << score << ", turn=";
+            if (turn) ss << turn.get();
+            else ss << "None";
+            ss << ")";
+            return ss.str();
+        }
     };
 
     template<typename TGameState = GameState, bool AB_CUTOFF_ENABLED = true>
     Result search(const TGameState& state, size_t maxDepth) {
-        BOOST_LOG(m_log) << "Starting search of depth " << maxDepth;
+        LOG(Logging::info) << "Starting search of depth " << maxDepth << " AB cutoff=" << AB_CUTOFF_ENABLED;
         m_counters = PerfCounters();
         Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(state, 0, maxDepth,
                                                              MIN_SCORE, MAX_SCORE);
-        BOOST_LOG(m_log) << m_counters;
+        LOG(Logging::debug) << m_counters;
         return result;
     }
 
@@ -51,16 +62,16 @@ public:
 
         std::string toString() const {
             std::stringstream ss;
-            ss << "Nodes visited:   " << nodes << endl
-               << "No. of cut offs: " << cutoffs << endl
-               << "Result updates:  " << updates << endl;
+            ss << "Nodes visited:   " << nodes << std::endl
+               << "No. of cut offs: " << cutoffs << std::endl
+               << "Result updates:  " << updates << std::endl;
             return ss.str();
         }
     } m_counters;
 private:
 
     // Recursive Negamax
-    template <typename TGameState = GameState, bool AB_CUTOFF_ENABLED = true>
+    template <typename TGameState = GameState, bool AB_CUTOFF_ENABLED>
     Result search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
 
         if (state.isGameOver() || depth == maxDepth) {
@@ -76,8 +87,10 @@ private:
             // Simulate ply
             newState.applyTurn(turn);
             // Get best possible return ply score in maxDepth for adversary
-            Result result = search_recurse(newState, depth + 1, maxDepth,
-                                           -beta, -max(alpha, bestResult.score));
+            Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(
+                        newState, depth + 1, maxDepth,
+                        -beta, -std::max(alpha, bestResult.score));
+            
             // Convert the result to our POV (Zero-Sum)
             result.switchSides();
 
@@ -91,7 +104,6 @@ private:
                 if (AB_CUTOFF_ENABLED && bestResult.score >= beta) {
                     ++m_counters.cutoffs;
                     // Prune the rest of the sibling branches
-                    //LOG(trace) << "(" << depth << ") AB-cutoff " << bestResult.score << " exceeds beta of " << beta;
                     return bestResult;
                 }
             }
@@ -102,7 +114,7 @@ private:
     }
 
     TEvaluatorPtr m_evaluator;
-    boost::log::sources::logger m_log;
+    Logging::Logger m_log;
 };
 
 #endif // NEGAMAX_H

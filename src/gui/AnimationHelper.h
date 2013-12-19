@@ -30,11 +30,10 @@ private:
 	unsigned int m_duration;	// duration in ms
 
 	unsigned int m_startTime;	// start time 
-	unsigned int m_elapsedTime;	// time in ms since helper is running
 	float m_completeness;		// percent / 100
 	float m_easingResult;		// the calculated result of the animation
 
-	int getElapsedTime();
+	unsigned int getElapsedTime();
 };
 
 using AnimationHelperPtr = std::shared_ptr<AnimationHelper>;

@@ -4,13 +4,15 @@
 
 using namespace std;
 using namespace std::chrono;
+using namespace Logging;
 
 GameLogic::GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config)
     : m_tickLength(500)
     , m_abort(false)
     , m_white(white)
     , m_black(black)
-    , m_config(config){
+    , m_config(config)
+    , m_log(initLogger("GameLogic")){
     assert(white != black);
 
     addObserver(white);

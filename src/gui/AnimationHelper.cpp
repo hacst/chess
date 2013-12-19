@@ -26,13 +26,13 @@ bool AnimationHelper::hasStopped() {
 	return hasStarted && hasEnded;
 }
 
-int AnimationHelper::getElapsedTime() {
+unsigned int AnimationHelper::getElapsedTime() {
 	return SDL_GetTicks() - m_startTime;
 }
 
 float AnimationHelper::ease(FunctionType type, const float lowerBound, const float upperBound) {
 	// check if this function is called after the maximum animation duration is exceeded
-	int elapsed_time = getElapsedTime();
+	unsigned int elapsed_time = getElapsedTime();
 	if (elapsed_time > m_duration) {
 		return upperBound;
 	}

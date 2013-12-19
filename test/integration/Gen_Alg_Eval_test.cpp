@@ -11,9 +11,8 @@ using namespace std;
 
 // Plays the white player only
 TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
-	GameState gameState(generateChessBoard(PoF(Piece(White, Pawn), C3),
-										   PoF(Piece(Black, Pawn), D6),
-										   PoF(Piece(), ERR)));
+    GameState gameState(generateChessBoard({PoF(Piece(White, Pawn), C3),
+                                            PoF(Piece(Black, Pawn), D6)}));
 
 	Negamax<> negamax(make_shared<MaterialEvaluator>());
 
@@ -44,9 +43,8 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
 
 // Plays the black player only
 TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
-	GameState gameState(generateChessBoard(PoF(Piece(White, Pawn), C3),
-										   PoF(Piece(Black, Pawn), D6),
-										   PoF(Piece(), ERR)));
+    GameState gameState(generateChessBoard({PoF(Piece(White, Pawn), C3),
+										   PoF(Piece(Black, Pawn), D6)}));
 
 	Negamax<> negamax(make_shared<MaterialEvaluator>());
 
@@ -71,9 +69,8 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
 
 // Plays the white player only
 TEST(Gen_Alg_Eval, KnightStrikesPawn) {
-	GameState gameState(generateChessBoard(PoF(Piece(White, Knight), A2),
-										   PoF(Piece(Black, Pawn), D4),
-										   PoF(Piece(), ERR)));
+    GameState gameState(generateChessBoard({PoF(Piece(White, Knight), A2),
+										   PoF(Piece(Black, Pawn), D4)}));
 
 	Negamax<> negamax(make_shared<MaterialEvaluator>());
 

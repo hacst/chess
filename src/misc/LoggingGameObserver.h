@@ -1,17 +1,21 @@
-#ifndef CONSOLEOBSERVER_H
-#define CONSOLEOBSERVER_H
+#ifndef LOGGINGGAMEOBSERVER_H
+#define LOGGINGGAMEOBSERVER_H
 
 #include "logic/interface/AbstractGameObserver.h"
+#include "core/Logging.h"
 
-class ConsoleObserver: public AbstractGameObserver {
+class LoggingGameObserver: public AbstractGameObserver {
 public:
+    LoggingGameObserver();
     void onGameStart(GameState state, GameConfiguration config) override;
 	void onTurnStart(PlayerColor who) override;
     void onTurnEnd(PlayerColor who, Turn turn, GameState newState) override;
 	void onTurnTimeout(PlayerColor who, std::chrono::seconds timeout) override;
     void onGameOver(GameState state, PlayerColor winner) override;
+private:
+    Logging::Logger m_log;
 };
 
-using ConsoleObserverPtr = std::shared_ptr<ConsoleObserver>;
+using LoggingGameObserverPtr = std::shared_ptr<LoggingGameObserver>;
 
-#endif // CONSOLEOBSERVER_H
+#endif // LOGGINGGAMEOBSERVER_H

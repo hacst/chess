@@ -7,9 +7,8 @@
 #include <string>
 #include <sstream>
 #include <memory>
-#include "../misc/helper.h"
-
-using namespace std;
+#include <cassert>
+#include "misc/helper.h"
 
 
 const int NUM_FIELDS     = 64;

@@ -33,9 +33,6 @@ public:
 	void mouseReleased();
 
 private:
-	const int ITEM_STATE_TYPE_PRESSED = 1;
-	const int ITEM_STATE_TYPE_RELEASED = 2;
-	const int ITEM_STATE_TYPE_MOVED = 3;
 
 	std::vector<Menu2DItemPtr> items;
 
@@ -49,7 +46,6 @@ private:
 	int m_windowHeight;
 	int m_btCount;
 	int m_height;						// menu height in total with margin
-	int m_width;
 	int m_marginLeft;					// distance from left
 	int m_marginTop;					// distance from top
 

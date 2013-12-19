@@ -2,19 +2,18 @@
 #include <chrono>
 #include <thread>
 #include <boost/program_options.hpp>
-#include <boost/log/trivial.hpp>
-
-#define LOG	BOOST_LOG_TRIVIAL
 
 #include "misc/helper.h"
 #include "logic/Evaluators.h"
 #include "ai/Negamax.h"
+#include "core/Logging.h"
 
 using namespace std;
 using namespace std::chrono;
 namespace po = boost::program_options;
 
 using namespace std;
+using namespace Logging;
 
 int main(int argn, char **argv) {
     // Boost program options for commandline parsing
@@ -36,49 +35,53 @@ int main(int argn, char **argv) {
         return 1;
     }
 
+    Logging::initialize("consolechess.log", debug);
+    
+    Logger log = initLogger("consolechess");
+    
     const int turnlimit = vm["turns"].as<int>();
     const int depthWhite = vm["depthw"].as<int>();
     const int depthBlack = vm["depthb"].as<int>();
     const int delay  = vm["delay"].as<int>();
 
-    LOG(info) << "Turns limited to: " << turnlimit;
-    LOG(info) << "Depth limited to: " << depthWhite << " for White";
-    LOG(info) << "Depth limited to: " << depthBlack << " for Black";
+    GLOG(info) << "Turns limited to: " << turnlimit;
+    GLOG(info) << "Depth limited to: " << depthWhite << " for White";
+    GLOG(info) << "Depth limited to: " << depthBlack << " for Black";
 
     GameState gameState;
     auto eval = make_shared<MaterialEvaluator>();
     Negamax<> negamax(eval);
 
-    LOG(info) << "Initial state";
-    LOG(info) << gameState.getChessBoard();
+    GLOG(info) << "Initial state";
+    GLOG(info) << gameState.getChessBoard();
 
     for (int i = 0; i < turnlimit; ++i) {
-        LOG(info) << "== " << gameState.getNextPlayer() << " ==";
-        LOG(info) << "Calculating turn " << i << "...";
+        GLOG(info) << "== " << gameState.getNextPlayer() << " ==";
+        GLOG(info) << "Calculating turn " << i << "...";
 
         const int depth = (gameState.getNextPlayer() == White) ? depthWhite : depthBlack;
         auto result = negamax.search(gameState, depth);
-        LOG(info) << "Completed calculation";
+        GLOG(info) << "Completed calculation";
 
         if (!result.turn) {
-            LOG(info) << "No more moves possible";
+            GLOG(info) << "No more moves possible";
             break;
         }
 
         auto turn = result.turn.get();
-        LOG(info) << "Turn: " << turn;
-        LOG(info) << "Score: " << result.score;
+        GLOG(info) << "Turn: " << turn;
+        GLOG(info) << "Score: " << result.score;
 
         gameState.applyTurn(turn);
-        LOG(debug) << gameState.getChessBoard();
+        GLOG(debug) << gameState.getChessBoard();
 
         if (delay != 0) {
             this_thread::sleep_for(milliseconds(delay));
         }
     }
 
-    LOG(info) << "Finale state: ";
-    LOG(info) << gameState.getChessBoard();
+    GLOG(info) << "Finale state: ";
+    GLOG(info) << gameState.getChessBoard();
 
     return 0;
 }

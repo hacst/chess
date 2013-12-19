@@ -36,14 +36,12 @@ TEST(ChessBoard, equality) {
 }
 
 TEST(ChessBoard, applyTurn) {
-    ChessBoard cb1(generateChessBoard(PoF(Piece(White, King), D1),
+    ChessBoard cb1(generateChessBoard({PoF(Piece(White, King), D1),
                                       PoF(Piece(White, Pawn), E2),
-                                      PoF(Piece(Black, Pawn), D3),
-                                      PoF(Piece(), ERR)));
+                                      PoF(Piece(Black, Pawn), D3)}));
     // black pawn attacks the white pawn
-    ChessBoard cb2(generateChessBoard(PoF(Piece(White, King), D1),
-                                      PoF(Piece(Black, Pawn), E2),
-                                      PoF(Piece(), ERR)));
+    ChessBoard cb2(generateChessBoard({PoF(Piece(White, King), D1),
+                                      PoF(Piece(Black, Pawn), E2)}));
     Turn t = Turn::move(Piece(Black, Pawn), D3, E2);
     cb1.applyTurn(t);
 

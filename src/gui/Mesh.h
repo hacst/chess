@@ -6,9 +6,9 @@
 #endif
 
 #include <GL/gl.h>
-#include <../3rdparty/assimp/include/assimp/Importer.hpp>	// C++ importer interface
-#include <../3rdparty/assimp/include/assimp/scene.h>		// Output data structure
-#include <../3rdparty/assimp/include/assimp/postprocess.h>	// Post processing flags
+#include <assimp/Importer.hpp>	// C++ importer interface
+#include <assimp/scene.h>		// Output data structure
+#include <assimp/postprocess.h>	// Post processing flags
 
 class Mesh {
 public:

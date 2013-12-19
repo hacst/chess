@@ -16,8 +16,6 @@
 #include "gui/Menu2DItem.h"
 #include "gui/AnimationHelper.h"
 
-using namespace std;
-
 class Menu2DItem {
 public:
 	struct boundingBox {
@@ -40,6 +38,7 @@ public:
 	void onClick(const boost::function<void()>& slot);
 	void unClick();
 
+    std::string toString() const;
 private:
 	// member variables
     int m_index;

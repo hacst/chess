@@ -1,5 +1,7 @@
 #include "ChessBoard.h"
 
+using namespace std;
+
 ChessBoard::ChessBoard() {
     std::array<Piece, 64> board = {
         { Piece(White, Rook), Piece(White, Knight), Piece(White, Bishop), Piece(White, King), Piece(White, Queen), Piece(White, Bishop), Piece(White, Knight), Piece(White, Rook),
@@ -189,21 +191,16 @@ BitBoard generateBitBoard(Field f1, ...) {
     return bb;
 }
 
-std::array<Piece, 64> generateChessBoard(PoF pof1, ...) {
-    va_list pofs;
-    va_start(pofs, pof1);
-
+std::array<Piece, 64> generateChessBoard(std::vector<PoF> pieces) {
+    
     std::array<Piece, 64> board;
     for (int i = 0; i < NUM_FIELDS; i++) {
         board[i] = Piece(NoPlayer, NoType);
     }
 
-    PoF pof = pof1;
-    while(pof.field != ERR) {
+    for (auto& pof: pieces) {
         board[pof.field] = pof.piece;
-        pof = (PoF)va_arg(pofs, PoF);
     }
 
-    va_end(pofs);
     return board;
 }

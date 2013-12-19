@@ -60,8 +60,6 @@ private:
 
 	int m_tileWidth, m_tileHeight;
 
-	int x, y, z;
-
 	void createChessBoardList();
 	void drawTile(int x, int y, int z, bool odd, bool highlight);
 	void moveModelToTile(ModelPtr model, int row, int col);

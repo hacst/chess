@@ -5,9 +5,6 @@
 #include <memory>
 #include <type_traits>
 #include <ostream>
-#include <boost/log/trivial.hpp>
-
-#define LOG	BOOST_LOG_TRIVIAL
 
 template<typename T>
 struct has_toString

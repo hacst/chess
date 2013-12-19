@@ -35,7 +35,7 @@ set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME     ON)
 
-find_package(Boost 1.54 REQUIRED COMPONENTS log filesystem date_time thread system program_options serialization)
+find_package(Boost 1.54 REQUIRED COMPONENTS log_setup log filesystem date_time thread system program_options serialization)
 
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
 add_subdirectory(3rdparty/SOIL)
@@ -104,8 +104,8 @@ set(MISC_SOURCES
     src/misc/ConsolePlayer.h
     src/misc/ConsolePlayer.cpp
 
-    src/misc/ConsoleObserver.h
-    src/misc/ConsoleObserver.cpp
+    src/misc/LoggingGameObserver.h
+    src/misc/LoggingGameObserver.cpp
 
     src/misc/DummyPlayer.h
 
@@ -160,6 +160,8 @@ source_group(logic\\threading FILES ${LOGIC_THREADING_SOURCES})
 set(CORE_SOURCES
     src/core/GameConfiguration.h
     src/core/GameConfiguration.cpp
+    src/core/Logging.h
+    src/core/Logging.cpp
 )
 
 source_group(core FILES ${CORE_SOURCES})
@@ -213,7 +215,7 @@ include_directories(SYSTEM
     ${Boost_INCLUDE_DIRS}
     ${SOIL_SOURCE_DIR}/include
     ${freetype_SOURCE_DIR}/include
-    ${assimp_SOURCE_DIR}/include
+    ${Assimp_SOURCE_DIR}/include
 )
 
 include_directories(
@@ -228,7 +230,7 @@ add_definitions(${OpenGL_DEFINITIONS})
 
 if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # Enable C++11 and stricter warning handling. Also enable debug symbols.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -g")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -Wno-missing-braces -g")
 elseif(MSVC)
     # Enable warnings as errors on MSVC.
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
