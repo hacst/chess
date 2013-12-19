@@ -19,7 +19,7 @@ void MenuOptions::enter() {
 	fsm.window->set2DMode();
 
 	// set background color
-	glClearColor(0.6, 0.21, 0, 0.0);
+	glClearColor(0.6f, 0.21f, 0, 0);
 
 	menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
 	menu->addButton("OptVideoMode.png")->onClick(boost::bind(&MenuOptions::onResolutionChange, this));

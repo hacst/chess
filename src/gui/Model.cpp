@@ -82,10 +82,10 @@ void Model::draw() {
 		glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
 		// note: transformation matrices are multiplied from right -> last matrix first!
-		glTranslatef(m_position.x, m_position.y, m_position.z);							// 5) translate to world space coordinates
+		glTranslatef((float)m_position.x, (float)m_position.y, (float)m_position.z);							// 5) translate to world space coordinates
 		glScalef(m_correctScaling, m_correctScaling, m_correctScaling);					// 4) scale
-		glRotatef(flipModelDirection ? 180.0 : 0.0, 0.0f, 1.0f, 0.0f);					// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
-		glTranslatef(m_correctPosition.x, m_correctPosition.y, m_correctPosition.z);	// 2) correct local origin
+		glRotatef(flipModelDirection ? 180.0f : 0.0f, 0.0f, 1.0f, 0.0f);					// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
+        glTranslatef((float) m_correctPosition.x, (float) m_correctPosition.y, (float) m_correctPosition.z);	// 2) correct local origin
 		glRotatef(-90.0, 1.0f, 0.0f, 0.0f);												// 1) correct rotation around x-axis to "stand-up" the model
 
 		model->drawScene();																// 6) draw the scene

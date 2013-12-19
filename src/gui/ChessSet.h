@@ -51,7 +51,14 @@ private:
 	ModelPtr king, pawn, queen, bishop, knight, rook;
 	std::array<ModelPtr, 6> models;
 	std::vector<std::string> extResources;
-	std::array<std::array<float, 7>, 6> extCorrectionValues;	// 6 models a 7 parameters
+
+    struct CorrectionValue {
+        int x, y, z;
+        float scale;
+        int rotX, rotY, rotZ;
+    };
+
+	std::array<CorrectionValue, 6> extCorrectionValues;	// 6 models a 7 parameters
 
 	// OpenGL DisplayLists
 	GLuint m_boardList;

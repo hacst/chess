@@ -12,17 +12,17 @@ GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height)
 	, m_fsm(StateMachine::getInstance()) {
 
 	// front and back pane
-	m_zNear = 0.1;
-	m_zFar = 400.0;
+	m_zNear = 0.1f;
+	m_zFar = 400.0f;
 
 	// initial position of the camera
-	m_cX = 0.0;
-	m_cY = 200.0;
-	m_cZ = m_zFar / 2.0;
+	m_cX = 0.0f;
+	m_cY = 200.0f;
+	m_cZ = m_zFar / 2.0f;
 
-	m_cameraAngleX = 40.0;
-	m_cameraAngleY = 0.0;
-	m_cameraAngleZ = 0.0;
+	m_cameraAngleX = 40.0f;
+	m_cameraAngleY = 0.0f;
+	m_cameraAngleZ = 0.0f;
 
 	m_fov = 60.0;
 
@@ -41,7 +41,7 @@ int GuiWindow::getHeight() {
 }
 
 int GuiWindow::getCameraDistanceToOrigin() {
-	return m_zFar / 2.0;
+	return static_cast<int>(m_zFar / 2.0f);
 }
 
 bool GuiWindow::isFullscreen() {
@@ -294,7 +294,7 @@ void GuiWindow::printText(int x, int y, float red, float green, float blue, std:
 void GuiWindow::printHeadline(std::string text) {
 	fontObject fo = {
 		10, 10,
-		0.8, 0.8, 0.8,
+		0.8f, 0.8f, 0.8f,
 		fontSize::HEADLINE,
 		fontHeadline,
 		text
@@ -306,7 +306,7 @@ void GuiWindow::printHeadline(std::string text) {
 void GuiWindow::printSubHeadline(std::string text) {
 	fontObject fo = {
 		40, fontSize::HEADLINE + 20,
-		0.8, 0.8, 0.8,
+		0.8f, 0.8f, 0.8f,
 		fontSize::SUB_HEADLINE,
 		fontSubHeadline,
 		text
@@ -335,7 +335,7 @@ void GuiWindow::drawText(fontObject fo) {
 	glPushMatrix();
 		glColor3f(fo.red, fo.green, fo.blue);
 		int inverseOffset = m_height - fo.fontSize;
-		freetype::print(fo.font, fo.x, inverseOffset - fo.y, fo.text.c_str());
+		freetype::print(fo.font, static_cast<float>(fo.x), static_cast<float>(inverseOffset - fo.y), fo.text.c_str());
 	glPopMatrix();
 
 	set2DMode();

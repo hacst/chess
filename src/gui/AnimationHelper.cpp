@@ -39,7 +39,7 @@ float AnimationHelper::ease(FunctionType type, const float lowerBound, const flo
 
 	switch (type) {
 		case EASE_OUTSINE:
-			m_completeness = sinf(elapsed_time / static_cast<float>(m_duration)* (M_PI / 2));
+			m_completeness = sinf(elapsed_time / static_cast<float>(m_duration) * (static_cast<float>(M_PI) / 2.f));
 			break;
 		case EASE_LINEAR:
 		default:

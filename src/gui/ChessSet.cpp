@@ -20,14 +20,14 @@ ChessSet::ChessSet() {
 		"resources/3dmodels/pawn.3DS"
 	};
 
-	extCorrectionValues = { {
-		{ { 61, 11, 0, 1, -90, 0, 0 } },	// king
-		{ { 40, 11, 0, 1, -90, 0, 0 } },	// queen
-		{ { 1, 19, 0, 1, -90, 0, 0 } },		// bishop
-		{ { 0, 0, 0, 0.4, -90, 0, 0 } },	// knight
-		{ { 20, 11, 0, 1, -90, 0, 0 } },	// rook
-		{ { 0, 12, 0, 1, -90, 0, 0 } }		// pawn
-	} };
+    extCorrectionValues = { {
+        { 61, 11, 0, 1, -90, 0, 0 },	// king
+        { 40, 11, 0, 1, -90, 0, 0 },	// queen
+        { 1, 19, 0, 1, -90, 0, 0 },		// bishop
+        { 0, 0, 0, 0.4, -90, 0, 0 },	// knight
+        { 20, 11, 0, 1, -90, 0, 0 },	// rook
+        { 0, 12, 0, 1, -90, 0, 0 }		// pawn
+    } };
 }
 
 ChessSet::~ChessSet() {
@@ -49,15 +49,12 @@ void ChessSet::loadResources() {
 		models[i] = make_shared<Model>(resName);
 
 		// set the correction values for the model
-		models[i]->setCorrectionValues( 
-			extCorrectionValues[i][0],
-			extCorrectionValues[i][1],
-			extCorrectionValues[i][2],
-			extCorrectionValues[i][3],
-			extCorrectionValues[i][4],
-			extCorrectionValues[i][5],
-			extCorrectionValues[i][6]
-		);
+        auto& cor = extCorrectionValues[i];
+        models[i]->setCorrectionValues(
+            cor.x, cor.y, cor.z,
+            cor.scale,
+            cor.rotX, cor.rotY, cor.rotZ
+        );
 
 		// cache the model in a display list
 
@@ -106,7 +103,7 @@ void ChessSet::draw() {
 			int col = field / 8;
 
 			glPushMatrix();
-				glTranslatef(((row - 4) * m_tileWidth) + (m_tileWidth / 2), 0, ((col - 4) * m_tileWidth) + (m_tileWidth / 2));
+				glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), 0, ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
 				glCallList(m_modelList[p.type + (p.player == PlayerColor::Black ? 6 : 0)]);
 			glPopMatrix();
 		}
@@ -127,7 +124,7 @@ void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
 	0,
 	((col - 4) * m_tileWidth) + (m_tileWidth / 2)
 	); */
-	glTranslatef(((row - 4) * m_tileWidth) + (m_tileWidth / 2), 0, ((col - 4) * m_tileWidth) + (m_tileWidth / 2));
+	glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), 0, ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
 }
 
 void ChessSet::createChessBoardList() {
@@ -159,7 +156,7 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 	int halfHeight = m_tileHeight;
 
 	glPushMatrix();
-		glTranslatef(x, y, z);
+    glTranslatef(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
 		
 		glBegin(GL_QUADS);
 			GLfloat emission[] = { 0.7f, 0.7f, 0.7f, 1.0f };		// material emits this color (not light-dependent)
@@ -182,40 +179,40 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 			glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
 			// front face
-			glVertex3f(halfWidth, halfHeight, halfWidth);	// top right
-			glVertex3f(-halfWidth, halfHeight, halfWidth);	// top left
-			glVertex3f(-halfWidth, -halfHeight, halfWidth);	// bottom left
-			glVertex3f(halfWidth, -halfHeight, halfWidth);	// bottom right
+			glVertex3i(halfWidth, halfHeight, halfWidth);	// top right
+			glVertex3i(-halfWidth, halfHeight, halfWidth);	// top left
+			glVertex3i(-halfWidth, -halfHeight, halfWidth);	// bottom left
+			glVertex3i(halfWidth, -halfHeight, halfWidth);	// bottom right
 
 			// left face
-			glVertex3f(-halfWidth, halfHeight, halfWidth);
-			glVertex3f(-halfWidth, halfHeight, -halfWidth);
-			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3f(-halfWidth, -halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, -halfWidth);
+			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(-halfWidth, -halfHeight, halfWidth);
 
 			// back face
-			glVertex3f(halfWidth, halfHeight, -halfWidth);
-			glVertex3f(-halfWidth, halfHeight, -halfWidth);
-			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3f(halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, -halfWidth);
+			glVertex3i(-halfWidth, halfHeight, -halfWidth);
+			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(halfWidth, -halfHeight, -halfWidth);
 
 			// right face
-			glVertex3f(halfWidth, halfHeight, -halfWidth);
-			glVertex3f(halfWidth, halfHeight, halfWidth);
-			glVertex3f(halfWidth, -halfHeight, halfWidth);
-			glVertex3f(halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, halfWidth);
+			glVertex3i(halfWidth, -halfHeight, halfWidth);
+			glVertex3i(halfWidth, -halfHeight, -halfWidth);
 
 			// top face
-			glVertex3f(halfWidth, halfHeight, halfWidth);
-			glVertex3f(-halfWidth, halfHeight, halfWidth);
-			glVertex3f(-halfWidth, halfHeight, -halfWidth);
-			glVertex3f(halfWidth, halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, -halfWidth);
 
 			// bottom face
-			glVertex3f(halfWidth, -halfHeight, halfWidth);
-			glVertex3f(-halfWidth, -halfHeight, halfWidth);
-			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3f(halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(halfWidth, -halfHeight, halfWidth);
+			glVertex3i(-halfWidth, -halfHeight, halfWidth);
+			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3i(halfWidth, -halfHeight, -halfWidth);
 		glEnd();
 	glPopMatrix();
 }

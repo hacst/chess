@@ -51,13 +51,13 @@ void Menu2D::draw() {
 
 	// draw a transparent background for the menu with an animation
 	animationHelper->setStartNowOrKeepIt();
-	glColor4f(0.2, 0.2, 0.3, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
+	glColor4f(0.2f, 0.2f, 0.3f, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
 
 	glBegin(GL_QUADS);
-		glVertex2f(m_marginLeft - 20,					m_marginTop - 20			);
-		glVertex2f(m_marginLeft + m_buttonWidth + 20,	m_marginTop - 20			);
-		glVertex2f(m_marginLeft + m_buttonWidth + 20,	m_marginTop + m_height + 20	);
-		glVertex2f(m_marginLeft - 20,					m_marginTop + m_height + 20	);
+		glVertex2i(m_marginLeft - 20,					m_marginTop - 20			);
+		glVertex2i(m_marginLeft + m_buttonWidth + 20,	m_marginTop - 20			);
+		glVertex2i(m_marginLeft + m_buttonWidth + 20,	m_marginTop + m_height + 20	);
+		glVertex2i(m_marginLeft - 20,					m_marginTop + m_height + 20	);
 	glEnd();
 
 	// iterate over all items and let them draw

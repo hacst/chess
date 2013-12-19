@@ -9,7 +9,7 @@ endif()
 
 if (MSVC)
     # Add windows target version (Windows XP)
-    add_definitions(-D_WIN32_WINNT=0x0501 -DNOMINMAX)
+    add_definitions(-D_WIN32_WINNT=0x0501 -DNOMINMAX -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
     # Ensure we use the multithreaded runtime
     # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace
@@ -35,7 +35,7 @@ set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME     ON)
 
-find_package(Boost 1.54 REQUIRED COMPONENTS log_setup log filesystem date_time thread system program_options serialization)
+find_package(Boost 1.54 REQUIRED COMPONENTS chrono log_setup log filesystem date_time thread system program_options serialization)
 
 add_subdirectory(3rdparty/SDL-2.0.1-7804)
 add_subdirectory(3rdparty/SOIL)

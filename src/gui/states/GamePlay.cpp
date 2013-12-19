@@ -292,11 +292,11 @@ void GamePlay::rotateCamera() {
 	}
 
 	float angleDegree = m_animationHelperCamera->ease(AnimationHelper::EASE_OUTSINE, static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
-	float angleRadian = angleDegree * (M_PI / 180.0f);
+	float angleRadian = angleDegree * ((float)M_PI / 180.0f);
 
 	float newCameraX = sinf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
 	float newCameraZ = cosf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
-	float rotationY = (atan2(newCameraX, -newCameraZ) * 180.0f / M_PI) - 180.0f;
+	float rotationY = (atan2f(newCameraX, -newCameraZ) * 180.0f / (float)M_PI) - 180.0f;
 
 	fsm.window->m_cameraAngleY = rotationY;
 	fsm.window->m_cX = newCameraX;
