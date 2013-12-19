@@ -55,7 +55,8 @@ private:
 
 	// OpenGL DisplayLists
 	GLuint m_boardList;
-	GLuint m_modelsList;
+	GLuint m_modelList[12];	// first 6 white, last 6 black
+	std::array<Piece, 64> m_state;
 
 	int m_tileWidth, m_tileHeight;
 

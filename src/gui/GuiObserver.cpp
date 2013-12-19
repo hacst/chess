@@ -33,7 +33,7 @@ void GuiObserver::onTurnStart(PlayerColor who) {
 }
 
 void GuiObserver::onTurnEnd(PlayerColor who, Turn turn, GameState newState) {
-	//m_chessSetPtr->setState(newState.getChessBoard().getBoard());
+	m_chessSetPtr->setState(newState.getChessBoard().getBoard());
 	
 	cout << "GuiObserver (" << this_thread::get_id() << "): " << who << " performed: " << turn << endl;
 	cout << endl << newState << endl << endl;

@@ -8,23 +8,6 @@ Menu2D::Menu2D(int windowWidth, int windowHeight)
 	, m_windowHeight(windowHeight)
 	, m_btCount(0) {
 
-	//m_height = menuOptions.size() * (m_buttonHeight + m_buttonMargin);
-	//m_width = m_buttonWidth;
-	//m_marginTop = (windowHeight / 2) - (m_height / 2);		// center in height
-	//m_marginLeft = (windowWidth / 2) - (m_buttonWidth / 2);	// center in width
-
-	// create foreach menuOption one button and add it to the vector collection
-	/*int index = 0;
-	for (auto& mo : menuOptions) {
-		int btPositionY = (index * m_buttonHeight) + ((index + 1) * m_buttonMargin) + m_marginTop - (m_buttonMargin / 2);
-		Menu2DItemPtr item = make_shared<Menu2DItem>(index, mo, m_marginLeft, btPositionY, m_buttonWidth, m_buttonHeight, m_animationDuration + (m_animationDuration / 2));
-
-		item->whenClicked([=]() { test(index); });
-		items.push_back(item);
-
-		++index;
-	}*/
-
 	// create an animation object
 	animationHelper = make_shared<AnimationHelper>(m_animationDuration);
 }
@@ -68,7 +51,7 @@ void Menu2D::draw() {
 
 	// draw a transparent background for the menu with an animation
 	animationHelper->setStartNowOrKeepIt();
-	glColor4f(0.2, 0.2, 0.2, animationHelper->easeLinear(0.1, 1.0));
+	glColor4f(0.2, 0.2, 0.3, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
 
 	glBegin(GL_QUADS);
 		glVertex2f(m_marginLeft - 20,					m_marginTop - 20			);

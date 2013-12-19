@@ -43,41 +43,51 @@ void Model::loadScene() {
 
 void Model::draw() {
 	glPushMatrix();
-		// see http://www.opengl.org/sdk/docs/man2/xhtml/glMaterial.xml
+		bool flipModelDirection = false;
+		GLfloat emission[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+		GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		GLfloat diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		GLfloat specular[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-		GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		GLfloat ambient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		if (m_color == Color::BLACK) {
+			flipModelDirection = true;
+
 			emission[0] = 0.0f;
 			emission[1] = 0.0f;
 			emission[2] = 0.0f;
+			emission[3] = 0.2f;
 
-			ambient[0] = 1.0f;
-			ambient[1] = 1.0f;
-			ambient[2] = 1.0f;
+			ambient[0] = 0.0f;
+			ambient[1] = 0.0f;
+			ambient[2] = 0.0f;
+			ambient[3] = 0.2f;
+
+			diffuse[0] = 0.2f;
+			diffuse[1] = 0.2f;
+			diffuse[2] = 0.2f;
+			diffuse[3] = 1.0f;
+
+			specular[0] = 0.0f;
+			specular[1] = 0.0f;
+			specular[2] = 0.0f;
+			specular[3] = 1.0f;
 		}
 
-
-		GLfloat diffuse[] = { 1.0f, 0.0f, 0.0f, 1.f };
-		GLfloat specular[] = { 1.0f, 1.0f, 0.5f, 1.f };
+		GLfloat shininess[] = { 100 };
 
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 		glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-
-		GLfloat shininess[] = { 120 };
 		glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
-		glTranslatef(m_position.x, m_position.y, m_position.z);							// global position
-		glTranslatef(m_correctPosition.x, m_correctPosition.y, m_correctPosition.z);	// correct local origin
-		glRotatef(m_correctRotation.x, 1, 0, 0);										// correct rotation
-		glRotatef(m_correctRotation.y, 0, 1, 0);
-		glRotatef(m_correctRotation.z, 0, 0, 1);
-		glScalef(m_correctScaling, m_correctScaling, m_correctScaling);					// correct scaling
-		m_color == Color::WHITE ? glColor3f(1, 1, 1) : glColor3f(0, 0, 0);				// color
-		//glRotatef(m_rotateY, 0, 1, 0);													// local rotation
+		// note: transformation matrices are multiplied from right -> last matrix first!
+		glTranslatef(m_position.x, m_position.y, m_position.z);							// 5) translate to world space coordinates
+		glScalef(m_correctScaling, m_correctScaling, m_correctScaling);					// 4) scale
+		glRotatef(flipModelDirection ? 180.0 : 0.0, 0.0f, 1.0f, 0.0f);					// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
+		glTranslatef(m_correctPosition.x, m_correctPosition.y, m_correctPosition.z);	// 2) correct local origin
+		glRotatef(-90.0, 1.0f, 0.0f, 0.0f);												// 1) correct rotation around x-axis to "stand-up" the model
 
-		model->drawScene();
+		model->drawScene();																// 6) draw the scene
 	glPopMatrix();
 }
