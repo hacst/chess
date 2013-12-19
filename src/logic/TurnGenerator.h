@@ -10,11 +10,11 @@
 
 
 enum File {
-    A, B, C, D, E, F, G, H
+    A = 0, B, C, D, E, F, G, H
 };
 
 enum Rank {
-    One, Two, Three, Four, Five, Six, Seven, Eight
+    One = 0, Two, Three, Four, Five, Six, Seven, Eight
 };
 
 
@@ -52,10 +52,10 @@ public:
     virtual BitBoard maskFile (File file);
     virtual BitBoard clearFile(File file);
 
-    virtual BitBoard getRightBits(BitBoard bbPiece);
-    virtual BitBoard getLeftBits (BitBoard bbPiece);
-    virtual BitBoard getUpperBits(BitBoard bbPiece);
-    virtual BitBoard getLowerBits(BitBoard bbPiece);
+    virtual BitBoard getBitsE(BitBoard bbPiece);
+    virtual BitBoard getBitsW(BitBoard bbPiece);
+    virtual BitBoard getBitsN(BitBoard bbPiece);
+    virtual BitBoard getBitsS(BitBoard bbPiece);
 
     virtual BitBoard getBitsNE(BitBoard bbPiece);
     virtual BitBoard getBitsNW(BitBoard bbPiece);

@@ -151,45 +151,39 @@ BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOppPieces,
 
 BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
                                         BitBoard allPieces) {
-    return 0;
-
     BitBoard bbNE = getBitsNE(bishops);
     BitBoard bbNW = getBitsNW(bishops);
     BitBoard bbSE = getBitsSE(bishops);
     BitBoard bbSW = getBitsSW(bishops);
 
-
-    LOG(info) << bitBoardToString(bbNE);
-    //LOG(info) << bitBoardToString(bbNW);
-    //LOG(info) << bitBoardToString(bbSE);
-    //LOG(info) << bitBoardToString(bbSW);
-
-
     // north east moves
     BitBoard neMoves = bbNE & allPieces;
-    neMoves = (neMoves << 9) | (neMoves << 18) | (neMoves << 27) | (neMoves << 36) |
-              (neMoves << 45) | (neMoves << 54);
+    neMoves = (neMoves <<  9) | (neMoves << 18) | (neMoves << 27) |
+              (neMoves << 36) | (neMoves << 45) | (neMoves << 54);
     neMoves &= bbNE;
     neMoves ^= bbNE;
     neMoves &= (allOppPieces | ~(allPieces));
 
     // north west moves
     BitBoard nwMoves = bbNW & allPieces;
-
+    nwMoves = (nwMoves <<  7) | (nwMoves << 14) | (nwMoves << 21) |
+              (nwMoves << 28) | (nwMoves << 35) | (nwMoves << 42);
     nwMoves &= bbNW;
     nwMoves ^= bbNW;
     nwMoves &= (allOppPieces | ~(allPieces));
 
-    // south east moves
+    // south east movespp
     BitBoard seMoves = bbSE & allPieces;
-
+    seMoves = (seMoves >>  7) | (seMoves >> 14) | (seMoves >> 21) |
+              (seMoves >> 28) | (seMoves >> 35) | (seMoves >> 42);
     seMoves &= bbSE;
     seMoves ^= bbSE;
     seMoves &= (allOppPieces | ~(allPieces));
 
     // south west moves
     BitBoard swMoves = bbSW & allPieces;
-
+    swMoves = (swMoves >>  9) | (swMoves >> 18) | (swMoves >> 27) |
+              (swMoves >> 36) | (swMoves >> 45) | (swMoves >> 54);
     swMoves &= bbSW;
     swMoves ^= bbSW;
     swMoves &= (allOppPieces | ~(allPieces));
@@ -199,43 +193,44 @@ BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
 
 BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
                                       BitBoard allPieces) {
-    BitBoard rightBits = getRightBits(rooks);
-    BitBoard leftBits  = getLeftBits (rooks);
-    BitBoard upperBits = getUpperBits(rooks);
-    BitBoard lowerBits = getLowerBits(rooks);
+    BitBoard bbE = getBitsE(rooks);
+    BitBoard bbW = getBitsW(rooks);
+    BitBoard bbN = getBitsN(rooks);
+    BitBoard bbS = getBitsS(rooks);
 
     // right moves
-    BitBoard rightMoves = rightBits & allPieces;
+    BitBoard rightMoves = bbE & allPieces;
     rightMoves = (rightMoves << 1) | (rightMoves << 2) | (rightMoves << 3) |
                  (rightMoves << 4) | (rightMoves << 5) | (rightMoves << 6) |
                  (rightMoves << 7);
     //rightMoves = 0xFE00000000000000 >> (56-LSB von rightMoves);
-    rightMoves &= rightBits;
-    rightMoves ^= rightBits;
+    rightMoves &= bbE;
+    rightMoves ^= bbE;
     rightMoves &= (allOppPieces | ~(allPieces));
 
     // left moves
-    BitBoard leftMoves = leftBits & allPieces;
+    BitBoard leftMoves = bbW & allPieces;
     leftMoves = 0xFE00000000000000 >> (64-BB_SCAN(leftMoves));
-    leftMoves &= leftBits;
-    leftMoves ^= leftBits;
+    leftMoves &= bbW;
+    leftMoves ^= bbW;
     leftMoves &= (allOppPieces | ~(allPieces));
 
     // up moves
-    BitBoard upMoves = upperBits & allPieces;
+    BitBoard upMoves = bbN & allPieces;
     upMoves = (upMoves <<  8) | (upMoves << 16) | (upMoves << 24) |
               (upMoves << 32) | (upMoves << 40) | (upMoves << 48) |
               (upMoves << 56);
     //upMoves = 0x0101010101010100 << LSB;
-    upMoves &= upperBits;
-    upMoves ^= upperBits;
+    upMoves &= bbN;
+    upMoves ^= bbN;
     upMoves &= (allOppPieces | ~(allPieces));
 
+
     // down moves
-    BitBoard downMoves = lowerBits & allPieces;
+    BitBoard downMoves = bbS & allPieces;
     downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
-    downMoves &= lowerBits;
-    downMoves ^= lowerBits;
+    downMoves &= bbS;
+    downMoves ^= bbS;
     downMoves &= (allOppPieces | ~(allPieces));
 
     return rightMoves | leftMoves | upMoves | downMoves;
@@ -247,41 +242,80 @@ BitBoard TurnGenerator::getBitsNE(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x8040201008040200 << field;
 
-    return bb;
+    BitBoard bbMask = 0;
+    for (int i = (field % 8) + 1; i < 8; i++) {
+        bbMask |= maskFile(static_cast<File>(i));
+    }
+
+    return bb & bbMask;
 }
 
 BitBoard TurnGenerator::getBitsNW(BitBoard bbPiece) {
-    return 0;
+    int field = BB_SCAN(bbPiece);
+    int shift = field - 7;
+    BitBoard bb;
+
+    if (shift < 0) {
+        bb = 0x0102040810204000 >> shift*(-1);
+    } else {
+        bb = 0x0102040810204000 << shift;
+    }
+
+    BitBoard bbMask = 0;
+    for (int i = 0; i < (field % 8); i++) {
+        bbMask |= maskFile(static_cast<File>(i));
+    }
+
+    return bb & bbMask;
 }
 
 BitBoard TurnGenerator::getBitsSE(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
-    BitBoard bb = 0x8040201008040200 >> (56-field);
+    int shift = 56 - field;
+    BitBoard bb;
 
-    return bb;
+    if (shift < 0) {
+        bb = 0x0002040810204080 << shift*(-1);
+    } else {
+        bb = 0x0002040810204080 >> shift;
+    }
+
+    BitBoard bbMask = 0;
+    for (int i = (field % 8) + 1; i < 8; i++) {
+        bbMask |= maskFile(static_cast<File>(i));
+    }
+
+    return bb & bbMask;
 }
 
 BitBoard TurnGenerator::getBitsSW(BitBoard bbPiece) {
-    return 0;
+    int field = BB_SCAN(bbPiece);
+    BitBoard bb = 0x0040201008040201 >> (64-(field+1));
+
+    BitBoard bbMask = 0;
+    for (int i = 0; i < (field % 8); i++) {
+        bbMask |= maskFile(static_cast<File>(i));
+    }
+
+    return bb & bbMask;
 }
 
 
 
 
+// TODO: Shift mit mehr als 32 geht nicht?
+//BitBoard bb = 0x00000000000000FE << 32;
+//bb &= maskRank(static_cast<Rank>(field / 8));
 
-BitBoard TurnGenerator::getRightBits(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsE(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0xFE00000000000000 >> (56-field);
     bb &= maskRank(static_cast<Rank>(field / 8));
 
-    // TODO: Shift mit mehr als 32 geht nicht?
-    //BitBoard bb = 0x00000000000000FE << 32;
-    //bb &= maskRank(static_cast<Rank>(field / 8));
-
     return bb;
 }
 
-BitBoard TurnGenerator::getLeftBits(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsW(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0xFE00000000000000 >> (64-field);
     bb &= maskRank(static_cast<Rank>(field / 8));
@@ -289,82 +323,46 @@ BitBoard TurnGenerator::getLeftBits(BitBoard bbPiece) {
     return bb;
 }
 
-BitBoard TurnGenerator::getUpperBits(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsN(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x0101010101010100 << field;
 
     return bb;
 }
 
-BitBoard TurnGenerator::getLowerBits(BitBoard bbPiece) {
+// TODO: shifting a number of bits that is equal to or larger than
+// its width is undefined behavior. You can only safely shift a 64-bit
+// integer between 0 and 63 positions
+// BitBoard bb = 0x0101010101010100 >> (64-field);
+
+BitBoard TurnGenerator::getBitsS(BitBoard bbPiece) {
     int field = BB_SCAN(bbPiece);
-    BitBoard bb = 0x0101010101010100 >> (64-field);
+    BitBoard bb = 0x0080808080808080 >> (64-(field+1));
 
     return bb;
 }
-
 
 
 BitBoard TurnGenerator::maskRank(Rank rank) {
-    BitBoard bb = 0;
-    int offset = rank * 8;
+    // Geht nicht! Da die Zahl als 32 Bit Integer aufgefasst wird
+    // funktioniert der Shift nicht korrekt!
+    // http://stackoverflow.com/questions/10499104/is-shifting-more-than-32-bits-of-a-uint64-t-integer-on-an-x86-machine-undefined
+    //return 0x00000000000000FF << (rank * 8);
 
-    BIT_SET(bb, offset);
-    BIT_SET(bb, offset + 1);
-    BIT_SET(bb, offset + 2);
-    BIT_SET(bb, offset + 3);
-    BIT_SET(bb, offset + 4);
-    BIT_SET(bb, offset + 5);
-    BIT_SET(bb, offset + 6);
-    BIT_SET(bb, offset + 7);
+    return (BitBoard)0x00000000000000FF << (rank *8);
 
-    return bb;
+    //BitBoard bb = 0x00000000000000FF;
+    //return bb << (rank * 8);
 }
 
 BitBoard TurnGenerator::clearRank(Rank rank) {
-    BitBoard bb = ULLONG_MAX;
-    int offset = rank * 8;
-
-    BIT_CLEAR(bb, offset);
-    BIT_CLEAR(bb, offset + 1);
-    BIT_CLEAR(bb, offset + 2);
-    BIT_CLEAR(bb, offset + 3);
-    BIT_CLEAR(bb, offset + 4);
-    BIT_CLEAR(bb, offset + 5);
-    BIT_CLEAR(bb, offset + 6);
-    BIT_CLEAR(bb, offset + 7);
-
-    return bb;
+    return ~(maskRank(rank));
 }
 
 BitBoard TurnGenerator::maskFile(File file) {
-    BitBoard bb = 0;
-
-    BIT_SET(bb, file);
-    BIT_SET(bb, file + 8);
-    BIT_SET(bb, file + 16);
-    BIT_SET(bb, file + 24);
-    BIT_SET(bb, file + 32);
-    BIT_SET(bb, file + 40);
-    BIT_SET(bb, file + 48);
-    BIT_SET(bb, file + 56);
-
-    return bb;
+    return 0x0101010101010101 << file;
 }
 
 BitBoard TurnGenerator::clearFile(File file) {
-    BitBoard bb = ULLONG_MAX;
-
-    BIT_CLEAR(bb, file);
-    BIT_CLEAR(bb, file + 8);
-    BIT_CLEAR(bb, file + 16);
-    BIT_CLEAR(bb, file + 24);
-    BIT_CLEAR(bb, file + 32);
-    BIT_CLEAR(bb, file + 40);
-    BIT_CLEAR(bb, file + 48);
-    BIT_CLEAR(bb, file + 56);
-
-    return bb;
-    // TODO: Gehts so auch?
-    //bitBoard &= ~((BitBoard)1 << file << file + 8 << file + 16);
+    return ~(maskFile(file));
 }
