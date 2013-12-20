@@ -27,11 +27,11 @@ GameLogic::~GameLogic() {
     }
 }
 
-AbstractPlayerPtr GameLogic::getWhite() const {
+AbstractPlayerPtr GameLogic::getWhitePlayer() const {
     return m_white;
 }
 
-AbstractPlayerPtr GameLogic::getBlack() const {
+AbstractPlayerPtr GameLogic::getBlackPlayer() const {
     return m_black;
 }
 

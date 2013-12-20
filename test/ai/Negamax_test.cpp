@@ -39,7 +39,7 @@ TEST(Negamax, searchGameOver) {
     Negamax<decltype(mockEval)> negamax(mockEval);
 
     MockGameOver mockGameState;
-    auto result = negamax.search(mockGameState, 10);
+    auto result = negamax.search(mockGameState, 5);
     EXPECT_FALSE(result.turn);
 }
 
@@ -54,7 +54,7 @@ TEST(Negamax, searchDepthExhaustion) {
     Negamax<decltype(mockEval)> negamax(mockEval);
 
     MockGameState mockGameState;
-    auto result = negamax.search(mockGameState, 10);
+    auto result = negamax.search(mockGameState, 5);
     EXPECT_TRUE(result.turn);
     EXPECT_EQ(0, result.score);
 }

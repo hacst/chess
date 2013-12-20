@@ -5,6 +5,10 @@
 #include "logic/threading/ServiceDispatcherThread.h"
 #include "misc/helper.h"
 
+/**
+ * @brief Class which takes human player interaction from a console.
+ * @warning Has serious issues on turn timeout due to blocking console reads.
+ */
 class ConsolePlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:
 	virtual ~ConsolePlayer();

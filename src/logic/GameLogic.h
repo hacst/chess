@@ -11,13 +11,23 @@
 #include "misc/helper.h"
 #include "core/Logging.h"
 
+/**
+ * @brief GameLogic implementation for a game of chess with observers.
+ */
 class GameLogic : public AbstractGameLogic {
 public:
+    /**
+     * @brief Sets up a GameLogic object for one chess game.
+     * @note Don't forget to start operation by calling start.
+     * @param white White player reference
+     * @param black Black player reference
+     * @param config Configuration for this game
+     */
     GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config);
     ~GameLogic();
 
-    virtual AbstractPlayerPtr getWhite() const override;
-    virtual AbstractPlayerPtr getBlack() const override;
+    virtual AbstractPlayerPtr getWhitePlayer() const override;
+    virtual AbstractPlayerPtr getBlackPlayer() const override;
 
     virtual void addObserver(AbstractGameObserverPtr observer) override;
 
@@ -28,10 +38,23 @@ public:
     virtual void stop() override;
 
 private:
-    /// Contains actual functionality of GameLogic
+    /**
+     * @brief Executes a blocking game loop implementation.
+     * Repeatedly asks the white and black player to take turns
+     * until one wins the game or another game terminating event
+     * occurs. Notifies registered observer of game state changes
+     * and handles timeout events.
+     */
     virtual void run() override;
 
-    /// Wraps std::future::wait_for so the wait can be aborted every m_tickLength time.
+    /**
+     * @brief Helper function for performing an interruptable wait on a future.
+     * Splits up a usually uninterruptable wait on a future into m_tickLength
+     * long waits with checks for the m_abort condition.
+     * @see std::future<>::wait_for
+     * @param fut Future to wait on
+     * @param waitInMs Maximum waiting time
+     */
     template <typename Future>
     bool wait_for(Future&& fut, std::chrono::milliseconds waitInMs) {
         std::chrono::milliseconds waited(0);
@@ -50,16 +73,24 @@ private:
     }
 
     /**
-     * @brief Abortable wait
+     * @brief Helper function for performing an interruptable wait.
+     * Splits up a blocking wait into m_tickLength long waits with
+     * checks for the m_abort condition.
+     * @param waitInMs Time to wait.
      */
     void wait(std::chrono::milliseconds waitInMs) const;
 
-    /// Function to call a given function on all attached observers.
-    ///
-    /// Usage:	notify([&](AbstractGameObserverPtr& obs) {
-    ///			    obs->someObserverFunction(parameters);
-    ///			});
-    ///
+    /** 
+     * @brief Function to call a given function on all attached observers.
+     * Basically a observers.map(function).
+     * 
+     * Usage:   notify([&](AbstractGameObserverPtr& obs) {
+     *              // This is your function which is handed obs
+     *              obs->someObserverFunction(parameters);
+     *          });
+     * 
+     * @param f Function which takes an AbstractGameObserverPtr as an argument.
+     */
     template <typename Function>
     void notify(Function&& f) {
         for (auto& observer : m_observers) {
@@ -67,13 +98,17 @@ private:
         }
     }
 
+    /**
+     * @return Returns a reference to the next player to make his turn.
+     */
     AbstractPlayerPtr& getCurrentPlayer();
 
-    // Interval in which the GameLogic should check for
+    //! Interval in which the GameLogic should check for aborts (@see m_abort)
     std::chrono::milliseconds m_tickLength;
-    // If true the running game is aborted
+    //! If true the running game is aborted
     bool m_abort;
 
+    //! List of observers for the game to be notified of game events (contains players)
     std::vector<AbstractGameObserverPtr> m_observers;
     AbstractPlayerPtr m_white;
     AbstractPlayerPtr m_black;

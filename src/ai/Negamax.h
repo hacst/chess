@@ -10,21 +10,29 @@
 #include "logic/GameState.h"
 #include "core/Logging.h"
 
+/**
+ * @brief Implementation of a Negamax algorithm.
+ */
 template <typename TEvaluatorPtr = EvaluatorPtr>
 class Negamax {
 public:
+    /**
+     * @brief Creates a new algorithm instance.
+     * @param evaluator Evaluator to use in search.
+     */
     Negamax(TEvaluatorPtr evaluator)
         : m_evaluator(evaluator)
         , m_log(Logging::initLogger("Negamax")) {
     }
 
+    /**
+     * @brief Structure for holding search results.
+     */
     struct Result {
+        //! Evaluator score estimation for this turn.
         Score score;
+        //! Turn to make to advance towards score.
         boost::optional<Turn> turn;
-
-        void switchSides() {
-            score *= -1;
-        }
 
         bool operator<(const Result& other) { return score < other.score; }
         bool operator<=(const Result& other) { return score <= other.score; }
@@ -34,6 +42,7 @@ public:
         bool operator==(const Result& other) const {
             return score == other.score && turn == other.turn;
         }
+        
         std::string toString() const {
             std::stringstream ss;
             ss << "Result(Score=" << score << ", turn=";
@@ -44,20 +53,35 @@ public:
         }
     };
 
+    /**
+     * @brief Search given state up to maxDepth full turns.
+     * @tparam TGameState Type of game state so GameState is mockable.
+     * @tparam AB_CUTOFF_ENABLE If false Alpha-Beta cutoff feature is disabled.
+     * @param state Game state to search.
+     * @param maxDepthInTurns Number of full turns (ply and return ply) to search.
+     * @return Result of the search.
+     */
     template<typename TGameState = GameState, bool AB_CUTOFF_ENABLED = true>
-    Result search(const TGameState& state, size_t maxDepth) {
-        LOG(Logging::info) << "Starting search of depth " << maxDepth << " AB cutoff=" << AB_CUTOFF_ENABLED;
+    Result search(const TGameState& state, size_t maxDepthInTurns) {
+        LOG(Logging::info) << "Starting search of depth " << maxDepthInTurns << " turns. AB cutoff = " << AB_CUTOFF_ENABLED;
+        
         m_counters = PerfCounters();
-        Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(state, 0, maxDepth,
-                                                             MIN_SCORE, MAX_SCORE);
+        
+        Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(
+                    state, 0, maxDepthInTurns * 2, MIN_SCORE, MAX_SCORE);
+        
         LOG(Logging::debug) << m_counters;
         return result;
     }
 
+    //! Structure with performance counters used for debugging and evaluation.
     struct PerfCounters {
         PerfCounters() : nodes(0), cutoffs(0), updates(0) {}
+        //! Number of nodes searched.
         uint64_t nodes;
+        //! Number of branches cut-off using Alpha-Beta.
         uint64_t cutoffs;
+        //! Number of best result updates during search.
         uint64_t updates;
 
         std::string toString() const {
@@ -68,9 +92,19 @@ public:
             return ss.str();
         }
     } m_counters;
+    
 private:
 
-    // Recursive Negamax
+    /**
+     * @brief Recursive Negamax search with optional Alpha-Beta cutoff.
+     * @tparam TGameState Type of game state so GameState is mockable.
+     * @tparam AB_CUTOFF_ENABLE If false Alpha-Beta cutoff feature is disabled.
+     * @param state Game state to search from.
+     * @param depth Depth in plys already searched.
+     * @param maxDepth Maximum depth in plys to search.
+     * @param alpha Alpha score.
+     * @param beta Beta score.
+     */
     template <typename TGameState = GameState, bool AB_CUTOFF_ENABLED>
     Result search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
 
@@ -92,7 +126,7 @@ private:
                         -beta, -std::max(alpha, bestResult.score));
             
             // Convert the result to our POV (Zero-Sum)
-            result.switchSides();
+            result.score *= -1;
 
             // Check if we improved upon previous turns
             if (result > bestResult) {

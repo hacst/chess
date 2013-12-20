@@ -10,6 +10,7 @@
 
 namespace Logging {
 
+//! Logging severity levels
 enum Severity
 {
     trace,
@@ -27,9 +28,8 @@ enum Severity
 
 #endif
 
-/**
- * Typedef for custom severity + channel logger
- */
+
+//! Typedef for custom severity + channel logger
 using Logger = boost::log::sources::severity_channel_logger_mt<
     Severity, // Severity level
     std::string // Channel name
@@ -37,10 +37,21 @@ using Logger = boost::log::sources::severity_channel_logger_mt<
 
 std::ostream& operator<<(std::ostream& stream, const Severity severity);
 
+/**
+ * @return Severity level from given string. boost::none if severity is invalid.
+ */
 boost::optional<Severity> severityFrom(const std::string& severity);
 
+/**
+ * @brief Initializes logging with a console and a file log and the given severity.
+ * @param fileName File name for file log.
+ * @param minimalSeverity Severity below which to discard log messages.
+ */
 void initialize(const std::string& fileName, Severity minimalSeverity = info);
 
+/**
+ * @return Returns a Logger with the given channel name.
+ */
 Logger initLogger(const std::string& channel);
 
 } // namespace Logging
