@@ -44,42 +44,28 @@ void Model::loadScene() {
 void Model::draw() {
 	glPushMatrix();
 		bool flipModelDirection = false;
-		GLfloat emission[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-		GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		GLfloat diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		GLfloat specular[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		GLfloat diffuseAndAmbient[] = { 1.f, 1.f, 1.f, 1.f };
+		GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		if (m_color == Color::BLACK) {
 			flipModelDirection = true;
 
-			emission[0] = 0.0f;
-			emission[1] = 0.0f;
-			emission[2] = 0.0f;
-			emission[3] = 0.2f;
-
-			ambient[0] = 0.0f;
-			ambient[1] = 0.0f;
-			ambient[2] = 0.0f;
-			ambient[3] = 0.2f;
-
-			diffuse[0] = 0.2f;
-			diffuse[1] = 0.2f;
-			diffuse[2] = 0.2f;
-			diffuse[3] = 1.0f;
-
-			specular[0] = 0.0f;
-			specular[1] = 0.0f;
-			specular[2] = 0.0f;
-			specular[3] = 1.0f;
+			diffuseAndAmbient[0] = 0.03f;
+			diffuseAndAmbient[1] = 0.03f;
+			diffuseAndAmbient[2] = 0.03f;
+			diffuseAndAmbient[3] = 0.1f;
 		}
 
-		GLfloat shininess[] = { 100 };
+		GLfloat shininess[] = { 128 };
 
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-		glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-		glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, diffuseAndAmbient);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseAndAmbient);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+
+        glEnable(GL_NORMALIZE);
 
 		// note: transformation matrices are multiplied from right -> last matrix first!
 		glTranslatef((float)m_position.x, (float)m_position.y, (float)m_position.z);							// 5) translate to world space coordinates

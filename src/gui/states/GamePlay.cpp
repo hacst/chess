@@ -44,7 +44,7 @@ void GamePlay::enter() {
 	m_lightpos0[0] = 0.0f;		// right back
 	m_lightpos0[1] = 300.0f;
 	m_lightpos0[2] = 0.0f;
-	m_lightpos0[3] = 1.0f;		// 0.0: directional light (light the sun), (x, y, z) specify the the direction of the light
+	m_lightpos0[3] = 0.0f;		// 0.0: directional light (light the sun), (x, y, z) specify the the direction of the light
 								// 1.0: positional light (like a desk lamp), (x, y, z) specify the location of the light
 
 	m_rotateFrom = 0;
@@ -185,21 +185,22 @@ void GamePlay::setLights() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	glEnable(GL_COLOR_MATERIAL);
+	glDisable(GL_COLOR_MATERIAL);
 
 	// config the single lights
 	glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 
 	// LIGHT 0 (ambient + diffuse + specular = phong)
-	ambientLight[0] = 0.1f;
-	ambientLight[1] = 0.1f;
-	ambientLight[2] = 0.1f;
-	ambientLight[3] = 0.1f;
+	ambientLight[0] = 0.2f;
+	ambientLight[1] = 0.2f;
+	ambientLight[2] = 0.2f;
+	ambientLight[3] = 1.0f;
 
 	// a warm lighting source
-	diffuseLight[0] = 0.2f;
-	diffuseLight[1] = 0.2f;
-	diffuseLight[2] = 0.2f;
+	diffuseLight[0] = 0.7f;
+	diffuseLight[1] = 0.7f;
+	diffuseLight[2] = 0.7f;
 	diffuseLight[3] = 1.0f;
 
 	specularLight[0] = 1.0f;
@@ -208,19 +209,12 @@ void GamePlay::setLights() {
 	specularLight[3] = 1.0f;
 
 	// LIGHTS
-	GLfloat lightDir0[] = { 0.0, -1.0, 0.0 };
-	GLfloat angle[] = { 45.0 };	// looks nice with 39.0
-	GLfloat exponent[] = { 5.0 };	// looks nice with 9.0
 
 	glLightfv(GL_LIGHT0, GL_POSITION, m_lightpos0);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDir0);
-	glLightfv(GL_LIGHT0, GL_SPOT_EXPONENT, exponent);
-	glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, angle);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-	glEnable(GL_LIGHT0);
 
 	// smoothing the light
 	glShadeModel(GL_SMOOTH);
@@ -238,7 +232,7 @@ void GamePlay::draw() {
 	m_chessSet->draw();
 
 	// trigger camera rotation
-	rotateCamera();
+	//rotateCamera();
 
 	// draw menu if game is paused
 	if (m_internalState == PAUSED) {

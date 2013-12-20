@@ -170,7 +170,7 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 			GLfloat ambient[] = { 1.0f, 0.0f, 0.0f, 1.0f };			// representating the amount (percentage) of light which is reflected
 			GLfloat diffuse[] = { 0.0f, 0.0f, 0.0f, 1.f };
 			GLfloat specular[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-			GLfloat shininess[] = { 20 };
+			GLfloat shininess[] = { 128 };
 
 			glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
