@@ -11,16 +11,39 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
 
+/**
+ * @brief Class for holding game configuration parameters.
+ * @note Can be stored and read from disc using save/load.
+ */
 struct GameConfiguration {
 public:
     GameConfiguration();
 
-    int timeBetweenTurnsInSeconds; // Minimum time between turns for display purposes
+    //! Minimum time between turns for display purposes.
+    int timeBetweenTurnsInSeconds;
+    //! Maximum time between turns after which to time out a move.
     int maximumTurnTimeInSeconds;
 
+    /**
+     * @brief Loads a game configuration from disk.
+     * @param path Path to file.
+     * @return GameConfiguration on success. boost::none on failure.
+     */
     static boost::optional<GameConfiguration> load(const std::string& path);
+    
+    /**
+     * @brief Saves a given game configuration to a file.
+     * @param config Configuration to save.
+     * @param path Path to save configuration to.
+     * @return True on success.
+     */
     static bool save(const GameConfiguration& config, const std::string& path);
 
+    /**
+     * @brief Saves this configuration to the given path.
+     * @param path Path to file to save to.
+     * @return True on success.
+     */
     bool save(const std::string& path) const;
 
     bool operator==(const GameConfiguration& other) const;

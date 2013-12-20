@@ -23,7 +23,7 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
 	};
 
 	for (Turn& expectedTurn: expectedTurns) {
-		auto result = negamax.search(gameState, 4);
+		auto result = negamax.search(gameState, 2);
 		ASSERT_TRUE(result.turn);
 
 		Turn turn = result.turn.get();
@@ -57,7 +57,7 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
 	for (Turn& expectedTurn: expectedTurns) {
 		gameState.applyTurn(Turn());
 
-		auto result = negamax.search(gameState, 4);
+		auto result = negamax.search(gameState, 2);
 		ASSERT_TRUE(result.turn);
 
 		Turn turn = result.turn.get();
@@ -80,7 +80,7 @@ TEST(Gen_Alg_Eval, KnightStrikesPawn) {
 	};
 
 	for (Turn& expectedTurn: expectedTurns) {
-		auto result = negamax.search(gameState, 4);
+		auto result = negamax.search(gameState, 2);
 		ASSERT_TRUE(result.turn);
 
 		Turn turn = result.turn.get();

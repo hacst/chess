@@ -11,6 +11,11 @@
 #include <chrono>
 #include <iostream>
 
+/**
+ * @brief Player implementation which takes random turns after
+ *        random amounts of time.
+ * @warning Does not react to doAbortTurn events.
+ */
 class DummyPlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:
     DummyPlayer()
@@ -20,6 +25,14 @@ public:
     
     virtual ~DummyPlayer() {
         stop(true);
+    }
+    
+    virtual void onSetColor(PlayerColor color) override {
+        LOG(Logging::info) << "Will be playing " << color;
+    }
+    
+    virtual void doAbortTurn() override {
+        LOG(Logging::warning) << "Asked to abort turn. This is not implemented";
     }
     
     virtual std::future<Turn> doMakeTurn(GameState state) override {

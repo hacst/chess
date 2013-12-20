@@ -4,6 +4,9 @@
 #include "logic/interface/AbstractGameObserver.h"
 #include "core/Logging.h"
 
+/**
+ * @brief AbstractGameObserver which simply logs occuring events.
+ */
 class LoggingGameObserver: public AbstractGameObserver {
 public:
     LoggingGameObserver();

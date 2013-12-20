@@ -8,6 +8,7 @@
 
 using namespace std;
 using namespace std::chrono;
+using namespace Logging;
 
 AIPlayer::AIPlayer()
     : m_promisedTurn()
@@ -15,11 +16,10 @@ AIPlayer::AIPlayer()
     , m_gameState()
     , m_gameConfig()
     , m_color(PlayerColor::NoPlayer)
-    , m_log()
     , m_algorithm(std::make_shared<MaterialEvaluator>())
-    , m_thread() {
-
-    m_log.add_attribute("Tag", boost::log::attributes::constant< std::string >("AIPlayer"));
+    , m_thread()
+    , m_log(initLogger("AIPlayer")) {
+    
     // Empty
 }
 
@@ -40,12 +40,12 @@ AIPlayer::~AIPlayer() {
 }
 
 void AIPlayer::onSetColor(PlayerColor color) {
-    BOOST_LOG(m_log) << "Got color " << color;
+    LOG(info) << "Got color " << color;
     m_color = color;
 }
 
 void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
-    BOOST_LOG(m_log) << "Game start";
+    LOG(info) << "Game start";
 
     m_gameState = state;
     m_gameConfig = config;
@@ -54,7 +54,7 @@ void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
 }
 
 future<Turn> AIPlayer::doMakeTurn(GameState state) {
-    BOOST_LOG(m_log) << "Asked to make turn";
+    LOG(info) << "Asked to make turn";
     assert(m_playerState != PLAYING);
 
     m_promisedTurn = promise<Turn>();
@@ -69,17 +69,17 @@ void AIPlayer::doAbortTurn() {
 }
 
 void AIPlayer::play() {
-    const size_t DEPTH = 6;
+    const size_t DEPTH = 3;
 
-    BOOST_LOG(m_log) << "Starting search of depth " << DEPTH;
+    LOG(info) << "Starting search of depth " << DEPTH;
     auto result = m_algorithm.search(m_gameState, DEPTH);
 
     // Pass on result for turn
     if (result.turn) {
-        BOOST_LOG(m_log) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
+        LOG(info) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
         m_promisedTurn.set_value(result.turn.get());
     } else {
-        BOOST_LOG(m_log) << "Aborted search, no turn possible";
+        LOG(info) << "Aborted search, no turn possible";
         m_promisedTurn.set_value(Turn());
     }
 
@@ -99,7 +99,7 @@ void AIPlayer::run() {
         default: break;
         }
     }
-    BOOST_LOG(m_log) << "AIPlayer stopped";
+    LOG(info) << "AIPlayer stopped";
 }
 
 void AIPlayer::onGameOver(GameState, PlayerColor) {
@@ -114,7 +114,7 @@ void AIPlayer::changeState(States newState) {
     lock_guard<mutex> lock(m_stateMutex);
 
     if (m_playerState != newState && m_playerState != STOPPED) {
-        BOOST_LOG(m_log) << "Now " << newState;
+        LOG(info) << "Now " << newState;
 
         m_playerState = newState;
     }

@@ -5,7 +5,14 @@
 #include <memory>
 #include <type_traits>
 #include <ostream>
+#include <random>
 
+/**
+ * @brief Selects a random element from a given container.
+ * @param container Container to choose from.
+ * @param rng Random number generator to use (e.g. a std::mt19937).
+ * @return Iterator to the chosen element. end(container) if the container is empty.
+ */
 template<typename Container, typename Rng>
 auto random_selection(const Container& container, Rng& rng) -> decltype(std::begin(container)) {
     auto cur = std::begin(container);
@@ -19,6 +26,10 @@ auto random_selection(const Container& container, Rng& rng) -> decltype(std::beg
     return cur;
 }
 
+// Not for public consumption. Contains template metaprogramming which for a
+// given type T makes has_toString<T>::value statically (during compile time)
+// evaluate to true or false depending on whether the given type (e.g. a class)
+// has a toString method. Used by the ostream operator<< overload below.
 template<typename T>
 struct has_toString
 {
@@ -35,6 +46,11 @@ public:
 };
 
 namespace std {
+// Not for public consumption. Uses has_toString to enable on ostream operator<<
+// overload for classes which implement a toString function. For these functions
+// using this operator (e.g. cout << myclass) will call the toString function on
+// a class to get a stringified version of the class. This is a convinience class
+// which makes C++ behave a bit closer to what Java programmers are used to.
 template<typename T>
 typename std::enable_if<has_toString<T>::value, std::ostream&>::type
 operator<<(std::ostream& stream, const T& t) {
