@@ -8,7 +8,7 @@ using namespace std;
 
 ChessSet::ChessSet() {
 	m_tileWidth = 24;
-	m_tileHeight = 0;
+	m_tileHeight = 2;
 
 	// all external resources to load
 	extResources = {
@@ -119,12 +119,7 @@ void ChessSet::draw() {
 
 // replace by translation
 void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
-	/*model->setPosition(
-	((row - 4) * m_tileWidth) + (m_tileWidth / 2),
-	0,
-	((col - 4) * m_tileWidth) + (m_tileWidth / 2)
-	); */
-	glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), 0, ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
+	glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), static_cast<float>(m_tileHeight), ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
 }
 
 void ChessSet::createChessBoardList() {
@@ -153,66 +148,75 @@ void ChessSet::createChessBoardList() {
 
 void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 	int halfWidth = m_tileWidth / 2;
-	int halfHeight = m_tileHeight;
+	int halfHeight = m_tileHeight / 2;
 
 	glPushMatrix();
     glTranslatef(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
 		
 		glBegin(GL_QUADS);
-			GLfloat emission[] = { 0.7f, 0.7f, 0.7f, 1.0f };		// material emits this color (not light-dependent)
-
+			GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
+			
+			GLfloat ambient[] = { 1.0f, 1.0f, 1.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
+																	//          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
+																	//          the result is the same as if you define only ambient light.
 			if (odd) {
-				emission[0] = 0.0f;
-				emission[1] = 0.0f;
-				emission[2] = 0.0f;
+				ambient[0] = 0.14f;
+				ambient[1] = 0.07f;
+				ambient[2] = 0.0f;
 			}
+			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
 
-			GLfloat ambient[] = { 1.0f, 0.0f, 0.0f, 1.0f };			// representating the amount (percentage) of light which is reflected
-			GLfloat diffuse[] = { 0.0f, 0.0f, 0.0f, 1.f };
-			GLfloat specular[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-			GLfloat shininess[] = { 20 };
+			GLfloat diffuse[] = { 0.2f, 0.2f, 0.2f, 1.f };			// example: this light comes from a certain direction but is reflected homogenously from each point of the surface.
+			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
-			glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-			glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-			glMaterialfv(GL_FRONT, GL_EMISSION, emission);	// OK
-			glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+			GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };		// example: highlight point
+			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+
+			GLfloat shininess[] = { 100 };
+			glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
 			// front face
+			glNormal3f(0.0f, 0.0f, -1.0f);
 			glVertex3i(halfWidth, halfHeight, halfWidth);	// top right
 			glVertex3i(-halfWidth, halfHeight, halfWidth);	// top left
 			glVertex3i(-halfWidth, -halfHeight, halfWidth);	// bottom left
 			glVertex3i(halfWidth, -halfHeight, halfWidth);	// bottom right
 
 			// left face
+			glNormal3f(-1.0f, 0.0f, 0.0f);
 			glVertex3i(-halfWidth, halfHeight, halfWidth);
 			glVertex3i(-halfWidth, halfHeight, -halfWidth);
 			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
 			glVertex3i(-halfWidth, -halfHeight, halfWidth);
 
 			// back face
+			glNormal3f(0.0f, 0.0f, 1.0f);
 			glVertex3i(halfWidth, halfHeight, -halfWidth);
 			glVertex3i(-halfWidth, halfHeight, -halfWidth);
 			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
 			glVertex3i(halfWidth, -halfHeight, -halfWidth);
 
 			// right face
+			glNormal3f(1.0f, 0.0f, 0.0f);
 			glVertex3i(halfWidth, halfHeight, -halfWidth);
 			glVertex3i(halfWidth, halfHeight, halfWidth);
 			glVertex3i(halfWidth, -halfHeight, halfWidth);
 			glVertex3i(halfWidth, -halfHeight, -halfWidth);
 
-			// top face
-			glVertex3i(halfWidth, halfHeight, halfWidth);
-			glVertex3i(-halfWidth, halfHeight, halfWidth);
-			glVertex3i(-halfWidth, halfHeight, -halfWidth);
-			glVertex3i(halfWidth, halfHeight, -halfWidth);
-
 			// bottom face
+			glNormal3f(0.0f, -1.0f, 0.0f);
 			glVertex3i(halfWidth, -halfHeight, halfWidth);
 			glVertex3i(-halfWidth, -halfHeight, halfWidth);
 			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
 			glVertex3i(halfWidth, -halfHeight, -halfWidth);
+
+			// top face
+			glNormal3f(0.0f, 1.0f, 0.0f);
+			glVertex3i(halfWidth, halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, halfWidth);
+			glVertex3i(-halfWidth, halfHeight, -halfWidth);
+			glVertex3i(halfWidth, halfHeight, -halfWidth);
 		glEnd();
 	glPopMatrix();
 }

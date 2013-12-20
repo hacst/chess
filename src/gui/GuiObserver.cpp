@@ -26,7 +26,7 @@ void GuiObserver::onGameStart(GameState state, GameConfiguration config) {
 void GuiObserver::onTurnStart(PlayerColor who) {
 	if (who != m_currentPlayerColor) {
 		m_currentPlayerColor = who;
-		//m_gamePlayState.startCameraRotation();
+		m_gamePlayState.startCameraRotation();
 	}
 
 	cout << "GuiObserver (" << this_thread::get_id() << "): " << who << " should now perform his turn" << endl;

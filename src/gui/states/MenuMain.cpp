@@ -30,9 +30,6 @@ void MenuMain::enter() {
 	menu->addButton("LoadGame.png")->onClick(boost::bind(&MenuMain::onLoadGame, this));
 	menu->addButton("Options.png")->onClick(boost::bind(&MenuMain::onOptions, this));
 	menu->addButton("ExitGame.png")->onClick(boost::bind(&MenuMain::onExitGame, this));
-
-	// init OpenGL
-	glEnable(GL_COLOR_MATERIAL);
 }
 
 AbstractState* MenuMain::run() {
@@ -100,5 +97,4 @@ void MenuMain::onExitGame() {
 }
 
 void MenuMain::exit() {
-	glDisable(GL_COLOR_MATERIAL);
 }

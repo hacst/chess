@@ -46,6 +46,9 @@ public:
 
 	};
 
+protected:
+	int m_tileWidth, m_tileHeight;
+
 private:
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard
 	ModelPtr king, pawn, queen, bishop, knight, rook;
@@ -64,8 +67,6 @@ private:
 	GLuint m_boardList;
 	GLuint m_modelList[12];	// first 6 white, last 6 black
 	std::array<Piece, 64> m_state;
-
-	int m_tileWidth, m_tileHeight;
 
 	void createChessBoardList();
 	void drawTile(int x, int y, int z, bool odd, bool highlight);

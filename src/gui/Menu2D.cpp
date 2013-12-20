@@ -35,6 +35,7 @@ void Menu2D::updateAbsolutePosition() {
 }
 
 void Menu2D::draw() {
+	glEnable(GL_COLOR);
 	glEnable(GL_BLEND);
 
 	glPushMatrix();
@@ -68,6 +69,7 @@ void Menu2D::draw() {
 	glPopMatrix();
 
 	glDisable(GL_BLEND);
+	glDisable(GL_COLOR);
 }
 
 void Menu2D::mouseMoved(const int x, const int y) {

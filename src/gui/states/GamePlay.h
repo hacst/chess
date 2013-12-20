@@ -53,13 +53,12 @@ private:
 	ChessSetPtr m_chessSet;
 	Menu2DPtr m_pauseMenu;
 
-	GLfloat m_lightpos0[4], m_lightpos1[4], m_lightpos2[4], m_lightpos3[4];
-	GLuint m_cube1, m_cube2, m_cube3, m_cube4;
-
 	int m_rotateFrom, m_rotateTo;
 
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
+	GLfloat m_lightPos0[3];
+	GLfloat m_lightPos1[3];
 
 	AbstractPlayerPtr m_firstPlayer, m_secondPlayer;
 	AbstractGameLogicPtr m_gameLogic;
@@ -70,17 +69,16 @@ private:
 	int cameraView;
 	std::string debugText;
 	void drawCoordinateSystem();
-	GLfloat ambientLight[4];
-	GLfloat diffuseLight[4];
-	GLfloat specularLight[4];
-	GLfloat angle[1];
-	GLfloat exponent[1];
-
+	
+	int posNumber;
+	
 	// methods
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
-	void setLights();
+	void initLighting();
 	void createChessSet();
+	void enableLighting();
+	void disableLighting();
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

@@ -25,7 +25,7 @@ GamePlay::GamePlay() : fsm(StateMachine::getInstance()) {
 
 void GamePlay::enter() {
 	// set background color to black
-	glClearColor(0.0, 0.0, 0, 1);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// create a whole new ChessSet (2x 6 models + board)
 	createChessSet();
@@ -40,24 +40,17 @@ void GamePlay::enter() {
 	m_animationHelperCamera = make_shared<AnimationHelper>(1000);
 	m_animationHelperBackground = make_shared<AnimationHelper>(1000);
 
-	// light positions
-	m_lightpos0[0] = 0.0f;		// right back
-	m_lightpos0[1] = 300.0f;
-	m_lightpos0[2] = 0.0f;
-	m_lightpos0[3] = 1.0f;		// 0.0: directional light (light the sun), (x, y, z) specify the the direction of the light
-								// 1.0: positional light (like a desk lamp), (x, y, z) specify the location of the light
-
 	m_rotateFrom = 0;
 	m_rotateTo = 180;
 
 	// connection gui with ai and logic
 	auto firstPlayer = make_shared<AIPlayer>();
 	firstPlayer->start();
-    m_firstPlayer = firstPlayer;
+	m_firstPlayer = firstPlayer;
 
 	auto secondPlayer = make_shared<DummyPlayer>();
 	secondPlayer->start();
-    m_secondPlayer = secondPlayer;
+	m_secondPlayer = secondPlayer;
 
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
@@ -69,12 +62,20 @@ void GamePlay::enter() {
 	m_gameLogic->addObserver(m_observerProxy);
 
 	m_gameLogic->start();
-	
+
 	m_internalState = NOT_PAUSED;
 
-	// debug
-	angle[0] = 45.0;
-	exponent[0] = 0;
+	m_lightPos0[0] = 0.0f;
+	m_lightPos0[1] = 65.0f;
+	m_lightPos0[2] = -50.0f;
+	
+	m_lightPos1[0] = 0.0f;
+	m_lightPos1[1] = 65.0f;
+	m_lightPos1[2] = 50.0f;
+
+	// init lighting
+	initLighting();
+	enableLighting();
 }
 
 void GamePlay::createChessSet() {
@@ -105,7 +106,7 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 	array<float, 2> topRightVertex		= { windowWidth * percentLoaded, 0.0f };
 
 	fsm.window->set2DMode();
-
+	
 	glPushMatrix();
 		glBegin(GL_QUADS);
 			// left side is grey
@@ -119,11 +120,13 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 			glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
 		glEnd();
 	glPopMatrix();
-
+	
 	fsm.window->printText(10, fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
 
 	// we must now swap the frame buffer
 	fsm.window->swapFrameBufferNow();
+
+	fsm.window->set3DMode();
 }
 
 void GamePlay::onResumeGame() {
@@ -139,19 +142,6 @@ void GamePlay::onLeaveGame() {
 }
 
 AbstractState* GamePlay::run() {
-	// on demand event handling
-	if (fsm.eventmap.keyUp) {
-	}
-
-	if (fsm.eventmap.keyRight) {
-	}
-
-	if (fsm.eventmap.keyDown) {
-	}
-
-	if (fsm.eventmap.keyLeft) {
-	}
-
 	if (fsm.eventmap.keyEscape) {
 		m_internalState = PAUSED;
 	}
@@ -178,52 +168,62 @@ AbstractState* GamePlay::run() {
 }
 
 // this light source has an effect like a desk lamp and is in the middle of the chessboard, the lighting direction is downwards
-void GamePlay::setLights() {
-	// init OpenGL lighting (after creating ChessSet) to not destroy the lighting used there
-	glClearDepth(1.0f);
+void GamePlay::initLighting() {
+	fsm.window->set3DMode();
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	glEnable(GL_COLOR_MATERIAL);
-
-	// config the single lights
-	glEnable(GL_LIGHTING);
-
-	// LIGHT 0 (ambient + diffuse + specular = phong)
-	ambientLight[0] = 0.1f;
-	ambientLight[1] = 0.1f;
-	ambientLight[2] = 0.1f;
-	ambientLight[3] = 0.1f;
-
-	// a warm lighting source
-	diffuseLight[0] = 0.2f;
-	diffuseLight[1] = 0.2f;
-	diffuseLight[2] = 0.2f;
-	diffuseLight[3] = 1.0f;
-
-	specularLight[0] = 1.0f;
-	specularLight[1] = 1.0f;
-	specularLight[2] = 1.0f;
-	specularLight[3] = 1.0f;
-
-	// LIGHTS
-	GLfloat lightDir0[] = { 0.0, -1.0, 0.0 };
-	GLfloat angle[] = { 45.0 };	// looks nice with 39.0
-	GLfloat exponent[] = { 5.0 };	// looks nice with 9.0
-
-	glLightfv(GL_LIGHT0, GL_POSITION, m_lightpos0);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightDir0);
-	glLightfv(GL_LIGHT0, GL_SPOT_EXPONENT, exponent);
-	glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, angle);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
-
-	glEnable(GL_LIGHT0);
-
-	// smoothing the light
 	glShadeModel(GL_SMOOTH);
+	glEnable(GL_NORMALIZE);
+
+	// === global lighting model configuration ===
+	GLfloat globalAmbientLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientLight);
+
+	GLfloat mode = GLfloat(GL_TRUE);
+	glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, &mode);
+	
+	// === local ligthing source configuration ===
+	GLfloat ambient[] = { 1.0f, 0.94f, 0.68f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
+
+	GLfloat diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+
+	GLfloat specular[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, m_lightPos0);
+	glLightfv(GL_LIGHT1, GL_POSITION, m_lightPos1);
+
+	GLfloat direction0[] = { 0.0, 0.0, -1.0 };
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction0);
+	GLfloat direction1[] = { 0.0, 0.0, 1.0 };
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, direction1);
+
+	GLfloat angle[] = { 180.0 };
+	glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, angle);
+	glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, angle);
+
+	GLfloat exponent[] = { 1.0 };
+	glLightfv(GL_LIGHT0, GL_SPOT_EXPONENT, exponent);
+	glLightfv(GL_LIGHT1, GL_SPOT_EXPONENT, exponent);
+}
+
+void GamePlay::enableLighting() {
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+}
+
+void GamePlay::disableLighting() {
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
 }
 
 void GamePlay::draw() {
@@ -231,8 +231,6 @@ void GamePlay::draw() {
 
 	// 3D
 	fsm.window->set3DMode();
-
-	setLights();	// this MUST be in 3D Mode -> The light's position is transformed by the modelview matrix that was active at the moment the light was defined.
 
 	// chessboard and models
 	m_chessSet->draw();
@@ -242,36 +240,33 @@ void GamePlay::draw() {
 
 	// draw menu if game is paused
 	if (m_internalState == PAUSED) {
-		glEnable(GL_COLOR_MATERIAL);
-
 		// 2D
 		fsm.window->set2DMode();
 
 		fsm.window->printHeadline("II P A U S E");
 		m_pauseMenu->draw();
-
-		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 
 void GamePlay::drawCoordinateSystem() {
 	glPushMatrix();
+		
 		glLineWidth(5.0f);
 		glBegin(GL_LINES);
 			// x
 			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex3f(-30.0f, 0.0f, 0.0f);
-			glVertex3f(30.0f, 0.0f, 0.0f);
+			glVertex3f(-120.0f, 0.0f, 0.0f);
+			glVertex3f(120.0f, 0.0f, 0.0f);
 
 			// y
 			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex3f(0.0f, -30.0f, 0.0f);
-			glVertex3f(0.0f, 30.0f, 0.0f);
+			glVertex3f(0.0f, -120.0f, 0.0f);
+			glVertex3f(0.0f, 120.0f, 0.0f);
 
 			// z
 			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex3f(0.0f, 0.0f, -30.0f);
-			glVertex3f(0.0f, 0.0f, 30.0f);
+			glVertex3f(0.0f, 0.0f, -120.0f);
+			glVertex3f(0.0f, 0.0f, 120.0f);
 		glEnd();
 
 		glTranslatef(0, 5, 0);

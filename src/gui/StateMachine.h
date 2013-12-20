@@ -32,6 +32,10 @@ public:
 		bool keyDown = false;
 		bool keyUp = false;
 		bool keyEscape = false;
+		bool key0 = false;
+		bool key1 = false;
+		bool keyA = false;
+		bool keyY = false;
 	} eventmap;
 
 	GuiWindow* window;

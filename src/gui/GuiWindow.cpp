@@ -95,8 +95,6 @@ void GuiWindow::init() {
 	}
 
 	ogl = SDL_GL_CreateContext(window);
-	
-	// init was here ...
 
 	SDL_GL_SetSwapInterval(1);
 
@@ -144,6 +142,18 @@ void GuiWindow::handleEvents() {
 					case SDLK_DOWN:
 						m_fsm.eventmap.keyDown = true;
 						break;
+					case SDLK_0:
+						m_fsm.eventmap.key0 = true;
+						break;
+					case SDLK_1:
+						m_fsm.eventmap.key1 = true;
+						break;
+					case SDLK_a:
+						m_fsm.eventmap.keyA = true;
+						break;
+					case SDLK_y:
+						m_fsm.eventmap.keyY = true;
+						break;
 					default:
 						break;
 				}
@@ -164,6 +174,18 @@ void GuiWindow::handleEvents() {
 					break;
 				case SDLK_DOWN:
 					m_fsm.eventmap.keyDown = false;
+					break;
+				case SDLK_0:
+					m_fsm.eventmap.key0 = false;
+					break;
+				case SDLK_1:
+					m_fsm.eventmap.key1 = false;
+					break;
+				case SDLK_a:
+					m_fsm.eventmap.keyA = false;
+					break;
+				case SDLK_y:
+					m_fsm.eventmap.keyY = false;
 					break;
 				default:
 					break;
@@ -208,9 +230,6 @@ void GuiWindow::exec() {
 	while (!m_quit) {
 		unsigned int start = SDL_GetTicks();
 
-		glMatrixMode(GL_PROJECTION);							// switch to projection mode
-		glLoadIdentity();										// and reset matrix
-
 		++fpsCount;
 		int elapsedTime = SDL_GetTicks() - startTime;
 		if (elapsedTime > 1000) {
@@ -240,10 +259,12 @@ void GuiWindow::exec() {
 
 void GuiWindow::swapFrameBufferNow() {
 	SDL_GL_SwapWindow(window);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// clear Screen and Depth Buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// clear Screen and depth buffer
 }
 
 void GuiWindow::set2DMode() {
+	glDisable(GL_DEPTH_TEST);
+
 	glOrtho(0, m_width, m_height, 0, 0, 128);
 
 	glTranslatef(0, 0, 0);	// move camera to the initial position out
@@ -266,6 +287,11 @@ void GuiWindow::set3DMode() {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 void GuiWindow::makeFrustum(double fovY, double aspectRatio, double front, double back) {
