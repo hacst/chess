@@ -15,7 +15,7 @@ class DummyPlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:
     DummyPlayer()
         : m_rng()
-        , m_msDist(0, 7)
+        , m_msDist(0, 5)
         , m_log(Logging::initLogger("DummyPlayer")) {}
     
     virtual ~DummyPlayer() {
@@ -23,14 +23,17 @@ public:
     }
     
     virtual std::future<Turn> doMakeTurn(GameState state) override {
-        // Always pass after a random amount of time
-        // Obviously can't be aborted
-        return postPromise([=]() {
+        return postPromise([=]() mutable {
+            // Always choose a random turn after a random amount of time
+            // Obviously can't be aborted
+            auto turns = state.getTurnList();
+            auto turnIt = random_selection(turns, m_rng);
+            Turn turn = (turnIt == std::end(turns)) ? Turn() : (*turnIt);
             int duration = m_msDist(m_rng);
-            LOG(Logging::debug) << "Dummy will sleep for " << duration << " seconds" << std::endl;
+
+            LOG(Logging::debug) << "Will select " << turn << " after " << duration << " seconds sleep";
             std::this_thread::sleep_for(std::chrono::seconds(duration));
-            
-            return Turn();
+            return turn;
         });
     }
 private:

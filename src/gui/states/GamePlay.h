@@ -2,7 +2,6 @@
 #define GAMEPLAY_H
 
 #include "logic/GameLogic.h"
-#include "ai/AIPlayer.h"
 #include "gui/GuiObserver.h"
 
 #include "gui/interface/AbstractState.h"
@@ -62,7 +61,7 @@ private:
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
 
-	AIPlayerPtr m_firstPlayer, m_secondPlayer;
+	AbstractPlayerPtr m_firstPlayer, m_secondPlayer;
 	AbstractGameLogicPtr m_gameLogic;
 	GuiObserverPtr m_observer;
 	ObserverDispatcherProxyPtr m_observerProxy;

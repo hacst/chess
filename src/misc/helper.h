@@ -6,6 +6,19 @@
 #include <type_traits>
 #include <ostream>
 
+template<typename Container, typename Rng>
+auto random_selection(const Container& container, Rng& rng) -> decltype(std::begin(container)) {
+    auto cur = std::begin(container);
+    auto end = std::end(container);
+
+    if (cur == end) {
+        return end;
+    }
+    std::uniform_int_distribution<size_t> distribution(0, std::distance(cur, end) - 1);
+    std::advance(cur, distribution(rng));
+    return cur;
+}
+
 template<typename T>
 struct has_toString
 {

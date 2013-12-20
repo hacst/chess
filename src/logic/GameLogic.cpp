@@ -136,6 +136,6 @@ PlayerColor GameLogic::getWinner() const {
 }
 
 AbstractPlayerPtr& GameLogic::getCurrentPlayer() {
-    return (m_gameState.getNextPlayer() == White) ? m_black : m_white;
+    return (m_gameState.getNextPlayer() == White) ? m_white : m_black;
 }
 

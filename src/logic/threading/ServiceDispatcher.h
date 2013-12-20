@@ -32,7 +32,7 @@ protected:
 		auto p(std::make_shared<std::promise<decltype(f())>>());
 		auto future = p->get_future();
 
-		m_service.post([f, p](){
+		m_service.post([f, p]() mutable {
 			p->set_value(f());
 		});
 

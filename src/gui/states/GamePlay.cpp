@@ -14,6 +14,9 @@
 #include "gui/ObjectHelper.h"
 #include "gui/GuiWindow.h"
 
+#include "ai/AIPlayer.h"
+#include "misc/DummyPlayer.h"
+
 using namespace std;
 
 GamePlay::GamePlay() : fsm(StateMachine::getInstance()) {
@@ -48,10 +51,13 @@ void GamePlay::enter() {
 	m_rotateTo = 180;
 
 	// connection gui with ai and logic
-	m_firstPlayer = make_shared<AIPlayer>();
-	m_firstPlayer->start();
-	m_secondPlayer = make_shared<AIPlayer>();
-	m_secondPlayer->start();
+	auto firstPlayer = make_shared<AIPlayer>();
+	firstPlayer->start();
+    m_firstPlayer = firstPlayer;
+
+	auto secondPlayer = make_shared<DummyPlayer>();
+	secondPlayer->start();
+    m_secondPlayer = secondPlayer;
 
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
