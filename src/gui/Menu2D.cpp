@@ -13,6 +13,11 @@ Menu2D::Menu2D(int windowWidth, int windowHeight)
 }
 
 Menu2D::~Menu2D() {
+	for (auto& item : items) {
+		item->unClick();
+		item.reset();
+	}
+	
 	items.clear();
 }
 
@@ -93,4 +98,11 @@ void Menu2D::mouseReleased() {
 	for (auto& item : items) {
 		item->mouseReleased(mouseState.x, mouseState.y);
 	}
+}
+
+void Menu2D::windowResized(int newWidth, int newHeight) {
+	m_windowWidth = newWidth;
+	m_windowHeight = newHeight;
+
+	updateAbsolutePosition();
 }

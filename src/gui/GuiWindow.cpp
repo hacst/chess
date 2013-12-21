@@ -30,6 +30,11 @@ GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height)
 	m_colorBits = 32;
 	m_depthBits = 16;
 	m_antiAlias = 8;
+
+	m_reloadState = false;
+}
+
+GuiWindow::~GuiWindow() {
 }
 
 int GuiWindow::getWidth() {
@@ -50,16 +55,50 @@ bool GuiWindow::isFullscreen() {
 
 void GuiWindow::switchWindowMode(WindowMode mode) {
 	if (mode == WindowMode::FULLSCREEN && m_fullscreen != true) {
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP);
+		
+		// save current resolution settings
+		m_widthOld = m_width;
+		m_heightOld = m_height;
+
+		// get window size and set it to new resolution
+		int width, height;
+		SDL_GetWindowSize(window, &width, &height);
+		m_width = width;
+		m_height = height;
+
+		// change viewport and correct aspect ratio
+		glViewport(0, 0, m_width, m_height);
+		glMatrixMode(GL_PROJECTION);
+		
+		float aspect = (float)m_width / (float)m_height;
+		glOrtho(-aspect, aspect, -1, 1, m_zNear, m_zFar);
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
 		m_fullscreen = true;
 	} else {
-		SDL_SetWindowFullscreen(window, 0);
+		// restore previous resolution
+		m_width = m_widthOld;
+		m_height = m_heightOld;
+
 		m_fullscreen = false;
+
+		// we're recreating a new context
+		SDL_GL_DeleteContext(ogl);
+		SDL_DestroyWindow(window);
+		
+		init();
+
+		// make sure to reinit current state of state machine
+		// to reload all textures and objects for OGL
+		// do not call the run() of the current state again! -> leads into confusing state
+		m_reloadState = true;
 	}
 }
 
 void GuiWindow::init() {
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		cerr << "Failed to init SDL: " << SDL_GetError() << endl;
 		//return 1;		// how to handle errors?
@@ -83,8 +122,8 @@ void GuiWindow::init() {
 	if (m_fullscreen) flags |= SDL_WINDOW_FULLSCREEN;
 	
 	window = SDL_CreateWindow(m_title.c_str(),
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
 		m_width,
 		m_height,
 		SDL_WINDOW_OPENGL | flags);
@@ -95,14 +134,12 @@ void GuiWindow::init() {
 	}
 
 	ogl = SDL_GL_CreateContext(window);
-
 	SDL_GL_SetSwapInterval(1);
 
-	// init finite state machine (make sure that your OpenGL context is already created and initialized!)
-	m_fsm.window = this;
-	m_fsm.setStartState(new MenuMain());
+	loadFonts();
+}
 
-	// load fonts
+void GuiWindow::loadFonts() {
 	fontHeadline.init("resources/Lato-Bla.ttf", fontSize::HEADLINE);
 	fontSubHeadline.init("resources/Lato-BlaIta.ttf", fontSize::SUB_HEADLINE);
 	fontText.init("resources/Signika.ttf", fontSize::TEXT);
@@ -220,7 +257,11 @@ void GuiWindow::exit() {
 }
 
 void GuiWindow::exec() {
-	this->init();
+	init();
+
+	// init finite state machine (make sure that your OpenGL context is already created and initialized!)
+	m_fsm.window = this;
+	m_fsm.setStartState(new MenuMain());
 
 	// ===== frame counter =====
 	int fpsCount = 0;
@@ -236,6 +277,12 @@ void GuiWindow::exec() {
 			//cout << "FPS: " << (fpsCount / (static_cast<float>(elapsedTime) / 1000.0)) << endl;
 			fpsCount = 0;
 			startTime = SDL_GetTicks();
+		}
+
+		// this is for resolution changes
+		if (m_reloadState) {
+			m_fsm.setNextState(new MenuMain());
+			m_reloadState = false;
 		}
 
 		// exit if state is nullptr

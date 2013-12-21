@@ -42,6 +42,7 @@ public:
 
 	void setStartState(AbstractState* startState);
 	AbstractState* run();
+	void setNextState(AbstractState* state);
 
 private:
 	StateMachine() {};								// The {} brackets are needed here.

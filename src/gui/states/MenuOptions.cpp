@@ -74,7 +74,10 @@ void MenuOptions::onResolutionChange() {
 		fsm.window->switchWindowMode(GuiWindow::WindowMode::WINDOW);
 	}
 
-	m_nextState = States::KEEP_CURRENT;
+	// resolution has changed -> propagate to menu (only here, other menus get window size on init)
+	menu->windowResized(fsm.window->getWidth(), fsm.window->getHeight());
+
+	m_nextState = States::MENU_BACK;
 }
 
 void MenuOptions::onMenuBack() {
@@ -84,4 +87,5 @@ void MenuOptions::onMenuBack() {
 
 void MenuOptions::exit() {
 	std::cout << "left MenuOptions menu!" << std::endl;
+	menu.reset();
 }

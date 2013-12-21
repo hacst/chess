@@ -17,7 +17,7 @@
 
 class GuiWindow {
 public:
-	virtual ~GuiWindow() { /* Nothing */ }
+	virtual ~GuiWindow();
 
 	GuiWindow(std::string title, bool fullscreen, int width, int height);
 	void exec();
@@ -64,6 +64,7 @@ private:
 	void handleEvents();
 	void display();
 	void init();
+	void loadFonts();
 	void terminate();
 	void exit();
 	
@@ -86,9 +87,12 @@ private:
 	int m_width;
 	int m_height;
 
+	int m_widthOld, m_heightOld;
+
 	int m_colorBits;
 	int m_depthBits;
 	int m_antiAlias;
+	bool m_reloadState;
 
 	float m_zNear, m_zFar;
 

@@ -20,3 +20,11 @@ AbstractState* StateMachine::run() {
 
 	return nextState;
 }
+
+void StateMachine::setNextState(AbstractState* state) {
+	m_currentState->exit();
+	delete m_currentState;
+
+	m_currentState = state;
+	m_currentState->enter();
+}

@@ -31,6 +31,7 @@ public:
 	void mouseMoved(const int x, const int y);
 	void mousePressed();
 	void mouseReleased();
+	void windowResized(int newWidth, int newHeight);
 
 private:
 
