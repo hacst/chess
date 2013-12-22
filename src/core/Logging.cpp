@@ -47,21 +47,25 @@ boost::optional<Severity> severityFrom(const string &severity) {
     return static_cast<Severity>(it - begin(stringSeverities));
 }
 
-void initialize(const string& fileName, Severity minimalSeverity) {
-    boost::log::register_simple_formatter_factory< Severity,char >("Severity");
-    
+void initializeLogging() {
+    boost::log::register_simple_formatter_factory<Severity, char>("Severity");
+    boost::log::add_common_attributes();
+}
+
+void addLoggingConsoleSink(Severity minimalSeverity, const string& formatString) {
     boost::log::add_console_log(clog,
-        keywords::format = "%Severity% @ %Channel%: %Message%"
+        keywords::format = formatString,
+        keywords::filter = severity >= minimalSeverity
     );
-    
+}
+
+void addLoggingFileSink(const string& fileName, Severity minimalSeverity, const string& formatString) {
     boost::log::add_file_log(
         keywords::file_name = fileName,
         keywords::format = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%",
-        keywords::auto_flush = true
+        keywords::auto_flush = true,
+        keywords::filter = severity >= minimalSeverity
     );
-    
-    boost::log::core::get()->set_filter(severity >= minimalSeverity);
-    boost::log::add_common_attributes();
 }
 
 Logger initLogger(const string &channel) {

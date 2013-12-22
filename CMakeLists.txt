@@ -265,24 +265,27 @@ if (TEST)
     # MISC tests for the odd helper things in the project
     #
     set(MISC_TEST_SOURCES
+        test/test_main.cpp
         test/misc_test.cpp
     )
-    source_group(test FILES ${MISC_TEST_SOURCES})
 
     add_executable(misc_test ${MISC_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
-    target_link_libraries(misc_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
+    target_link_libraries(misc_test gmock ${EVERYTHINGBUTGUI_LIBRARIES})
+    set_target_properties (misc_test PROPERTIES COMPILE_DEFINITIONS "TEST_LOG_NAME=\"misc_test.log\"")
     add_test(NAME Misc-Testset COMMAND misc_test)
 
     #
     # AI tests for testing the AI algorithms
     #
     set(AI_TEST_SOURCES
+        test/test_main.cpp
         test/ai/AIPlayer_test.cpp
         test/ai/Negamax_test.cpp
     )
 
     add_executable(ai_test ${AI_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
-    target_link_libraries(ai_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
+    target_link_libraries(ai_test gmock ${EVERYTHINGBUTGUI_LIBRARIES})
+    set_target_properties (ai_test PROPERTIES COMPILE_DEFINITIONS "TEST_LOG_NAME=\"ai_test.log\"")
     add_test(NAME AI-Testset COMMAND ai_test)
 
     #
@@ -302,11 +305,13 @@ if (TEST)
     # INTEGRATION tests for testing several components in conjunction
     #
     set(INTEGRATION_TEST_SOURCES
+        test/test_main.cpp
         test/integration/Gen_Alg_Eval_test.cpp
     )
 
     add_executable(integration_test ${INTEGRATION_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
-    target_link_libraries(integration_test gmock_main ${EVERYTHINGBUTGUI_LIBRARIES})
+    target_link_libraries(integration_test gmock ${EVERYTHINGBUTGUI_LIBRARIES})
+    set_target_properties (integration_test PROPERTIES COMPILE_DEFINITIONS "TEST_LOG_NAME=\"integration_test.log\"")
     add_test(NAME Integration_test-Testset COMMAND integration_test)
 
 endif()
