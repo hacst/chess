@@ -91,8 +91,15 @@ void ChessSet::setState(std::array<Piece, 64> state) {
 	m_state = state;
 }
 
+void ChessSet::setTurn(Turn turn) {
+	m_turn = turn;
+}
+
 void ChessSet::draw() {
 	// 1) drawing models which have not been modified in position at first
+	if (m_turn.action == Turn::Action::Move) {
+		// todo
+	}
 
 	// 2) animating and drawing modified models here
 
@@ -109,9 +116,6 @@ void ChessSet::draw() {
 		}
 		++field;
 	}
-
-	// DEPRECATED: models
-	//glCallList(m_modelsList);
 
 	// chessboard
 	glCallList(m_boardList);

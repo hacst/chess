@@ -19,8 +19,42 @@
 
 using namespace std;
 
-GamePlay::GamePlay() : fsm(StateMachine::getInstance()) {
-	m_nextState = States::KEEP_CURRENT;
+GamePlay::GamePlay()
+	: fsm(StateMachine::getInstance())
+	, m_rotateFrom(0)
+	, m_rotateTo(180)
+	, m_nextState(States::KEEP_CURRENT) {
+}
+
+void GamePlay::initMessageBox() {
+	m_messageBox.width = 600;
+	m_messageBox.height = 40;
+	m_messageBox.padding = 10;
+	m_messageBox.text = "";
+	m_messageBox.showDuration = 3000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
+
+	// precalculate absolute position
+	m_messageBox.windowPosX = (fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
+	m_messageBox.windowPosY = 10;
+
+	// create rectangle OGL list for faster drawing
+	fsm.window->set2DMode();
+
+	m_messageBox.displayList = glGenLists(1);
+
+	glNewList(m_messageBox.displayList, GL_COMPILE);
+		glPushMatrix();
+			glBegin(GL_QUADS);
+				glColor3f(0.0f, 0.0f, 0.4f);
+				glVertex3f(static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY), 0.0f); // top left
+				glVertex3f(static_cast<float>(m_messageBox.windowPosX + m_messageBox.width), static_cast<float>(m_messageBox.windowPosY), 0.0f); // top right
+			
+				glColor3f(0.0f, 0.0f, 0.3f);
+				glVertex3f(static_cast<float>(m_messageBox.windowPosX + m_messageBox.width), static_cast<float>(m_messageBox.windowPosY + m_messageBox.height), 0.0f); // bottom right
+				glVertex3f(static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY + m_messageBox.height), 0.0f); // bottom left
+			glEnd();
+		glPopMatrix();
+	glEndList();
 }
 
 void GamePlay::enter() {
@@ -39,9 +73,6 @@ void GamePlay::enter() {
 	// create a new AnimationHelper for camera movement
 	m_animationHelperCamera = make_shared<AnimationHelper>(1000);
 	m_animationHelperBackground = make_shared<AnimationHelper>(1000);
-
-	m_rotateFrom = 0;
-	m_rotateTo = 180;
 
 	// connection gui with ai and logic
 	auto firstPlayer = make_shared<AIPlayer>();
@@ -76,6 +107,9 @@ void GamePlay::enter() {
 	// init lighting
 	initLighting();
 	enableLighting();
+
+	// init message box
+	initMessageBox();
 }
 
 void GamePlay::createChessSet() {
@@ -238,6 +272,11 @@ void GamePlay::draw() {
 	// trigger camera rotation
 	rotateCamera();
 
+	fsm.window->set2DMode();
+
+	// draw message box
+	drawMessageBox();
+
 	// draw menu if game is paused
 	if (m_internalState == PAUSED) {
 		// 2D
@@ -246,6 +285,27 @@ void GamePlay::draw() {
 		fsm.window->printHeadline("II P A U S E");
 		m_pauseMenu->draw();
 	}
+}
+
+// must be done in 2D mode
+void GamePlay::drawMessageBox() {
+	if (m_messageBox.text == "")
+		return;
+	
+	// show only if the show time is not over
+	if (m_messageBox.shownSince < (SDL_GetTicks() - m_messageBox.showDuration)) {
+		m_messageBox.text = "";
+		return;
+	}
+
+	glCallList(m_messageBox.displayList);
+
+	fsm.window->printText(
+		m_messageBox.windowPosX + m_messageBox.padding,
+		m_messageBox.windowPosY + m_messageBox.padding,
+		1.0f, 1.0f, 1.0f, 
+		m_messageBox.text
+	);
 }
 
 void GamePlay::drawCoordinateSystem() {
@@ -310,6 +370,11 @@ void GamePlay::startCameraRotation() {
 	// also set the coordinates to the opposite
 	m_rotateFrom = (m_rotateFrom + 180) % 360;
 	m_rotateTo = (m_rotateFrom + 180) % 360;
+}
+
+void GamePlay::startShowText(std::string text) {
+	m_messageBox.text = text;
+	m_messageBox.shownSince = SDL_GetTicks();
 }
 
 void GamePlay::onBackToMenu() {

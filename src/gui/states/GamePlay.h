@@ -24,6 +24,7 @@ public:
 	// draw method
 	void draw();
 	void startCameraRotation();
+	void startShowText(std::string text);
 
 	// events and callbacks
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
@@ -55,6 +56,20 @@ private:
 
 	int m_rotateFrom, m_rotateTo;
 
+	struct MessageBox {
+		unsigned int width;
+		unsigned int height;
+		unsigned int padding;
+		unsigned int showDuration;
+		std::string text;
+
+		unsigned int shownSince;
+		unsigned int windowPosX;
+		unsigned int windowPosY;
+
+		GLuint displayList;
+	} m_messageBox;
+
 	int m_resourcesTotal;
 	int m_resourcesLoaded;
 	GLfloat m_lightPos0[3];
@@ -73,8 +88,10 @@ private:
 	int posNumber;
 	
 	// methods
+	void initMessageBox();
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
+	void drawMessageBox();
 	void initLighting();
 	void createChessSet();
 	void enableLighting();
