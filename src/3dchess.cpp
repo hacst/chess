@@ -42,7 +42,9 @@ int main(int argn, char **argv) {
         return 1;
     }
     
-    Logging::initialize("3dchess.log", severity.get());
+    initializeLogging();
+    addLoggingConsoleSink(severity.get());
+    addLoggingFileSink("3dchess.log", severity.get());
     
     Logger log = initLogger("main");
     

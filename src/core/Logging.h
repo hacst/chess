@@ -43,11 +43,29 @@ std::ostream& operator<<(std::ostream& stream, const Severity severity);
 boost::optional<Severity> severityFrom(const std::string& severity);
 
 /**
- * @brief Initializes logging with a console and a file log and the given severity.
- * @param fileName File name for file log.
- * @param minimalSeverity Severity below which to discard log messages.
+ * @brief Basic initialization for logging.
+ * @see addLoggingConsoleSind
+ * @see addLoggingFileSink
  */
-void initialize(const std::string& fileName, Severity minimalSeverity = info);
+void initializeLogging();
+
+/**
+ * @brief Adds a sink for logging to clog
+ * @param minimalSeverity Minimum severity filter
+ * @param formatString Format string for log output (default boost log with added Severity variable)
+ */
+void addLoggingConsoleSink(
+    Severity minimalSeverity = info,
+    const std::string& formatString = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%");
+
+/**
+* @brief Adds a sink for logging to a file
+* @param fileName File to log to
+* @param minimalSeverity Minimum severity filter
+* @param formatString Format string for log output (default boost log with added Severity variable)
+*/
+void addLoggingFileSink(const std::string& fileName, Severity minimalSeverity = info,
+    const std::string& formatString = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%");
 
 /**
  * @return Returns a Logger with the given channel name.

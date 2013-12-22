@@ -35,8 +35,10 @@ int main(int argn, char **argv) {
         return 1;
     }
 
-    Logging::initialize("consolechess.log", debug);
-    
+    initializeLogging();
+    addLoggingConsoleSink(debug);
+    addLoggingFileSink("consolechess.log", debug);
+
     Logger log = initLogger("consolechess");
     
     const int turnlimit = vm["turns"].as<int>();

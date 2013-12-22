@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <vector>
+#include <random>
 #include "ai/Negamax.h"
 #include "logic/Evaluators.h"
+#include "misc/helper.h"
 
 using namespace std;
 using ::testing::_;
@@ -90,7 +92,7 @@ TEST(Negamax, searchRelaxation) {
         MockIncreasingState mockGameState;
         MockIncreasingState::increasingScore = 0;
 
-        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 2);
+        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 1);
         EXPECT_TRUE(result.turn);
 
         /*        Search space                   Depth   Next turn color
@@ -108,7 +110,7 @@ TEST(Negamax, searchRelaxation) {
         mockGameStateBlack.nextPlayer = Black;
         MockIncreasingState::increasingScore = 0;
 
-        auto result = negamax.search<MockIncreasingState, false>(mockGameStateBlack, 2);
+        auto result = negamax.search<MockIncreasingState, false>(mockGameStateBlack, 1);
         EXPECT_TRUE(result.turn);
         /*        Search space                   Depth   Next turn color
          *              0                          0           W
@@ -121,23 +123,45 @@ TEST(Negamax, searchRelaxation) {
     }
 }
 
+
+template <typename Rng>
+ChessBoard generateRandomBoard(size_t maxTurns, Rng& rng) {
+    uniform_int_distribution<size_t> dst(0, maxTurns);
+    const size_t turnCount = dst(rng);
+
+    GameState gs;
+    for (size_t i = 0; i < turnCount; ++i) {
+        auto turns = gs.getTurnList();
+        auto turn = random_selection(turns, rng);
+        if (turn == end(turns)) break;
+        gs.applyTurn(*turn);
+    }
+
+    return gs.getChessBoard();
+}
+
 TEST(Negamax, AlphaBetaCutoff) {
     Negamax<> negamax(make_shared<MaterialEvaluator>());
     Negamax<> negamaxAB(make_shared<MaterialEvaluator>());
 
-    const unsigned int DEPTH = 4;
-    const unsigned int TRIES = 1;
+    const unsigned int DEPTH = 1;
+    const unsigned int TRIES = 10;
+
+    mt19937 rng;
 
     for (size_t i = 0; i < TRIES; ++i) {
         //TODO: Generate some random board position
-        GameState gs;
+        GameState gs(generateRandomBoard(50, rng));
 
         auto withABCutoff = negamaxAB.search<GameState, true>(gs, DEPTH);
         EXPECT_LT(0, negamaxAB.m_counters.cutoffs);
         auto withoutABCutoff = negamax.search<GameState, false>(gs, DEPTH);
         EXPECT_EQ(0, negamax.m_counters.cutoffs);
 
-        EXPECT_EQ(withABCutoff, withoutABCutoff);
+        EXPECT_EQ(withoutABCutoff.score, withABCutoff.score)
+            << "Base state (" << i << "): " << gs << endl
+            << "AB move    : " << withABCutoff << endl
+            << "Other move : " << withoutABCutoff << endl;
     }
 
 }
