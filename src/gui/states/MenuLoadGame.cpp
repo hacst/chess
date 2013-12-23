@@ -13,8 +13,6 @@ MenuLoadGame::MenuLoadGame() : fsm(StateMachine::getInstance()) {
 }
 
 void MenuLoadGame::enter() {
-	std::cout << "entered MenuLoadGame " << fsm.window->getHeight() << std::endl;
-
 	// switch to 2D mode
 	fsm.window->set2DMode();
 
@@ -25,7 +23,7 @@ void MenuLoadGame::enter() {
 	menu->addButton("LoadGameSlot1.png");
 	menu->addButton("LoadGameSlot2.png");
 	menu->addButton("LoadGameSlot3.png");
-	menu->addButton("LoadGameBack.png")->onClick(boost::bind(&MenuLoadGame::onMenuBack, this));
+	menu->addButton("Back.png")->onClick(boost::bind(&MenuLoadGame::onMenuBack, this));
 }
 
 AbstractState* MenuLoadGame::run() {
@@ -55,7 +53,7 @@ AbstractState* MenuLoadGame::run() {
 		case States::LOAD_SLOT_C:
 			nextState = this;	// @todo
 			break;
-		case States::MENU_BACK:
+		case States::MENU_MAIN:
 			nextState = new MenuMain();
 			break;
 		case States::KEEP_CURRENT:
@@ -77,10 +75,8 @@ void MenuLoadGame::draw() {
 }
 
 void MenuLoadGame::onMenuBack() {
-	std::cout << "go menu back" << std::endl;
-	m_nextState = States::MENU_BACK;
+	m_nextState = States::MENU_MAIN;
 }
 
 void MenuLoadGame::exit() {
-	std::cout << "left MenuLoadGame menu!" << std::endl;
 }

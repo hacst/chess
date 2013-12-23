@@ -1,4 +1,4 @@
-#include "gui/states/GamePlay.h"
+#include "gui/states/MenuGameMode.h"
 #include "gui/states/MenuMain.h"
 
 #include <iostream>
@@ -51,7 +51,7 @@ AbstractState* MenuMain::run() {
 	AbstractState* nextState;
 	switch (m_nextState) {
 		case States::NEW_GAME:
-			nextState = new GamePlay();
+			nextState = new MenuGameMode();
 			break;
 		case States::LOAD_GAME:
 			nextState = new MenuLoadGame();

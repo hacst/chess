@@ -1,15 +1,15 @@
-#ifndef MENUOPTIONS_H
-#define MENUOPTIONS_H
+#ifndef MENUPLAYERCOLOR_H
+#define MENUPLAYERCOLOR_H
 
 #include "gui/interface/AbstractState.h"
-#include "gui/states/MenuOptions.h"
+#include "gui/states/MenuGameMode.h"
 #include "gui/Menu2D.h"
 
 class StateMachine;
 
-class MenuOptions : public AbstractState {
+class MenuPlayerColor : public AbstractState {
 public:
-	MenuOptions();
+	MenuPlayerColor();
 
 	// interface methods
 	void enter() override;
@@ -20,7 +20,8 @@ public:
 	void draw();
 
 	// state methods
-	void onResolutionChange();
+	void onColorWhite();
+	void onColorBlack();
 	void onMenuBack();
 
 private:
@@ -29,7 +30,8 @@ private:
 	enum States {
 		KEEP_CURRENT,
 
-		MENU_MAIN
+		GAME_PLAY,
+		MENU_GAME_MODE
 	};
 	States m_nextState;
 
@@ -37,4 +39,4 @@ private:
 	Menu2DPtr menu;
 };
 
-#endif // MENUOPTIONS_H
+#endif // MENUPLAYERCOLOR_H

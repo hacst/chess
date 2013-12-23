@@ -31,7 +31,7 @@ private:
 		LOAD_SLOT_A,
 		LOAD_SLOT_B,
 		LOAD_SLOT_C,
-		MENU_BACK
+		MENU_MAIN
 	};
 	States m_nextState;
 

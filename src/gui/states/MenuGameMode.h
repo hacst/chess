@@ -1,15 +1,15 @@
-#ifndef MENUOPTIONS_H
-#define MENUOPTIONS_H
+#ifndef MENUGAMEMODE_H
+#define MENUGAMEMODE_H
 
 #include "gui/interface/AbstractState.h"
-#include "gui/states/MenuOptions.h"
+#include "gui/states/MenuGameMode.h"
 #include "gui/Menu2D.h"
 
 class StateMachine;
 
-class MenuOptions : public AbstractState {
+class MenuGameMode : public AbstractState {
 public:
-	MenuOptions();
+	MenuGameMode();
 
 	// interface methods
 	void enter() override;
@@ -20,7 +20,8 @@ public:
 	void draw();
 
 	// state methods
-	void onResolutionChange();
+	void onModeKIVsKI();
+	void onModePlayerVsKI();
 	void onMenuBack();
 
 private:
@@ -29,6 +30,8 @@ private:
 	enum States {
 		KEEP_CURRENT,
 
+		GAME_PLAY,
+		MENU_PLAYER_COLOR,
 		MENU_MAIN
 	};
 	States m_nextState;
@@ -37,4 +40,4 @@ private:
 	Menu2DPtr menu;
 };
 
-#endif // MENUOPTIONS_H
+#endif // MENUGAMEMODE_H
