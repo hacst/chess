@@ -46,7 +46,8 @@ private:
 
 	enum InternalState {
 		NOT_PAUSED,
-		PAUSED
+		PAUSED,
+		SAVE_GAME
 	} m_internalState;
 
 	// smart pointers
@@ -88,14 +89,22 @@ private:
 	int posNumber;
 	
 	// methods
+	void initLighting();
+	void initChessSet();
+	void initAnimationHelpers();
+	void initMenuPause();
+	void initMenuSaveGame();
+	void initPlayers();
+	void initGameLogic();
 	void initMessageBox();
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
 	void drawMessageBox();
-	void initLighting();
-	void createChessSet();
+	void drawLastTurns();
+	void drawPauseMenu();
 	void enableLighting();
 	void disableLighting();
+	void handleEvents();
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

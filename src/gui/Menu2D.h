@@ -32,6 +32,7 @@ public:
 	void mousePressed();
 	void mouseReleased();
 	void windowResized(int newWidth, int newHeight);
+	void resetAnimation();
 
 private:
 

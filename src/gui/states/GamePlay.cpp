@@ -60,21 +60,28 @@ void GamePlay::initMessageBox() {
 void GamePlay::enter() {
 	// set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	m_internalState = NOT_PAUSED;
 
-	// create a whole new ChessSet (2x 6 models + board)
-	createChessSet();
+	initChessSet();
+	initMenuPause();
+	initAnimationHelpers();
+	initLighting();
+	initMessageBox();
 
-	// @TODO: Menu must register at window, so that window can call menu if window size has changed
+	// connect gui with ai and logic
+	initPlayers();
+	initGameLogic();
+}
+
+void GamePlay::initMenuPause() {
 	m_pauseMenu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
 	m_pauseMenu->addButton("ResumeGame.png")->onClick(boost::bind(&GamePlay::onResumeGame, this));
 	m_pauseMenu->addButton("SaveGame.png")->onClick(boost::bind(&GamePlay::onSaveGame, this));
 	m_pauseMenu->addButton("BackToMainMenu.png")->onClick(boost::bind(&GamePlay::onLeaveGame, this));
+}
 
-	// create a new AnimationHelper for camera movement
-	m_animationHelperCamera = make_shared<AnimationHelper>(1000);
-	m_animationHelperBackground = make_shared<AnimationHelper>(1000);
-
-	// connection gui with ai and logic
+void GamePlay::initPlayers() {
+	// AI vs. AI
 	auto firstPlayer = make_shared<AIPlayer>();
 	firstPlayer->start();
 	m_firstPlayer = firstPlayer;
@@ -82,37 +89,25 @@ void GamePlay::enter() {
 	auto secondPlayer = make_shared<DummyPlayer>();
 	secondPlayer->start();
 	m_secondPlayer = secondPlayer;
+}
 
+void GamePlay::initGameLogic() {
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	GameConfigurationPtr config = make_shared<GameConfiguration>();
 	config->timeBetweenTurnsInSeconds = 3;
+
 	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
 	m_gameLogic->addObserver(m_observer);
+
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
 	m_gameLogic->addObserver(m_observerProxy);
 
 	m_gameLogic->start();
-
-	m_internalState = NOT_PAUSED;
-
-	m_lightPos0[0] = 0.0f;
-	m_lightPos0[1] = 65.0f;
-	m_lightPos0[2] = -50.0f;
-	
-	m_lightPos1[0] = 0.0f;
-	m_lightPos1[1] = 65.0f;
-	m_lightPos1[2] = 50.0f;
-
-	// init lighting
-	initLighting();
-	enableLighting();
-
-	// init message box
-	initMessageBox();
 }
 
-void GamePlay::createChessSet() {
+// create a whole new ChessSet (2x6 models + 1 board)
+void GamePlay::initChessSet() {
 	m_chessSet = make_shared<ChessSet>();
 
 	m_resourcesLoaded = 0;
@@ -120,6 +115,12 @@ void GamePlay::createChessSet() {
 
 	m_chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
 	m_chessSet->loadResources();
+}
+
+// creates new animation helpers for camera movement and background fading
+void GamePlay::initAnimationHelpers() {
+	m_animationHelperCamera = make_shared<AnimationHelper>(1000);
+	m_animationHelperBackground = make_shared<AnimationHelper>(1000);
 }
 
 void GamePlay::onBeforeLoadNextResource(string resourceName) {
@@ -165,14 +166,17 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 
 void GamePlay::onResumeGame() {
 	m_internalState = NOT_PAUSED;
+	m_pauseMenu->resetAnimation();
 }
 
 void GamePlay::onSaveGame() {
+	m_internalState = SAVE_GAME;
+
 
 }
 
 void GamePlay::onLeaveGame() {
-
+	m_nextState = BACK_TO_MENU;
 }
 
 AbstractState* GamePlay::run() {
@@ -203,6 +207,14 @@ AbstractState* GamePlay::run() {
 
 // this light source has an effect like a desk lamp and is in the middle of the chessboard, the lighting direction is downwards
 void GamePlay::initLighting() {
+	m_lightPos0[0] = 0.0f;
+	m_lightPos0[1] = 65.0f;
+	m_lightPos0[2] = -50.0f;
+
+	m_lightPos1[0] = 0.0f;
+	m_lightPos1[1] = 65.0f;
+	m_lightPos1[2] = 50.0f;
+
 	fsm.window->set3DMode();
 
 	glShadeModel(GL_SMOOTH);
@@ -261,29 +273,40 @@ void GamePlay::disableLighting() {
 }
 
 void GamePlay::draw() {
+	enableLighting();
+
 	fadeBackgroundForOneTime();
 
 	// 3D
 	fsm.window->set3DMode();
+	m_chessSet->draw();	// chessboard and models
+	rotateCamera();		// trigger camera rotation
 
-	// chessboard and models
-	m_chessSet->draw();
-
-	// trigger camera rotation
-	rotateCamera();
-
+	// 2D
 	fsm.window->set2DMode();
-
-	// draw message box
-	drawMessageBox();
+	disableLighting();
 
 	// draw menu if game is paused
 	if (m_internalState == PAUSED) {
-		// 2D
-		fsm.window->set2DMode();
+		drawPauseMenu();
+	} else {
+		// do not draw any text -> looks crappy
+		drawMessageBox();
+		drawLastTurns();
+	}
+}
 
-		fsm.window->printHeadline("II P A U S E");
-		m_pauseMenu->draw();
+void GamePlay::handleEvents() {
+	if (fsm.eventmap.mouseMoved) {
+		m_pauseMenu->mouseMoved(fsm.eventmap.mouseX, fsm.eventmap.mouseY);
+	}
+
+	if (fsm.eventmap.mouseDown) {
+		m_pauseMenu->mousePressed();
+	}
+
+	if (fsm.eventmap.mouseUp) {
+		m_pauseMenu->mouseReleased();
 	}
 }
 
@@ -306,6 +329,52 @@ void GamePlay::drawMessageBox() {
 		1.0f, 1.0f, 1.0f, 
 		m_messageBox.text
 	);
+}
+
+// must be done in 2D mode
+void GamePlay::drawLastTurns() {
+	// config
+	int fontSize = fsm.window->fontSize::TEXT_SMALL;
+	int numberOfTurnsToDraw = 5;
+	
+	// precalculations
+	int lineHeight = fontSize;
+	int totalLineHeight = numberOfTurnsToDraw * lineHeight;
+	int offsetY = fsm.window->getHeight() - totalLineHeight;
+
+	int step = 0;
+	for (auto& turn : m_chessSet->getTurns()) {
+		if (step == numberOfTurnsToDraw)
+			return;
+
+		int relativeOffsetY = step * lineHeight;
+		fsm.window->printTextSmall(10, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, turn.toString());
+
+		++step;
+	}
+}
+
+void GamePlay::drawPauseMenu() {
+	handleEvents();
+	
+	// modal dialog with transparent background
+	glEnable(GL_COLOR);
+	glEnable(GL_BLEND);
+	glPushMatrix();
+		glBegin(GL_QUADS);
+			glColor4f(0.0f, 0.0f, 0.0f, 0.25f);
+
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(static_cast<float>(fsm.window->getWidth()), 0.0f, 0.0f);
+			glVertex3f(static_cast<float>(fsm.window->getWidth()), static_cast<float>(fsm.window->getHeight()), 0.0f);
+			glVertex3f(0.0f, static_cast<float>(fsm.window->getHeight()), 0.0f);
+		glEnd();
+	glPopMatrix();
+	glDisable(GL_BLEND);
+	glDisable(GL_COLOR);
+
+	fsm.window->printHeadline("P A U S E");
+	m_pauseMenu->draw();
 }
 
 void GamePlay::drawCoordinateSystem() {

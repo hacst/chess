@@ -48,6 +48,14 @@ public:
 	void printSubHeadline(std::string text);
 	void printTextCenter(float red, float green, float blue, std::string text);
 	void printText(int x, int y, float red, float green, float blue, std::string text);
+	void printTextSmall(int x, int y, float red, float green, float blue, std::string text);
+
+	enum fontSize {
+		HEADLINE = 42,
+		SUB_HEADLINE = 28,
+		TEXT = 20,
+		TEXT_SMALL = 15
+	};
 
 private:
 	struct fontObject {
@@ -98,13 +106,7 @@ private:
 
 	StateMachine& m_fsm;
 	
-	freetype::font_data fontHeadline, fontSubHeadline, fontText;
-	
-	enum fontSize {
-		HEADLINE = 42,
-		SUB_HEADLINE = 28,
-		TEXT = 20
-	};
+	freetype::font_data fontHeadline, fontSubHeadline, fontText, fontTextSmall;
 };
 
 #endif // GUIWINDOW_H

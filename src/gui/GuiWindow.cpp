@@ -143,6 +143,7 @@ void GuiWindow::loadFonts() {
 	fontHeadline.init("resources/Lato-Bla.ttf", fontSize::HEADLINE);
 	fontSubHeadline.init("resources/Lato-BlaIta.ttf", fontSize::SUB_HEADLINE);
 	fontText.init("resources/Signika.ttf", fontSize::TEXT);
+	fontTextSmall.init("resources/Signika.ttf", fontSize::TEXT_SMALL);
 }
 
 void GuiWindow::terminate() {
@@ -310,7 +311,7 @@ void GuiWindow::swapFrameBufferNow() {
 }
 
 void GuiWindow::set2DMode() {
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	glOrtho(0, m_width, m_height, 0, 0, 128);
 
@@ -363,6 +364,19 @@ void GuiWindow::printText(int x, int y, float red, float green, float blue, std:
 
 	drawText(fo);
 }
+
+void GuiWindow::printTextSmall(int x, int y, float red, float green, float blue, std::string text) {
+	fontObject fo = {
+		x, y,
+		red, green, blue,
+		fontSize::TEXT_SMALL,
+		fontTextSmall,
+		text
+	};
+
+	drawText(fo);
+}
+
 
 void GuiWindow::printHeadline(std::string text) {
 	fontObject fo = {

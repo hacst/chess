@@ -106,3 +106,7 @@ void Menu2D::windowResized(int newWidth, int newHeight) {
 
 	updateAbsolutePosition();
 }
+
+void Menu2D::resetAnimation() {
+	animationHelper->reset();
+}

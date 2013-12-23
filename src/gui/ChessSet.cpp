@@ -92,16 +92,17 @@ void ChessSet::setState(std::array<Piece, 64> state) {
 }
 
 void ChessSet::setTurn(Turn turn) {
-	m_turn = turn;
+	m_turns.push_front(turn);
+}
+
+deque<Turn> ChessSet::getTurns() {
+	return m_turns;
 }
 
 void ChessSet::draw() {
-	// 1) drawing models which have not been modified in position at first
-	if (m_turn.action == Turn::Action::Move) {
+	/*if (m_turns.back().action == Turn::Action::Move) {
 		// todo
-	}
-
-	// 2) animating and drawing modified models here
+	}*/
 
 	int field = 0;
 	for (auto &p : m_state) {
