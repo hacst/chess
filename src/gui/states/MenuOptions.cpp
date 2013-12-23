@@ -13,8 +13,6 @@ MenuOptions::MenuOptions() : fsm(StateMachine::getInstance()) {
 }
 
 void MenuOptions::enter() {
-	std::cout << "entered MenuLoadGame " << std::endl;
-
 	// switch to 2D mode
 	fsm.window->set2DMode();
 
@@ -44,7 +42,7 @@ AbstractState* MenuOptions::run() {
 
 	AbstractState* nextState;
 	switch (m_nextState) {
-	case States::MENU_BACK:
+	case States::MENU_MAIN:
 		nextState = new MenuMain();
 		break;
 	case States::KEEP_CURRENT:
@@ -66,8 +64,6 @@ void MenuOptions::draw() {
 }
 
 void MenuOptions::onResolutionChange() {
-	std::cout << "change resolution" << std::endl;
-
 	if (!fsm.window->isFullscreen()) {
 		fsm.window->switchWindowMode(GuiWindow::WindowMode::FULLSCREEN);
 	} else {
@@ -77,12 +73,11 @@ void MenuOptions::onResolutionChange() {
 	// resolution has changed -> propagate to menu (only here, other menus get window size on init)
 	menu->windowResized(fsm.window->getWidth(), fsm.window->getHeight());
 
-	m_nextState = States::MENU_BACK;
+	m_nextState = States::MENU_MAIN;
 }
 
 void MenuOptions::onMenuBack() {
-	std::cout << "go menu back" << std::endl;
-	m_nextState = States::MENU_BACK;
+	m_nextState = States::MENU_MAIN;
 }
 
 void MenuOptions::exit() {
