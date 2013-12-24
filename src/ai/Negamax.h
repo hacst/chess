@@ -34,6 +34,9 @@ public:
         //! Turn to make to advance towards score.
         boost::optional<Turn> turn;
 
+        //! Negates score. Syntax sugar to get closer to algorithm notation.
+        Result operator-() const { return{ -score, turn }; };
+
         bool operator<(const Result& other) { return score < other.score; }
         bool operator<=(const Result& other) { return score <= other.score; }
         bool operator>=(const Result& other) { return score >= other.score; }
@@ -62,14 +65,14 @@ public:
      * @return Result of the search.
      */
     template<typename TGameState = GameState, bool AB_CUTOFF_ENABLED = true>
-    Result search(const TGameState& state, size_t maxDepthInTurns) {
-        LOG(Logging::info) << "Starting search of depth " << maxDepthInTurns << " turns. AB cutoff = " << AB_CUTOFF_ENABLED;
+    Result search(const TGameState& state, size_t maxDepth) {
+        LOG(Logging::info) << "Starting " << maxDepth << " plies deep search. AB cutoff = " << AB_CUTOFF_ENABLED;
         
         m_counters = PerfCounters();
         
         Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(
-                    state, 0, maxDepthInTurns * 2, MIN_SCORE, MAX_SCORE);
-        
+                    state, 0, maxDepth, MIN_SCORE, MAX_SCORE);
+
         LOG(Logging::debug) << m_counters;
         return result;
     }
@@ -107,26 +110,23 @@ private:
      */
     template <typename TGameState = GameState, bool AB_CUTOFF_ENABLED>
     Result search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
-
         if (state.isGameOver() || depth == maxDepth) {
             return { m_evaluator->getScore(state) , boost::none };
         }
 
         Result bestResult { MIN_SCORE, boost::none };
-        TGameState newState;
-        for (auto& turn: state.getTurnList()) {
-            newState = state;
+        auto possibleTurns = state.getTurnList();
+        performMoveOrdering(possibleTurns);
+
+        for (auto& turn : possibleTurns) {
+            TGameState newState = state;
             ++m_counters.nodes;
 
-            // Simulate ply
             newState.applyTurn(turn);
-            // Get best possible return ply score in maxDepth for adversary
-            Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(
+
+            Result result = -search_recurse<TGameState, AB_CUTOFF_ENABLED>(
                         newState, depth + 1, maxDepth,
-                        -beta, -std::max(alpha, bestResult.score));
-            
-            // Convert the result to our POV (Zero-Sum)
-            result.score *= -1;
+                        -beta, -alpha);
 
             // Check if we improved upon previous turns
             if (result > bestResult) {
@@ -134,17 +134,23 @@ private:
                 //LOG(trace) << "(" << depth << ") Improved score " << bestResult.score << " to " << result.score;
                 bestResult = result;
                 bestResult.turn = turn;
+            }
 
-                if (AB_CUTOFF_ENABLED && bestResult.score >= beta) {
-                    ++m_counters.cutoffs;
-                    // Prune the rest of the sibling branches
-                    return bestResult;
-                }
+            alpha = std::max(alpha, result.score);
+
+            if (AB_CUTOFF_ENABLED && alpha >= beta) {
+                ++m_counters.cutoffs;
+                // Prune the rest of the sibling branches
+                break;
             }
         }
 
         //LOG(trace) << "(" << depth << ") Best score " << bestResult.score;
         return bestResult;
+    }
+
+    void performMoveOrdering(std::vector<Turn>& /*moves*/) {
+        //TODO: Implement this
     }
 
     TEvaluatorPtr m_evaluator;

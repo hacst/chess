@@ -7,9 +7,9 @@
 class GameState;
 
 using Score = int;
-
+// Provide MAX_SCORE/MIN_SCORE to ensure that both are negatable to reach each other
 static const Score MAX_SCORE = std::numeric_limits<Score>::max();
-static const Score MIN_SCORE = std::numeric_limits<Score>::min();
+static const Score MIN_SCORE = -std::numeric_limits<Score>::max();
 
 class AbstractEvaluator {
 public:

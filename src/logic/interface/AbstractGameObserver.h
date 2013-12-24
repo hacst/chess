@@ -12,7 +12,7 @@
  * Classes of this type can be registered with the GameLogic to be
  * notified of relevant game events.
  * 
- * @note A Observer is only required to stay in a valid state for on game.
+ * @note A Observer is only required to stay in a valid state for one game.
  * It is free to halt its operations after the end of the game.
  * 
  * @warning None of the functions in the class must block.

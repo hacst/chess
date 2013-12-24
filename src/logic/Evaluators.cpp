@@ -14,12 +14,12 @@ Score MaterialEvaluator::getMaterialWorth(const PlayerColor player, const ChessB
     Score score = 0;
 
     const static std::array<Score, 13> pieceToScore = {
-        2000,  // king
-        88,    // queen
-        33,    // bishop
-        32,    // knight
-        51,    // rook
-        10,    // pawn
+        20000,  // king
+        880,    // queen
+        333,    // bishop
+        320,    // knight
+        510,    // rook
+        100,    // pawn
         0,    // WTF
         0,    // Empty
     };

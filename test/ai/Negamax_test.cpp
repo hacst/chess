@@ -68,8 +68,9 @@ struct MockIncreasingState : public MockGameState {
         return{ Turn(), Turn(), Turn() };
     }
 
-    virtual void applyTurn(Turn) override {
+    virtual void applyTurn(Turn t) override {
         score = ++increasingScore;
+        MockGameState::applyTurn(t);
     }
 
     Score score;
@@ -92,7 +93,7 @@ TEST(Negamax, searchRelaxation) {
         MockIncreasingState mockGameState;
         MockIncreasingState::increasingScore = 0;
 
-        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 1);
+        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 2);
         EXPECT_TRUE(result.turn);
 
         /*        Search space                   Depth   Next turn color
@@ -110,7 +111,7 @@ TEST(Negamax, searchRelaxation) {
         mockGameStateBlack.nextPlayer = Black;
         MockIncreasingState::increasingScore = 0;
 
-        auto result = negamax.search<MockIncreasingState, false>(mockGameStateBlack, 1);
+        auto result = negamax.search<MockIncreasingState, false>(mockGameStateBlack, 2);
         EXPECT_TRUE(result.turn);
         /*        Search space                   Depth   Next turn color
          *              0                          0           W
@@ -122,6 +123,40 @@ TEST(Negamax, searchRelaxation) {
         EXPECT_EQ(pow(3, 1) + pow(3, 2), MockIncreasingState::increasingScore);
     }
 }
+
+
+TEST(Negamax, searchRelaxationUneven) {
+
+
+    {
+        auto mockEval = make_shared<MockIncreasingEval>();
+        Negamax<decltype(mockEval)> negamax(mockEval);
+        MockIncreasingState mockGameState;
+        MockIncreasingState::increasingScore = 0;
+
+        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 3);
+        EXPECT_TRUE(result.turn);
+
+        EXPECT_EQ(31, result.score);
+        EXPECT_EQ(pow(3, 1) + pow(3, 2) + pow(3, 3), MockIncreasingState::increasingScore);
+    }
+    // Check symetric case
+
+    {
+        auto mockEval = make_shared<MockIncreasingEval>();
+        Negamax<decltype(mockEval)> negamax(mockEval);
+        MockIncreasingState mockGameState;
+        mockGameState.nextPlayer = Black;
+        MockIncreasingState::increasingScore = 0;
+
+        auto result = negamax.search<MockIncreasingState, false>(mockGameState, 3);
+        EXPECT_TRUE(result.turn);
+
+        EXPECT_EQ(-11, result.score);
+        EXPECT_EQ(pow(3, 1) + pow(3, 2) + pow(3, 3), MockIncreasingState::increasingScore);
+    }
+}
+
 
 
 template <typename Rng>
@@ -141,43 +176,26 @@ ChessBoard generateRandomBoard(size_t maxTurns, Rng& rng) {
 }
 
 TEST(Negamax, AlphaBetaCutoff) {
-    Negamax<> negamax(make_shared<MaterialEvaluator>());
-    Negamax<> negamaxAB(make_shared<MaterialEvaluator>());
-
-    const unsigned int DEPTH = 1;
-    const unsigned int TRIES = 10;
+    const unsigned int TRIES = 3;
 
     mt19937 rng;
+    uniform_int_distribution<size_t> depthDist(2, 3);
 
     for (size_t i = 0; i < TRIES; ++i) {
-        //TODO: Generate some random board position
+        Negamax<> negamax(make_shared<MaterialEvaluator>());
+        Negamax<> negamaxAB(make_shared<MaterialEvaluator>());
+        
         GameState gs(generateRandomBoard(50, rng));
 
-        auto withABCutoff = negamaxAB.search<GameState, true>(gs, DEPTH);
+        const size_t depth = depthDist(rng);
+        auto withABCutoff = negamaxAB.search<GameState, true>(gs, depth);
         EXPECT_LT(0, negamaxAB.m_counters.cutoffs);
-        auto withoutABCutoff = negamax.search<GameState, false>(gs, DEPTH);
+        auto withoutABCutoff = negamax.search<GameState, false>(gs, depth);
         EXPECT_EQ(0, negamax.m_counters.cutoffs);
 
-        EXPECT_EQ(withoutABCutoff.score, withABCutoff.score)
-            << "Base state (" << i << "): " << gs << endl
-            << "AB move    : " << withABCutoff << endl
-            << "Other move : " << withoutABCutoff << endl;
+        EXPECT_EQ(withoutABCutoff, withABCutoff)
+            << "Base state (" << i << "): " << gs << endl;
     }
 
-}
-
-TEST(Negamax, DISABLED_searchRelaxationUneven) {
-    auto mockEval = make_shared<MockIncreasingEval>();
-    Negamax<decltype(mockEval)> negamax(mockEval);
-
-    MockIncreasingState mockGameState;
-    MockIncreasingState::increasingScore = 0;
-
-    auto result = negamax.search(mockGameState, 3);
-    EXPECT_TRUE(result.turn);
-
-    //TODO: Why does it try to play blacks perspective???
-    EXPECT_EQ(28, result.score);
-    EXPECT_EQ(pow(3, 1) + pow(3, 2) + pow(3, 3), MockIncreasingState::increasingScore);
 }
 

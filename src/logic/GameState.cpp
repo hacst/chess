@@ -20,8 +20,8 @@ std::vector<Turn> GameState::getTurnList() {
 }
 
 void GameState::applyTurn(const Turn& turn) {
-	m_chessBoard.applyTurn(turn);
-	m_nextPlayer = (m_nextPlayer == White) ? Black : White;
+    m_chessBoard.applyTurn(turn);
+    m_nextPlayer = togglePlayerColor(m_nextPlayer);
 }
 
 PlayerColor GameState::getNextPlayer() const {
