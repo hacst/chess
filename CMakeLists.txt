@@ -90,12 +90,14 @@ set(GUI_STATE_SOURCES
     src/gui/states/MenuLoadGame.h
     src/gui/states/MenuOptions.h
     src/gui/states/MenuGameMode.h
+	src/gui/states/MenuPlayerColor.h
 	src/gui/states/GamePlay.h
 
     src/gui/states/MenuMain.cpp
     src/gui/states/MenuLoadGame.cpp
     src/gui/states/MenuOptions.cpp
     src/gui/states/MenuGameMode.cpp
+	src/gui/states/MenuPlayerColor.cpp
 	src/gui/states/GamePlay.cpp
 )
 
