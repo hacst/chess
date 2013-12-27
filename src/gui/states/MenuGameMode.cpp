@@ -22,8 +22,8 @@ void MenuGameMode::enter() {
 	glClearColor(0.6f, 0.21f, 0, 0);
 
 	menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
-	menu->addButton("ModeKIVsKI.png")->onClick(boost::bind(&MenuGameMode::onModeKIVsKI, this));
-	menu->addButton("ModePlayerVsKI.png")->onClick(boost::bind(&MenuGameMode::onModePlayerVsKI, this));
+	menu->addButton("ModeKIVsKI.png")->onClick(boost::bind(&MenuGameMode::onModeAIVsAI, this));
+	menu->addButton("ModePlayerVsKI.png")->onClick(boost::bind(&MenuGameMode::onModePlayerVsAI, this));
 	menu->addButton("Back.png")->onClick(boost::bind(&MenuGameMode::onMenuBack, this));
 }
 
@@ -46,7 +46,7 @@ AbstractState* MenuGameMode::run() {
 	AbstractState* nextState;
 	switch (m_nextState) {
 	case States::GAME_PLAY:
-		nextState = new GamePlay();
+		nextState = new GamePlay(GamePlay::GameMode::AI_VS_AI, PlayerColor::White);
 		break;
 	case States::MENU_PLAYER_COLOR:
 		nextState = new MenuPlayerColor();
@@ -76,11 +76,11 @@ void MenuGameMode::onMenuBack() {
 	m_nextState = States::MENU_MAIN;
 }
 
-void MenuGameMode::onModeKIVsKI() {
+void MenuGameMode::onModeAIVsAI() {
 	m_nextState = States::GAME_PLAY;
 }
 
-void MenuGameMode::onModePlayerVsKI() {
+void MenuGameMode::onModePlayerVsAI() {
 	m_nextState = States::MENU_PLAYER_COLOR;
 }
 

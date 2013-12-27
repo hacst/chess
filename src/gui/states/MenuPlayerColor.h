@@ -2,7 +2,6 @@
 #define MENUPLAYERCOLOR_H
 
 #include "gui/interface/AbstractState.h"
-#include "gui/states/MenuGameMode.h"
 #include "gui/Menu2D.h"
 
 class StateMachine;
@@ -25,7 +24,8 @@ public:
 	void onMenuBack();
 
 private:
-	StateMachine& fsm;
+	StateMachine& m_fsm;
+	bool m_colorWhite;
 
 	enum States {
 		KEEP_CURRENT,
@@ -36,7 +36,7 @@ private:
 	States m_nextState;
 
 	// menu smart pointer handle
-	Menu2DPtr menu;
+	Menu2DPtr m_menu;
 };
 
 #endif // MENUPLAYERCOLOR_H

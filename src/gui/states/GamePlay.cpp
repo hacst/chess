@@ -19,11 +19,11 @@
 
 using namespace std;
 
-GamePlay::GamePlay()
-	: fsm(StateMachine::getInstance())
-	, m_rotateFrom(0)
-	, m_rotateTo(180)
-	, m_nextState(States::KEEP_CURRENT) {
+GamePlay::GamePlay(GameMode mode, PlayerColor firstPlayerColor)
+	: m_fsm(StateMachine::getInstance())
+	, m_nextState(States::KEEP_CURRENT)
+	, m_gameMode(mode)
+	, m_firstPlayerColor(firstPlayerColor) {
 }
 
 void GamePlay::initMessageBox() {
@@ -34,11 +34,11 @@ void GamePlay::initMessageBox() {
 	m_messageBox.showDuration = 3000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
 
 	// precalculate absolute position
-	m_messageBox.windowPosX = (fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
+	m_messageBox.windowPosX = (m_fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
 	m_messageBox.windowPosY = 10;
 
 	// create rectangle OGL list for faster drawing
-	fsm.window->set2DMode();
+	m_fsm.window->set2DMode();
 
 	m_messageBox.displayList = glGenLists(1);
 
@@ -62,6 +62,7 @@ void GamePlay::enter() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	m_internalState = NOT_PAUSED;
 
+	initCamera();
 	initChessSet();
 	initMenuPause();
 	initAnimationHelpers();
@@ -74,21 +75,38 @@ void GamePlay::enter() {
 }
 
 void GamePlay::initMenuPause() {
-	m_pauseMenu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
+	m_pauseMenu = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
 	m_pauseMenu->addButton("ResumeGame.png")->onClick(boost::bind(&GamePlay::onResumeGame, this));
-	m_pauseMenu->addButton("SaveGame.png")->onClick(boost::bind(&GamePlay::onSaveGame, this));
+
+	// saving a game is only available in Player vs AI mode.
+	if (m_gameMode == PLAYER_VS_AI) {
+		m_pauseMenu->addButton("SaveGame.png")->onClick(boost::bind(&GamePlay::onSaveGame, this));
+	}
+	
 	m_pauseMenu->addButton("BackToMainMenu.png")->onClick(boost::bind(&GamePlay::onLeaveGame, this));
 }
 
 void GamePlay::initPlayers() {
-	// AI vs. AI
-	auto firstPlayer = make_shared<AIPlayer>();
-	firstPlayer->start();
-	m_firstPlayer = firstPlayer;
+	if (m_gameMode == PLAYER_VS_AI) {
+		// Player vs. AI
+		auto firstPlayer = make_shared<AIPlayer>();
+		firstPlayer->start();
+		m_firstPlayer = firstPlayer;
 
-	auto secondPlayer = make_shared<DummyPlayer>();
-	secondPlayer->start();
-	m_secondPlayer = secondPlayer;
+		// @todo
+		auto secondPlayer = make_shared<DummyPlayer>();
+		secondPlayer->start();
+		m_secondPlayer = secondPlayer;
+	} else if (m_gameMode == AI_VS_AI) {
+		// AI vs. AI
+		auto firstPlayer = make_shared<AIPlayer>();
+		firstPlayer->start();
+		m_firstPlayer = firstPlayer;
+
+		auto secondPlayer = make_shared<AIPlayer>();
+		secondPlayer->start();
+		m_secondPlayer = secondPlayer;
+	}
 }
 
 void GamePlay::initGameLogic() {
@@ -104,6 +122,30 @@ void GamePlay::initGameLogic() {
 	m_gameLogic->addObserver(m_observerProxy);
 
 	m_gameLogic->start();
+}
+
+void GamePlay::initCamera() {
+	// the camera is looking from -Z to +Z and is placed at X = 0.
+	if (m_firstPlayerColor == PlayerColor::White) {
+		m_rotateFrom = 0;
+		m_rotateTo = 180;
+
+		// we fix the camera orientation to +/-180 degree
+		setCameraPosition(180.0f);
+	} else {
+		m_rotateFrom = 180;
+		m_rotateTo = 0;
+
+		// we do not need to correct the camera orientation if the playerColor is black
+		setCameraPosition(0.0f);
+	}
+
+	// we lock the camera, if the mode is Player vs. AI
+	if (m_gameMode == PLAYER_VS_AI) {
+		m_lockCamera = true;
+	} else {
+		m_lockCamera = false;
+	}
 }
 
 // create a whole new ChessSet (2x6 models + 1 board)
@@ -126,13 +168,13 @@ void GamePlay::initAnimationHelpers() {
 void GamePlay::onBeforeLoadNextResource(string resourceName) {
 	// swap the frame buffer for the first time to
 	if (m_resourcesLoaded == 0) {
-		fsm.window->swapFrameBufferNow();
+		m_fsm.window->swapFrameBufferNow();
 	}
 
 	// print what is loaded (resource name + progress bar)
 	++m_resourcesLoaded;
 
-	int windowWidth = fsm.window->getWidth();
+	int windowWidth = m_fsm.window->getWidth();
 	float percentLoaded = m_resourcesLoaded / static_cast<float>(m_resourcesTotal);
 
 	array<float, 2> topLeftVertex		= { 0.0f, 0.0f	};
@@ -140,7 +182,7 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 	array<float, 2> bottomRightVertex	= { windowWidth * percentLoaded, 10.0f };
 	array<float, 2> topRightVertex		= { windowWidth * percentLoaded, 0.0f };
 
-	fsm.window->set2DMode();
+	m_fsm.window->set2DMode();
 	
 	glPushMatrix();
 		glBegin(GL_QUADS);
@@ -156,12 +198,12 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 		glEnd();
 	glPopMatrix();
 	
-	fsm.window->printText(10, fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
+	m_fsm.window->printText(10, m_fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
 
 	// we must now swap the frame buffer
-	fsm.window->swapFrameBufferNow();
+	m_fsm.window->swapFrameBufferNow();
 
-	fsm.window->set3DMode();
+	m_fsm.window->set3DMode();
 }
 
 void GamePlay::onResumeGame() {
@@ -180,7 +222,7 @@ void GamePlay::onLeaveGame() {
 }
 
 AbstractState* GamePlay::run() {
-	if (fsm.eventmap.keyEscape) {
+	if (m_fsm.eventmap.keyEscape) {
 		m_internalState = PAUSED;
 	}
 	
@@ -215,7 +257,7 @@ void GamePlay::initLighting() {
 	m_lightPos1[1] = 65.0f;
 	m_lightPos1[2] = 50.0f;
 
-	fsm.window->set3DMode();
+	m_fsm.window->set3DMode();
 
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_NORMALIZE);
@@ -278,12 +320,16 @@ void GamePlay::draw() {
 	fadeBackgroundForOneTime();
 
 	// 3D
-	fsm.window->set3DMode();
+	m_fsm.window->set3DMode();
 	m_chessSet->draw();	// chessboard and models
-	rotateCamera();		// trigger camera rotation
+
+	// rotate the camera, if the camera is not locked
+	if (!m_lockCamera) {
+		rotateCamera();
+	}
 
 	// 2D
-	fsm.window->set2DMode();
+	m_fsm.window->set2DMode();
 	disableLighting();
 
 	// draw menu if game is paused
@@ -297,15 +343,15 @@ void GamePlay::draw() {
 }
 
 void GamePlay::handleEvents() {
-	if (fsm.eventmap.mouseMoved) {
-		m_pauseMenu->mouseMoved(fsm.eventmap.mouseX, fsm.eventmap.mouseY);
+	if (m_fsm.eventmap.mouseMoved) {
+		m_pauseMenu->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
 	}
 
-	if (fsm.eventmap.mouseDown) {
+	if (m_fsm.eventmap.mouseDown) {
 		m_pauseMenu->mousePressed();
 	}
 
-	if (fsm.eventmap.mouseUp) {
+	if (m_fsm.eventmap.mouseUp) {
 		m_pauseMenu->mouseReleased();
 	}
 }
@@ -323,7 +369,7 @@ void GamePlay::drawMessageBox() {
 
 	glCallList(m_messageBox.displayList);
 
-	fsm.window->printText(
+	m_fsm.window->printText(
 		m_messageBox.windowPosX + m_messageBox.padding,
 		m_messageBox.windowPosY + m_messageBox.padding,
 		1.0f, 1.0f, 1.0f, 
@@ -331,24 +377,45 @@ void GamePlay::drawMessageBox() {
 	);
 }
 
+void GamePlay::addTurn(PlayerColor who, Turn turn) {
+	PlayerTurn pt;
+	pt.who = who;
+	pt.turn = turn;
+
+	m_playerTurns.push_front(pt);
+}
+
+void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
+	m_piecesList = piecesList;
+}
+
+void GamePlay::setState(std::array<Piece, 64> state) {
+	m_chessBoardState = state;
+	m_chessSet->setState(state);
+}
+
 // must be done in 2D mode
 void GamePlay::drawLastTurns() {
 	// config
-	int fontSize = fsm.window->fontSize::TEXT_SMALL;
+	int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
 	int numberOfTurnsToDraw = 5;
 	
 	// precalculations
-	int lineHeight = fontSize;
+	int lineHeight = fontSize + 4;
 	int totalLineHeight = numberOfTurnsToDraw * lineHeight;
-	int offsetY = fsm.window->getHeight() - totalLineHeight;
+	int offsetY = m_fsm.window->getHeight() - totalLineHeight - fontSize;
 
 	int step = 0;
-	for (auto& turn : m_chessSet->getTurns()) {
+	for (auto& turn : m_playerTurns) {
 		if (step == numberOfTurnsToDraw)
 			return;
 
 		int relativeOffsetY = step * lineHeight;
-		fsm.window->printTextSmall(10, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, turn.toString());
+
+		string turnStr = (turn.who == PlayerColor::White ? "Weiss: " : "Schwarz: ");
+		turnStr += turn.turn.toString();
+
+		m_fsm.window->printTextSmall(10, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, turnStr);
 
 		++step;
 	}
@@ -365,15 +432,15 @@ void GamePlay::drawPauseMenu() {
 			glColor4f(0.0f, 0.0f, 0.0f, 0.25f);
 
 			glVertex3f(0.0f, 0.0f, 0.0f);
-			glVertex3f(static_cast<float>(fsm.window->getWidth()), 0.0f, 0.0f);
-			glVertex3f(static_cast<float>(fsm.window->getWidth()), static_cast<float>(fsm.window->getHeight()), 0.0f);
-			glVertex3f(0.0f, static_cast<float>(fsm.window->getHeight()), 0.0f);
+			glVertex3f(static_cast<float>(m_fsm.window->getWidth()), 0.0f, 0.0f);
+			glVertex3f(static_cast<float>(m_fsm.window->getWidth()), static_cast<float>(m_fsm.window->getHeight()), 0.0f);
+			glVertex3f(0.0f, static_cast<float>(m_fsm.window->getHeight()), 0.0f);
 		glEnd();
 	glPopMatrix();
 	glDisable(GL_BLEND);
 	glDisable(GL_COLOR);
 
-	fsm.window->printHeadline("P A U S E");
+	m_fsm.window->printHeadline("P A U S E");
 	m_pauseMenu->draw();
 }
 
@@ -421,16 +488,20 @@ void GamePlay::rotateCamera() {
 		return;
 	}
 
-	float angleDegree = m_animationHelperCamera->ease(AnimationHelper::EASE_OUTSINE, static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
-	float angleRadian = angleDegree * ((float)M_PI / 180.0f);
+	float degree = m_animationHelperCamera->ease(AnimationHelper::EASE_OUTSINE, static_cast<float>(m_rotateFrom), static_cast<float>(m_rotateTo));
+	setCameraPosition(degree);
+}
 
-	float newCameraX = sinf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
-	float newCameraZ = cosf(angleRadian) * fsm.window->getCameraDistanceToOrigin();
+void GamePlay::setCameraPosition(float degree) {
+	float angleRadian = degree * ((float)M_PI / 180.0f);
+
+	float newCameraX = sinf(angleRadian) * m_fsm.window->getCameraDistanceToOrigin();
+	float newCameraZ = cosf(angleRadian) * m_fsm.window->getCameraDistanceToOrigin();
 	float rotationY = (atan2f(newCameraX, -newCameraZ) * 180.0f / (float)M_PI) - 180.0f;
 
-	fsm.window->m_cameraAngleY = rotationY;
-	fsm.window->m_cX = newCameraX;
-	fsm.window->m_cZ = newCameraZ;
+	m_fsm.window->m_cameraAngleY = rotationY;
+	m_fsm.window->m_cX = newCameraX;
+	m_fsm.window->m_cZ = newCameraZ;
 }
 
 void GamePlay::startCameraRotation() {
@@ -444,6 +515,17 @@ void GamePlay::startCameraRotation() {
 void GamePlay::startShowText(std::string text) {
 	m_messageBox.text = text;
 	m_messageBox.shownSince = SDL_GetTicks();
+}
+
+void GamePlay::switchToPlayerColor(PlayerColor color) {
+	if (m_gameMode == PLAYER_VS_AI) {
+		// do nothing
+	} else if (m_gameMode == AI_VS_AI) {
+		startCameraRotation();
+	}
+
+	string colorStr = (color == PlayerColor::White ? "Weiss" : "Schwarz");
+	startShowText(colorStr + " ist jetzt an der Reihe.");
 }
 
 void GamePlay::onBackToMenu() {

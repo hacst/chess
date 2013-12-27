@@ -3,10 +3,13 @@
 
 #include "logic/GameLogic.h"
 #include "gui/GuiObserver.h"
-
 #include "gui/interface/AbstractState.h"
 #include "gui/Menu2D.h"
 #include "gui/ChessSet.h"
+
+#include <vector>
+#include <array>
+#include <deque>
 
 class StateMachine;
 class ObserverDispatcherProxy;
@@ -14,7 +17,12 @@ using ObserverDispatcherProxyPtr = std::shared_ptr<ObserverDispatcherProxy>;
 
 class GamePlay : public AbstractState {
 public:
-	GamePlay();
+	enum GameMode {
+		AI_VS_AI,
+		PLAYER_VS_AI
+	};
+
+	GamePlay(GameMode mode, PlayerColor firstPlayerColor);
 
 	// interface methods
 	void enter() override;
@@ -23,20 +31,30 @@ public:
 
 	// draw method
 	void draw();
-	void startCameraRotation();
+
+	// trigger methods
 	void startShowText(std::string text);
+	void switchToPlayerColor(PlayerColor color);
+	void setState(std::array<Piece, 64> state);
+	void addTurn(PlayerColor who, Turn turn);
+	void setCapturedPiecesList(std::vector<Piece> piecesList);
 
 	// events and callbacks
 	void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
 	void onResumeGame();
 	void onSaveGame();
 	void onLeaveGame();
-
-	// state methods
 	void onBackToMenu();
 
 private:
-	StateMachine& fsm;
+	StateMachine& m_fsm;
+	int m_rotateFrom, m_rotateTo;
+	GameMode m_gameMode;
+	PlayerColor m_firstPlayerColor;
+	bool m_lockCamera;
+
+	std::array<Piece, 64> m_chessBoardState;
+	std::vector<Piece> m_piecesList;
 
 	enum States {
 		KEEP_CURRENT,
@@ -50,13 +68,19 @@ private:
 		SAVE_GAME
 	} m_internalState;
 
+	struct PlayerTurn {
+		PlayerColor who;
+		Turn turn;
+	};
+
+	std::deque<PlayerTurn> m_playerTurns;
+
 	// smart pointers
 	AnimationHelperPtr m_animationHelperCamera, m_animationHelperBackground;
 	ChessSetPtr m_chessSet;
 	Menu2DPtr m_pauseMenu;
 
-	int m_rotateFrom, m_rotateTo;
-
+	// @todo: -> own class
 	struct MessageBox {
 		unsigned int width;
 		unsigned int height;
@@ -97,14 +121,17 @@ private:
 	void initPlayers();
 	void initGameLogic();
 	void initMessageBox();
+	void initCamera();
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
+	void setCameraPosition(float degree);
 	void drawMessageBox();
 	void drawLastTurns();
 	void drawPauseMenu();
 	void enableLighting();
 	void disableLighting();
 	void handleEvents();
+	void startCameraRotation();
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

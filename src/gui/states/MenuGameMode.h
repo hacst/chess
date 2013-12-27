@@ -20,8 +20,8 @@ public:
 	void draw();
 
 	// state methods
-	void onModeKIVsKI();
-	void onModePlayerVsKI();
+	void onModeAIVsAI();
+	void onModePlayerVsAI();
 	void onMenuBack();
 
 private:

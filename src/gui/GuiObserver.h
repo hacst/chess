@@ -22,9 +22,6 @@ public:
 private:
 	ChessSetPtr m_chessSetPtr;
 	GamePlay& m_gamePlayState;
-	PlayerColor m_currentPlayerColor;
-
-	std::string getColorString(PlayerColor who);
 };
 
 using GuiObserverPtr = std::shared_ptr<GuiObserver>;

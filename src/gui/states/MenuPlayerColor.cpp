@@ -10,35 +10,35 @@
 
 using namespace std;
 
-MenuPlayerColor::MenuPlayerColor() : fsm(StateMachine::getInstance()) {
+MenuPlayerColor::MenuPlayerColor() : m_fsm(StateMachine::getInstance()) {
 	m_nextState = States::KEEP_CURRENT;
 }
 
 void MenuPlayerColor::enter() {
 	// switch to 2D mode
-	fsm.window->set2DMode();
+	m_fsm.window->set2DMode();
 
 	// set background color
 	glClearColor(0.6f, 0.21f, 0, 0);
 
-	menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
-	menu->addButton("ColorWhite.png")->onClick(boost::bind(&MenuPlayerColor::onColorWhite, this));
-	menu->addButton("ColorBlack.png")->onClick(boost::bind(&MenuPlayerColor::onColorBlack, this));
-	menu->addButton("Back.png")->onClick(boost::bind(&MenuPlayerColor::onMenuBack, this));
+	m_menu = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
+	m_menu->addButton("ColorWhite.png")->onClick(boost::bind(&MenuPlayerColor::onColorWhite, this));
+	m_menu->addButton("ColorBlack.png")->onClick(boost::bind(&MenuPlayerColor::onColorBlack, this));
+	m_menu->addButton("Back.png")->onClick(boost::bind(&MenuPlayerColor::onMenuBack, this));
 }
 
 AbstractState* MenuPlayerColor::run() {
 	// on demand event handling
-	if (fsm.eventmap.mouseMoved) {
-		menu->mouseMoved(fsm.eventmap.mouseX, fsm.eventmap.mouseY);
+	if (m_fsm.eventmap.mouseMoved) {
+		m_menu->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
 	}
 
-	if (fsm.eventmap.mouseDown) {
-		menu->mousePressed();
+	if (m_fsm.eventmap.mouseDown) {
+		m_menu->mousePressed();
 	}
 
-	if (fsm.eventmap.mouseUp) {
-		menu->mouseReleased();
+	if (m_fsm.eventmap.mouseUp) {
+		m_menu->mouseReleased();
 	}
 
 	this->draw();
@@ -46,7 +46,7 @@ AbstractState* MenuPlayerColor::run() {
 	AbstractState* nextState;
 	switch (m_nextState) {
 	case States::GAME_PLAY:
-		nextState = this; // @todo
+		nextState = new GamePlay(GamePlay::GameMode::PLAYER_VS_AI, m_colorWhite ? PlayerColor::White : PlayerColor::Black);
 		break;
 	case States::MENU_GAME_MODE:
 		nextState = new MenuGameMode();
@@ -63,10 +63,10 @@ AbstractState* MenuPlayerColor::run() {
 }
 
 void MenuPlayerColor::draw() {
-	menu->draw();
+	m_menu->draw();
 
-	fsm.window->printHeadline("3D Schach");
-	fsm.window->printSubHeadline(".:: Welche Spielerfarbe?");
+	m_fsm.window->printHeadline("3D Schach");
+	m_fsm.window->printSubHeadline(".:: Welche Spielerfarbe?");
 }
 
 void MenuPlayerColor::onMenuBack() {
@@ -74,10 +74,12 @@ void MenuPlayerColor::onMenuBack() {
 }
 
 void MenuPlayerColor::onColorWhite() {
+	m_colorWhite = true;
 	m_nextState = States::GAME_PLAY;
 }
 
 void MenuPlayerColor::onColorBlack() {
+	m_colorWhite = false;
 	m_nextState = States::GAME_PLAY;
 }
 

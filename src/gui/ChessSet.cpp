@@ -91,14 +91,6 @@ void ChessSet::setState(std::array<Piece, 64> state) {
 	m_state = state;
 }
 
-void ChessSet::setTurn(Turn turn) {
-	m_turns.push_front(turn);
-}
-
-deque<Turn> ChessSet::getTurns() {
-	return m_turns;
-}
-
 void ChessSet::draw() {
 	/*if (m_turns.back().action == Turn::Action::Move) {
 		// todo
