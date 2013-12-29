@@ -16,14 +16,17 @@
 
 #include "ai/AIPlayer.h"
 #include "misc/DummyPlayer.h"
+#include "misc/DebugTools.h"
 
 using namespace std;
+using namespace Logging;
 
 GamePlay::GamePlay(GameMode mode, PlayerColor firstPlayerColor)
 	: m_fsm(StateMachine::getInstance())
 	, m_nextState(States::KEEP_CURRENT)
 	, m_gameMode(mode)
-	, m_firstPlayerColor(firstPlayerColor) {
+	, m_firstPlayerColor(firstPlayerColor)
+    , m_log(initLogger("GUI:GamePlay")) {
 }
 
 void GamePlay::initMessageBox() {
@@ -228,6 +231,10 @@ AbstractState* GamePlay::run() {
 	if (m_fsm.eventmap.keyEscape) {
 		m_internalState = PAUSED;
 	}
+
+    if (m_fsm.eventmap.key0) {
+        LOG(info) << DebugTools::toInitializerList(m_chessBoardState) << endl;
+    }
 	
 	// Execute all pending calls from the observer
 	m_observerProxy->poll();

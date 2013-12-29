@@ -6,6 +6,7 @@
 #include "gui/interface/AbstractState.h"
 #include "gui/Menu2D.h"
 #include "gui/ChessSet.h"
+#include "core/Logging.h"
 
 #include <vector>
 #include <array>
@@ -116,6 +117,8 @@ private:
 	ObserverDispatcherProxyPtr m_observerProxy;
 	
 	int posNumber;
+
+    Logging::Logger m_log;
 	
 	// methods
 	void initLighting();

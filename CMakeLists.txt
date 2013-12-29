@@ -114,6 +114,9 @@ set(MISC_SOURCES
     src/misc/DummyPlayer.h
 
     src/misc/helper.h
+
+    src/misc/DebugTools.h
+    src/misc/DebugTools.cpp
 )
 
 source_group(misc FILES ${MISC_SOURCES})
