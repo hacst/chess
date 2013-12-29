@@ -120,6 +120,14 @@ std::vector<Piece> ChessBoard::getCapturedPieces() const {
 }
 
 
+bool ChessBoard::hasBlackPieces() const {
+    return bb[Black][AllPieces] != 0;
+}
+
+bool ChessBoard::hasWhitePieces() const {
+    return bb[White][AllPieces] != 0;
+}
+
 
 /* for test and debug purposes */
 

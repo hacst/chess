@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include <algorithm>
 
 GameState::GameState() {
 	init();
@@ -32,9 +33,35 @@ const ChessBoard& GameState::getChessBoard() const {
 	return m_chessBoard;
 }
 
-bool GameState::isGameOver() {
-	//TODO: Impl. me
-	return getTurnList().empty();
+bool GameState::isGameOver() const {
+    // When debugging we might want to work with boards without a king. Alternatively
+    // check for all pieces of a player being gone.
+    if (!(m_chessBoard.hasBlackPieces() && m_chessBoard.hasWhitePieces())) {
+        return true;
+    }
+
+    // Assume game is over once king is captured.
+    // FIXME: Figure out whether it's ok for the state to have the king captured. Sure would make the AI's life easier. Also this is horribly inefficient
+    const auto captures = m_chessBoard.getCapturedPieces();
+    auto hit = std::find_if(begin(captures), end(captures), [](const Piece& piece) {
+        return piece.type == King;
+    });
+
+    return (hit != end(captures));
+}
+
+PlayerColor GameState::getWinner() const {
+    //FIXME: Same as isGameOver. Assumes king capture or eradication.
+    if (!m_chessBoard.hasBlackPieces()) return White;
+    else if (!m_chessBoard.hasWhitePieces()) return Black;
+
+    // If we find a captured king the corresponding color has lost
+    const auto captures = m_chessBoard.getCapturedPieces();
+    auto hit = std::find_if(begin(captures), end(captures), [](const Piece& piece) {
+        return piece.type == King;
+    });
+
+    return togglePlayerColor(hit->player);
 }
 
 bool GameState::operator==(const GameState& other) const {

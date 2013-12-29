@@ -9,6 +9,10 @@ bool Turn::operator==(const Turn& other) const {
             && action == other.action;
 }
 
+bool Turn::operator!=(const Turn& other) const {
+    return !(*this == other);
+}
+
 std::string Turn::toString() const {
     static const char actions[][10] = {
         "Move",

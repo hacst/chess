@@ -49,8 +49,12 @@ public:
     virtual std::array<Piece, 64> getBoard()          const;
     virtual std::vector<Piece>    getCapturedPieces() const;
 
+    bool hasBlackPieces() const;
+    bool hasWhitePieces() const;
+
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
+
     std::string toString() const;
 
 protected:

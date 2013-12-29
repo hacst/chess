@@ -19,7 +19,9 @@ public:
 	virtual PlayerColor         getNextPlayer() const;
 	virtual const ChessBoard&   getChessBoard() const;
 
-	bool isGameOver();
+	bool isGameOver() const;
+    PlayerColor getWinner() const;
+
 	bool operator==(const GameState& other) const;
 	bool operator!=(const GameState& other) const;
 	std::string toString() const;

@@ -128,11 +128,14 @@ void GameLogic::wait(std::chrono::milliseconds waitInMs) const {
 }
 
 bool GameLogic::isGameOver() const {
-    return false || m_abort;
+    return m_gameState.isGameOver() || m_abort;
 }
 
 PlayerColor GameLogic::getWinner() const {
-    return PlayerColor::NoPlayer;
+    if (m_abort)
+        return PlayerColor::NoPlayer;
+
+    return m_gameState.getWinner();
 }
 
 AbstractPlayerPtr& GameLogic::getCurrentPlayer() {

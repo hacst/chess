@@ -38,6 +38,8 @@ public:
     }*/
 
     bool operator==(const Turn& other) const;
+    bool operator!=(const Turn& other) const;
+
     std::string toString() const;
 };
 
