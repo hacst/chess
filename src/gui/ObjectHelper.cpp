@@ -69,3 +69,50 @@ GLuint ObjectHelper::createCubeList(float size, float x, float y, float z) {
 
 	return list;
 }
+
+GLuint ObjectHelper::create2DRectList(float width, float height, float viewportX, float viewportY, float colorR, float colorG, float colorB) {
+	GLuint list = glGenLists(1);
+
+	glEnable(GL_COLOR);
+
+	glNewList(list, GL_COMPILE);
+		glPushMatrix();
+			glBegin(GL_QUADS);
+				glColor3f(colorR, colorG, colorB);
+
+				glVertex3f(viewportX,			viewportY,				0.0f); // top left
+				glVertex3f(viewportX + width,	viewportY,				0.0f); // top right
+				glVertex3f(viewportX + width,	viewportY + height,		0.0f); // bottom right
+				glVertex3f(viewportX,			viewportY + height,		0.0f); // bottom left
+			glEnd();
+		glPopMatrix();
+	glEndList();
+
+	glDisable(GL_COLOR);
+
+	return list;
+}
+
+GLuint ObjectHelper::create2DGradientRectList(float width, float height, float viewportX, float viewportY, float fromColorR, float fromColorG, float fromColorB, float toColorR, float toColorG, float toColorB) {
+	GLuint list = glGenLists(1);
+
+	glEnable(GL_COLOR);
+
+	glNewList(list, GL_COMPILE);
+		glPushMatrix();
+			glBegin(GL_QUADS);
+				glColor3f(fromColorR, fromColorG, fromColorB);
+				glVertex3f(viewportX,			viewportY,				0.0f); // top left
+				glVertex3f(viewportX + width,	viewportY,				0.0f); // top right
+
+				glColor3f(toColorR, toColorG, toColorB);
+				glVertex3f(viewportX + width,	viewportY + height,		0.0f); // bottom right
+				glVertex3f(viewportX,			viewportY + height,		0.0f); // bottom left
+			glEnd();
+		glPopMatrix();
+	glEndList();
+
+	glDisable(GL_COLOR);
+
+	return list;
+}

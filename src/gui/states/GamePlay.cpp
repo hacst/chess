@@ -40,21 +40,22 @@ void GamePlay::initMessageBox() {
 	// create rectangle OGL list for faster drawing
 	m_fsm.window->set2DMode();
 
-	m_messageBox.displayList = glGenLists(1);
+	m_messageBox.displayList = ObjectHelper::create2DGradientRectList(
+									static_cast<float>(m_messageBox.width), static_cast<float>(m_messageBox.height),
+									static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY),
+									0.0f, 0.0f, 0.4f,
+									0.0f, 0.0f, 0.3f
+	);
+}
 
-	glNewList(m_messageBox.displayList, GL_COMPILE);
-		glPushMatrix();
-			glBegin(GL_QUADS);
-				glColor3f(0.0f, 0.0f, 0.4f);
-				glVertex3f(static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY), 0.0f); // top left
-				glVertex3f(static_cast<float>(m_messageBox.windowPosX + m_messageBox.width), static_cast<float>(m_messageBox.windowPosY), 0.0f); // top right
-			
-				glColor3f(0.0f, 0.0f, 0.3f);
-				glVertex3f(static_cast<float>(m_messageBox.windowPosX + m_messageBox.width), static_cast<float>(m_messageBox.windowPosY + m_messageBox.height), 0.0f); // bottom right
-				glVertex3f(static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY + m_messageBox.height), 0.0f); // bottom left
-			glEnd();
-		glPopMatrix();
-	glEndList();
+void GamePlay::initCapturedPieces() {
+	for (int i = 0; i < 6; ++i) {
+		m_capturedPieces.countBlack[i] = 0;
+		m_capturedPieces.countWhite[i] = 0;
+	}
+
+	m_capturedPieces.blackBar = ObjectHelper::create2DRectList(150.0f, 20.0f, 10.0f, 10.0f, 1.0f, 1.0f, 1.0f);
+	m_capturedPieces.whiteBar = ObjectHelper::create2DRectList(150.0f, 20.0f, m_fsm.window->getWidth() - 160.0f, 10.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void GamePlay::enter() {
@@ -68,6 +69,7 @@ void GamePlay::enter() {
 	initAnimationHelpers();
 	initLighting();
 	initMessageBox();
+	initCapturedPieces();
 
 	// connect gui with ai and logic
 	initPlayers();
@@ -213,11 +215,12 @@ void GamePlay::onResumeGame() {
 
 void GamePlay::onSaveGame() {
 	m_internalState = SAVE_GAME;
-
-
 }
 
 void GamePlay::onLeaveGame() {
+	m_firstPlayer->doAbortTurn();
+	m_secondPlayer->doAbortTurn();
+
 	m_nextState = BACK_TO_MENU;
 }
 
@@ -335,10 +338,13 @@ void GamePlay::draw() {
 	// draw menu if game is paused
 	if (m_internalState == PAUSED) {
 		drawPauseMenu();
-	} else {
-		// do not draw any text -> looks crappy
+	}
+	
+	// draw last turns, message box and captured pieces only if we're not in pause mode
+	if (m_internalState != PAUSED) {
 		drawMessageBox();
 		drawLastTurns();
+		drawCapturedPieces();
 	}
 }
 
@@ -386,7 +392,16 @@ void GamePlay::addTurn(PlayerColor who, Turn turn) {
 }
 
 void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
-	m_piecesList = piecesList;
+	// accumulate
+	for (auto &cp : piecesList) {
+		if (cp.player == PlayerColor::Black) {
+			++m_capturedPieces.countBlack[cp.type];
+		}
+
+		if (cp.player == PlayerColor::White) {
+			++m_capturedPieces.countWhite[cp.type];
+		}
+	}
 }
 
 void GamePlay::setState(std::array<Piece, 64> state) {
@@ -421,6 +436,70 @@ void GamePlay::drawLastTurns() {
 	}
 }
 
+void GamePlay::drawCapturedPieces() {
+	// config
+	int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
+	int numberOfTurnsToDraw = 6;
+
+	// precalculations
+	int lineHeight = fontSize + 4;
+	int totalLineHeight = numberOfTurnsToDraw * lineHeight;
+	int offsetY = 40;
+
+	// *** white: left side ***
+	glCallList(m_capturedPieces.whiteBar);
+
+	int offsetX = 10;
+	for (int i = 0; i < 6; ++i) {
+		int relativeOffsetY = i * lineHeight;
+
+		stringstream strs;
+		strs << m_capturedPieces.countWhite[i] << " " << getPieceName(i);
+
+		m_fsm.window->printTextSmall(offsetX, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, strs.str());
+	}
+
+	// *** black: right side ***
+	glCallList(m_capturedPieces.blackBar);
+
+	offsetX = m_fsm.window->getWidth() - 95;
+	for (int i = 0; i < 6; ++i) {
+		int relativeOffsetY = i * lineHeight;
+
+		stringstream strs;
+		strs << m_capturedPieces.countWhite[i] << " " << getPieceName(i);
+
+		m_fsm.window->printTextSmall(offsetX, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, strs.str());
+	}
+}
+
+string GamePlay::getPieceName(int pieceNumber) {
+	string pieceName;
+
+	switch (pieceNumber) {
+		case PieceType::Bishop:
+			pieceName = "Laeufer";
+			break;
+		case PieceType::King:
+			pieceName = "Koenig";
+			break;
+		case PieceType::Knight:
+			pieceName = "Springer";
+			break;
+		case PieceType::Pawn:
+			pieceName = "Bauer";
+			break;
+		case PieceType::Queen:
+			pieceName = "Dame";
+			break;
+		case PieceType::Rook:
+			pieceName = "Turm";
+			break;
+	}
+
+	return pieceName;
+}
+
 void GamePlay::drawPauseMenu() {
 	handleEvents();
 	
@@ -442,31 +521,6 @@ void GamePlay::drawPauseMenu() {
 
 	m_fsm.window->printHeadline("P A U S E");
 	m_pauseMenu->draw();
-}
-
-void GamePlay::drawCoordinateSystem() {
-	glPushMatrix();
-		
-		glLineWidth(5.0f);
-		glBegin(GL_LINES);
-			// x
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex3f(-120.0f, 0.0f, 0.0f);
-			glVertex3f(120.0f, 0.0f, 0.0f);
-
-			// y
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex3f(0.0f, -120.0f, 0.0f);
-			glVertex3f(0.0f, 120.0f, 0.0f);
-
-			// z
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex3f(0.0f, 0.0f, -120.0f);
-			glVertex3f(0.0f, 0.0f, 120.0f);
-		glEnd();
-
-		glTranslatef(0, 5, 0);
-	glPopMatrix();
 }
 
 void GamePlay::fadeBackgroundForOneTime() {

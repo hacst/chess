@@ -1,4 +1,5 @@
 #include "ChessSet.h"
+#include "AnimationHelper.h"
 
 #include <algorithm>
 #include <iostream>
@@ -103,8 +104,12 @@ void ChessSet::draw() {
 			int col = field / 8;
 
 			glPushMatrix();
+				// move model to tile
 				glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), 0, ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
-				glCallList(m_modelList[p.type + (p.player == PlayerColor::Black ? 6 : 0)]);
+
+				// draw model via list index
+				int listIndex = p.type + (p.player == PlayerColor::Black ? 6 : 0);
+				glCallList(m_modelList[listIndex]);
 			glPopMatrix();
 		}
 		++field;

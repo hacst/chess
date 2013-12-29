@@ -54,7 +54,17 @@ private:
 	bool m_lockCamera;
 
 	std::array<Piece, 64> m_chessBoardState;
-	std::vector<Piece> m_piecesList;
+
+	// @todo -> own class
+	struct CapturedPieces {
+		std::array<int, 6> countBlack;
+		std::array<int, 6> countWhite;
+
+		GLuint blackBar;
+		GLuint whiteBar;
+	} m_capturedPieces;
+
+	string getPieceName(int pieceNumber);
 
 	enum States {
 		KEEP_CURRENT,
@@ -104,11 +114,6 @@ private:
 	AbstractGameLogicPtr m_gameLogic;
 	GuiObserverPtr m_observer;
 	ObserverDispatcherProxyPtr m_observerProxy;
-
-	// debug
-	int cameraView;
-	std::string debugText;
-	void drawCoordinateSystem();
 	
 	int posNumber;
 	
@@ -122,11 +127,13 @@ private:
 	void initGameLogic();
 	void initMessageBox();
 	void initCamera();
+	void initCapturedPieces();
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
 	void setCameraPosition(float degree);
 	void drawMessageBox();
 	void drawLastTurns();
+	void drawCapturedPieces();
 	void drawPauseMenu();
 	void enableLighting();
 	void disableLighting();
