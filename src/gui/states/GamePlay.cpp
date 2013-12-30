@@ -51,11 +51,15 @@ void GamePlay::initMessageBox() {
 	);
 }
 
-void GamePlay::initCapturedPieces() {
+void GamePlay::resetCapturedPieces() {
 	for (int i = 0; i < 6; ++i) {
 		m_capturedPieces.countBlack[i] = 0;
 		m_capturedPieces.countWhite[i] = 0;
 	}
+}
+
+void GamePlay::initCapturedPieces() {
+	resetCapturedPieces();
 
 	m_capturedPieces.blackBar = ObjectHelper::create2DRectList(150.0f, 20.0f, 10.0f, 10.0f, 1.0f, 1.0f, 1.0f);
 	m_capturedPieces.whiteBar = ObjectHelper::create2DRectList(150.0f, 20.0f, m_fsm.window->getWidth() - 160.0f, 10.0f, 0.0f, 0.0f, 0.0f);
@@ -115,13 +119,11 @@ void GamePlay::initPlayers() {
 }
 
 void GamePlay::initGameLogic() {
-	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
-
 	GameConfigurationPtr config = make_shared<GameConfiguration>();
 	config->timeBetweenTurnsInSeconds = 3;
 
 	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
-	m_gameLogic->addObserver(m_observer);
+	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
 	m_gameLogic->addObserver(m_observerProxy);
@@ -151,6 +153,9 @@ void GamePlay::initCamera() {
 	} else {
 		m_lockCamera = false;
 	}
+
+	// no camera rotation on first turn
+	m_firstTurn = true;
 }
 
 // create a whole new ChessSet (2x6 models + 1 board)
@@ -375,10 +380,10 @@ void GamePlay::drawMessageBox() {
 		return;
 	
 	// show only if the show time is not over
-	if (m_messageBox.shownSince < (SDL_GetTicks() - m_messageBox.showDuration)) {
+	/*if (m_messageBox.shownSince < (SDL_GetTicks() - m_messageBox.showDuration)) {
 		m_messageBox.text = "";
 		return;
-	}
+	}*/
 
 	glCallList(m_messageBox.displayList);
 
@@ -390,16 +395,19 @@ void GamePlay::drawMessageBox() {
 	);
 }
 
+/*
 void GamePlay::addTurn(PlayerColor who, Turn turn) {
 	PlayerTurn pt;
 	pt.who = who;
 	pt.turn = turn;
-
+	
 	m_playerTurns.push_front(pt);
-}
+	m_lastTurn = turn;
+}*/
 
 void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
-	// accumulate
+	resetCapturedPieces();
+
 	for (auto &cp : piecesList) {
 		if (cp.player == PlayerColor::Black) {
 			++m_capturedPieces.countBlack[cp.type];
@@ -411,9 +419,21 @@ void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
 	}
 }
 
+void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn) {
+	m_lastTurn = lastTurn;
+	m_lastPlayer = lastPlayer;
+
+	PlayerTurn pt;
+	pt.who = m_lastPlayer;
+	pt.turn = m_lastTurn;
+	m_playerTurns.push_front(pt);
+
+	setState(state);
+}
+
 void GamePlay::setState(std::array<Piece, 64> state) {
 	m_chessBoardState = state;
-	m_chessSet->setState(state);
+	m_chessSet->setState(state, m_lastPlayer, m_lastTurn);
 }
 
 // must be done in 2D mode
@@ -467,7 +487,7 @@ void GamePlay::drawCapturedPieces() {
 	// *** black: right side ***
 	glCallList(m_capturedPieces.blackBar);
 
-	offsetX = m_fsm.window->getWidth() - 95;
+	offsetX = m_fsm.window->getWidth() - 100;
 	for (int i = 0; i < 6; ++i) {
 		int relativeOffsetY = i * lineHeight;
 
@@ -579,12 +599,14 @@ void GamePlay::startShowText(std::string text) {
 void GamePlay::switchToPlayerColor(PlayerColor color) {
 	if (m_gameMode == PLAYER_VS_AI) {
 		// do nothing
-	} else if (m_gameMode == AI_VS_AI) {
+	} else if (m_gameMode == AI_VS_AI && !m_firstTurn) {
 		startCameraRotation();
 	}
 
 	string colorStr = (color == PlayerColor::White ? "Weiss" : "Schwarz");
 	startShowText(colorStr + " ist jetzt an der Reihe.");
+
+	m_firstTurn = false; // camera should rotate with the next turn
 }
 
 void GamePlay::onBackToMenu() {

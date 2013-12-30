@@ -36,8 +36,20 @@ public:
 	// trigger methods
 	void startShowText(std::string text);
 	void switchToPlayerColor(PlayerColor color);
+
+	/**
+	* @brief Method for setting the new chess state.
+	* This method is non-blocking.
+	*/
+	void setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn);
 	void setState(std::array<Piece, 64> state);
-	void addTurn(PlayerColor who, Turn turn);
+
+	/**
+	* @brief Method for setting the new turn, which changed the chess state.
+	* @note Be sure to first call this and *after* call setState.
+	* This method is non-blocking.
+	*/
+	//void addTurn(PlayerColor who, Turn turn);
 	void setCapturedPiecesList(std::vector<Piece> piecesList);
 
 	// events and callbacks
@@ -85,6 +97,9 @@ private:
 	};
 
 	std::deque<PlayerTurn> m_playerTurns;
+	Turn m_lastTurn;
+	PlayerColor m_lastPlayer;
+	bool m_firstTurn;
 
 	// smart pointers
 	AnimationHelperPtr m_animationHelperCamera, m_animationHelperBackground;
@@ -131,6 +146,7 @@ private:
 	void initMessageBox();
 	void initCamera();
 	void initCapturedPieces();
+	void resetCapturedPieces();
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
 	void setCameraPosition(float degree);
