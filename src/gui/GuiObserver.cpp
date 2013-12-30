@@ -23,8 +23,7 @@ void GuiObserver::onTurnStart(PlayerColor who) {
 }
 
 void GuiObserver::onTurnEnd(PlayerColor who, Turn turn, GameState newState) {
-	m_gamePlayState.addTurn(who, turn);
-	m_gamePlayState.setState(newState.getChessBoard().getBoard());
+	m_gamePlayState.setState(newState.getChessBoard().getBoard(), who, turn);
 	m_gamePlayState.setCapturedPiecesList(newState.getChessBoard().getCapturedPieces());
 }
 

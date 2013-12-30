@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "logic/interface/AbstractGameObserver.h"
-
 #include "gui/ChessSet.h"
 
 class GamePlay;
