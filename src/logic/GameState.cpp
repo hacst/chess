@@ -68,6 +68,10 @@ PlayerColor GameState::getWinner() const {
     return togglePlayerColor(hit->player);
 }
 
+Score GameState::getScore() const {
+    return m_chessBoard.getScore(m_nextPlayer);
+}
+
 bool GameState::operator==(const GameState& other) const {
 	return m_nextPlayer == other.getNextPlayer()
 			&& m_chessBoard == other.getChessBoard();

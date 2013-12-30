@@ -83,7 +83,7 @@ void GameLogic::run() {
                 currentPlayer->doAbortTurn();
                 break;
             }
-
+            //FIXME: Probably should make other player win
             LOG(debug) << "Turn timed out";
             notify([&](AbstractGameObserverPtr& obs) {
                 obs->onTurnTimeout(currentColor, maximumTurnTime);

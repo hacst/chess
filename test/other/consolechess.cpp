@@ -51,8 +51,7 @@ int main(int argn, char **argv) {
     GLOG(info) << "Depth limited to: " << depthBlack << " for Black";
 
     GameState gameState;
-    auto eval = make_shared<MaterialEvaluator>();
-    Negamax<> negamax(eval);
+    Negamax negamax;
 
     GLOG(info) << "Initial state";
     GLOG(info) << gameState.getChessBoard();
@@ -62,7 +61,7 @@ int main(int argn, char **argv) {
         GLOG(info) << "Calculating turn " << i << "...";
 
         const int depth = (gameState.getNextPlayer() == White) ? depthWhite : depthBlack;
-        auto result = negamax.search(gameState, depth);
+        auto result = negamax.search<GameState, true, true>(gameState, depth);
         GLOG(info) << "Completed calculation";
 
         if (!result.turn) {

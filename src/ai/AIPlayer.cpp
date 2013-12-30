@@ -16,7 +16,7 @@ AIPlayer::AIPlayer()
     , m_gameState()
     , m_gameConfig()
     , m_color(PlayerColor::NoPlayer)
-    , m_algorithm(std::make_shared<MaterialEvaluator>())
+    , m_algorithm()
     , m_thread()
     , m_log(initLogger("AIPlayer")) {
     
@@ -69,7 +69,7 @@ void AIPlayer::doAbortTurn() {
 }
 
 void AIPlayer::play() {
-    const size_t DEPTH = 5;
+    const size_t DEPTH = 4;
 
     LOG(info) << "Starting search of depth " << DEPTH;
     auto result = m_algorithm.search(m_gameState, DEPTH);

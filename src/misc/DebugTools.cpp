@@ -2,8 +2,6 @@
 
 #include <sstream>
 
-#include "logic/ChessBoard.h"
-
 using namespace std;
 namespace DebugTools {
 

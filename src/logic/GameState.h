@@ -21,6 +21,8 @@ public:
 
 	bool isGameOver() const;
     PlayerColor getWinner() const;
+    //! Returns current score estimate from next players POV.
+    Score getScore() const;
 
 	bool operator==(const GameState& other) const;
 	bool operator!=(const GameState& other) const;

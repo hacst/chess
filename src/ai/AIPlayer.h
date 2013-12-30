@@ -88,7 +88,7 @@ private:
     PlayerColor m_color;
     
     //! Algorithm used for search.
-    Negamax<> m_algorithm;
+    Negamax m_algorithm;
     //! Thread the AI is run on.
     std::thread m_thread;
     

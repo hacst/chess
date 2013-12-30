@@ -3,6 +3,7 @@
 #include <sstream>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
+#include <limits>
 
 #include "GameConfiguration.h"
 
@@ -11,7 +12,7 @@ using namespace chrono;
 
 GameConfiguration::GameConfiguration()
     : timeBetweenTurnsInSeconds(0)
-    , maximumTurnTimeInSeconds(60) {
+    , maximumTurnTimeInSeconds(std::numeric_limits<int>::max()) {
     // Empty
 }
 
