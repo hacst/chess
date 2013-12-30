@@ -69,17 +69,14 @@ inline Field flipHorizontal(Field field) {
 }
 
 inline Rank nextRank(Rank rank) {
-    assert(rank < Eight);
     return static_cast<Rank>(rank + 1);
 }
 
 inline File nextFile(File file) {
-    assert(file < H);
     return static_cast<File>(file + 1);
 }
 
 inline Field nextField(Field field) {
-    assert(field < H8);
     return static_cast<Field>(static_cast<int>(field) + 1);
 }
 
