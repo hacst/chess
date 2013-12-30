@@ -23,9 +23,9 @@ using namespace Logging;
 
 GamePlay::GamePlay(GameMode mode, PlayerColor firstPlayerColor)
 	: m_fsm(StateMachine::getInstance())
-	, m_nextState(States::KEEP_CURRENT)
 	, m_gameMode(mode)
-	, m_firstPlayerColor(firstPlayerColor)
+    , m_firstPlayerColor(firstPlayerColor)
+    , m_nextState(States::KEEP_CURRENT)
     , m_log(initLogger("GUI:GamePlay")) {
 }
 
@@ -446,11 +446,9 @@ void GamePlay::drawLastTurns() {
 void GamePlay::drawCapturedPieces() {
 	// config
 	int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
-	int numberOfTurnsToDraw = 6;
 
 	// precalculations
 	int lineHeight = fontSize + 4;
-	int totalLineHeight = numberOfTurnsToDraw * lineHeight;
 	int offsetY = 40;
 
 	// *** white: left side ***
