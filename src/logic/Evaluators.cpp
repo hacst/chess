@@ -109,7 +109,7 @@ const std::array<PieceSquareTable, 8> PIECE_SQUARE_TABLE = { {
 * @brief Piece values as proposed by http://chessprogramming.wikispaces.com/Simplified+evaluation+function#Piece-Square
 * @note Adjusted for indexing with Piece enum type
 */
-const std::array<Score, 13> PIECE_VALUES = {
+const std::array<Score, 8> PIECE_VALUES = {
     20000,  // king
     900,    // queen
     330,    // bishop
