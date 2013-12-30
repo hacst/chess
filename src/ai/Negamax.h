@@ -96,10 +96,10 @@ public:
 
         std::string toString() const {
             std::stringstream ss;
-            const auto ms = duration.count();
+            const auto ms = duration.count() + 1;
             ss << "PerfCounters:"
-               << "Search took:     " << ms << "ms" << std::endl
-               << "Nodes visited:   " << nodes << " (" << nodes / ms << " nodes/ms)" << std::endl
+               << "Search took:     " << ms - 1<< "ms" << std::endl
+               << "Nodes visited:   " << nodes << " (~" << nodes / ms << " nodes/ms)" << std::endl
                << "No. of cut offs: " << cutoffs << std::endl
                << "Result updates:  " << updates << std::endl;
             return ss.str();

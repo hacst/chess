@@ -64,7 +64,7 @@ struct MockIncreasingState : public MockGameState {
     }
 
     virtual Score getScore() const override {
-        return score;
+        return (nextPlayer == White) ? score : -score;
     }
 
     Score score;
