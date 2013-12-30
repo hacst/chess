@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include "logic/ChessBoard.h"
+#include "misc/DebugTools.h"
+#include "logic/Evaluators.h"
 
+using namespace DebugTools;
+using namespace std;
 
 /*
 TEST(ChessBoard, toString) {
@@ -46,4 +50,25 @@ TEST(ChessBoard, applyTurn) {
     cb1.applyTurn(t);
 
     EXPECT_EQ(cb1, cb2);
+}
+
+TEST(ChessBoard, IncrementalScoreEvaluation) {
+    mt19937 rng(3421);
+    const int TRIES = 50;
+    for (int i = 0; i < TRIES; ++i) {
+        ChessBoard b = generateRandomBoard(50, rng);
+        ASSERT_EQ(IncrementalBoardEvaluator::estimateFullBoard(b.getBoard()),
+            b.getScore(White)) << i << "th Board: " << b;
+    }
+}
+
+TEST(MaterialEvaluator, MigrationCheck) {
+    MaterialEvaluator eval;
+    mt19937 rng(45438);
+    const int TRIES = 50;
+    for (int i = 0; i < TRIES; ++i) {
+        GameState gs = generateRandomState(50, rng);
+        ASSERT_EQ(eval.getScore(gs),
+            gs.getScore()) << i << "th State: " << gs;
+    }
 }

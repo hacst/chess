@@ -2,7 +2,8 @@
 
 using namespace std;
 
-ChessBoard::ChessBoard() {
+ChessBoard::ChessBoard()
+    : m_evaluator() {
     std::array<Piece, 64> board = {
         { Piece(White, Rook), Piece(White, Knight), Piece(White, Bishop), Piece(White, King), Piece(White, Queen), Piece(White, Bishop), Piece(White, Knight), Piece(White, Rook),
           Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn),
@@ -32,7 +33,9 @@ black_king = 0x1000000000000000
     initBitBoards(board);
 }
 
-ChessBoard::ChessBoard(std::array<Piece, 64> board) {
+ChessBoard::ChessBoard(std::array<Piece, 64> board)
+    : m_evaluator(board) {
+
     initBitBoards(board);
 }
 
@@ -69,15 +72,19 @@ void ChessBoard::applyTurn(const Turn& turn) {
         BIT_CLEAR(bb[turn.piece.player][turn.piece.type], turn.from);
         BIT_SET  (bb[turn.piece.player][turn.piece.type], turn.to);
 
+        m_evaluator.moveIncrement(turn);
+
         // TODO: en passant?
-        PlayerColor opp = (turn.piece.player == White) ? Black : White;
+        const PlayerColor opp = togglePlayerColor(turn.piece.player);
         if (BIT_ISSET(bb[opp][AllPieces], turn.to)) {
             for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
                 if (BIT_ISSET(bb[opp][pieceType], turn.to)) {
                     BIT_CLEAR(bb[opp][pieceType], turn.to);
-                    m_capturedPieces.push_back(Piece(opp, (PieceType)pieceType));
+                    const Piece capturedPiece(opp, (PieceType) pieceType);
+                    m_capturedPieces.push_back(capturedPiece);
 
-                    pieceType = NUM_PIECETYPES; // break?
+                    m_evaluator.captureIncrement(turn.to, capturedPiece);
+                    break;
                 }
             }
         }
@@ -126,6 +133,11 @@ bool ChessBoard::hasBlackPieces() const {
 
 bool ChessBoard::hasWhitePieces() const {
     return bb[White][AllPieces] != 0;
+}
+
+//! Returns the current estimated score according to the internal estimator.
+Score ChessBoard::getScore(PlayerColor color) const {
+    return m_evaluator.getScore(color);
 }
 
 

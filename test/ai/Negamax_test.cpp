@@ -5,9 +5,11 @@
 #include "ai/Negamax.h"
 #include "logic/Evaluators.h"
 #include "misc/helper.h"
+#include "misc/DebugTools.h"
 
 using namespace std;
 using ::testing::_;
+using namespace DebugTools;
 
 
 class MockGameState {
@@ -17,6 +19,7 @@ public:
     virtual PlayerColor getNextPlayer() const { return nextPlayer; }
     virtual std::vector<Turn> getTurnList() { return std::vector<Turn> { Turn() }; }
     virtual void applyTurn(Turn) { nextPlayer = togglePlayerColor(nextPlayer); }
+    virtual Score getScore() const { return 0; }
 
     PlayerColor nextPlayer;
 };
@@ -30,30 +33,17 @@ public:
 };
 
 
-struct MockGameOverEval {
-    MOCK_CONST_METHOD1(getScore, Score(const MockGameOver&));
-};
-
 TEST(Negamax, searchGameOver) {
-    auto mockEval = make_shared<MockGameOverEval>();
-    EXPECT_CALL(*mockEval, getScore(_)).Times(1);
-
-    Negamax<decltype(mockEval)> negamax(mockEval);
+    Negamax negamax;
 
     MockGameOver mockGameState;
     auto result = negamax.search(mockGameState, 5);
     EXPECT_FALSE(result.turn);
 }
 
-struct MockGameStateEval {
-    MOCK_CONST_METHOD1(getScore, Score(const MockGameState&));
-};
 
 TEST(Negamax, searchDepthExhaustion) {
-    auto mockEval = make_shared<MockGameStateEval>();
-    EXPECT_CALL(*mockEval, getScore(_)).Times(1);
-
-    Negamax<decltype(mockEval)> negamax(mockEval);
+    Negamax negamax;
 
     MockGameState mockGameState;
     auto result = negamax.search(mockGameState, 5);
@@ -73,21 +63,19 @@ struct MockIncreasingState : public MockGameState {
         MockGameState::applyTurn(t);
     }
 
+    virtual Score getScore() const override {
+        return score;
+    }
+
     Score score;
     static Score increasingScore;
 };
 
 Score MockIncreasingState::increasingScore = 0;
 
-struct MockIncreasingEval {
-    Score getScore(const MockIncreasingState& state) {
-        return (state.nextPlayer == White) ? state.score : -state.score;
-    }
-};
 
 TEST(Negamax, searchRelaxation) {
-    auto mockEval = make_shared<MockIncreasingEval>();
-    Negamax<decltype(mockEval)> negamax(mockEval);
+    Negamax negamax;
 
     {
         MockIncreasingState mockGameState;
@@ -129,8 +117,7 @@ TEST(Negamax, searchRelaxationUneven) {
 
 
     {
-        auto mockEval = make_shared<MockIncreasingEval>();
-        Negamax<decltype(mockEval)> negamax(mockEval);
+        Negamax negamax;
         MockIncreasingState mockGameState;
         MockIncreasingState::increasingScore = 0;
 
@@ -143,8 +130,7 @@ TEST(Negamax, searchRelaxationUneven) {
     // Check symetric case
 
     {
-        auto mockEval = make_shared<MockIncreasingEval>();
-        Negamax<decltype(mockEval)> negamax(mockEval);
+        Negamax negamax;
         MockIncreasingState mockGameState;
         mockGameState.nextPlayer = Black;
         MockIncreasingState::increasingScore = 0;
@@ -158,23 +144,6 @@ TEST(Negamax, searchRelaxationUneven) {
 }
 
 
-
-template <typename Rng>
-ChessBoard generateRandomBoard(size_t maxTurns, Rng& rng) {
-    uniform_int_distribution<size_t> dst(0, maxTurns);
-    const size_t turnCount = dst(rng);
-
-    GameState gs;
-    for (size_t i = 0; i < turnCount; ++i) {
-        auto turns = gs.getTurnList();
-        auto turn = random_selection(turns, rng);
-        if (turn == end(turns)) break;
-        gs.applyTurn(*turn);
-    }
-
-    return gs.getChessBoard();
-}
-
 TEST(Negamax, AlphaBetaCutoff) {
     const unsigned int TRIES = 3;
 
@@ -182,8 +151,8 @@ TEST(Negamax, AlphaBetaCutoff) {
     uniform_int_distribution<size_t> depthDist(2, 3);
 
     for (size_t i = 0; i < TRIES; ++i) {
-        Negamax<> negamax(make_shared<MaterialEvaluator>());
-        Negamax<> negamaxAB(make_shared<MaterialEvaluator>());
+        Negamax negamax;
+        Negamax negamaxAB;
         
         GameState gs(generateRandomBoard(50, rng));
 

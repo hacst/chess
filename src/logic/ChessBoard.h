@@ -7,6 +7,7 @@
 
 //#include "ChessTypes.h"
 #include "Turn.h"
+#include "Evaluators.h"
 
 #define BB_SCAN(bb)    static_cast<Field>(static_cast<int>(std::log2((double)bb))) /* returns the field of MS1B */
 #define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field))    /* returns the value 2^field */
@@ -32,12 +33,6 @@ struct PoF {
 
 std::array<Piece, 64> generateChessBoard(std::vector<PoF> pieces);
 
-
-
-
-
-
-
 class ChessBoard {
     friend class TurnGenerator;
 
@@ -45,12 +40,17 @@ public:
     ChessBoard();
     ChessBoard(std::array<Piece, 64> board);
 
-    virtual void                  applyTurn(const Turn& t);
-    virtual std::array<Piece, 64> getBoard()          const;
-    virtual std::vector<Piece>    getCapturedPieces() const;
+    void                  applyTurn(const Turn& t);
+    std::array<Piece, 64> getBoard()          const;
+    std::vector<Piece>    getCapturedPieces() const;
 
+    //! Returns true if black pieces are on the board.
     bool hasBlackPieces() const;
+    //! Returns true if white pieces are on the board.
     bool hasWhitePieces() const;
+
+    //! Returns the current estimated score according to the internal estimator.
+    Score getScore(PlayerColor color) const;
 
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
@@ -65,10 +65,11 @@ protected:
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> bb;
 
 private:
-    virtual void initBitBoards(std::array<Piece, 64> board);
-    virtual void updateBitBoards();
+    void initBitBoards(std::array<Piece, 64> board);
+    void updateBitBoards();
 
     std::vector<Piece> m_capturedPieces;
+    IncrementalBoardEvaluator m_evaluator;
 };
 
 using ChessBoardPtr = std::shared_ptr<ChessBoard>;

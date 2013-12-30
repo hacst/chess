@@ -16,7 +16,7 @@ AIPlayer::AIPlayer()
     , m_gameState()
     , m_gameConfig()
     , m_color(PlayerColor::NoPlayer)
-    , m_algorithm(std::make_shared<MaterialEvaluator>())
+    , m_algorithm()
     , m_thread()
     , m_log(initLogger("AIPlayer")) {
     
