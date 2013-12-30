@@ -5,8 +5,64 @@
 #include "core/GameConfiguration.h"
 
 TEST(Misc, togglePlayerColor) {
-	EXPECT_EQ(Black, togglePlayerColor(White));
-	EXPECT_EQ(White, togglePlayerColor(Black));
+    EXPECT_EQ(Black, togglePlayerColor(White));
+    EXPECT_EQ(White, togglePlayerColor(Black));
+}
+
+TEST(Misc, rankFor) {
+    for (Rank r = One; r < Eight; r = nextRank(r)) {
+        for (File f = A; f < H; f = nextFile(f)) {
+            const Field field = fieldFor(f, r);
+            EXPECT_EQ(r, rankFor(field)) << "Field: " << field;
+        }
+    }
+}
+
+TEST(Misc, fileFor) {
+    for (Rank r = One; r < Eight; r = nextRank(r)) {
+        for (File f = A; f < H; f = nextFile(f)) {
+            const Field field = fieldFor(f, r);
+            EXPECT_EQ(f, fileFor(field)) << "Field: " << field;
+        }
+    }
+}
+
+TEST(Misc, nextField) {
+    EXPECT_EQ(B1, nextField(A1));
+    EXPECT_EQ(A5, nextField(H4));
+    EXPECT_EQ(H8, nextField(G8));
+}
+
+TEST(Misc, nextFile) {
+    EXPECT_EQ(B, nextFile(A));
+    EXPECT_EQ(C, nextFile(B));
+    EXPECT_EQ(D, nextFile(C));
+    EXPECT_EQ(E, nextFile(D));
+    EXPECT_EQ(F, nextFile(E));
+    EXPECT_EQ(G, nextFile(F));
+    EXPECT_EQ(H, nextFile(G));
+
+}
+
+TEST(Misc, nextRank) {
+    EXPECT_EQ(Two, nextRank(One));
+    EXPECT_EQ(Three, nextRank(Two));
+    EXPECT_EQ(Four, nextRank(Three));
+    EXPECT_EQ(Five, nextRank(Four));
+    EXPECT_EQ(Six, nextRank(Five));
+    EXPECT_EQ(Seven, nextRank(Six));
+    EXPECT_EQ(Eight, nextRank(Seven));
+}
+
+TEST(Misc, flipHorizontal) {
+    EXPECT_EQ(A1, flipHorizontal(A8));
+    EXPECT_EQ(A8, flipHorizontal(A1));
+
+    EXPECT_EQ(C4, flipHorizontal(C5));
+    EXPECT_EQ(C5, flipHorizontal(C4));
+    
+    EXPECT_EQ(H8, flipHorizontal(H1));
+    EXPECT_EQ(H1, flipHorizontal(H8));
 }
 
 /*

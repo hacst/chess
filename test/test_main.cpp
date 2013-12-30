@@ -10,7 +10,7 @@ using namespace Logging;
 #endif
 
 #ifndef TEST_LOG_LEVEL
-#define TEST_LOG_LEVEL info
+#define TEST_LOG_LEVEL debug
 #endif
 
 /**

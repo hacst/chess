@@ -16,7 +16,7 @@ void GameState::init() {
 	// TODO: init ChessBoard from savegame
 }
 
-std::vector<Turn> GameState::getTurnList() {
+std::vector<Turn> GameState::getTurnList() const {
 	return m_turnGen.generateTurns(getNextPlayer(), getChessBoard());
 }
 
@@ -47,7 +47,11 @@ bool GameState::isGameOver() const {
         return piece.type == King;
     });
 
-    return (hit != end(captures));
+    if (hit != end(captures)) {
+        return true;
+    }
+
+    return getTurnList().size() == 0;
 }
 
 PlayerColor GameState::getWinner() const {

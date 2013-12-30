@@ -178,7 +178,7 @@ ChessBoard generateRandomBoard(size_t maxTurns, Rng& rng) {
 TEST(Negamax, AlphaBetaCutoff) {
     const unsigned int TRIES = 3;
 
-    mt19937 rng;
+    mt19937 rng(1234);
     uniform_int_distribution<size_t> depthDist(2, 3);
 
     for (size_t i = 0; i < TRIES; ++i) {

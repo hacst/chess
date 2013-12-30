@@ -14,7 +14,7 @@ public:
 	virtual void init();
 	//virtual void init(SaveGame* sg);
 
-	virtual std::vector<Turn>   getTurnList();
+	virtual std::vector<Turn>   getTurnList() const;
 	virtual void                applyTurn(const Turn& turn);
 	virtual PlayerColor         getNextPlayer() const;
 	virtual const ChessBoard&   getChessBoard() const;

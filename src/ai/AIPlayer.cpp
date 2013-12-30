@@ -69,7 +69,7 @@ void AIPlayer::doAbortTurn() {
 }
 
 void AIPlayer::play() {
-    const size_t DEPTH = 6;
+    const size_t DEPTH = 5;
 
     LOG(info) << "Starting search of depth " << DEPTH;
     auto result = m_algorithm.search(m_gameState, DEPTH);

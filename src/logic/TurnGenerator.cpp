@@ -1,6 +1,6 @@
 #include "TurnGenerator.h"
 
-std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBoard& cb) {
+std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBoard& cb) const {
     std::vector<Turn> vecTurns, vecAllTurns;
     BitBoard bbTurns, bbCurPieceType, bbCurPiece;
     Field curPiecePos;
@@ -27,7 +27,7 @@ std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBo
     return vecAllTurns;
 }
 
-std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns) {
+std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns) const {
     std::vector<Turn> turns;
     Field from, to;
 
@@ -42,7 +42,7 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, BitBoard bbPiece, 
     return turns;
 }
 
-BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoard& cb) {
+BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoard& cb) const {
     PlayerColor opp = (piece.player == White) ? Black : White;
 
     switch (piece.type) {
@@ -60,7 +60,7 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     }
 }
 
-BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
+BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) const {
 
     // TODO: Steht der King im schach? Nur Zuege berechnen, um aus dem
     // schach rauszukommen -> wenn keine moeglichen zuege gefunden -> sieger?
@@ -92,7 +92,7 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) {
     return kingTurns;
 }
 
-BitBoard TurnGenerator::calcKnightTurns(BitBoard knights, BitBoard allOwnPieces) {
+BitBoard TurnGenerator::calcKnightTurns(BitBoard knights, BitBoard allOwnPieces) const {
     BitBoard turn1 = (knights & (clearFile(A) & clearFile(B))) << 6;
     BitBoard turn2 = (knights & (clearFile(A)))                << 15;
     BitBoard turn3 = (knights & (clearFile(H)))                << 17;
@@ -111,7 +111,7 @@ BitBoard TurnGenerator::calcKnightTurns(BitBoard knights, BitBoard allOwnPieces)
 }
 
 BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
-                                      BitBoard allPieces, PlayerColor player) {
+    BitBoard allPieces, PlayerColor player) const {
 
     // TODO: en passant
 
@@ -144,13 +144,13 @@ BitBoard TurnGenerator::calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
 }
 
 BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOppPieces,
-                                       BitBoard allPieces) {
+    BitBoard allPieces) const {
     return calcRookTurns  (queens, allOppPieces, allPieces) |
            calcBishopTurns(queens, allOppPieces, allPieces);
 }
 
 BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
-                                        BitBoard allPieces) {
+    BitBoard allPieces) const {
     BitBoard bbNE = getBitsNE(bishops);
     BitBoard bbNW = getBitsNW(bishops);
     BitBoard bbSE = getBitsSE(bishops);
@@ -199,7 +199,7 @@ BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
 }
 
 BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
-                                      BitBoard allPieces) {
+    BitBoard allPieces) const {
     BitBoard bbE = getBitsE(rooks);
     BitBoard bbW = getBitsW(rooks);
     BitBoard bbN = getBitsN(rooks);
@@ -245,7 +245,7 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
 
 
 
-BitBoard TurnGenerator::getBitsNE(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsNE(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x8040201008040200 << field;
 
@@ -257,7 +257,7 @@ BitBoard TurnGenerator::getBitsNE(BitBoard bbPiece) {
     return bb & bbMask;
 }
 
-BitBoard TurnGenerator::getBitsNW(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsNW(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     int shift = field - 7;
     BitBoard bb;
@@ -276,7 +276,7 @@ BitBoard TurnGenerator::getBitsNW(BitBoard bbPiece) {
     return bb & bbMask;
 }
 
-BitBoard TurnGenerator::getBitsSE(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsSE(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     int shift = 56 - field;
     BitBoard bb;
@@ -295,7 +295,7 @@ BitBoard TurnGenerator::getBitsSE(BitBoard bbPiece) {
     return bb & bbMask;
 }
 
-BitBoard TurnGenerator::getBitsSW(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsSW(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x0040201008040201 >> (64-(field+1));
 
@@ -314,7 +314,7 @@ BitBoard TurnGenerator::getBitsSW(BitBoard bbPiece) {
 //BitBoard bb = 0x00000000000000FE << 32;
 //bb &= maskRank(static_cast<Rank>(field / 8));
 
-BitBoard TurnGenerator::getBitsE(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsE(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0xFE00000000000000 >> (56-field);
     bb &= maskRank(static_cast<Rank>(field / 8));
@@ -322,7 +322,7 @@ BitBoard TurnGenerator::getBitsE(BitBoard bbPiece) {
     return bb;
 }
 
-BitBoard TurnGenerator::getBitsW(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsW(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0xFE00000000000000 >> (64-field);
     bb &= maskRank(static_cast<Rank>(field / 8));
@@ -330,7 +330,7 @@ BitBoard TurnGenerator::getBitsW(BitBoard bbPiece) {
     return bb;
 }
 
-BitBoard TurnGenerator::getBitsN(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsN(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x0101010101010100 << field;
 
@@ -342,7 +342,7 @@ BitBoard TurnGenerator::getBitsN(BitBoard bbPiece) {
 // integer between 0 and 63 positions
 // BitBoard bb = 0x0101010101010100 >> (64-field);
 
-BitBoard TurnGenerator::getBitsS(BitBoard bbPiece) {
+BitBoard TurnGenerator::getBitsS(BitBoard bbPiece) const {
     int field = BB_SCAN(bbPiece);
     BitBoard bb = 0x0080808080808080 >> (64-(field+1));
 
@@ -350,7 +350,7 @@ BitBoard TurnGenerator::getBitsS(BitBoard bbPiece) {
 }
 
 
-BitBoard TurnGenerator::maskRank(Rank rank) {
+BitBoard TurnGenerator::maskRank(Rank rank) const {
     // Geht nicht! Da die Zahl als 32 Bit Integer aufgefasst wird
     // funktioniert der Shift nicht korrekt!
     // http://stackoverflow.com/questions/10499104/is-shifting-more-than-32-bits-of-a-uint64-t-integer-on-an-x86-machine-undefined
@@ -362,14 +362,14 @@ BitBoard TurnGenerator::maskRank(Rank rank) {
     //return bb << (rank * 8);
 }
 
-BitBoard TurnGenerator::clearRank(Rank rank) {
+BitBoard TurnGenerator::clearRank(Rank rank) const {
     return ~(maskRank(rank));
 }
 
-BitBoard TurnGenerator::maskFile(File file) {
+BitBoard TurnGenerator::maskFile(File file) const {
     return 0x0101010101010101 << file;
 }
 
-BitBoard TurnGenerator::clearFile(File file) {
+BitBoard TurnGenerator::clearFile(File file) const {
     return ~(maskFile(file));
 }

@@ -139,6 +139,16 @@ namespace std {
         default: return r("unknown field");
         }
     }
+
+    std::ostream& operator <<(std::ostream& stream, const Rank r) {
+        stream << static_cast<int>(r);
+        return stream;
+    }
+
+    std::ostream& operator <<(std::ostream& stream, const File f) {
+        stream << ('A' + static_cast<int>(f));
+        return stream;
+    }
 }
 
 bool Piece::operator==(const Piece& other) const {

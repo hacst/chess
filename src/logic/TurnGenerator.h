@@ -8,59 +8,45 @@
 #include "ChessTypes.h"
 #include "ChessBoard.h"
 
-
-enum File {
-    A = 0, B, C, D, E, F, G, H
-};
-
-enum Rank {
-    One = 0, Two, Three, Four, Five, Six, Seven, Eight
-};
-
-
-
-
-
-
 //class BitBoardTurnGen
 class TurnGenerator { //: public AbstractTurnGenerator {
 public:
-    virtual std::vector<Turn> generateTurns(PlayerColor player, const ChessBoard& cb); // override;
+    virtual std::vector<Turn> generateTurns(PlayerColor player, const ChessBoard& cb) const; // override;
 
-//private:
+    //private:
 
 
     //virtual std::array<BitBoard, 6> calcTurns(PlayerColor player, const ChessBoard& cb);
-    virtual BitBoard          calcTurns      (Piece piece, BitBoard bbPiece, const ChessBoard& cb);
-    virtual std::vector<Turn> bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns);
+    virtual BitBoard          calcTurns(Piece piece, BitBoard bbPiece, const ChessBoard& cb) const;
+    virtual std::vector<Turn> bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns) const;
 
     // nonsliding pieces
-    virtual BitBoard calcKingTurns  (BitBoard king,    BitBoard allOwnPieces);
-    virtual BitBoard calcKnightTurns(BitBoard knights, BitBoard allOwnPieces);
-    virtual BitBoard calcPawnTurns  (BitBoard pawns,   BitBoard allOppPieces,
-                                     BitBoard allPieces, PlayerColor player);
+    virtual BitBoard calcKingTurns(BitBoard king, BitBoard allOwnPieces) const;
+    virtual BitBoard calcKnightTurns(BitBoard knights, BitBoard allOwnPieces) const;
+    virtual BitBoard calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
+        BitBoard allPieces, PlayerColor player) const;
     // sliding pieces
-    virtual BitBoard calcQueenTurns (BitBoard queens,  BitBoard allOppPieces,
-                                     BitBoard allPieces);
+    virtual BitBoard calcQueenTurns(BitBoard queens, BitBoard allOppPieces,
+        BitBoard allPieces) const;
     virtual BitBoard calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
-                                     BitBoard allPieces);
-    virtual BitBoard calcRookTurns  (BitBoard rooks,   BitBoard allOppPieces,
-                                     BitBoard allPieces);
+        BitBoard allPieces) const;
+    virtual BitBoard calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
+        BitBoard allPieces) const;
 
-    virtual BitBoard maskRank (Rank rank);
-    virtual BitBoard clearRank(Rank rank);
-    virtual BitBoard maskFile (File file);
-    virtual BitBoard clearFile(File file);
+    virtual BitBoard maskRank(Rank rank) const;
+    virtual BitBoard clearRank(Rank rank) const;
+    virtual BitBoard maskFile(File file) const;
+    virtual BitBoard clearFile(File file) const;
 
-    virtual BitBoard getBitsE(BitBoard bbPiece);
-    virtual BitBoard getBitsW(BitBoard bbPiece);
-    virtual BitBoard getBitsN(BitBoard bbPiece);
-    virtual BitBoard getBitsS(BitBoard bbPiece);
+    virtual BitBoard getBitsE(BitBoard bbPiece) const;
+    virtual BitBoard getBitsW(BitBoard bbPiece) const;
+    virtual BitBoard getBitsN(BitBoard bbPiece) const;
+    virtual BitBoard getBitsS(BitBoard bbPiece) const;
 
-    virtual BitBoard getBitsNE(BitBoard bbPiece);
-    virtual BitBoard getBitsNW(BitBoard bbPiece);
-    virtual BitBoard getBitsSE(BitBoard bbPiece);
-    virtual BitBoard getBitsSW(BitBoard bbPiece);
+    virtual BitBoard getBitsNE(BitBoard bbPiece) const;
+    virtual BitBoard getBitsNW(BitBoard bbPiece) const;
+    virtual BitBoard getBitsSE(BitBoard bbPiece) const;
+    virtual BitBoard getBitsSW(BitBoard bbPiece) const;
 };
 
 using TurnGeneratorPtr = std::shared_ptr<TurnGenerator>;

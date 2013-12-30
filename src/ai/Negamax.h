@@ -73,6 +73,7 @@ public:
         Result result = search_recurse<TGameState, AB_CUTOFF_ENABLED>(
                     state, 0, maxDepth, MIN_SCORE, MAX_SCORE);
 
+        LOG(Logging::debug) << result;
         LOG(Logging::debug) << m_counters;
         return result;
     }
@@ -111,12 +112,13 @@ private:
     template <typename TGameState = GameState, bool AB_CUTOFF_ENABLED>
     Result search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
         if (state.isGameOver() || depth == maxDepth) {
-            return { m_evaluator->getScore(state) , boost::none };
+            return{ m_evaluator->getScore(state), boost::none };
         }
 
         Result bestResult { MIN_SCORE, boost::none };
         auto possibleTurns = state.getTurnList();
         performMoveOrdering(possibleTurns);
+        assert(possibleTurns.size() > 0);
 
         for (auto& turn : possibleTurns) {
             TGameState newState = state;
@@ -132,6 +134,7 @@ private:
             if (result > bestResult) {
                 ++m_counters.updates;
                 //LOG(trace) << "(" << depth << ") Improved score " << bestResult.score << " to " << result.score;
+
                 bestResult = result;
                 bestResult.turn = turn;
             }

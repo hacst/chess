@@ -22,8 +22,8 @@ int main(int argn, char **argv) {
     desc.add_options()
         ("help", "Print help message")
         ("turns", po::value<int>()->default_value(numeric_limits<int>::max()), "Number of turns after which to abort game")
-        ("depthw", po::value<int>()->default_value(3), "Search depth for Negamax search for White player")
-        ("depthb", po::value<int>()->default_value(3), "Search depth for Negamax search for Black player")
+        ("depthw", po::value<int>()->default_value(6), "Search depth for Negamax search for White player")
+        ("depthb", po::value<int>()->default_value(6), "Search depth for Negamax search for Black player")
         ("delay", po::value<int>()->default_value(0), "Sleep in ms between moves")
         ;
 
