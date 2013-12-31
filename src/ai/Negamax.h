@@ -67,7 +67,7 @@ public:
     template<typename TGameState = GameState, bool AB_CUTOFF_ENABLED = true, bool MOVE_ORDERING_ENABLED = true>
     Result search(const TGameState& state, size_t maxDepth) {
         LOG(Logging::info) << "Starting " << maxDepth << " plies deep search. AB-pruning=" << AB_CUTOFF_ENABLED << ") Move ordering=" << MOVE_ORDERING_ENABLED;
-        auto start = std::chrono::monotonic_clock::now();
+        auto start = std::chrono::steady_clock::now();
 
         m_counters = PerfCounters();
         
@@ -75,7 +75,7 @@ public:
                     state, 0, maxDepth, MIN_SCORE, MAX_SCORE);
 
         m_counters.duration = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::monotonic_clock::now() - start);
+            std::chrono::steady_clock::now() - start);
 
         LOG(Logging::debug) << result;
         LOG(Logging::debug) << m_counters;
