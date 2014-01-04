@@ -39,7 +39,7 @@ ChessSet::~ChessSet() {
 }
 
 int ChessSet::getResourcesCount() {
-	return m_extResources.size() + 1;	// +1 for the board
+	return static_cast<int>(m_extResources.size()) + 1;	// +1 for the board
 }
 
 void ChessSet::loadResources() {
