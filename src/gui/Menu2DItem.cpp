@@ -5,14 +5,10 @@
 
 using namespace std;
 
-Menu2DItem::Menu2DItem(int index, std::string filename, int width, int height, int animationDuration)
-	: m_index(index)
-	, m_width(width)
+Menu2DItem::Menu2DItem(std::string filename, int width, int height)
+	: m_width(width)
 	, m_height(height)
 	, m_filename(filename) {
-
-	// create an animation object
-	animationHelper = make_shared<AnimationHelper>(animationDuration);
 
 	// load normal state texture
 	m_texture[0] = SOIL_load_OGL_texture(
@@ -28,7 +24,7 @@ Menu2DItem::Menu2DItem(int index, std::string filename, int width, int height, i
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
-		);
+	);
 
 	// load active state texture
 	m_texture[2] = SOIL_load_OGL_texture(
@@ -36,7 +32,7 @@ Menu2DItem::Menu2DItem(int index, std::string filename, int width, int height, i
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
-		);
+	);
 }
 
 Menu2DItem::~Menu2DItem() {
@@ -56,8 +52,6 @@ bool Menu2DItem::inBoundingBox() {
 }
 
 void Menu2DItem::draw() {
-	animationHelper->setStartNowOrKeepIt();
-
 	// add texture
 	int state_index;
 	if (m_hovered) {
@@ -124,10 +118,4 @@ void Menu2DItem::onClick(const boost::function<void()>& slot) {
 
 void Menu2DItem::unClick() {
     m_clicked.disconnect_all_slots();
-}
-
-string Menu2DItem::toString() const {
-    stringstream ss;
-    ss << "Nenu2DItem(index=" << m_index << ")";
-    return ss.str();
 }

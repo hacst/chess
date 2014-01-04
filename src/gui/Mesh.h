@@ -6,27 +6,43 @@
 #endif
 
 #include <GL/gl.h>
+
 #include <assimp/Importer.hpp>	// C++ importer interface
 #include <assimp/scene.h>		// Output data structure
 #include <assimp/postprocess.h>	// Post processing flags
 
+/**
+ * @brief Wrapper class for the Assimp library.
+ */
 class Mesh {
 public:
-	// Konstruktor, der alle wichtigen Werte des Meshes übernimmt.
-	Mesh(unsigned int numVertices, aiVector3D* vertices,
-		aiVector3D* normals, unsigned int numFaces, aiFace* faces);
-
-	// Destruktor, der am Ende des Programms aufräumt.
+	/**
+	 * @brief Creates a new Mesh object.
+	 * @param numVertices The number of model vertices.
+	 * @param vertices The model's vertices itself.
+	 * @param normals The model's normals itself.
+	 * @param numFaces The number of model faces.
+	 * @param faces The model's faces itself.
+	 */
+	Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces);
 	~Mesh(void);
 
-	// Die geladenen Vertices, Normals und Texturkoordinaten als Vektoren
+	//! The model's vertices
 	aiVector3D* vertices;
+
+	//! The model's normals
 	aiVector3D* normals;
+
+	//! The model's texture coordinates
 	aiVector3D* textureCoords;
+
+	//! The model's indices
 	GLuint* indices;
 
-	// Die Anzahl der Vertices bzw. Indices
+	//! The number of vertices
 	GLuint numVertices;
+
+	//! The number of indices
 	GLuint numIndices;
 };
 

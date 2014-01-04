@@ -27,7 +27,6 @@ GuiWindow::GuiWindow(string title, bool fullscreen, int width, int height)
 	m_fov = 60.0;
 
 	// init other parameters
-	m_colorBits = 32;
 	m_depthBits = 16;
 	m_antiAlias = 8;
 
@@ -346,8 +345,8 @@ void GuiWindow::makeFrustum(double fovY, double aspectRatio, double front, doubl
 	const double DEG2RAD = 3.1415926535 / 180;
 
 	double tangent = tan(fovY / 2 * DEG2RAD);   // tangent of half fovY
-	double height = front * tangent;          // half height of near plane
-	double width = height * aspectRatio;      // half width of near plane
+	double height = front * tangent;			// half height of near plane
+	double width = height * aspectRatio;		// half width of near plane
 
 	// params: left, right, bottom, top, near, far
 	glFrustum(-width, width, -height, height, front, back);

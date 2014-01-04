@@ -11,8 +11,6 @@ Model::Model(string file) :	m_file(file) {
 	m_correctScaling = 1.0f;
 	m_correctRotation = { 0, 0, 0 };
 
-	m_rotateY = 0;
-
 	m_position = { 0, 0, 0 };
 }
 
@@ -30,10 +28,6 @@ void Model::setColor(Color color) {
 
 void Model::setPosition(int globalX, int globalY, int globalZ) {
 	m_position = { globalX, globalY, globalZ };
-}
-
-void Model::rotateY(int degree) {
-	m_rotateY = degree;
 }
 
 void Model::loadScene() {

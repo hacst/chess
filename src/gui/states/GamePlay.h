@@ -16,21 +16,49 @@ class StateMachine;
 class ObserverDispatcherProxy;
 using ObserverDispatcherProxyPtr = std::shared_ptr<ObserverDispatcherProxy>;
 
+/**
+ * @brief Class which holds the state GamePlay. This state is the essential part of
+ * all states. The whole game play is hold in this state.
+ *
+ * @note To run() a state, first enter() the state.
+ */
 class GamePlay : public AbstractState {
 public:
+	//! The possible game modes.
 	enum GameMode {
 		AI_VS_AI,
 		PLAYER_VS_AI
 	};
 
+	/**
+	 * @brief Creates a new game.
+	 * @param mode The GameMode (*AI vs. AI* or *Player vs. AI*).
+	 * @param firstPlayerColor The color of the player which takes the first turn.
+	 */
 	GamePlay(GameMode mode, PlayerColor firstPlayerColor);
 
-	// interface methods
+	/**
+	 * @brief Enters the state for the first time. This will setup all the state related stuff.
+	 * @note To run() the current state, first enter() it.
+	 */
 	void enter() override;
+
+	/**
+	 * @brief Runs the current state and does all the work.
+	 * @return AbstractState* the state which should be run after this state.
+	 * A nullptr if the game should be exited.
+	 */
 	AbstractState* run() override;
+
+	/**
+	 * @brief Exits the current state and cleans up all allocated resources.
+	 * @note This is the last method to call, before the object is deleted.
+	 */
 	void exit() override;
 
-	// draw method
+	/**
+	 * @brief Draws something state related stuff on the screen.
+	 */
 	void draw();
 
 	// trigger methods

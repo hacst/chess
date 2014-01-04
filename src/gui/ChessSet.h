@@ -16,6 +16,9 @@
 
 #include <GL/gl.h>
 
+/**
+ * @brief The ChessSet holds all the figures together with the board needed for the chess game.
+ */
 class ChessSet {
 public:
 	ChessSet();

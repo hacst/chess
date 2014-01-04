@@ -25,7 +25,7 @@ Menu2DItemPtr Menu2D::addButton(std::string filename) {
 	updateAbsolutePosition();	// update absolute menu position
 	
 	// we don't know how many buttons will be added in total, so we must update the position later (before drawing)
-	Menu2DItemPtr item = make_shared<Menu2DItem>(m_btCount, filename, m_buttonWidth, m_buttonHeight, m_animationDuration * 2);
+	Menu2DItemPtr item = make_shared<Menu2DItem>(filename, m_buttonWidth, m_buttonHeight);
 	items.push_back(item);
 
 	++m_btCount;
