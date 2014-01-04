@@ -1,18 +1,21 @@
 #include "ChessBoard.h"
+#include "misc/helper.h"
 
 using namespace std;
 
 ChessBoard::ChessBoard()
-    : m_evaluator() {
+    : m_evaluator()
+    , nextPlayer(White) {
+
     std::array<Piece, 64> board = {
-        { Piece(White, Rook), Piece(White, Knight), Piece(White, Bishop), Piece(White, King), Piece(White, Queen), Piece(White, Bishop), Piece(White, Knight), Piece(White, Rook),
+        { Piece(White, Rook), Piece(White, Knight), Piece(White, Bishop), Piece(White, Queen), Piece(White, King), Piece(White, Bishop), Piece(White, Knight), Piece(White, Rook),
           Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn), Piece(White, Pawn),
           Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType),
           Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType),
           Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType),
           Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType), Piece(NoPlayer, NoType),
           Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn), Piece(Black, Pawn),
-          Piece(Black, Rook), Piece(Black, Knight), Piece(Black, Bishop), Piece(Black, King), Piece(Black, Queen), Piece(Black, Bishop), Piece(Black, Knight), Piece(Black, Rook) }
+          Piece(Black, Rook), Piece(Black, Knight), Piece(Black, Bishop), Piece(Black, Queen), Piece(Black, King), Piece(Black, Bishop), Piece(Black, Knight), Piece(Black, Rook) }
     };
 
     /*
@@ -33,13 +36,15 @@ black_king = 0x1000000000000000
     initBitBoards(board);
 }
 
-ChessBoard::ChessBoard(std::array<Piece, 64> board)
-    : m_evaluator(board) {
+ChessBoard::ChessBoard(std::array<Piece, 64> board, PlayerColor nextPlayer)
+    : m_evaluator(board)
+    , nextPlayer(nextPlayer) {
 
     initBitBoards(board);
 }
 
 void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
+
     // init all bit boards with 0
     for (int player = White; player < NUM_PLAYERS; player++) {
         for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
@@ -54,7 +59,27 @@ void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
         }
     }
 
+    // If we find Rooks and Kings in initial position assume castling rights are intact.
+    shortCastleRight = { { false, false } };
+    longCastleRight = { { false, false } };
+
+    if (board[E1] == Piece(White, King)) {
+        longCastleRight[White] = (board[A1] == Piece(White, Rook));
+        shortCastleRight[White] = (board[H1] == Piece(White, Rook));
+    }
+
+    if (board[E8] == Piece(Black, King)) {
+        longCastleRight[Black] = (board[A8] == Piece(Black, Rook));
+        shortCastleRight[Black] = (board[H8] == Piece(Black, Rook));
+    }
+
+    enPassantRightForFiles = 0; // No possibility at start
+
     updateBitBoards();
+}
+
+PlayerColor ChessBoard::getNextPlayer() const {
+    return nextPlayer;
 }
 
 void ChessBoard::updateBitBoards() {
@@ -67,8 +92,11 @@ void ChessBoard::updateBitBoards() {
 
 
 void ChessBoard::applyTurn(const Turn& turn) {
+    enPassantRightForFiles = 0; // Void en passant rights
 
     if (turn.action == Turn::Action::Move) {
+        updateCastlingRights(turn);
+
         BIT_CLEAR(bb[turn.piece.player][turn.piece.type], turn.from);
         BIT_SET  (bb[turn.piece.player][turn.piece.type], turn.to);
 
@@ -89,13 +117,44 @@ void ChessBoard::applyTurn(const Turn& turn) {
             }
         }
 
+        if (turn.piece.type == Pawn) {
+            if (std::abs(rankFor(turn.from) - rankFor(turn.to)) > 1) {
+                assert(rankFor(turn.from) == Two || rankFor(turn.from) == Seven);
+                enPassantRightForFiles = 1 << fileFor(turn.from);
+            }
+        }
     } else if (turn.action == Turn::Action::Forfeit) {
         //TODO: Do something
+    } else if (turn.action == Turn::Action::Castle) {
+        //TODO: Castle and update castling rights
+        updateCastlingRights(turn);
     } else {
         // Assume passed
     }
 
     updateBitBoards();
+
+    nextPlayer = togglePlayerColor(nextPlayer);
+}
+
+void ChessBoard::updateCastlingRights(const Turn& turn) {
+    if (turn.piece == Piece(White, Rook)) {
+        if (turn.from == A1) longCastleRight[White] = false;
+        else if (turn.from == H1) shortCastleRight[White] = false;
+
+    } else if (turn.piece == Piece(White, King)) {
+        shortCastleRight[White] = false;
+        longCastleRight[White] = false;
+    }
+
+    if (turn.piece == Piece(Black, Rook)) {
+        if (turn.from == A8) longCastleRight[Black] = false;
+        else if (turn.from == H8) shortCastleRight[Black] = false;
+
+    } else if (turn.piece == Piece(Black, King)) {
+        shortCastleRight[Black] = false;
+        longCastleRight[Black] = false;
+    }
 }
 
 std::array<Piece, 64> ChessBoard::getBoard() const {
@@ -144,7 +203,13 @@ Score ChessBoard::getScore(PlayerColor color) const {
 /* for test and debug purposes */
 
 bool ChessBoard::operator==(const ChessBoard& other) const {
-    return getBoard() == other.getBoard();
+    return bb == other.bb
+        && shortCastleRight == other.shortCastleRight
+        && longCastleRight == other.longCastleRight
+        && enPassantRightForFiles == other.enPassantRightForFiles
+        && nextPlayer == other.nextPlayer
+    //    && m_capturedPieces == other.m_capturedPieces   // Exluded from comparision
+        && m_evaluator == other.m_evaluator;
 }
 
 bool ChessBoard::operator!=(const ChessBoard& other) const {
@@ -163,15 +228,28 @@ std::string ChessBoard::toString() const {
             ss << board[row + col - 8] << ' ';
         }
     }
-    ss << endl;
-
-    /*int i = 0;
-    for (auto& piece: board) {
-        if (!(i++ % 8)) ss << endl;
-        ss << piece << ' ';
-    }*/
+    ss << endl << endl;
+    ss << "Castling White Short : " << shortCastleRight[White] << " Long: " << longCastleRight[White] << endl;
+    ss << "         Black Short : " << shortCastleRight[Black] << " Long: " << longCastleRight[Black] << endl;
+    ss << "En passant           : " << getEnPassantFile() << endl;
+    ss << "Score estimate       : " << m_evaluator.getScore(nextPlayer) << endl;
+    ss << "Next move            : " << nextPlayer << endl << endl;
 
     return ss.str();
+}
+
+File ChessBoard::getEnPassantFile() const {
+    if (enPassantRightForFiles == 0) return NoFile;
+
+    return fileFor(BB_SCAN(enPassantRightForFiles));
+}
+
+std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {
+    return shortCastleRight;
+}
+
+std::array<bool, NUM_PLAYERS> ChessBoard::getLongCastleRights() const {
+    return longCastleRight;
 }
 
 std::string bitBoardToString(BitBoard b) {
@@ -211,7 +289,7 @@ BitBoard generateBitBoard(Field f1, ...) {
     return bb;
 }
 
-std::array<Piece, 64> generateChessBoard(std::vector<PoF> pieces) {
+ChessBoard generateChessBoard(std::vector<PoF> pieces, PlayerColor nextPlayer) {
     
     std::array<Piece, 64> board;
     for (int i = 0; i < NUM_FIELDS; i++) {
@@ -222,5 +300,5 @@ std::array<Piece, 64> generateChessBoard(std::vector<PoF> pieces) {
         board[pof.field] = pof.piece;
     }
 
-    return board;
+    return ChessBoard(board, nextPlayer);
 }

@@ -141,12 +141,16 @@ namespace std {
     }
 
     std::ostream& operator <<(std::ostream& stream, const Rank r) {
-        stream << static_cast<int>(r);
+        if (r == NoRank) stream << "NoRank";
+        else stream << static_cast<int>(r);
+
         return stream;
     }
 
     std::ostream& operator <<(std::ostream& stream, const File f) {
-        stream << ('A' + static_cast<int>(f));
+        if (f == NoFile) stream << "NoFile";
+        else stream << ('A' + static_cast<int>(f));
+
         return stream;
     }
 }

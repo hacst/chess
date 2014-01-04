@@ -72,14 +72,12 @@ struct PoF {
         : piece(piece), field(field) {}
 };
 
-std::array<Piece, 64> generateChessBoard(std::vector<PoF> pieces);
-
 class ChessBoard {
     friend class TurnGenerator;
 
 public:
     ChessBoard();
-    ChessBoard(std::array<Piece, 64> board);
+    explicit ChessBoard(std::array<Piece, 64> board, PlayerColor nextPlayer = White);
 
     void                  applyTurn(const Turn& t);
     std::array<Piece, 64> getBoard()          const;
@@ -89,6 +87,8 @@ public:
     bool hasBlackPieces() const;
     //! Returns true if white pieces are on the board.
     bool hasWhitePieces() const;
+    //! Return next player to make a turn
+    PlayerColor getNextPlayer() const;
 
     //! Returns the current estimated score according to the internal estimator.
     Score getScore(PlayerColor color) const;
@@ -98,20 +98,39 @@ public:
 
     std::string toString() const;
 
+    //! Returns the file where en-passant rights exist. NoFile if none.
+    File getEnPassantFile() const;
+    //! Returns short castle rights for players.
+    std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
+    //! Returns long castle rights for players.
+    std::array<bool, NUM_PLAYERS> getLongCastleRights() const;
+
 protected:
     // for internal turn calculation bit boards are used
     // at least 12 bit boards are needed for a complete board
     // representation + some additional bit boards for turn
     // faster calculation
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> bb;
+    //! Short castle rights for players.
+    std::array<bool, NUM_PLAYERS> shortCastleRight;
+    //! Long castle rights for players.
+    std::array<bool, NUM_PLAYERS> longCastleRight;
+    //! Bitmask for enemy en passant rights for a file next turn
+    uint8_t enPassantRightForFiles;
+    //! Player doing the next turn
+    PlayerColor nextPlayer;
 
 private:
     void initBitBoards(std::array<Piece, 64> board);
     void updateBitBoards();
+    //! Checks whether the given turn affects castling rights and updates them accordingly.
+    void updateCastlingRights(const Turn& turn);
 
     std::vector<Piece> m_capturedPieces;
     IncrementalBoardEvaluator m_evaluator;
 };
+
+ChessBoard generateChessBoard(std::vector<PoF> pieces, PlayerColor nextPlayer = White);
 
 using ChessBoardPtr = std::shared_ptr<ChessBoard>;
 

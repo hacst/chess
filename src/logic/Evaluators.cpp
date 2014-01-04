@@ -8,14 +8,14 @@ Score MaterialEvaluator::getScore(const GameState& gameState) const {
     return getMaterialWorth(gameState.getNextPlayer(), gameState.getChessBoard());
 }
 
-using PieceSquareTable = std::array<Score, 64>;
+using PieceSquareTable = std::array<Score, NUM_FIELDS>;
 
 namespace {
 /**
 * @brief Piece square table as proposed by http://chessprogramming.wikispaces.com/Simplified+evaluation+function#Piece-Square
 * @note Two dimensional. Indexable by Piece then Field from blacks POV.
 */
-const std::array<PieceSquareTable, 8> PIECE_SQUARE_TABLE = { {
+    const std::array<PieceSquareTable, NUM_PIECETYPES> PIECE_SQUARE_TABLE = { {
     {   // King
         -30, -40, -40, -50, -50, -40, -40, -30,
         -30, -40, -40, -50, -50, -40, -40, -30,
@@ -80,28 +80,6 @@ const std::array<PieceSquareTable, 8> PIECE_SQUARE_TABLE = { {
         5, -5, -10, 0, 0, -10, -5, 5,
         5, 10, 10, -20, -20, 10, 10, 5,
         0, 0, 0, 0, 0, 0, 0, 0
-    },
-
-    {   // WTF
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-    },
-
-    {   // Empty
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0,
     }
 }};
 
@@ -109,15 +87,13 @@ const std::array<PieceSquareTable, 8> PIECE_SQUARE_TABLE = { {
 * @brief Piece values as proposed by http://chessprogramming.wikispaces.com/Simplified+evaluation+function#Piece-Square
 * @note Adjusted for indexing with Piece enum type
 */
-const std::array<Score, 8> PIECE_VALUES = {
+const std::array<Score, NUM_PIECETYPES> PIECE_VALUES = {
     20000,  // king
     900,    // queen
     330,    // bishop
     320,    // knight
     500,    // rook
     100,    // pawn
-    0,    // WTF
-    0,    // Empty
 };
 
 } // namespace
@@ -214,4 +190,8 @@ void IncrementalBoardEvaluator::captureIncrement(Field field, const Piece& piece
 
 Score IncrementalBoardEvaluator::getScore(PlayerColor color) const {
     return color == White ? m_estimatedScore : -m_estimatedScore;
+}
+
+bool IncrementalBoardEvaluator::operator == (const IncrementalBoardEvaluator& other) const {
+    return m_estimatedScore == other.m_estimatedScore;
 }

@@ -29,6 +29,8 @@ public:
 
     //! Returns the score from the perspective of the given player color.
     Score getScore(PlayerColor color) const;
+
+    bool operator==(const IncrementalBoardEvaluator& other) const;
 private:
     //! Score estimation for white player
     Score m_estimatedScore;

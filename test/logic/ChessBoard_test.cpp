@@ -55,10 +55,10 @@ TEST(ChessBoard, equality) {
 TEST(ChessBoard, applyTurn) {
     ChessBoard cb1(generateChessBoard({PoF(Piece(White, King), D1),
                                       PoF(Piece(White, Pawn), E2),
-                                      PoF(Piece(Black, Pawn), D3)}));
+                                      PoF(Piece(Black, Pawn), D3)}, Black));
     // black pawn attacks the white pawn
     ChessBoard cb2(generateChessBoard({PoF(Piece(White, King), D1),
-                                      PoF(Piece(Black, Pawn), E2)}));
+                                      PoF(Piece(Black, Pawn), E2)}, White));
     Turn t = Turn::move(Piece(Black, Pawn), D3, E2);
     cb1.applyTurn(t);
 
@@ -72,6 +72,65 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
         ChessBoard b = generateRandomBoard(50, rng);
         ASSERT_EQ(IncrementalBoardEvaluator::estimateFullBoard(b.getBoard()),
             b.getScore(White)) << i << "th Board: " << b;
+    }
+}
+
+TEST(ChessBoard, EnPassant) {
+    ChessBoard cb;
+    ASSERT_EQ(NoFile, cb.getEnPassantFile());
+
+    for (File file = A; file < H; file = nextFile(file)) {
+        Field fieldFrom = fieldFor(file, Two);
+        Field fieldTo = fieldFor(file, Four);
+        if (cb.getNextPlayer() == Black) {
+            fieldFrom = flipHorizontal(fieldFrom);
+            fieldTo = flipHorizontal(fieldTo);
+        }
+        Turn turn = Turn::move(Piece(cb.getNextPlayer(), Pawn), fieldFrom, fieldTo);
+        cb.applyTurn(turn);
+        ASSERT_EQ(file, cb.getEnPassantFile()) << turn << endl << cb;
+    }
+    cb.applyTurn(Turn::move(Piece(cb.getNextPlayer(), Pawn), A4, A5));
+    ASSERT_EQ(NoFile, cb.getEnPassantFile());
+}
+
+TEST(ChessBoard, CastlingRights) {
+    {
+        ChessBoard cb;
+        EXPECT_EQ(true, cb.getShortCastleRights()[White]) << cb;
+        EXPECT_EQ(true, cb.getShortCastleRights()[Black]) << cb;
+        EXPECT_EQ(true, cb.getLongCastleRights()[White]) << cb;
+        EXPECT_EQ(true, cb.getLongCastleRights()[Black]) << cb;
+    }
+
+    {
+        ChessBoard cb(generateChessBoard({
+            PoF(Piece(White, Rook), A1),
+            PoF(Piece(White, King), E1),
+            PoF(Piece(Black, Rook), H8),
+            PoF(Piece(Black, King), E8)
+        }));
+
+        EXPECT_EQ(true, cb.getLongCastleRights()[White]) << cb;
+        EXPECT_EQ(false, cb.getLongCastleRights()[Black]) << cb;
+        EXPECT_EQ(true, cb.getShortCastleRights()[Black]) << cb;
+        EXPECT_EQ(false, cb.getShortCastleRights()[White]) << cb;
+
+        Turn turn = Turn::move(Piece(White, King), E1, F2);
+        cb.applyTurn(turn);
+
+        EXPECT_EQ(false, cb.getLongCastleRights()[White]) << turn << endl << cb;
+        EXPECT_EQ(false, cb.getLongCastleRights()[Black]) << turn << endl << cb;
+        EXPECT_EQ(true, cb.getShortCastleRights()[Black]) << turn << endl << cb;
+        EXPECT_EQ(false, cb.getShortCastleRights()[White]) << turn << endl << cb;
+
+        turn = Turn::move(Piece(Black, Rook), H8, H1);
+        cb.applyTurn(turn);
+
+        EXPECT_EQ(false, cb.getLongCastleRights()[White]) << turn << endl << cb;
+        EXPECT_EQ(false, cb.getLongCastleRights()[Black]) << turn << endl << cb;
+        EXPECT_EQ(false, cb.getShortCastleRights()[Black]) << turn << endl << cb;
+        EXPECT_EQ(false, cb.getShortCastleRights()[White]) << turn << endl << cb;
     }
 }
 

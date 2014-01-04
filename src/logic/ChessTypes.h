@@ -12,6 +12,8 @@
 
 
 const int NUM_FIELDS = 64;
+const int NUM_FILES = 8;
+const int NUM_RANKS = 8;
 const int NUM_PLAYERS = 2;
 const int NUM_PIECETYPES = 6;
 
@@ -28,11 +30,11 @@ enum Field {
 };
 
 enum File {
-    A = 0, B, C, D, E, F, G, H
+    A = 0, B, C, D, E, F, G, H, NoFile
 };
 
 enum Rank {
-    One = 0, Two, Three, Four, Five, Six, Seven, Eight
+    One = 0, Two, Three, Four, Five, Six, Seven, Eight, NoRank
 };
 
 enum PieceType {

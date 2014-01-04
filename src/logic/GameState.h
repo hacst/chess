@@ -9,7 +9,7 @@
 class GameState {
 public:
 	GameState();
-	GameState(const ChessBoard& chessBoard, PlayerColor nextPlayer = White);
+	explicit GameState(const ChessBoard& chessBoard);
 
 	virtual void init();
 	//virtual void init(SaveGame* sg);
@@ -29,7 +29,6 @@ public:
 	std::string toString() const;
 
 private:
-	PlayerColor     m_nextPlayer;
 	ChessBoard      m_chessBoard;
 	TurnGenerator   m_turnGen;
 	// TODO: replace with AbstractTurnGenerator
