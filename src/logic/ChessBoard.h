@@ -9,7 +9,49 @@
 #include "Turn.h"
 #include "Evaluators.h"
 
-#define BB_SCAN(bb)    static_cast<Field>(static_cast<int>(std::log2((double)bb))) /* returns the field of MS1B */
+using BitBoard = uint64_t;
+
+#ifdef _MSC_VER
+#include <intrin.h>
+
+#ifdef _WIN64
+#pragma intrinsic(_BitScanReverse64)
+inline Field getFirstOccupiedField(BitBoard bb) {
+    assert(bb != 0);
+    assert(sizeof(Field) == sizeof(unsigned long));
+    unsigned long result;
+    _BitScanReverse64(&result, bb);
+    return static_cast<Field>(result);
+}
+
+#else //_WIN32
+#pragma intrinsic(_BitScanReverse)
+inline Field getFirstOccupiedField(BitBoard bb) {
+    assert(bb != 0);
+    assert(sizeof(Field) == sizeof(long));
+    unsigned long result;
+    if (_BitScanReverse(&result, bb >> 32) == 0) {
+        _BitScanReverse(&result, bb & 0xFFFFFFFF);
+        return static_cast<Field>(result);
+    }
+    return static_cast<Field>(result + 32);
+}
+
+#endif //_WIN64
+#elif defined(__GNUC__) || defined(__clang__)
+inline Field getFirstOccupiedField(BitBoard bb) {
+    assert(bb != 0);
+    assert(sizeof(Field) == sizeof(int));
+    return static_cast<Field>(63 - __builtin_clzll(bb));
+}
+#else
+// This shouldn't be used really. Too slow.
+inline Field getFirstOccupiedField(BitBoard bb) {
+    return static_cast<Field>(static_cast<int>(std::log2((double)bb)));
+}
+#endif
+
+#define BB_SCAN(bb)    getFirstOccupiedField(bb) /* returns the field of MS1B */
 #define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field))    /* returns the value 2^field */
 
 #define BIT_SET(   bb, field) (bb |=   (BitBoard)1 << (field))
@@ -17,7 +59,6 @@
 #define BIT_TOGGLE(bb, field) (bb ^=   (BitBoard)1 << (field))
 #define BIT_ISSET( bb, field) (bb & (  (BitBoard)1 << (field)))
 
-using BitBoard = uint64_t;
 std::string bitBoardToString(BitBoard b);
 BitBoard    generateBitBoard(Field f1, ...);
 

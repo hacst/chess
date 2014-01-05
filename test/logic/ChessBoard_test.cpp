@@ -25,7 +25,20 @@ TEST(ChessBoard, generateChessBoard) {
 }
 */
 
+TEST(ChessBoard, MACRO_BB_SET) {
+    mt19937 rng(45438);
+    uniform_int_distribution<BitBoard> bbDist(1);
+    uniform_int_distribution<int> fieldDist(0, 63);
+    const int TRIES = 200;
+    for (int i = 0; i < TRIES; ++i) {
+        Field f = static_cast<Field>(fieldDist(rng));
+        BitBoard mask = ~((~(BitBoard)0) << f);
+        BitBoard bb = (bbDist(rng) & mask) | BB_SET(f);
 
+        ASSERT_EQ(f, BB_SCAN(bb)) <<
+            "From BB: " << bitBoardToString(bb) << endl << "(" << i << ") Raw: " << bb;
+    }
+}
 
 TEST(ChessBoard, equality) {
     ChessBoard cb1, cb2;
