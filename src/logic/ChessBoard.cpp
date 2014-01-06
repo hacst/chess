@@ -4,8 +4,8 @@
 using namespace std;
 
 ChessBoard::ChessBoard()
-    : m_evaluator()
-    , nextPlayer(White) {
+    : nextPlayer(White)
+    , m_evaluator() {
 
     std::array<Piece, 64> board = {
         { Piece(White, Rook), Piece(White, Knight), Piece(White, Bishop), Piece(White, Queen), Piece(White, King), Piece(White, Bishop), Piece(White, Knight), Piece(White, Rook),
@@ -37,8 +37,8 @@ black_king = 0x1000000000000000
 }
 
 ChessBoard::ChessBoard(std::array<Piece, 64> board, PlayerColor nextPlayer)
-    : m_evaluator(board)
-    , nextPlayer(nextPlayer) {
+    : nextPlayer(nextPlayer)
+    , m_evaluator(board) {
 
     initBitBoards(board);
 }
