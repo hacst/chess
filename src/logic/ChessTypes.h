@@ -74,12 +74,24 @@ inline Rank nextRank(Rank rank) {
     return static_cast<Rank>(rank + 1);
 }
 
+inline Rank prevRank(Rank rank) {
+    return static_cast<Rank>(rank - 1);
+}
+
 inline File nextFile(File file) {
     return static_cast<File>(file + 1);
 }
 
+inline File prevFile(File file) {
+    return static_cast<File>(file - 1);
+}
+
 inline Field nextField(Field field) {
-    return static_cast<Field>(static_cast<int>(field) + 1);
+    return static_cast<Field>(field + 1);
+}
+
+inline Field prevField(Field field) {
+    return static_cast<Field>(field - 1);
 }
 
 struct Piece {
@@ -87,7 +99,7 @@ struct Piece {
     PieceType   type;
 
     Piece()
-        : player(), type() {}
+        : player(NoPlayer), type(NoType) {}
     Piece(PlayerColor player, PieceType pieceType)
         : player(player), type(pieceType) {}
 

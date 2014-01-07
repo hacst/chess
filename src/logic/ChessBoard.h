@@ -4,10 +4,12 @@
 #include <stdarg.h>
 #include <array>
 #include <cmath>
+#include <string>
 
 //#include "ChessTypes.h"
 #include "Turn.h"
 #include "Evaluators.h"
+#include "IncrementalZobristHasher.h"
 
 using BitBoard = uint64_t;
 
@@ -77,8 +79,14 @@ class ChessBoard {
 
 public:
     ChessBoard();
-    explicit ChessBoard(std::array<Piece, 64> board, PlayerColor nextPlayer = White);
-
+    ChessBoard(std::array<Piece, 64> board,
+               PlayerColor nextPlayer,
+               std::array<bool, NUM_PLAYERS> shortCastleRight,
+               std::array<bool, NUM_PLAYERS> longCastleRight,
+               Field enPassantSquare,
+               int halfMoveClock,
+               int fullMoveClock);
+    
     void                  applyTurn(const Turn& t);
     std::array<Piece, 64> getBoard()          const;
     std::vector<Piece>    getCapturedPieces() const;
@@ -92,14 +100,29 @@ public:
 
     //! Returns the current estimated score according to the internal estimator.
     Score getScore(PlayerColor color) const;
-
+    IncrementalZobristHasher::Hash getHash() const;
+    
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
 
     std::string toString() const;
+    
+    /**
+     * @brief Create a chessboard from a Forsyth–Edwards Notation string.
+     * http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+     * @warning This function does no validation. Do not pass invalid FEN.
+     * @param fen FEN String.
+     */
+    static ChessBoard fromFEN(const std::string& fen);
+    
+    /**
+     * @brief Converts the current board state into FEN notation.
+     * @return State in FEN notation.
+     */
+    std::string toFEN() const;
 
-    //! Returns the file where en-passant rights exist. NoFile if none.
-    File getEnPassantFile() const;
+    //! Returns the field where en-passant rights exist. ERR if none.
+    Field getEnPassantSquare() const;
     //! Returns short castle rights for players.
     std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
     //! Returns long castle rights for players.
@@ -110,24 +133,31 @@ protected:
     // at least 12 bit boards are needed for a complete board
     // representation + some additional bit boards for turn
     // faster calculation
-    std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> bb;
-    //! Short castle rights for players.
-    std::array<bool, NUM_PLAYERS> shortCastleRight;
-    //! Long castle rights for players.
-    std::array<bool, NUM_PLAYERS> longCastleRight;
-    //! Bitmask for enemy en passant rights for a file next turn
-    uint8_t enPassantRightForFiles;
-    //! Player doing the next turn
-    PlayerColor nextPlayer;
-
+    std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
+    
 private:
     void initBitBoards(std::array<Piece, 64> board);
     void updateBitBoards();
     //! Checks whether the given turn affects castling rights and updates them accordingly.
     void updateCastlingRights(const Turn& turn);
 
+    //! Short castle rights for players.
+    std::array<bool, NUM_PLAYERS> m_shortCastleRight;
+    //! Long castle rights for players.
+    std::array<bool, NUM_PLAYERS> m_longCastleRight;
+    //! En passant square
+    Field m_enPassantSquare;
+    //! Half-move clock
+    int m_halfMoveClock;
+    //! Full move clock
+    int m_fullMoveClock;
+    //! Player doing the next turn
+    PlayerColor m_nextPlayer;
+    
     std::vector<Piece> m_capturedPieces;
+    
     IncrementalBoardEvaluator m_evaluator;
+    IncrementalZobristHasher m_hasher;
 };
 
 ChessBoard generateChessBoard(std::vector<PoF> pieces, PlayerColor nextPlayer = White);

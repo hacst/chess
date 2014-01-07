@@ -33,6 +33,12 @@ TEST(Misc, nextField) {
     EXPECT_EQ(H8, nextField(G8));
 }
 
+TEST(Misc,prevField) {
+    EXPECT_EQ(A1, prevField(B1));
+    EXPECT_EQ(H4, prevField(A5));
+    EXPECT_EQ(G8, prevField(H8));
+}
+
 TEST(Misc, nextFile) {
     EXPECT_EQ(B, nextFile(A));
     EXPECT_EQ(C, nextFile(B));
@@ -41,7 +47,16 @@ TEST(Misc, nextFile) {
     EXPECT_EQ(F, nextFile(E));
     EXPECT_EQ(G, nextFile(F));
     EXPECT_EQ(H, nextFile(G));
+}
 
+TEST(Misc, prevFile) {
+    EXPECT_EQ(G, prevFile(H));
+    EXPECT_EQ(F, prevFile(G));
+    EXPECT_EQ(E, prevFile(F));
+    EXPECT_EQ(D, prevFile(E));
+    EXPECT_EQ(C, prevFile(D));
+    EXPECT_EQ(B, prevFile(C));
+    EXPECT_EQ(A, prevFile(B));
 }
 
 TEST(Misc, nextRank) {
@@ -52,6 +67,16 @@ TEST(Misc, nextRank) {
     EXPECT_EQ(Six, nextRank(Five));
     EXPECT_EQ(Seven, nextRank(Six));
     EXPECT_EQ(Eight, nextRank(Seven));
+}
+
+TEST(Misc, prevRank) {
+    EXPECT_EQ(Seven, prevRank(Eight));
+    EXPECT_EQ(Six, prevRank(Seven));
+    EXPECT_EQ(Five, prevRank(Six));
+    EXPECT_EQ(Four, prevRank(Five));
+    EXPECT_EQ(Three, prevRank(Four));
+    EXPECT_EQ(Two, prevRank(Three));
+    EXPECT_EQ(One, prevRank(Two));
 }
 
 TEST(Misc, flipHorizontal) {

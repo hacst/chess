@@ -10,7 +10,7 @@ std::vector<Turn> TurnGenerator::generateTurns(PlayerColor player, const ChessBo
         piece.type   = (PieceType) pieceType;
         piece.player = player;
 
-        bbCurPieceType = cb.bb[player][pieceType];
+        bbCurPieceType = cb.m_bb[player][pieceType];
         while (bbCurPieceType != 0) {
             bbCurPiece  = 0;
             curPiecePos = BB_SCAN(bbCurPieceType);
@@ -46,16 +46,16 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     PlayerColor opp = (piece.player == White) ? Black : White;
 
     switch (piece.type) {
-    case King:   return calcKingTurns  (bbPiece, cb.bb[piece.player][AllPieces]);
-    case Queen:  return calcQueenTurns (bbPiece, cb.bb[opp][AllPieces],
-                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
-    case Bishop: return calcBishopTurns(bbPiece, cb.bb[opp][AllPieces],
-                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
-    case Knight: return calcKnightTurns(bbPiece, cb.bb[piece.player][AllPieces]);
-    case Rook:   return calcRookTurns  (bbPiece, cb.bb[opp][AllPieces],
-                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces]);
-    case Pawn:   return calcPawnTurns  (bbPiece, cb.bb[opp][AllPieces],
-                                        cb.bb[piece.player][AllPieces] | cb.bb[opp][AllPieces], piece.player);
+    case King:   return calcKingTurns  (bbPiece, cb.m_bb[piece.player][AllPieces]);
+    case Queen:  return calcQueenTurns (bbPiece, cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] | cb.m_bb[opp][AllPieces]);
+    case Bishop: return calcBishopTurns(bbPiece, cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] | cb.m_bb[opp][AllPieces]);
+    case Knight: return calcKnightTurns(bbPiece, cb.m_bb[piece.player][AllPieces]);
+    case Rook:   return calcRookTurns  (bbPiece, cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] | cb.m_bb[opp][AllPieces]);
+    case Pawn:   return calcPawnTurns  (bbPiece, cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] | cb.m_bb[opp][AllPieces], piece.player);
     default:     return 0;
     }
 }

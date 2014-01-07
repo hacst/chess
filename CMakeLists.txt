@@ -138,6 +138,8 @@ set(LOGIC_SOURCES
     src/logic/Turn.cpp
     src/logic/Evaluators.h
     src/logic/Evaluators.cpp
+    src/logic/IncrementalZobristHasher.h
+    src/logic/IncrementalZobristHasher.cpp
 )
 
 source_group(logic FILES ${LOGIC_SOURCES})

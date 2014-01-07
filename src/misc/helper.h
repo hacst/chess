@@ -10,7 +10,7 @@
 // As MSVC 2013 isn't fully C++11 compliant alignas cannot be used to
 // set data structure alignment. Instead compiler specific approaches
 // are wrapped in this PACK macro.
-#if defined(__GCC__) || defined(__clang___)
+#if defined(__GNUC__) || defined(__clang__)
 #define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
 #elif defined(_MSC_VER)
 #define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )

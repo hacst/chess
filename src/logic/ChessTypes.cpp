@@ -64,79 +64,79 @@ namespace std {
         };
 
         switch(f) {
-        case A1: return r("A1");
-        case B1: return r("B1");
-        case C1: return r("C1");
-        case D1: return r("D1");
-        case E1: return r("E1");
-        case F1: return r("F1");
-        case G1: return r("G1");
-        case H1: return r("H1");
+        case A1: return r("a1");
+        case B1: return r("b1");
+        case C1: return r("c1");
+        case D1: return r("d1");
+        case E1: return r("e1");
+        case F1: return r("f1");
+        case G1: return r("g1");
+        case H1: return r("h1");
 
-        case A2: return r("A2");
-        case B2: return r("B2");
-        case C2: return r("C2");
-        case D2: return r("D2");
-        case E2: return r("E2");
-        case F2: return r("F2");
-        case G2: return r("G2");
-        case H2: return r("H2");
+        case A2: return r("a2");
+        case B2: return r("b2");
+        case C2: return r("c2");
+        case D2: return r("d2");
+        case E2: return r("e2");
+        case F2: return r("f2");
+        case G2: return r("g2");
+        case H2: return r("h2");
 
-        case A3: return r("A3");
-        case B3: return r("B3");
-        case C3: return r("C3");
-        case D3: return r("D3");
-        case E3: return r("E3");
-        case F3: return r("F3");
-        case G3: return r("G3");
-        case H3: return r("H3");
+        case A3: return r("a3");
+        case B3: return r("b3");
+        case C3: return r("c3");
+        case D3: return r("d3");
+        case E3: return r("e3");
+        case F3: return r("f3");
+        case G3: return r("g3");
+        case H3: return r("h3");
 
-        case A4: return r("A4");
-        case B4: return r("B4");
-        case C4: return r("C4");
-        case D4: return r("D4");
-        case E4: return r("E4");
-        case F4: return r("F4");
-        case G4: return r("G4");
-        case H4: return r("H4");
+        case A4: return r("a4");
+        case B4: return r("b4");
+        case C4: return r("c4");
+        case D4: return r("d4");
+        case E4: return r("e4");
+        case F4: return r("f4");
+        case G4: return r("g4");
+        case H4: return r("h4");
 
-        case A5: return r("A5");
-        case B5: return r("B5");
-        case C5: return r("C5");
-        case D5: return r("D5");
-        case E5: return r("E5");
-        case F5: return r("F5");
-        case G5: return r("G5");
-        case H5: return r("H5");
+        case A5: return r("a5");
+        case B5: return r("b5");
+        case C5: return r("c5");
+        case D5: return r("d5");
+        case E5: return r("e5");
+        case F5: return r("f5");
+        case G5: return r("g5");
+        case H5: return r("h5");
 
-        case A6: return r("A6");
-        case B6: return r("B6");
-        case C6: return r("C6");
-        case D6: return r("D6");
-        case E6: return r("E6");
-        case F6: return r("F6");
-        case G6: return r("G6");
-        case H6: return r("H6");
+        case A6: return r("a6");
+        case B6: return r("b6");
+        case C6: return r("c6");
+        case D6: return r("d6");
+        case E6: return r("e6");
+        case F6: return r("f6");
+        case G6: return r("g6");
+        case H6: return r("h6");
 
-        case A7: return r("A7");
-        case B7: return r("B7");
-        case C7: return r("C7");
-        case D7: return r("D7");
-        case E7: return r("E7");
-        case F7: return r("F7");
-        case G7: return r("G7");
-        case H7: return r("H7");
+        case A7: return r("a7");
+        case B7: return r("b7");
+        case C7: return r("c7");
+        case D7: return r("d7");
+        case E7: return r("e7");
+        case F7: return r("f7");
+        case G7: return r("g7");
+        case H7: return r("h7");
 
-        case A8: return r("A8");
-        case B8: return r("B8");
-        case C8: return r("C8");
-        case D8: return r("D8");
-        case E8: return r("E8");
-        case F8: return r("F8");
-        case G8: return r("G8");
-        case H8: return r("H8");
+        case A8: return r("a8");
+        case B8: return r("b8");
+        case C8: return r("c8");
+        case D8: return r("d8");
+        case E8: return r("e8");
+        case F8: return r("f8");
+        case G8: return r("g8");
+        case H8: return r("h8");
 
-        default: return r("unknown field");
+        default: return r("-");
         }
     }
 
@@ -149,7 +149,7 @@ namespace std {
 
     std::ostream& operator <<(std::ostream& stream, const File f) {
         if (f == NoFile) stream << "NoFile";
-        else stream << ('A' + static_cast<int>(f));
+        else stream << ('a' + static_cast<int>(f));
 
         return stream;
     }
