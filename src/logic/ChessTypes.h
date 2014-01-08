@@ -94,6 +94,8 @@ inline Field prevField(Field field) {
     return static_cast<Field>(field - 1);
 }
 
+using BitBoard = uint64_t;
+
 struct Piece {
     PlayerColor player;
     PieceType   type;

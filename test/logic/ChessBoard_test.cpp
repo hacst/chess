@@ -102,6 +102,12 @@ TEST(ChessBoard, HashEnPassant) {
     }
 }
 
+TEST(ChessBoard, HashIncrementalEnPassant) {
+    ChessBoard cb = ChessBoard::fromFEN("8/8/8/8/6pP/8/8/8 b - h3 0 1");
+    cb.applyTurn(Turn::move(Piece(Black, Pawn), G4, G3));
+    EXPECT_EQ(IncrementalZobristHasher::hashFullBoard(cb), cb.getHash());
+}
+
 TEST(ChessBoard, HashEnPassantSample) {
     {
         ChessBoard cb = ChessBoard::fromFEN("rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
@@ -125,8 +131,18 @@ TEST(ChessBoard, HashPolyglotSequence) {
     
     for (auto& tth: turnToHashes) {
         cb.applyTurn(tth.first);
-        //TODO: Activate this //ASSERT_EQ(tth.second, cb.getHash()) << tth.first << endl << cb;
-        ASSERT_EQ(tth.second, IncrementalZobristHasher::estimateFullBoard(cb)) << tth.first << endl << cb;
+        ASSERT_EQ(tth.second, cb.getHash()) << tth.first << endl << cb;
+        ASSERT_EQ(tth.second, IncrementalZobristHasher::hashFullBoard(cb)) << tth.first << endl << cb;
+    }
+}
+
+TEST(ChessBoard, IncrementalHashing) {
+    mt19937 rng(34241);
+    const int TRIES = 100;
+    for (int i = 0; i < TRIES; ++i) {
+        ChessBoard cb = generateRandomBoard(100, rng);
+        ASSERT_EQ(IncrementalZobristHasher::hashFullBoard(cb),
+            cb.getHash()) << i << "th Board: " << cb;
     }
 }
 

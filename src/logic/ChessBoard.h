@@ -11,8 +11,6 @@
 #include "Evaluators.h"
 #include "IncrementalZobristHasher.h"
 
-using BitBoard = uint64_t;
-
 #ifdef _MSC_VER
 #include <intrin.h>
 
@@ -76,6 +74,7 @@ struct PoF {
 
 class ChessBoard {
     friend class TurnGenerator;
+    friend class IncrementalZobristHasher;
 
 public:
     ChessBoard();

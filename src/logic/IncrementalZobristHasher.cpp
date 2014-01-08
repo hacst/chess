@@ -155,16 +155,18 @@ IncrementalZobristHasher::HashConstants::HashConstants()
 
 
 IncrementalZobristHasher::IncrementalZobristHasher()
-    : m_hash(0) {
+    : m_hash(0)
+    , m_isEnPassantApplied(false) {
     // Empty
 }
 
 IncrementalZobristHasher::IncrementalZobristHasher(const ChessBoard &board)
-    : m_hash(estimateFullBoard(board)) {
+    : m_hash(hashFullBoard(board))
+    , m_isEnPassantApplied(isPolyglotEnPassant(board)) {
     // Empty
 }
 
-IncrementalZobristHasher::Hash IncrementalZobristHasher::estimateFullBoard(const ChessBoard &board) {
+IncrementalZobristHasher::Hash IncrementalZobristHasher::hashFullBoard(const ChessBoard &board) {
     Hash hash = 0;
     
     // Integrate pieces into hash
@@ -210,4 +212,78 @@ IncrementalZobristHasher::Hash IncrementalZobristHasher::estimateFullBoard(const
 
 IncrementalZobristHasher::Hash IncrementalZobristHasher::getHash() const {
     return m_hash;
+}
+
+
+
+void IncrementalZobristHasher::clearedEnPassantSquare(Field enPassantSquare) {
+    if (m_isEnPassantApplied) {
+        m_hash ^= m_hashConstants.forEnPassantRights(fileFor(enPassantSquare));
+        m_isEnPassantApplied = false;
+    }
+}
+
+void IncrementalZobristHasher::moveIncrement(const Turn& turn) {
+    m_hash ^= m_hashConstants.forPieceSquare(turn.piece.type, turn.from, turn.piece.player);
+    m_hash ^= m_hashConstants.forPieceSquare(turn.piece.type, turn.to, turn.piece.player);
+}
+
+void IncrementalZobristHasher::captureIncrement(Field field, const Piece& capturedPiece) {
+    m_hash ^= m_hashConstants.forPieceSquare(capturedPiece.type, field, capturedPiece.player);
+}
+
+void IncrementalZobristHasher::turnAppliedIncrement() {
+    m_hash ^= m_hashConstants.forSideToMove(White);
+    m_hash ^= m_hashConstants.forSideToMove(Black); // NOP
+}
+
+void IncrementalZobristHasher::newEnPassantPossibility(const Turn& turn, BitBoard opposingPawns) {
+    // We know the ranges are ok. First mask neighbors with 010 and then
+    // cut off possible overlap by masking the full rank.
+    const BitBoard neighbourPawnMask = (0x5ULL << (turn.to - 1))
+        & (0xFFULL << (rankFor(turn.to) * 8));
+
+    const BitBoard neighbouringPawns = (opposingPawns & neighbourPawnMask);
+    if (neighbouringPawns == 0) return;
+
+    m_hash ^= m_hashConstants.forEnPassantRights(fileFor(turn.to));
+    m_isEnPassantApplied = true;
+}
+
+
+void IncrementalZobristHasher::updateCastlingRights(
+    const std::array<bool, NUM_PLAYERS>& prevShortCastleRight,
+    const std::array<bool, NUM_PLAYERS>& prevLongCastleRight,
+    const std::array<bool, NUM_PLAYERS>& shortCastleRight,
+    const std::array<bool, NUM_PLAYERS>& longCastleRight
+    ) {
+
+    if (prevShortCastleRight[White] != shortCastleRight[White])
+        m_hash ^= m_hashConstants.forCastlingRightsShort(White);
+    if (prevShortCastleRight[Black] != shortCastleRight[Black])
+        m_hash ^= m_hashConstants.forCastlingRightsShort(Black);
+    if (prevLongCastleRight[White] != longCastleRight[White])
+        m_hash ^= m_hashConstants.forCastlingRightsLong(White);
+    if (prevLongCastleRight[Black] != longCastleRight[Black])
+        m_hash ^= m_hashConstants.forCastlingRightsLong(Black);
+}
+
+bool IncrementalZobristHasher::isPolyglotEnPassant(const ChessBoard& board) {
+    const PlayerColor player = board.getNextPlayer();
+    const Field enPassantField = board.getEnPassantSquare();
+    if (enPassantField == ERR) return false;
+
+    const Field targetPawn =
+        fieldFor(fileFor(enPassantField), player == White ? Five : Four);
+    
+    const BitBoard opposingPawns = board.m_bb[player][Pawn];
+
+    // We know the ranges are ok. First mask neighbors with 010 and then
+    // cut off possible overlap by masking the full rank.
+    const BitBoard neighbourPawnMask = (0x5ULL << (targetPawn - 1))
+        & (0xFFULL << (rankFor(targetPawn) * 8));
+
+    const BitBoard neighbouringPawns = (opposingPawns & neighbourPawnMask);
+
+    return (neighbouringPawns != 0);
 }

@@ -73,7 +73,11 @@ void ChessBoard::updateBitBoards() {
 
 
 void ChessBoard::applyTurn(const Turn& turn) {
-    m_enPassantSquare = ERR; // Void en passant rights
+    if (m_enPassantSquare != ERR) {
+        m_hasher.clearedEnPassantSquare(m_enPassantSquare);
+        m_enPassantSquare = ERR; // Void en passant rights
+    }
+
     ++m_halfMoveClock;
     
     if (turn.action == Turn::Action::Move) {
@@ -83,6 +87,7 @@ void ChessBoard::applyTurn(const Turn& turn) {
         BIT_SET  (m_bb[turn.piece.player][turn.piece.type], turn.to);
 
         m_evaluator.moveIncrement(turn);
+        m_hasher.moveIncrement(turn);
 
         if (m_enPassantSquare == turn.to) {
             // TODO: en passant
@@ -98,6 +103,7 @@ void ChessBoard::applyTurn(const Turn& turn) {
                     
                     m_halfMoveClock = 0;
                     m_evaluator.captureIncrement(turn.to, capturedPiece);
+                    m_hasher.captureIncrement(turn.to, capturedPiece);
                     break;
                 }
             }
@@ -111,8 +117,10 @@ void ChessBoard::applyTurn(const Turn& turn) {
             
             if (fromRank == Two && toRank == Four) {
                 m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(fromRank));
+                m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
             } else if (fromRank == Seven && toRank == Five) {
                 m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(toRank));
+                m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
             }
         }
     } else if (turn.action == Turn::Action::Forfeit) {
@@ -132,9 +140,13 @@ void ChessBoard::applyTurn(const Turn& turn) {
         ++m_fullMoveClock;
         m_nextPlayer = White;
     }
+    m_hasher.turnAppliedIncrement();
 }
 
 void ChessBoard::updateCastlingRights(const Turn& turn) {
+    const auto prevLongCastleRight = m_longCastleRight;
+    const auto prevShortCastleRight = m_shortCastleRight;
+
     if (turn.piece == Piece(White, Rook)) {
         if (turn.from == A1) m_longCastleRight[White] = false;
         else if (turn.from == H1) m_shortCastleRight[White] = false;
@@ -152,6 +164,11 @@ void ChessBoard::updateCastlingRights(const Turn& turn) {
         m_shortCastleRight[Black] = false;
         m_longCastleRight[Black] = false;
     }
+
+    m_hasher.updateCastlingRights(
+        prevShortCastleRight, prevLongCastleRight,
+        m_shortCastleRight, m_longCastleRight
+    );
 }
 
 std::array<Piece, 64> ChessBoard::getBoard() const {

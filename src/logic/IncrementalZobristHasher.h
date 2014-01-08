@@ -5,6 +5,7 @@
 #include "logic/ChessTypes.h"
 
 class ChessBoard;
+class Turn;
 
 /**
  * @brief Incremental polyglot constants based Zobrist-Hash implementation.
@@ -16,11 +17,40 @@ public:
     using Hash = uint64_t;
     
     //! Gives a full estimate for the given board
-    static Hash estimateFullBoard(const ChessBoard& board);
+    static Hash hashFullBoard(const ChessBoard& board);
     
+    //! Returns the current zobrist hash
     Hash getHash() const;
+
+    //! Called when the en passant field is cleared.
+    void clearedEnPassantSquare(Field enPassantSquare);
+    //! Called for a move update.
+    void moveIncrement(const Turn& turn);
+    //! Called when a piece is captured
+    void captureIncrement(Field field, const Piece& capturedPiece);
+    //! Updates hash for now active player
+    void turnAppliedIncrement();
+    //! Called when turn might give the enemy an en passant possibility
+    void newEnPassantPossibility(const Turn& turn, BitBoard opposingPawns);
+    //! Called to potentially update castling rights.
+    void updateCastlingRights(
+        const std::array<bool, NUM_PLAYERS>& prevShortCastleLeft,
+        const std::array<bool, NUM_PLAYERS>& prevLongCastleRight,
+        const std::array<bool, NUM_PLAYERS>& shortCastleRight,
+        const std::array<bool, NUM_PLAYERS>& longCastleRight
+    );
+
 private:
+    /**
+     * @brief Return true if en passant according to polyglot rules.
+     * Polyglot uses a en passant definition that differs from FEN.
+     * It only integrates the file if there are pawns neighbouring the
+     * pawn that opened the en passant possibility.
+     */
+    static bool isPolyglotEnPassant(const ChessBoard& board);
+
     Hash m_hash;
+    bool m_isEnPassantApplied;
     
     class HashConstants {
     public:
