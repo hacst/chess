@@ -18,8 +18,8 @@
  */
 class DummyPlayer : public AbstractPlayer, public ServiceDispatcherThread {
 public:
-    DummyPlayer()
-        : m_seed(std::random_device()())
+    DummyPlayer(int seed = 1234)
+        : m_seed(seed)
         , m_rng(m_seed)
         , m_msDist(0, 5)
         , m_log(Logging::initLogger("DummyPlayer")) {

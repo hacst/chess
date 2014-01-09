@@ -99,7 +99,7 @@ public:
 
     //! Returns the current estimated score according to the internal estimator.
     Score getScore(PlayerColor color) const;
-    IncrementalZobristHasher::Hash getHash() const;
+    Hash getHash() const;
     
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;

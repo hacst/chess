@@ -6,6 +6,7 @@
 #include <ostream>
 #include <chrono>
 #include <memory>
+#include <string>
 
 #include <boost/optional.hpp>
 #include <boost/serialization/nvp.hpp>
@@ -23,6 +24,8 @@ public:
     int timeBetweenTurnsInSeconds;
     //! Maximum time between turns after which to time out a move.
     int maximumTurnTimeInSeconds;
+    //! Relative path to opening book
+    std::string openingBook;
 
     /**
      * @brief Loads a game configuration from disk.
@@ -57,6 +60,7 @@ private:
     void serialize(Archive& ar, const unsigned int /*version*/) {
         ar & BOOST_SERIALIZATION_NVP(timeBetweenTurnsInSeconds);
         ar & BOOST_SERIALIZATION_NVP(maximumTurnTimeInSeconds);
+        ar & BOOST_SERIALIZATION_NVP(openingBook);
     }
 };
 

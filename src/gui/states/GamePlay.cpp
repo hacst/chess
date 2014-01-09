@@ -96,23 +96,24 @@ void GamePlay::initMenuPause() {
 }
 
 void GamePlay::initPlayers() {
+    random_device rd;
 	if (m_gameMode == PLAYER_VS_AI) {
 		// Player vs. AI
-		auto firstPlayer = make_shared<AIPlayer>();
+		auto firstPlayer = make_shared<AIPlayer>(rd());
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
 		// @todo
-		auto secondPlayer = make_shared<DummyPlayer>();
+		auto secondPlayer = make_shared<DummyPlayer>(rd());
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	} else if (m_gameMode == AI_VS_AI) {
 		// AI vs. AI
-		auto firstPlayer = make_shared<AIPlayer>();
+		auto firstPlayer = make_shared<AIPlayer>(rd());
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		auto secondPlayer = make_shared<AIPlayer>();
+		auto secondPlayer = make_shared<AIPlayer>(rd());
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	}

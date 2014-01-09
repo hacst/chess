@@ -23,6 +23,8 @@ public:
     PlayerColor getWinner() const;
     //! Returns current score estimate from next players POV.
     Score getScore() const;
+    //! Returns hash for current position
+    Hash getHash() const;
 
 	bool operator==(const GameState& other) const;
 	bool operator!=(const GameState& other) const;

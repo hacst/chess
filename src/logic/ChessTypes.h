@@ -95,6 +95,7 @@ inline Field prevField(Field field) {
 }
 
 using BitBoard = uint64_t;
+using Hash = uint64_t;
 
 struct Piece {
     PlayerColor player;

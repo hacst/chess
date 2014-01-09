@@ -12,7 +12,8 @@ using namespace chrono;
 
 GameConfiguration::GameConfiguration()
     : timeBetweenTurnsInSeconds(0)
-    , maximumTurnTimeInSeconds(std::numeric_limits<int>::max()) {
+    , maximumTurnTimeInSeconds(std::numeric_limits<int>::max())
+    , openingBook("resources/Book.bin") {
     // Empty
 }
 
@@ -51,8 +52,9 @@ bool GameConfiguration::operator==(const GameConfiguration& other) const {
 string GameConfiguration::toString() const {
     stringstream ss;
     ss << "GameConfiguration:" << endl
-       << "  Maximum turn time: " << maximumTurnTimeInSeconds << "s" << endl
-       << "  Minimum turn time: " << timeBetweenTurnsInSeconds << "s";
+        << "  Maximum turn time: " << maximumTurnTimeInSeconds << "s" << endl
+        << "  Minimum turn time: " << timeBetweenTurnsInSeconds << "s" << endl
+        << "  Opening book: " << openingBook << endl;
     return ss.str();
 }
 

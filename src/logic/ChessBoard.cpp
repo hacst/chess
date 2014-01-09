@@ -213,7 +213,7 @@ Score ChessBoard::getScore(PlayerColor color) const {
     return m_evaluator.getScore(color);
 }
 
-IncrementalZobristHasher::Hash ChessBoard::getHash() const {
+Hash ChessBoard::getHash() const {
     return m_hasher.getHash();
 }
 

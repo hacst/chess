@@ -77,6 +77,10 @@ bool GameState::operator!=(const GameState& other) const {
 	return !(*this == other);
 }
 
+Hash GameState::getHash() const {
+    return m_chessBoard.getHash();
+}
+
 std::string GameState::toString() const {
 	return m_chessBoard.toString();
 }

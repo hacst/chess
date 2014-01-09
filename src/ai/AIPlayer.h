@@ -4,6 +4,7 @@
 #include <mutex>
 #include "logic/interface/AbstractPlayer.h"
 #include "ai/Negamax.h"
+#include "ai/PolyglotBook.h"
 #include "core/Logging.h"
 
 /**
@@ -13,9 +14,10 @@ class AIPlayer: public AbstractPlayer {
 public:
     /**
      * @brief Creates a new AIPlayer.
+     * @param seed Seed to use for random operations for the player.
      * @note Don't forget to start() it.
      */
-    AIPlayer();
+    AIPlayer(int seed = 5253);
     ~AIPlayer();
 
     /**
@@ -92,6 +94,11 @@ private:
     //! Thread the AI is run on.
     std::thread m_thread;
     
+    //! Opening book (potentially unititialized)
+    PolyglotBook m_openingBook;
+    //! Indicates that we had a miss on the book and no longer use it
+    bool m_outOfBook;
+
     Logging::Logger m_log;
 };
 

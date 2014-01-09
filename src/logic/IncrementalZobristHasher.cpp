@@ -166,7 +166,7 @@ IncrementalZobristHasher::IncrementalZobristHasher(const ChessBoard &board)
     // Empty
 }
 
-IncrementalZobristHasher::Hash IncrementalZobristHasher::hashFullBoard(const ChessBoard &board) {
+Hash IncrementalZobristHasher::hashFullBoard(const ChessBoard &board) {
     Hash hash = 0;
     
     // Integrate pieces into hash
@@ -210,7 +210,7 @@ IncrementalZobristHasher::Hash IncrementalZobristHasher::hashFullBoard(const Che
     return hash;
 }
 
-IncrementalZobristHasher::Hash IncrementalZobristHasher::getHash() const {
+Hash IncrementalZobristHasher::getHash() const {
     return m_hash;
 }
 
