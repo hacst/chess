@@ -48,8 +48,8 @@ TEST(PolyglotBook, getBest) {
     // Initial position: 0x463b96181691fc9c
     PolyglotBookEntry best = { 0x463b96181691fc9cULL, { E2, E4, NoType }, 181};
     auto entry = book.getBestEntry(0x463b96181691fc9cULL);
-    
-    EXPECT_EQ(boost::optional<PolyglotBookEntry>(best), entry);
+    ASSERT_TRUE(entry);
+    EXPECT_EQ(best, entry.get());
 
     EXPECT_FALSE(book.getBestEntry(0x00));
 }

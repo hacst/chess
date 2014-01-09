@@ -5,6 +5,7 @@
 #include <array>
 #include <boost/detail/endian.hpp>
 #include <stdlib.h>
+#include <boost/random.hpp>
 
 using namespace std;
 using namespace Logging;
@@ -147,7 +148,7 @@ boost::optional<PolyglotBookEntry> PolyglotBook::getWeightedEntry(uint64_t key) 
         weights.push_back(option.weight);
     }
     
-    std::discrete_distribution<> dist(begin(weights), end(weights));
+    boost::random::discrete_distribution<> dist(begin(weights), end(weights));
     
     PolyglotBookEntry result = options[dist(m_rng)];
     LOG(trace) << "Choose: " << result;
