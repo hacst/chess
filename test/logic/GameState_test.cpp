@@ -107,3 +107,14 @@ TEST(MaterialEvaluator, PieceSquareTableReadout) {
         EXPECT_EQ(-score, eval.getMaterialWorth(Black, b)) << "Board: " << b;
     }
 }
+
+TEST(GameState, fiftyMoveRule) {
+    GameState gs(ChessBoard::fromFEN("8/k7/8/8/8/8/K7/8 b - - 99 90"));
+    ASSERT_FALSE(gs.isGameOver());
+    ASSERT_FALSE(gs.isDrawDueTo50MovesRule());
+
+    gs.applyTurn(Turn::move(Piece(Black, King), A7, A6));
+    EXPECT_TRUE(gs.isGameOver()) << gs;
+    EXPECT_TRUE(gs.isDrawDueTo50MovesRule()) << gs;
+    EXPECT_EQ(NoPlayer, gs.getWinner()) << gs;
+}

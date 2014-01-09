@@ -217,6 +217,14 @@ Hash ChessBoard::getHash() const {
     return m_hasher.getHash();
 }
 
+int ChessBoard::getHalfMoveClock() const {
+    return m_halfMoveClock;
+}
+
+int ChessBoard::getFullMoveClock() const {
+    return m_fullMoveClock;
+}
+
 
 /* for test and debug purposes */
 

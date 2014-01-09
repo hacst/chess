@@ -21,6 +21,9 @@ public:
 
 	bool isGameOver() const;
     PlayerColor getWinner() const;
+
+    //! Returns true if the game ended in a draw due to the 50 moves rule
+    bool isDrawDueTo50MovesRule() const;
     //! Returns current score estimate from next players POV.
     Score getScore() const;
     //! Returns hash for current position

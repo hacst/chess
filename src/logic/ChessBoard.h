@@ -99,7 +99,12 @@ public:
 
     //! Returns the current estimated score according to the internal estimator.
     Score getScore(PlayerColor color) const;
+    //! Returns hash for current position
     Hash getHash() const;
+    //! Returns half move clock
+    int getHalfMoveClock() const;
+    //! Returns full move clock
+    int getFullMoveClock() const;
     
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
