@@ -239,7 +239,7 @@ AbstractState* GamePlay::run() {
 	}
 
     if (m_fsm.eventmap.key0) {
-        LOG(info) << DebugTools::toInitializerList(m_chessBoardState) << endl;
+        LOG(info) << m_gameState << endl;
     }
 	
 	// Execute all pending calls from the observer
@@ -430,6 +430,10 @@ void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
 	m_playerTurns.push_front(pt);
 
 	setState(state);
+}
+
+void GamePlay::setGameState(const GameState& gameState) {
+    m_gameState = gameState;
 }
 
 void GamePlay::setState(std::array<Piece, 64> state) {

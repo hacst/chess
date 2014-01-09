@@ -14,6 +14,7 @@ GuiObserver::GuiObserver(ChessSetPtr chessSetPtr, GamePlay& gamePlayState)
 }
 
 void GuiObserver::onGameStart(GameState state, GameConfiguration config) {
+    m_gamePlayState.setGameState(state);
 	m_gamePlayState.setState(state.getChessBoard().getBoard());
 	m_gamePlayState.setCapturedPiecesList(state.getChessBoard().getCapturedPieces());
 }
@@ -23,6 +24,7 @@ void GuiObserver::onTurnStart(PlayerColor who) {
 }
 
 void GuiObserver::onTurnEnd(PlayerColor who, Turn turn, GameState newState) {
+    m_gamePlayState.setGameState(newState);
 	m_gamePlayState.setState(newState.getChessBoard().getBoard(), who, turn);
 	m_gamePlayState.setCapturedPiecesList(newState.getChessBoard().getCapturedPieces());
 }
@@ -39,4 +41,5 @@ void GuiObserver::onGameOver(GameState state, PlayerColor winner) {
 	strs << (winner == PlayerColor::Black ? "Schwarz" : "Weiss") << " hat gewonnen. Das Spiel ist zu Ende.";
 
 	m_gamePlayState.startShowText(strs.str());
+    m_gamePlayState.setGameState(state);
 }

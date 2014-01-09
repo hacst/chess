@@ -72,6 +72,8 @@ public:
 	void setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn);
 	void setState(std::array<Piece, 64> state);
 
+    void setGameState(const GameState& gameState);
+
 	/**
 	* @brief Method for setting the new turn, which changed the chess state.
 	* @note Be sure to first call this and *after* call setState.
@@ -95,6 +97,7 @@ private:
 	bool m_lockCamera;
 
 	std::array<Piece, 64> m_chessBoardState;
+    GameState m_gameState;
 
 	// @todo -> own class
 	struct CapturedPieces {
