@@ -181,6 +181,8 @@ set(AI_SOURCES
     src/ai/AIPlayer.cpp
     src/ai/Negamax.h
     src/ai/Negamax.cpp
+    src/ai/PolyglotBook.h
+    src/ai/PolyglotBook.cpp
 )
 
 source_group(ai FILES ${AI_SOURCES})
@@ -290,6 +292,7 @@ if (TEST)
         test/test_main.cpp
         test/ai/AIPlayer_test.cpp
         test/ai/Negamax_test.cpp
+        test/ai/PolyglotBook_test.cpp
     )
 
     add_executable(ai_test ${AI_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
