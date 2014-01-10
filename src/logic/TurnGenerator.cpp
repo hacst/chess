@@ -46,7 +46,9 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     PlayerColor opp = (piece.player == White) ? Black : White;
 
     switch (piece.type) {
-    case King:   return calcKingTurns  (bbPiece, cb.m_bb[piece.player][AllPieces]);
+    case King:   return calcKingTurns  (bbPiece, cb.m_bb[piece.player][AllPieces],
+                                        cb.m_longCastleRight[piece.player],
+                                        cb.m_shortCastleRight[piece.player]);
     case Queen:  return calcQueenTurns (bbPiece, cb.m_bb[opp][AllPieces],
                                         cb.m_bb[piece.player][AllPieces] | cb.m_bb[opp][AllPieces]);
     case Bishop: return calcBishopTurns(bbPiece, cb.m_bb[opp][AllPieces],
@@ -60,7 +62,8 @@ BitBoard TurnGenerator::calcTurns(Piece piece, BitBoard bbPiece, const ChessBoar
     }
 }
 
-BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) const {
+BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces,
+                                      bool longCastleRights, bool shortCastleRights) const {
 
     // TODO: Steht der King im schach? Nur Zuege berechnen, um aus dem
     // schach rauszukommen -> wenn keine moeglichen zuege gefunden -> sieger?
@@ -80,10 +83,17 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king, BitBoard allOwnPieces) cons
                          turn5 | turn6 | turn7 | turn8;
     kingTurns &= ~allOwnPieces;
 
-    // TODO: Rochade
+    // TODO: castle
+    if (longCastleRights) {
+
+    }
+
+    if (shortCastleRights) {
+
+    }
 
     // TODO: steht der (eigene) king nach einem der ermittelten zuege
-    // im schach? <- Diese zuege entfernenQt Creator 3.0
+    // im schach? <- Diese zuege entfernen
     // dazu alle möeglichen zuege des anderen spielers berechnen
     // (in einem bb) und dann verunden mit king bb. ergebniss bb
     // enthaelt felder, die der king nicht betreten darf, also
@@ -206,41 +216,47 @@ BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
     BitBoard bbS = getBitsS(rooks);
 
     // right moves
-    BitBoard rightMoves = bbE & allPieces;
-    rightMoves = (rightMoves << 1) | (rightMoves << 2) | (rightMoves << 3) |
-                 (rightMoves << 4) | (rightMoves << 5) | (rightMoves << 6) |
-                 (rightMoves << 7);
+    BitBoard eastMoves = bbE & allPieces;
+    eastMoves = (eastMoves << 1) | (eastMoves << 2) | (eastMoves << 3) |
+                 (eastMoves << 4) | (eastMoves << 5) | (eastMoves << 6) |
+                 (eastMoves << 7);
     //rightMoves = 0xFE00000000000000 >> (56-LSB von rightMoves);
-    rightMoves &= bbE;
-    rightMoves ^= bbE;
-    rightMoves &= (allOppPieces | ~(allPieces));
+    eastMoves &= bbE;
+    eastMoves ^= bbE;
+    eastMoves &= (allOppPieces | ~(allPieces));
 
-    // left moves
-    BitBoard leftMoves = bbW & allPieces;
-    leftMoves = 0xFE00000000000000 >> (64-BB_SCAN(leftMoves));
-    leftMoves &= bbW;
-    leftMoves ^= bbW;
-    leftMoves &= (allOppPieces | ~(allPieces));
+    // west moves
+    BitBoard westMoves = bbW & allPieces;
+    westMoves = (westMoves >> 1) | (westMoves >> 2) | (westMoves >> 3) |
+                (westMoves >> 4) | (westMoves >> 5) | (westMoves >> 6) |
+                (westMoves >> 7);
+    //westMoves = 0xFE00000000000000 >> (64-BB_SCAN(westMoves));
+    westMoves &= bbW;
+    westMoves ^= bbW;
+    westMoves &= (allOppPieces | ~(allPieces));
 
-    // up moves
-    BitBoard upMoves = bbN & allPieces;
-    upMoves = (upMoves <<  8) | (upMoves << 16) | (upMoves << 24) |
-              (upMoves << 32) | (upMoves << 40) | (upMoves << 48) |
-              (upMoves << 56);
+    // north moves
+    BitBoard northMoves = bbN & allPieces;
+    northMoves = (northMoves <<  8) | (northMoves << 16) | (northMoves << 24) |
+                (northMoves << 32) | (northMoves << 40) | (northMoves << 48) |
+                (northMoves << 56);
     //upMoves = 0x0101010101010100 << LSB;
-    upMoves &= bbN;
-    upMoves ^= bbN;
-    upMoves &= (allOppPieces | ~(allPieces));
+    northMoves &= bbN;
+    northMoves ^= bbN;
+    northMoves &= (allOppPieces | ~(allPieces));
 
 
-    // down moves
-    BitBoard downMoves = bbS & allPieces;
-    downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
-    downMoves &= bbS;
-    downMoves ^= bbS;
-    downMoves &= (allOppPieces | ~(allPieces));
+    // south moves
+    BitBoard southMoves = bbS & allPieces;
+    southMoves = (southMoves >> 8) | (southMoves >> 16) | (southMoves >> 24) |
+                (southMoves >> 32) | (southMoves >> 40) | (southMoves >> 48) |
+                (southMoves >> 56);
+    //downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
+    southMoves &= bbS;
+    southMoves ^= bbS;
+    southMoves &= (allOppPieces | ~(allPieces));
 
-    return rightMoves | leftMoves | upMoves | downMoves;
+    return eastMoves | westMoves | northMoves | southMoves;
 }
 
 
@@ -357,6 +373,8 @@ BitBoard TurnGenerator::maskRank(Rank rank) const {
     //return 0x00000000000000FF << (rank * 8);
 
     return (BitBoard)0x00000000000000FF << (rank *8);
+
+    //0x5ULL; // 64 bit u long long
 
     //BitBoard bb = 0x00000000000000FF;
     //return bb << (rank * 8);
