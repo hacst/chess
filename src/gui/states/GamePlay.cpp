@@ -623,11 +623,10 @@ void GamePlay::switchToPlayerColor(PlayerColor color) {
 }
 
 void GamePlay::onBackToMenu() {
-	std::cout << "go back to menu" << std::endl;
-
+    LOG(info) << "Returning to main menu";
 	m_nextState = BACK_TO_MENU;
 }
 
 void GamePlay::exit() {
-	std::cout << "left GamePlay!" << std::endl;
+    LOG(info) << "Left GamePlay!";
 }
