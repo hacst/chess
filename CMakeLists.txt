@@ -171,6 +171,8 @@ set(CORE_SOURCES
     src/core/GameConfiguration.cpp
     src/core/Logging.h
     src/core/Logging.cpp
+    src/core/Globals.h
+    src/core/Globals.cpp
 )
 
 source_group(core FILES ${CORE_SOURCES})

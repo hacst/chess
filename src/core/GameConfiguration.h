@@ -26,6 +26,8 @@ public:
     int maximumTurnTimeInSeconds;
     //! Relative path to opening book
     std::string openingBook;
+    //! Initial game state as FEN string
+    std::string initialGameStateFEN;
 
     /**
      * @brief Loads a game configuration from disk.
@@ -61,6 +63,7 @@ private:
         ar & BOOST_SERIALIZATION_NVP(timeBetweenTurnsInSeconds);
         ar & BOOST_SERIALIZATION_NVP(maximumTurnTimeInSeconds);
         ar & BOOST_SERIALIZATION_NVP(openingBook);
+        ar & BOOST_SERIALIZATION_NVP(initialGameStateFEN);
     }
 };
 

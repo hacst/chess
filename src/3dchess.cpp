@@ -8,6 +8,7 @@
 
 #include "misc/helper.h"
 #include "core/GameConfiguration.h"
+#include "core/Globals.h"
 #include "core/Logging.h"
 
 namespace po = boost::program_options;
@@ -23,6 +24,7 @@ int main(int argn, char **argv) {
             ("help", "Print help message")
             ("width", po::value<int>()->default_value(1024), "Horizontal resolution")
             ("height", po::value<int>()->default_value(768), "Vertical resolution")
+            ("config", po::value<string>()->default_value("config.xml"), "Config file")
             ("loglvl", po::value<string>()->default_value("debug"), "Set loglevel (trace|debug|info|warning|error|fatal)")
             ("fullscreen", "If set program runs in fullscreen")
             ;
@@ -47,16 +49,15 @@ int main(int argn, char **argv) {
     addLoggingFileSink("3dchess.log", severity.get());
     
     Logger log = initLogger("main");
-    
-    GameConfiguration config;
-    config.save("config.xml");
 
-    auto configl = GameConfiguration::load("config.xml");
-    if (!configl) {
-        GLOG(error) << "Failed to load";
+    auto configFromFile = GameConfiguration::load(vm["config"].as<string>());
+    if (!configFromFile) {
+        GLOG(error) << "Could not find configuration file '" << vm["config"].as<string>() << "'. Using defaults.";
     } else {
-        GLOG(info) << "Dur: " << (configl->maximumTurnTimeInSeconds) << "s";
+        global_config = *configFromFile;
     }
+
+    GLOG(info) << global_config;
 
     // SDL2/OpenGL for graphics
     const int width = vm["width"].as<int>();
@@ -69,6 +70,10 @@ int main(int argn, char **argv) {
 
     GuiWindow window("3D Chess", fullscreen, width, height);
     window.exec();
+
+    if (!global_config.save(vm["config"].as<string>())) {
+        GLOG(error) << "Could not save configuration to '" << vm["config"].as<string>() << "'";
+    }
 
     return 0;
 }

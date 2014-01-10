@@ -11,9 +11,10 @@ using namespace std;
 using namespace chrono;
 
 GameConfiguration::GameConfiguration()
-    : timeBetweenTurnsInSeconds(0)
+    : timeBetweenTurnsInSeconds(2)
     , maximumTurnTimeInSeconds(std::numeric_limits<int>::max())
-    , openingBook("resources/Book.bin") {
+    , openingBook("resources/Book.bin")
+    , initialGameStateFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
     // Empty
 }
 

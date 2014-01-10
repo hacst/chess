@@ -18,6 +18,8 @@
 #include "misc/DummyPlayer.h"
 #include "misc/DebugTools.h"
 
+#include "core/Globals.h"
+
 using namespace std;
 using namespace Logging;
 
@@ -34,7 +36,7 @@ void GamePlay::initMessageBox() {
 	m_messageBox.height = 40;
 	m_messageBox.padding = 10;
 	m_messageBox.text = "";
-	m_messageBox.showDuration = 3000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
+	m_messageBox.showDuration = global_config.timeBetweenTurnsInSeconds * 1000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
 
 	// precalculate absolute position
 	m_messageBox.windowPosX = (m_fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
@@ -120,10 +122,10 @@ void GamePlay::initPlayers() {
 }
 
 void GamePlay::initGameLogic() {
-	GameConfigurationPtr config = make_shared<GameConfiguration>();
-	config->timeBetweenTurnsInSeconds = 3;
+	GameConfigurationPtr config = make_shared<GameConfiguration>(global_config);
 
-	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
+    GameState initialGameState(ChessBoard::fromFEN(config->initialGameStateFEN)); // FIXME: fromFEN isn't robust
+    m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config, initialGameState);
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
