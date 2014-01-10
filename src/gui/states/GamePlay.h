@@ -16,6 +16,9 @@ class StateMachine;
 class ObserverDispatcherProxy;
 using ObserverDispatcherProxyPtr = std::shared_ptr<ObserverDispatcherProxy>;
 
+class PlayerDispatcherProxy;
+using PlayerDispatcherProxyPtr = std::shared_ptr<PlayerDispatcherProxy>;
+
 /**
  * @brief Class which holds the state GamePlay. This state is the essential part of
  * all states. The whole game play is hold in this state.
@@ -158,6 +161,7 @@ private:
 	AbstractGameLogicPtr m_gameLogic;
 	GuiObserverPtr m_observer;
 	ObserverDispatcherProxyPtr m_observerProxy;
+	PlayerDispatcherProxyPtr m_playerProxy;
 	
 	int posNumber;
 

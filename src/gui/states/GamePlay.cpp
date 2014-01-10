@@ -3,7 +3,8 @@
 
 // ObsDisProx include Must be first to be before all windows.h
 // includes in other headers to satisfy the angry gods
-#include "logic/threading/ObserverDispatcherProxy.h" 
+#include "logic/threading/ObserverDispatcherProxy.h"
+#include "logic/threading/PlayerDispatcherProxy.h"
 
 #include "gui/states/GamePlay.h"
 #include "gui/GuiObserver.h"
@@ -13,9 +14,9 @@
 #include "gui/AnimationHelper.h"
 #include "gui/ObjectHelper.h"
 #include "gui/GuiWindow.h"
+#include "gui/Player.h"
 
 #include "ai/AIPlayer.h"
-#include "misc/DummyPlayer.h"
 #include "misc/DebugTools.h"
 
 using namespace std;
@@ -104,9 +105,11 @@ void GamePlay::initPlayers() {
 		m_firstPlayer = firstPlayer;
 
 		// @todo
-		auto secondPlayer = make_shared<DummyPlayer>(rd());
-		secondPlayer->start();
+		auto secondPlayer = make_shared<Player>(rd());
 		m_secondPlayer = secondPlayer;
+
+		m_playerProxy = make_shared<PlayerDispatcherProxy>(m_secondPlayer);
+		secondPlayer->start();
 	} else if (m_gameMode == AI_VS_AI) {
 		// AI vs. AI
 		auto firstPlayer = make_shared<AIPlayer>(rd());
@@ -242,8 +245,9 @@ AbstractState* GamePlay::run() {
         LOG(info) << DebugTools::toInitializerList(m_chessBoardState) << endl;
     }
 	
-	// Execute all pending calls from the observer
+	// Execute all pending calls from the observer and player
 	m_observerProxy->poll();
+	m_playerProxy->poll();
 
 	this->draw();
 
@@ -545,7 +549,7 @@ void GamePlay::drawPauseMenu() {
 	glDisable(GL_BLEND);
 	glDisable(GL_COLOR);
 
-	m_fsm.window->printHeadline("P A U S E");
+	m_fsm.window->printHeadline("M E N U");
 	m_pauseMenu->draw();
 }
 

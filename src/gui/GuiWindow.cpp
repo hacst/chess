@@ -167,6 +167,9 @@ void GuiWindow::handleEvents() {
 					case SDLK_ESCAPE:
 						m_fsm.eventmap.keyEscape = true;
 						break;
+					case SDLK_RETURN:
+						m_fsm.eventmap.keyReturn = true;
+						break;
 					case SDLK_LEFT:
 						m_fsm.eventmap.keyLeft = true;
 						break;
@@ -199,6 +202,9 @@ void GuiWindow::handleEvents() {
 				switch (evt.key.keysym.sym) {
 				case SDLK_ESCAPE:
 					m_fsm.eventmap.keyEscape = false;
+					break;
+				case SDLK_RETURN:
+					m_fsm.eventmap.keyReturn = false;
 					break;
 				case SDLK_LEFT:
 					m_fsm.eventmap.keyLeft = false;

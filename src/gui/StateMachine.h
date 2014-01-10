@@ -43,6 +43,7 @@ public:
 		bool keyDown = false;
 		bool keyUp = false;
 		bool keyEscape = false;
+		bool keyReturn = false;
 		bool key0 = false;
 		bool key1 = false;
 		bool keyA = false;
