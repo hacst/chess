@@ -20,6 +20,7 @@ public:
     virtual std::vector<Turn> getTurnList() { return std::vector<Turn> { Turn() }; }
     virtual void applyTurn(Turn) { nextPlayer = togglePlayerColor(nextPlayer); }
     virtual Score getScore() const { return 0; }
+    virtual Score getHash() const { return 0; }
 
     PlayerColor nextPlayer;
 };
