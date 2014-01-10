@@ -25,6 +25,7 @@ int main(int argn, char **argv) {
             ("width", po::value<int>()->default_value(1024), "Horizontal resolution")
             ("height", po::value<int>()->default_value(768), "Vertical resolution")
             ("config", po::value<string>()->default_value("config.xml"), "Config file")
+            ("FEN", po::value<string>(), "Fen string to override configuration")
             ("loglvl", po::value<string>()->default_value("debug"), "Set loglevel (trace|debug|info|warning|error|fatal)")
             ("fullscreen", "If set program runs in fullscreen")
             ;
@@ -57,6 +58,11 @@ int main(int argn, char **argv) {
         global_config = *configFromFile;
     }
 
+    string previousInitialGameStateFEN = global_config.initialGameStateFEN;
+    if (vm.count("FEN") != 0) {
+        global_config.initialGameStateFEN = vm["FEN"].as<string>();
+    }
+    
     GLOG(info) << global_config;
 
     // SDL2/OpenGL for graphics
@@ -70,6 +76,8 @@ int main(int argn, char **argv) {
 
     GuiWindow window("3D Chess", fullscreen, width, height);
     window.exec();
+    
+    global_config.initialGameStateFEN = previousInitialGameStateFEN;
 
     if (!global_config.save(vm["config"].as<string>())) {
         GLOG(error) << "Could not save configuration to '" << vm["config"].as<string>() << "'";

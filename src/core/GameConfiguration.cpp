@@ -55,7 +55,9 @@ string GameConfiguration::toString() const {
     ss << "GameConfiguration:" << endl
         << "  Maximum turn time: " << maximumTurnTimeInSeconds << "s" << endl
         << "  Minimum turn time: " << timeBetweenTurnsInSeconds << "s" << endl
-        << "  Opening book: " << openingBook << endl;
+        << "  Opening book: " << openingBook << endl
+        << "  Initial FEN: " << initialGameStateFEN << endl;
+    
     return ss.str();
 }
 
