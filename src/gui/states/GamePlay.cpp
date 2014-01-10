@@ -98,27 +98,33 @@ void GamePlay::initMenuPause() {
 }
 
 void GamePlay::initPlayers() {
-    random_device rd;
 	if (m_gameMode == PLAYER_VS_AI) {
 		// Player vs. AI
-		auto firstPlayer = make_shared<AIPlayer>(rd());
+        LOG(info) << "Starting Player vs. AI game with seed: " << global_seed;
+        
+		auto firstPlayer = make_shared<AIPlayer>(global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
 		// @todo
-		auto secondPlayer = make_shared<DummyPlayer>(rd());
+		auto secondPlayer = make_shared<DummyPlayer>(global_seed);
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	} else if (m_gameMode == AI_VS_AI) {
 		// AI vs. AI
-		auto firstPlayer = make_shared<AIPlayer>(rd());
+        LOG(info) << "Starting AI vs. AI game with seed: " << global_seed;
+        
+		auto firstPlayer = make_shared<AIPlayer>(global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		auto secondPlayer = make_shared<AIPlayer>(rd());
+		auto secondPlayer = make_shared<AIPlayer>(global_seed+1);
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	}
+    
+    // Make sure we don't re-use the seed for the next game.
+    global_seed += 2; 
 }
 
 void GamePlay::initGameLogic() {

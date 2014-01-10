@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <random>
 
 #include <boost/program_options.hpp>
 
@@ -26,6 +27,7 @@ int main(int argn, char **argv) {
             ("height", po::value<int>()->default_value(768), "Vertical resolution")
             ("config", po::value<string>()->default_value("config.xml"), "Config file")
             ("FEN", po::value<string>(), "Fen string to override configuration")
+            ("seed", po::value<int>(), "Seed override for random numbers")
             ("loglvl", po::value<string>()->default_value("debug"), "Set loglevel (trace|debug|info|warning|error|fatal)")
             ("fullscreen", "If set program runs in fullscreen")
             ;
@@ -64,6 +66,12 @@ int main(int argn, char **argv) {
     }
     
     GLOG(info) << global_config;
+    
+    global_seed = random_device()();
+    if (vm.count("seed") != 0) {
+        global_seed = vm["seed"].as<int>();
+    }
+    GLOG(info) << "Game seed: " << global_seed;
 
     // SDL2/OpenGL for graphics
     const int width = vm["width"].as<int>();
