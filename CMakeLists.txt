@@ -243,9 +243,9 @@ add_definitions(${OpenGL_DEFINITIONS})
 
 if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # Enable C++11 and stricter warning handling. Also enable debug symbols.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -Wno-missing-braces -g -O2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -Wno-missing-braces")
 elseif(MSVC)
-    # Enable warnings as errors on MSVC.
+    # /WX Enable warnings as errors on MSVC.
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
 endif()
 
