@@ -80,7 +80,7 @@ private:
      * @brief State of the AI.
      * @warning Protected by m_stateMutex.
      */
-    States m_playerState;
+    volatile States m_playerState;
     //! Mutex for m_playerState
     std::mutex m_stateMutex;
 
