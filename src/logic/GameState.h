@@ -11,13 +11,13 @@ public:
 	GameState();
 	explicit GameState(const ChessBoard& chessBoard);
 
-	virtual void init();
+	void init();
 	//virtual void init(SaveGame* sg);
 
-	virtual std::vector<Turn>   getTurnList() const;
-	virtual void                applyTurn(const Turn& turn);
-	virtual PlayerColor         getNextPlayer() const;
-	virtual const ChessBoard&   getChessBoard() const;
+	std::vector<Turn>   getTurnList() const;
+	void                applyTurn(const Turn& turn);
+	PlayerColor         getNextPlayer() const;
+	const ChessBoard&   getChessBoard() const;
 
 	bool isGameOver() const;
     PlayerColor getWinner() const;

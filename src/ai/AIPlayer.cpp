@@ -87,53 +87,63 @@ void AIPlayer::doAbortTurn() {
     changeState(PONDERING);
 }
 
-void AIPlayer::play() {
-    const size_t DEPTH = 4;
+bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
+    if (m_outOfBook)
+        return false;
+    
+    const Hash hash = m_gameState.getHash();
+    auto entry = m_openingBook.getWeightedEntry(hash);
+    if (entry) {
+        LOG(info) << "Book entry found for " << std::hex << m_gameState.getHash() << std::dec <<": " << *entry;
+        bool found = false;
 
-    if (!m_outOfBook) {
-        const Hash hash = m_gameState.getHash();
-        auto entry = m_openingBook.getWeightedEntry(hash);
-        if (entry) {
-            LOG(info) << "Book entry found for " << std::hex << m_gameState.getHash() << std::dec <<": " << *entry;
-            bool found = false;
-
-            // Check turn against possible moves to detect collisions
-            for (const auto& turn : m_gameState.getTurnList()) {
-                if (entry->move.from == turn.from
-                    && entry->move.to == turn.to) {
-                    //TODO: Fix this for pawn promotion and castling once we support that. For now comparing source and target should do.
-                    m_promisedTurn.set_value(turn);
-                    LOG(info) << "Performing turn from book: " << turn;
-                    found = true;
-                    break;
-                }
+        // Check turn against possible moves to detect collisions
+        for (const auto& turn : m_gameState.getTurnList()) {
+            if (entry->move.from == turn.from
+                && entry->move.to == turn.to) {
+                //TODO: Fix this for pawn promotion and castling once we support that. For now comparing source and target should do.
+                m_promisedTurn.set_value(turn);
+                LOG(info) << "Performing turn from book: " << turn;
+                found = true;
+                break;
             }
-            
-            if (!found) {
-                LOG(error) << "Book proposed impossible turn. This could either be a turn generation bug or a hash collision";
-                LOG(error) << m_gameState;
-                m_outOfBook = true;
-            }
-
-        } else {
-            m_outOfBook = true;
-            LOG(info) << "Now out of book";
         }
+        
+        if (!found) {
+            LOG(error) << "Book proposed impossible turn. This could either be a turn generation bug or a hash collision";
+            LOG(error) << m_gameState;
+            m_outOfBook = true;
+            return false;
+        }
+
+    } else {
+        m_outOfBook = true;
+        LOG(info) << "Now out of book";
+        return false;
     }
     
-    if (m_outOfBook) {
-        LOG(info) << "Starting search of depth " << DEPTH;
-        auto result = m_algorithm.search(m_gameState, DEPTH);
+    return true;
+}
 
-        // Pass on result for turn
-        if (result.turn) {
-            LOG(info) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
-            m_promisedTurn.set_value(result.turn.get());
-        }
-        else {
-            LOG(info) << "Aborted search, no turn possible";
-            m_promisedTurn.set_value(Turn());
-        }
+void AIPlayer::selectPromisedTurnBySearch() {
+    const size_t DEPTH = 4;
+    LOG(info) << "Starting search of depth " << DEPTH;
+    auto result = m_algorithm.search(m_gameState, DEPTH);
+
+    // Pass on result for turn
+    if (result.turn) {
+        LOG(info) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
+        m_promisedTurn.set_value(result.turn.get());
+    }
+    else {
+        LOG(info) << "Aborted search, no turn possible";
+        m_promisedTurn.set_value(Turn());
+    }    
+}
+
+void AIPlayer::play() {
+    if(!tryFindPromisedTurnInOpeningBook()) {
+        selectPromisedTurnBySearch();
     }
 
     changeState(PONDERING);

@@ -70,6 +70,9 @@ private:
      */
     void changeState(States newState);
 
+    bool tryFindPromisedTurnInOpeningBook();
+    void selectPromisedTurnBySearch();
+    
     //! Holds the promise during fulfillment (@see play).
     std::promise<Turn> m_promisedTurn;
 
@@ -90,7 +93,7 @@ private:
     PlayerColor m_color;
     
     //! Algorithm used for search.
-    Negamax m_algorithm;
+    Negamax<> m_algorithm;
     //! Thread the AI is run on.
     std::thread m_thread;
     

@@ -51,7 +51,7 @@ int main(int argn, char **argv) {
     GLOG(info) << "Depth limited to: " << depthBlack << " for Black";
 
     GameState gameState;
-    std::array<Negamax, NUM_PLAYERS> negamax;
+    std::array<Negamax<>, NUM_PLAYERS> negamax;
 
     GLOG(info) << "Initial state";
     GLOG(info) << gameState.getChessBoard();
@@ -62,7 +62,7 @@ int main(int argn, char **argv) {
 
         PlayerColor next = gameState.getNextPlayer();
         const int depth = (next == White) ? depthWhite : depthBlack;
-        auto result = negamax[next].search<GameState, true, true, true>(gameState, depth);
+        auto result = negamax[next].search(gameState, depth);
         GLOG(info) << "Completed calculation";
 
         if (!result.turn) {
