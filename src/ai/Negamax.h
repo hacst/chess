@@ -6,6 +6,7 @@
 #include <sstream>
 #include <array>
 #include <chrono>
+#include <atomic>
 
 #include "misc/helper.h"
 #include "ai/TranspositionTable.h"
@@ -63,6 +64,7 @@ public:
      */
     Negamax()
         : m_transpositionTable()
+        , m_abort(false)
         , m_log(Logging::initLogger("Negamax")) {
         // Empty
     }
@@ -74,9 +76,11 @@ public:
      * @return Result of the search.
      */
     NegamaxResult search(const TGameState& state, size_t maxDepth) {
+        m_abort = false;
+
         LOG(Logging::info) << "Starting " << maxDepth
                            << " plies deep search. AB-pruning=" << AB_CUTOFF_ENABLED
-                           << ") Move ordering=" << MOVE_ORDERING_ENABLED
+                           << " Move ordering=" << MOVE_ORDERING_ENABLED
                            << " Transposition tables=" << TRANSPOSITION_TABLES_ENABLED;
         
         auto start = std::chrono::steady_clock::now();
@@ -88,9 +92,21 @@ public:
         m_counters.duration = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
 
-        LOG(Logging::debug) << result;
+        if (m_abort) {
+            LOG(Logging::debug) << "Aborted without result";
+        } else {
+            LOG(Logging::debug) << result;
+        }
         LOG(Logging::debug) << m_counters;
         return result;
+    }
+
+    /**
+     * @brief Aborts the currently running calculation.
+     * Call from another thread to  abort currently running search.
+     */
+    void abort() {
+        m_abort = true;
     }
 
     //! Structure with performance counters used for debugging and evaluation.
@@ -149,10 +165,12 @@ private:
      * @param beta Beta score.
      */
     NegamaxResult search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
+        if (m_abort) return{ 0, boost::none };
+
         const size_t pliesLeft = maxDepth - depth;
-        
+
         if (state.isGameOver() || pliesLeft == 0) {
-            return{ state.getScore(), boost::none };
+            return { state.getScore(), boost::none };
         }
         
         const Score initialAlpha = alpha;
@@ -231,6 +249,8 @@ private:
                 // Prune the rest of the sibling branches
                 break;
             }
+
+            if (m_abort) return{ 0, boost::none };
         }
         
         if (TRANSPOSITION_TABLES_ENABLED) {
@@ -267,6 +287,9 @@ private:
     
     TranspositionTable m_transpositionTable;
     
+    //! Abort flag
+    std::atomic<bool> m_abort;
+
     Logging::Logger m_log;
 };
 

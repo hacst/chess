@@ -102,7 +102,7 @@ void GamePlay::initPlayers() {
 		// Player vs. AI
         LOG(info) << "Starting Player vs. AI game with seed: " << global_seed;
         
-		auto firstPlayer = make_shared<AIPlayer>(global_seed);
+		auto firstPlayer = make_shared<AIPlayer>("AIPlayer", global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
@@ -114,11 +114,11 @@ void GamePlay::initPlayers() {
 		// AI vs. AI
         LOG(info) << "Starting AI vs. AI game with seed: " << global_seed;
         
-		auto firstPlayer = make_shared<AIPlayer>(global_seed);
+        auto firstPlayer = make_shared<AIPlayer>("AIPlayer (white)", global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		auto secondPlayer = make_shared<AIPlayer>(global_seed+1);
+        auto secondPlayer = make_shared<AIPlayer>("AIPlayer (black)", global_seed + 1);
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	}

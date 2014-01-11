@@ -4,13 +4,13 @@
 #include "misc/helper.h"
 #include "logic/Evaluators.h"
 #include <memory>
-#include <chrono>
+#include <future>
 
 using namespace std;
 using namespace std::chrono;
 using namespace Logging;
 
-AIPlayer::AIPlayer(int seed)
+AIPlayer::AIPlayer(std::string name, int seed)
     : m_promisedTurn()
     , m_playerState(STOPPED)
     , m_gameState()
@@ -20,7 +20,8 @@ AIPlayer::AIPlayer(int seed)
     , m_thread()
     , m_openingBook(seed)
     , m_outOfBook(true)
-    , m_log(initLogger("AIPlayer")) {
+    , m_maxIterationDepth(numeric_limits<size_t>::max())
+    , m_log(initLogger(name)) {
     
     LOG(info) << "Using seed " << seed;
     // Empty
@@ -51,6 +52,7 @@ void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
     LOG(info) << "Game start";
 
     m_gameState = state;
+    m_ponderGameState = state;
     m_gameConfig = config;
 
     if (!m_gameConfig.openingBook.empty()) {
@@ -102,7 +104,7 @@ bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
             if (entry->move.from == turn.from
                 && entry->move.to == turn.to) {
                 //TODO: Fix this for pawn promotion and castling once we support that. For now comparing source and target should do.
-                m_promisedTurn.set_value(turn);
+                completePromiseWith(turn);
                 LOG(info) << "Performing turn from book: " << turn;
                 found = true;
                 break;
@@ -125,37 +127,89 @@ bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
     return true;
 }
 
-void AIPlayer::selectPromisedTurnBySearch() {
-    const size_t DEPTH = 4;
-    LOG(info) << "Starting search of depth " << DEPTH;
-    auto result = m_algorithm.search(m_gameState, DEPTH);
+void AIPlayer::completePromiseWith(const Turn& turn) {
+    m_ponderGameState = m_gameState;
+    m_ponderGameState.applyTurn(turn);
 
-    // Pass on result for turn
-    if (result.turn) {
-        LOG(info) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
-        m_promisedTurn.set_value(result.turn.get());
+    m_promisedTurn.set_value(turn);
+}
+
+void AIPlayer::searchForPromisedTurn() {
+    boost::optional<Turn> turnWithFarthestHorizon;
+    size_t iteration = 1;
+
+    while (canStayInState() && iteration < m_maxIterationDepth) {
+        auto turn = performSearchIteration(iteration, m_gameState);
+        if (!turn) break;
+
+        turnWithFarthestHorizon = turn;
+        ++iteration;
     }
-    else {
-        LOG(info) << "Aborted search, no turn possible";
-        m_promisedTurn.set_value(Turn());
-    }    
+    
+    if (turnWithFarthestHorizon) {
+        LOG(info) << "Reached " << iteration - 1 << " plies. Found " << *turnWithFarthestHorizon;
+        completePromiseWith(*turnWithFarthestHorizon);
+    } else {
+        LOG(warning) << "No viable solution found in time. Breaking promise";
+    }
 }
 
 void AIPlayer::play() {
+    setTimeLimit(seconds(10));
+
     if(!tryFindPromisedTurnInOpeningBook()) {
-        selectPromisedTurnBySearch();
+        searchForPromisedTurn();
     }
 
     changeState(PONDERING);
 }
 
+boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& state) {
+    LOG(info) << "Starting search of depth " << depth;
+    
+    future<NegamaxResult> result = async(launch::async, [&]{
+        return m_algorithm.search(state, depth);
+    });
+
+    while (canStayInState()) {
+        future_status status = result.wait_for(milliseconds(50));
+        if (status == future_status::ready) {
+            return result.get().turn;
+        }
+    }
+
+    m_algorithm.abort();
+    result.wait(); // Make sure we notice if our async thread hangs due to a bug.
+
+    return boost::none;
+}
+
+bool AIPlayer::canStayInState() {
+    return chrono::high_resolution_clock::now() < m_timeoutExpirationTime && !m_leaveCurrentState;
+}
+
+void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
+    m_timeoutExpirationTime = chrono::high_resolution_clock::now() + limit;
+}
+
 void AIPlayer::ponder() {
-    // Not implemented yet, sleep instead
-    this_thread::sleep_for(milliseconds(100));
+    setTimeLimit(chrono::hours(2)); // Practically no limit
+
+    performIterativeDeepening();
+}
+
+void AIPlayer::performIterativeDeepening() {
+    size_t iteration = 1;
+    while (canStayInState() && performSearchIteration(iteration, m_gameState)) {
+        LOG(info) << "Pondered " << iteration << " plies deep";
+        ++iteration;
+    }
 }
 
 void AIPlayer::run() {
     while (m_playerState != STOPPED) {
+        m_leaveCurrentState = false;
+
         switch (m_playerState) {
         case PONDERING: ponder(); break;
         case PLAYING: play(); break;
@@ -177,6 +231,7 @@ void AIPlayer::changeState(States newState) {
     lock_guard<mutex> lock(m_stateMutex);
 
     if (m_playerState != newState && m_playerState != STOPPED) {
+        m_leaveCurrentState = true;
         LOG(info) << "Now " << newState;
 
         m_playerState = newState;

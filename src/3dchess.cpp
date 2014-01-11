@@ -48,6 +48,7 @@ int main(int argn, char **argv) {
     }
     
     initializeLogging();
+
     addLoggingConsoleSink(severity.get());
     addLoggingFileSink("3dchess.log", severity.get());
     
