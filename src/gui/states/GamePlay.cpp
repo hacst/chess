@@ -102,7 +102,8 @@ void GamePlay::initPlayers() {
 		// Player vs. AI
         LOG(info) << "Starting Player vs. AI game with seed: " << global_seed;
         
-		auto firstPlayer = make_shared<AIPlayer>("AIPlayer", global_seed);
+        AIConfiguration aicfg = global_config.ai[global_config.aiSelected];
+        auto firstPlayer = make_shared<AIPlayer>(aicfg, "AIPlayer", global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
@@ -113,12 +114,13 @@ void GamePlay::initPlayers() {
 	} else if (m_gameMode == AI_VS_AI) {
 		// AI vs. AI
         LOG(info) << "Starting AI vs. AI game with seed: " << global_seed;
-        
-        auto firstPlayer = make_shared<AIPlayer>("AIPlayer (white)", global_seed);
+
+        AIConfiguration aicfg = global_config.ai[global_config.aiSelected];
+        auto firstPlayer = make_shared<AIPlayer>(aicfg, "AIPlayer (white)", global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-        auto secondPlayer = make_shared<AIPlayer>("AIPlayer (black)", global_seed + 1);
+        auto secondPlayer = make_shared<AIPlayer>(aicfg, "AIPlayer (black)", global_seed + 1);
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
 	}

@@ -10,20 +10,22 @@ using namespace std;
 using namespace std::chrono;
 using namespace Logging;
 
-AIPlayer::AIPlayer(std::string name, int seed)
+AIPlayer::AIPlayer(const AIConfiguration& config, const string& name, int seed)
     : m_promisedTurn()
     , m_playerState(STOPPED)
     , m_gameState()
     , m_gameConfig()
     , m_color(PlayerColor::NoPlayer)
-    , m_algorithm()
+    , m_negamax()
     , m_thread()
     , m_openingBook(seed)
     , m_outOfBook(true)
     , m_maxIterationDepth(numeric_limits<size_t>::max())
+    , m_config(config)
     , m_log(initLogger(name)) {
     
     LOG(info) << "Using seed " << seed;
+    LOG(info) << config;
     // Empty
 }
 
@@ -48,20 +50,29 @@ void AIPlayer::onSetColor(PlayerColor color) {
     m_color = color;
 }
 
-void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
+void AIPlayer::onGameStart(GameState state, GameConfiguration gameConfig) {
     LOG(info) << "Game start";
 
     m_gameState = state;
     m_ponderGameState = state;
-    m_gameConfig = config;
 
-    if (!m_gameConfig.openingBook.empty()) {
-        if (!m_openingBook.open(m_gameConfig.openingBook)) {
+    // The time limits set for the game are important. Give us an extra second
+    // to reply to those to make sure we don't time out on our moves.
+    m_maxTimeForTurn = seconds(
+        std::max(1, // Minimum of one second
+        std::min(
+            m_config.maximumTimeForTurnInSeconds,
+            gameConfig.maximumTurnTimeInSeconds - 1)));
+
+    LOG(info) << "Max turn time set to " << m_maxTimeForTurn.count() << "s";
+
+    if (!m_config.openingBook.empty()) {
+        if (!m_openingBook.open(m_config.openingBook)) {
             LOG(warning) << "Failed to load opening book. AI will play without one";
             m_outOfBook = true;
         } else {
             // Enable book
-            LOG(info) << "Using opening book '" << m_gameConfig.openingBook
+            LOG(info) << "Using opening book '" << m_config.openingBook
                 << "' with " << m_openingBook.getNumberOfEntries() << " entries";
 
             m_outOfBook = false;
@@ -138,7 +149,7 @@ void AIPlayer::searchForPromisedTurn() {
     boost::optional<Turn> turnWithFarthestHorizon;
     size_t iteration = 1;
 
-    while (canStayInState() && iteration < m_maxIterationDepth) {
+    while (canStayInState() && iteration <= m_config.maximumDepth) {
         auto turn = performSearchIteration(iteration, m_gameState);
         if (!turn) break;
 
@@ -155,7 +166,7 @@ void AIPlayer::searchForPromisedTurn() {
 }
 
 void AIPlayer::play() {
-    setTimeLimit(seconds(10));
+    setTimeLimit(m_maxTimeForTurn);
 
     if(!tryFindPromisedTurnInOpeningBook()) {
         searchForPromisedTurn();
@@ -168,7 +179,7 @@ boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& 
     LOG(info) << "Starting search of depth " << depth;
     
     future<NegamaxResult> result = async(launch::async, [&]{
-        return m_algorithm.search(state, depth);
+        return m_negamax.search(state, depth);
     });
 
     while (canStayInState()) {
@@ -178,7 +189,7 @@ boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& 
         }
     }
 
-    m_algorithm.abort();
+    m_negamax.abort();
     result.wait(); // Make sure we notice if our async thread hangs due to a bug.
 
     return boost::none;
@@ -193,14 +204,23 @@ void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
 }
 
 void AIPlayer::ponder() {
-    setTimeLimit(chrono::hours(2)); // Practically no limit
+    if (m_config.ponderDuringOpposingPly) {
+        setTimeLimit(chrono::hours(2)); // Practically no limit
 
-    performIterativeDeepening();
+        performIterativeDeepening();
+    } else {
+        while (canStayInState()) {
+            this_thread::sleep_for(milliseconds(100));
+        }
+    }
 }
 
 void AIPlayer::performIterativeDeepening() {
     size_t iteration = 1;
-    while (canStayInState() && performSearchIteration(iteration, m_gameState)) {
+    while (canStayInState()
+        && iteration <= m_config.maximumDepth
+        && performSearchIteration(iteration, m_gameState)) {
+
         LOG(info) << "Pondered " << iteration << " plies deep";
         ++iteration;
     }
