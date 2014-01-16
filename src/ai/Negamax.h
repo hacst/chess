@@ -193,7 +193,7 @@ private:
                     beta = std::min(beta, tableEntry->score);
                 }
                 
-                if (alpha > beta) {
+                if (alpha >= beta) {
                     return { tableEntry->score, tableEntry->turn };
                 }
             }
