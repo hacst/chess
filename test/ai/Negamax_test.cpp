@@ -193,9 +193,12 @@ TEST(Negamax, TranspositionTableWithMoveOrdering) {
         EXPECT_EQ(withoutTTMO.score, withTTMO.score)
                 << "With TT: " << withTTMO << endl
                 << "Without TT: " << withoutTTMO << endl
-                << " Base state (" << i << "): " << gs << endl;
+                << "Base state (" << i << "): " << gs << endl
+                << "Depth: " << depth << endl;
+        
         EXPECT_EQ(withTTMO, withTTMO2)
-                << "Base state (" << i << "): " << gs << endl;
+                << "Base state (" << i << "): " << gs << endl
+                << "Depth: " << depth << endl;
     }
 }
 
@@ -250,3 +253,20 @@ TEST(Negamax, MoveOrdering) {
     }
 }
 
+TEST(Negamax, TTMORegression) {
+    const int depth = 4;
+    //GameState gs(ChessBoard::fromFEN("rNb4N/2p2k1p/6nb/pP3p2/2Q2B2/1P1P3P/P3P1q1/R2K1BR1 b - - 0 25"));
+    // Reduced to:
+    GameState gs(ChessBoard::fromFEN("8/2p2k1p/8/8/8/8/8/3K1BR1 b - - 0 25"));
+    Negamax<GameState, true, false, false> negamaxAB;
+    Negamax<GameState, true, true, true> negamaxTTMO;
+    auto withTTMO = negamaxTTMO.search(gs, depth);
+    auto withoutTTMO = negamaxAB.search(gs, depth);
+    
+    EXPECT_EQ(withoutTTMO.score, withTTMO.score)
+            << "With TT: " << withTTMO << endl
+            << "Without TT: " << withoutTTMO << endl
+            << "Base state: " << gs << endl
+            << "Depth: " << depth << endl;
+    
+}
