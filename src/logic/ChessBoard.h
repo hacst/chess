@@ -8,7 +8,7 @@
 
 //#include "ChessTypes.h"
 #include "Turn.h"
-#include "Evaluators.h"
+#include "IncrementalMaterialAndPSTEvaluator.h"
 #include "IncrementalZobristHasher.h"
 
 #ifdef _MSC_VER
@@ -163,7 +163,7 @@ private:
     
     std::vector<Piece> m_capturedPieces;
     
-    IncrementalBoardEvaluator m_evaluator;
+    IncrementalMaterialAndPSTEvaluator m_evaluator;
     IncrementalZobristHasher m_hasher;
 };
 

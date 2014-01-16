@@ -7,7 +7,6 @@
 
 #include "logic/ChessTypes.h"
 #include "logic/Turn.h"
-#include "logic/interface/AbstractEvaluator.h"
 
 /**
  * @brief Single entry in transposition table

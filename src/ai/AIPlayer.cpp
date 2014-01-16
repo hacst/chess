@@ -2,7 +2,6 @@
 
 #include <boost/log/attributes/constant.hpp>
 #include "misc/helper.h"
-#include "logic/Evaluators.h"
 #include <memory>
 #include <future>
 

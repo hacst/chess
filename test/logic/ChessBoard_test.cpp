@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "logic/ChessBoard.h"
 #include "misc/DebugTools.h"
-#include "logic/Evaluators.h"
+#include "logic/IncrementalMaterialAndPSTEvaluator.h"
 
 using namespace DebugTools;
 using namespace std;
@@ -191,7 +191,7 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
     const int TRIES = 50;
     for (int i = 0; i < TRIES; ++i) {
         ChessBoard b = generateRandomBoard(50, rng);
-        ASSERT_EQ(IncrementalBoardEvaluator::estimateFullBoard(b.getBoard()),
+        ASSERT_EQ(IncrementalMaterialAndPSTEvaluator::estimateFullBoard(b.getBoard()),
             b.getScore(White)) << i << "th Board: " << b;
     }
 }
@@ -257,13 +257,77 @@ TEST(ChessBoard, CastlingRights) {
     }
 }
 
-TEST(MaterialEvaluator, MigrationCheck) {
-    MaterialEvaluator eval;
-    mt19937 rng(45438);
-    const int TRIES = 50;
-    for (int i = 0; i < TRIES; ++i) {
-        GameState gs = generateRandomState(50, rng);
-        ASSERT_EQ(eval.getScore(gs),
-            gs.getScore()) << i << "th State: " << gs;
+
+TEST(ChessBoard, ScoringPieceSquareTableReadout) {
+    // Check whether the scores match for some selected positions
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Pawn), D7)
+        });
+        const Score score = 100 + 50;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, King), G1)
+        });
+        const Score score = 20000 + 30;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Rook), H8)
+        });
+        const Score score = 500;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Queen), A5)
+        });
+        const Score score = 900 - 5;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
     }
 }
+
+TEST(ChessBoard, ScoringEvaluationSymmetry) {
+    const unsigned int TRIES = 100;
+
+    mt19937 rng;
+    uniform_int_distribution<> fieldDist(0,63);
+    uniform_int_distribution<> pieceDist(0,5);
+
+    for (size_t i = 0; i < TRIES; ++i) {
+        const Field field = static_cast<Field>(fieldDist(rng));
+        const PieceType piece = static_cast<PieceType>(pieceDist(rng));
+        {
+            ChessBoard b = generateChessBoard({
+                PoF(Piece(White, piece), field),
+                PoF(Piece(Black, piece), flipHorizontal(field))
+            });
+
+            // Check PSQ readout and symmetry
+            ASSERT_EQ(0, b.getScore(White)) << "Board: " << b;
+            ASSERT_EQ(0, b.getScore(Black)) << "Board: " << b;
+        }
+
+        {
+            ChessBoard b = generateChessBoard({
+                PoF(Piece(Black, piece), field),
+                PoF(Piece(White, piece), flipHorizontal(field))
+            });
+
+            // Check PSQ readout and symmetry
+            ASSERT_EQ(0, b.getScore(White)) << "Board: " << b;
+            ASSERT_EQ(0, b.getScore(Black)) << "Board: " << b;
+        }
+    }
+}
+

@@ -3,7 +3,7 @@
 #include <vector>
 #include <random>
 #include "ai/Negamax.h"
-#include "logic/Evaluators.h"
+#include "logic/IncrementalMaterialAndPSTEvaluator.h"
 #include "misc/helper.h"
 #include "misc/DebugTools.h"
 

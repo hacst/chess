@@ -10,7 +10,6 @@
 
 #include "misc/helper.h"
 #include "ai/TranspositionTable.h"
-#include "logic/interface/AbstractEvaluator.h"
 #include "logic/GameState.h"
 #include "core/Logging.h"
 
