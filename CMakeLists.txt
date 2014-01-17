@@ -309,7 +309,8 @@ if (TEST)
     set(LOGIC_TEST_SOURCES
         test/logic/GameState_test.cpp
         test/logic/ChessBoard_test.cpp
-        test/logic/TurnGenerator_test.cpp
+        test/logic/TurnGeneratorIntern_test.cpp
+        test/logic/TurnGeneratorExtern_test.cpp
     )
 
     add_executable(logic_test ${LOGIC_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})

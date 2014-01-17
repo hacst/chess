@@ -196,7 +196,7 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
     }
 }
 
-TEST(ChessBoard, EnPassant) {
+TEST(ChessBoard, EnPassant_1) {
     ChessBoard cb;
     ASSERT_EQ(ERR, cb.getEnPassantSquare());
 
@@ -215,6 +215,20 @@ TEST(ChessBoard, EnPassant) {
     }
     cb.applyTurn(Turn::move(Piece(cb.getNextPlayer(), Pawn), A4, A5));
     ASSERT_EQ(ERR, cb.getEnPassantSquare());
+}
+
+TEST(ChessBoard, EnPassant_2) {
+    ChessBoard cb1(generateChessBoard({PoF(Piece(White, Pawn), C2),
+                                       PoF(Piece(Black, Pawn), D4)}, White));
+    ASSERT_EQ(ERR, cb1.getEnPassantSquare());
+    cb1.applyTurn(Turn::move(Piece(cb1.getNextPlayer(), Pawn), C2, C4));
+    ASSERT_EQ(cb1.getEnPassantSquare(), C3);
+    cb1.applyTurn(Turn::move(Piece(cb1.getNextPlayer(), Pawn), D4, C3));
+    ASSERT_EQ(ERR, cb1.getEnPassantSquare());
+
+    ChessBoard cb2(generateChessBoard({PoF(Piece(Black, Pawn), C3)},
+                                      cb1.getNextPlayer()));
+    EXPECT_EQ(cb2, cb1);
 }
 
 TEST(ChessBoard, CastlingRights) {

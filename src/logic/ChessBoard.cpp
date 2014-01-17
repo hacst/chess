@@ -15,7 +15,11 @@ ChessBoard::ChessBoard()
   Piece(Black, Rook), Piece(Black, Knight), Piece(Black, Bishop), Piece(Black, Queen), Piece(Black, King), Piece(Black, Bishop), Piece(Black, Knight), Piece(Black, Rook) }
                  }, White, {{true, true}}, {{true,true}}, ERR, 0, 1)
 {
-    // Empty
+    m_kingInCheck[White] = false;
+    m_kingInCheck[Black] = false;
+    m_stalemate = false;
+    m_checkmate[White] = false;
+    m_checkmate[Black] = false;
 }
 
 ChessBoard::ChessBoard(std::array<Piece, 64> board,
@@ -25,7 +29,6 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
                        Field enPassantSquare,
                        int halfMoveClock,
                        int fullMoveClock)
-
     : m_shortCastleRight(shortCastleRight)
     , m_longCastleRight(longCastleRight)
     , m_enPassantSquare(enPassantSquare)
@@ -35,6 +38,11 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
     , m_evaluator(board)
     , m_hasher() {
 
+    m_kingInCheck[White] = false;
+    m_kingInCheck[Black] = false;
+    m_stalemate = false;
+    m_checkmate[White] = false;
+    m_checkmate[Black] = false;
     initBitBoards(board);
 }
 
@@ -59,81 +67,42 @@ void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
     m_hasher = IncrementalZobristHasher(*this);
 }
 
-PlayerColor ChessBoard::getNextPlayer() const {
-    return m_nextPlayer;
-}
-
 void ChessBoard::updateBitBoards() {
-    m_bb[White][AllPieces] = m_bb[White][King]   | m_bb[White][Queen] | m_bb[White][Bishop] |
-                           m_bb[White][Knight] | m_bb[White][Rook]  | m_bb[White][Pawn];
-    m_bb[Black][AllPieces] = m_bb[Black][King]   | m_bb[Black][Queen] | m_bb[Black][Bishop] |
-                           m_bb[Black][Knight] | m_bb[Black][Rook]  | m_bb[Black][Pawn];
+    m_bb[White][AllPieces] = m_bb[White][King]   | m_bb[White][Queen] |
+                             m_bb[White][Bishop] | m_bb[White][Knight] |
+                             m_bb[White][Rook]   | m_bb[White][Pawn];
+    m_bb[Black][AllPieces] = m_bb[Black][King]   | m_bb[Black][Queen] |
+                             m_bb[Black][Bishop] | m_bb[Black][Knight] |
+                             m_bb[Black][Rook]   | m_bb[Black][Pawn];
 }
-
-
 
 void ChessBoard::applyTurn(const Turn& turn) {
-    if (m_enPassantSquare != ERR) {
-        m_hasher.clearedEnPassantSquare(m_enPassantSquare);
-        m_enPassantSquare = ERR; // Void en passant rights
-    }
-
     ++m_halfMoveClock;
-    
+
     if (turn.action == Turn::Action::Move) {
-        updateCastlingRights(turn);
-
-        BIT_CLEAR(m_bb[turn.piece.player][turn.piece.type], turn.from);
-        BIT_SET  (m_bb[turn.piece.player][turn.piece.type], turn.to);
-
-        m_evaluator.moveIncrement(turn);
-        m_hasher.moveIncrement(turn);
-
-        if (m_enPassantSquare == turn.to) {
-            // TODO: en passant
-        }
-        
-        const PlayerColor opp = togglePlayerColor(turn.piece.player);
-        if (BIT_ISSET(m_bb[opp][AllPieces], turn.to)) {
-            for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
-                if (BIT_ISSET(m_bb[opp][pieceType], turn.to)) {
-                    BIT_CLEAR(m_bb[opp][pieceType], turn.to);
-                    const Piece capturedPiece(opp, (PieceType) pieceType);
-                    m_capturedPieces.push_back(capturedPiece);
-                    
-                    m_halfMoveClock = 0;
-                    m_evaluator.captureIncrement(turn.to, capturedPiece);
-                    m_hasher.captureIncrement(turn.to, capturedPiece);
-                    break;
-                }
-            }
-        }
-
-        if (turn.piece.type == Pawn) {
-            m_halfMoveClock = 0;
-            
-            const Rank fromRank = rankFor(turn.from);
-            const Rank toRank =  rankFor(turn.to);
-            
-            if (fromRank == Two && toRank == Four) {
-                m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(fromRank));
-                m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
-            } else if (fromRank == Seven && toRank == Five) {
-                m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(toRank));
-                m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
-            }
-        }
-    } else if (turn.action == Turn::Action::Forfeit) {
-        //TODO: Do something
+        applyMoveTurn(turn);
     } else if (turn.action == Turn::Action::Castle) {
-        //TODO: Castle and update castling rights
-        updateCastlingRights(turn);
+        applyCastleTurn(turn);
+
+    } else if (turn.action == Turn::Action::PromotionQueen) {
+        applyPromotionTurn(turn, Queen);
+    } else if (turn.action == Turn::Action::PromotionBishop) {
+        applyPromotionTurn(turn, Bishop);
+    } else if (turn.action == Turn::Action::PromotionRook) {
+        applyPromotionTurn(turn, Rook);
+    } else if (turn.action == Turn::Action::PromotionKnight) {
+        applyPromotionTurn(turn, Knight);
+
+    } else if (turn.action == Turn::Action::Forfeit) {
+        //TODO: add a Action::forfeit turn to each generated turn list?
     } else {
         // Assume passed
     }
 
+    updateEnPassantSquare(turn);
     updateBitBoards();
 
+    // select next player
     if (m_nextPlayer == White) {
         m_nextPlayer = Black;
     } else {
@@ -143,26 +112,161 @@ void ChessBoard::applyTurn(const Turn& turn) {
     m_hasher.turnAppliedIncrement();
 }
 
+void ChessBoard::applyMoveTurn(const Turn& turn) {
+    const PlayerColor opp = togglePlayerColor(turn.piece.player);
+    updateCastlingRights(turn);
+
+    BIT_CLEAR(m_bb[turn.piece.player][turn.piece.type], turn.from);
+    BIT_SET  (m_bb[turn.piece.player][turn.piece.type], turn.to);
+
+    m_evaluator.moveIncrement(turn);
+    m_hasher.moveIncrement(turn);
+
+    if (BIT_ISSET(m_bb[opp][AllPieces], turn.to)) {
+        capturePiece(turn);
+
+    } else if (m_enPassantSquare == turn.to) {
+        const Rank rank = rankFor(m_enPassantSquare);
+        const Piece capturedPiece(opp, Pawn);
+        Field field;
+        if (opp == White) {
+            field = fieldFor(fileFor(m_enPassantSquare), nextRank(rank));
+        } else {
+            field = fieldFor(fileFor(m_enPassantSquare), prevRank(rank));
+        }
+
+        addCapturedPiece(capturedPiece, field);
+    }
+}
+
+void ChessBoard::applyCastleTurn(const Turn& turn) {
+    m_halfMoveClock = 0;
+    updateCastlingRights(turn);
+
+    Field from, to;
+
+    if (turn.piece.type == King) {
+        BIT_CLEAR(m_bb[turn.piece.player][King], turn.from);
+        BIT_SET  (m_bb[turn.piece.player][King], turn.to);
+
+        if (turn.to == G1) { // short castle, white
+            from = H1;
+            to = F1;
+        } else if (turn.to == G8) { // short castle, black
+            from = H8;
+            to = F8;
+        } else if (turn.to == C1) { // long castle, white
+            from = A1;
+            to = D1;
+        } else if (turn.to == C8) { // long castle, black
+            from = A8;
+            to = D8;
+        }
+
+        BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
+        BIT_SET  (m_bb[turn.piece.player][Rook], to);
+
+    } else { // Rook
+        BIT_CLEAR(m_bb[turn.piece.player][Rook], turn.from);
+        BIT_SET  (m_bb[turn.piece.player][Rook], turn.to);
+
+        if (turn.to == F1) { // short castle, white
+            from = E1;
+            to = G1;
+        } else if (turn.to == G8) { // short castle, black
+            from = E8;
+            to = G8;
+        } else if (turn.to == C1) { // long castle, white
+            from = E1;
+            to = C1;
+        } else if (turn.to == C8) { // long castle, black
+            from = E8;
+            to = C8;
+        }
+
+        BIT_CLEAR(m_bb[turn.piece.player][King], from);
+        BIT_SET  (m_bb[turn.piece.player][King], to);
+    }
+
+    const PlayerColor opp = togglePlayerColor(turn.piece.player);
+    if (BIT_ISSET(m_bb[opp][AllPieces], turn.to)) capturePiece(turn);
+    if (BIT_ISSET(m_bb[opp][AllPieces], to))      capturePiece(turn);
+}
+
+void ChessBoard::applyPromotionTurn(const Turn& turn, const
+                                    PieceType pieceType) {
+    m_halfMoveClock = 0;
+
+    BIT_CLEAR(m_bb[turn.piece.player][turn.piece.type], turn.from);
+    BIT_SET  (m_bb[turn.piece.player][pieceType],       turn.to);
+
+    // TODO: update m_evaluator, m_hasher?
+}
+
+void ChessBoard::capturePiece(const Turn& turn) {
+    const PlayerColor opp = togglePlayerColor(turn.piece.player);
+
+    for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
+        if (BIT_ISSET(m_bb[opp][pieceType], turn.to)) {
+            const Piece capturedPiece(opp, (PieceType) pieceType);
+            addCapturedPiece(capturedPiece, turn.to);
+            break;
+        }
+    }
+}
+
+void ChessBoard::addCapturedPiece(const Piece capturedPiece, Field field) {
+    m_halfMoveClock = 0;
+
+    BIT_CLEAR(m_bb[capturedPiece.player][capturedPiece.type], field);
+    m_capturedPieces.push_back(capturedPiece);
+
+    m_evaluator.captureIncrement(field, capturedPiece);
+    m_hasher.captureIncrement(field, capturedPiece);
+}
+
+void ChessBoard::updateEnPassantSquare(const Turn &turn) {
+    if (m_enPassantSquare != ERR) {
+        m_hasher.clearedEnPassantSquare(m_enPassantSquare);
+        m_enPassantSquare = ERR; // Void en passant rights
+    }
+
+    const PlayerColor opp = togglePlayerColor(turn.piece.player);
+
+    if (turn.piece.type == Pawn) {
+        m_halfMoveClock = 0;
+        // check possible en passant turn for next player
+        const Rank fromRank = rankFor(turn.from);
+        const Rank toRank =  rankFor(turn.to);
+
+        if (fromRank == Two && toRank == Four) {
+            m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(fromRank));
+            m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
+        } else if (fromRank == Seven && toRank == Five) {
+            m_enPassantSquare = fieldFor(fileFor(turn.from), nextRank(toRank));
+            m_hasher.newEnPassantPossibility(turn, m_bb[opp][Pawn]);
+        }
+    }
+}
+
 void ChessBoard::updateCastlingRights(const Turn& turn) {
-    const auto prevLongCastleRight = m_longCastleRight;
+    const auto prevLongCastleRight  = m_longCastleRight;
     const auto prevShortCastleRight = m_shortCastleRight;
 
     if (turn.piece == Piece(White, Rook)) {
-        if (turn.from == A1) m_longCastleRight[White] = false;
+        if      (turn.from == A1) m_longCastleRight[White]  = false;
         else if (turn.from == H1) m_shortCastleRight[White] = false;
-
     } else if (turn.piece == Piece(White, King)) {
         m_shortCastleRight[White] = false;
-        m_longCastleRight[White] = false;
+        m_longCastleRight[White]  = false;
     }
 
     if (turn.piece == Piece(Black, Rook)) {
-        if (turn.from == A8) m_longCastleRight[Black] = false;
+        if      (turn.from == A8) m_longCastleRight[Black]  = false;
         else if (turn.from == H8) m_shortCastleRight[Black] = false;
-
     } else if (turn.piece == Piece(Black, King)) {
         m_shortCastleRight[Black] = false;
-        m_longCastleRight[Black] = false;
+        m_longCastleRight[Black]  = false;
     }
 
     m_hasher.updateCastlingRights(
@@ -199,13 +303,16 @@ std::vector<Piece> ChessBoard::getCapturedPieces() const {
     return m_capturedPieces;
 }
 
-
 bool ChessBoard::hasBlackPieces() const {
     return m_bb[Black][AllPieces] != 0;
 }
 
 bool ChessBoard::hasWhitePieces() const {
     return m_bb[White][AllPieces] != 0;
+}
+
+PlayerColor ChessBoard::getNextPlayer() const {
+    return m_nextPlayer;
 }
 
 //! Returns the current estimated score according to the internal estimator.
@@ -417,6 +524,30 @@ string ChessBoard::toFEN() const {
 
 Field ChessBoard::getEnPassantSquare() const {
     return m_enPassantSquare;
+}
+
+std::array<bool, NUM_PLAYERS> ChessBoard::getKingInCheck() const {
+    return m_kingInCheck;
+}
+
+void ChessBoard::setCheckmate(PlayerColor player, bool checkmate) {
+    m_checkmate[player] = checkmate;
+}
+
+std::array<bool, NUM_PLAYERS> ChessBoard::getCheckmate() const {
+    return m_checkmate;
+}
+
+void ChessBoard::setKingInCheck(PlayerColor player, bool kingInCheck) {
+    m_kingInCheck[player] = kingInCheck;
+}
+
+bool ChessBoard::getStalemate() const {
+    return m_stalemate;
+}
+
+void ChessBoard::setStalemate(bool stalemate) {
+    m_stalemate = stalemate;
 }
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {

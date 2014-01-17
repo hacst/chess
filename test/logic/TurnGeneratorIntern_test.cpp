@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <logic/GameState.h>
 #include "logic/TurnGenerator.h"
 
 TurnGenerator tGen;
@@ -231,42 +232,61 @@ BitBoard bbTurns_fine;
 /* TESTING calcKingTurns */
 TEST(TurnGenerator, calcKingTurns_A1) {
     bbKing = BB_SET(A1);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, 0);
     bbTurns_fine = generateBitBoard(B1, B2, A2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_H1) {
     bbKing = BB_SET(H1);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, 0);
     bbTurns_fine = generateBitBoard(G1, G2, H2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_A8) {
     bbKing = BB_SET(A8);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, 0);
     bbTurns_fine = generateBitBoard(B8, B7, A7, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_H8) {
     bbKing = BB_SET(H8);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, 0);
     bbTurns_fine = generateBitBoard(G8, G7, H7, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_C3) {
     bbKing = BB_SET(C3);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, 0);
     bbTurns_fine = generateBitBoard(D4, C4, B4, D3, B3, D2, C2, B2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_F4) {
     bbKing = BB_SET(F4);
     bbOwnPieces = generateBitBoard(C5, B3, E5, F5, F3, ERR);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, bbOwnPieces, true, true);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, bbOwnPieces, 0);
     bbTurns_fine = generateBitBoard(G5, G4, G3, E3, E4, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
+
+
 // TODO: test check and checkmate
+/*
+TEST(TurnGenerator, calcKingTurns_FilterCheckTurns) {
+    bbKing = BB_SET(F4);
+
+}
+
+// TEST(TurnGenerator, check_1)
+TEST(TurnGenerator, check_2) {
+    bbKing = BB_SET(E1);
+}
+*/
+
+
+
+
+
+
 
 
 
@@ -290,13 +310,13 @@ TEST(TurnGenerator, calcKnightTurns_All) {
 /* TESTING calcPawnTurns */
 TEST(TurnGenerator, calcPawnTurns_StartWhite) {
     bbPawns = generateBitBoard(A2, B2, C2, D2, E2, F2, G2, H2, ERR);
-    bb_calc = tGen.calcPawnTurns(bbPawns, 0, bbPawns, White);
+    bb_calc = tGen.calcPawnTurns(bbPawns, 0, bbPawns, White, ERR);
     bb_fine = tGen.maskRank(Three) + tGen.maskRank(Four);
     EXPECT_EQ(bb_calc, bb_fine);
 }
 TEST(TurnGenerator, calcPawnTurns_StartBlack) {
     bbPawns = generateBitBoard(A7, B7, C7, D7, E7, F7, G7, H7, ERR);
-    bb_calc = tGen.calcPawnTurns(bbPawns, 0, bbPawns, Black);
+    bb_calc = tGen.calcPawnTurns(bbPawns, 0, bbPawns, Black, ERR);
     bb_fine = tGen.maskRank(Six) + tGen.maskRank(Five);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -304,7 +324,7 @@ TEST(TurnGenerator, calcPawnTurns_AttackWhite_1) {
     bbPawns = BB_SET(A4);
     bbOppPieces = generateBitBoard(A5, B5, ERR);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, White);
+                                 bbPawns | bbOppPieces, White, ERR);
     bb_fine = BB_SET(B5);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -312,7 +332,7 @@ TEST(TurnGenerator, calcPawnTurns_AttackBlack_1) {
     bbPawns = BB_SET(A7);
     bbOppPieces = BB_SET(B6);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, Black);
+                                 bbPawns | bbOppPieces, Black, ERR);
     bb_fine = generateBitBoard(A6, A5, B6, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -320,7 +340,7 @@ TEST(TurnGenerator, calcPawnTurns_AttackWhite_2) {
     bbPawns = BB_SET(H2);
     bbOppPieces = BB_SET(G3);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, White);
+                                 bbPawns | bbOppPieces, White, ERR);
     bb_fine = generateBitBoard(G3, H3, H4, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -328,7 +348,7 @@ TEST(TurnGenerator, calcPawnTurns_AttackBlack_2) {
     bbPawns = BB_SET(H5);
     bbOppPieces = generateBitBoard(H4, G4, ERR);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, Black);
+                                 bbPawns | bbOppPieces, Black, ERR);
     bb_fine = BB_SET(G4);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -336,7 +356,7 @@ TEST(TurnGenerator, calcPawnTurns_AttackWhite_3) {
     bbPawns = BB_SET(D2);
     bbOppPieces = generateBitBoard(C3, E3, ERR);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, White);
+                                 bbPawns | bbOppPieces, White, ERR);
     bb_fine = generateBitBoard(C3, E3, D3, D4, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
 }
@@ -344,12 +364,28 @@ TEST(TurnGenerator, calcPawnTurns_AttackBlack_3) {
     bbPawns = BB_SET(C5);
     bbOppPieces = BB_SET(D4);
     bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, Black);
+                                 bbPawns | bbOppPieces, Black, ERR);
     bb_fine = generateBitBoard(D4, C4, ERR);
     EXPECT_EQ(bb_calc, bb_fine);
 }
-// TODO: test en passant
-
+TEST(TurnGenerator, calcPawnTurns_enPassantWhite) {
+    bbPawns = BB_SET(E5);
+    bbOppPieces = BB_SET(D5);
+    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
+                                 bbPawns | bbOppPieces, White, D6);
+    bb_fine = generateBitBoard(D6, E6, ERR);
+    EXPECT_EQ(bb_calc, bb_fine);
+}
+TEST(TurnGenerator, calcPawnTurns_enPassantBlack) {
+    bbPawns = BB_SET(C4);
+    bbOppPieces = generateBitBoard(B4, D3, ERR);
+    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
+                                 bbPawns | bbOppPieces, Black, B3);
+    bb_fine = generateBitBoard(B3, C3, D3, ERR);
+    EXPECT_EQ(bb_calc, bb_fine)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
 
 
 /* TESTING calcQueenTurns */
@@ -381,9 +417,6 @@ TEST(TurnGenerator, calcQueenTurns_stop) {
                                E3, F2, G1,       /* SE */
                                C3, ERR);         /* SW */
     EXPECT_EQ(bb_fine, bb_calc);
-
-    //LOG(trace) << bitBoardToString(bb_calc);
-    //LOG(trace) << bitBoardToString(bb_fine);
 }
 
 
@@ -419,7 +452,6 @@ TEST(TurnGenerator, calcBishopTurns_stopOppPieces) {
                                E1, ERR);   /* SW */
     EXPECT_EQ(bb_fine, bb_calc);
 }
-
 
 
 
@@ -515,79 +547,33 @@ TEST(TurnGenerator, calcRookTurns_misc_6) {
     bb_fine = 0;
     EXPECT_EQ(bb_fine, bb_calc);
 }
-
-
 /*
-LOG(trace) << bitBoardToString(bb_calc);
-LOG(trace) << bitBoardToString(bb_fine);
+TEST(TurnGenerator, calcRookTurns_misc_7) {
+    bbRooks = BB_SET(C8);
+    bb_calc = tGen.calcRookTurns(bbRooks, 0, bbRooks);
+    bb_fine = tGen.getBitsE(bbRooks);
+
+
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
 */
 
 
-
-
-
-
-
-/* TESTING the generated turns */
-std::vector<Turn> turns_calc;
-std::vector<Turn> turns_fine;
-
-TEST(TurnGenerator, generateTurns_1) {
-    ChessBoard cb(generateChessBoard({PoF(Piece(White, King), E1),
-                                     PoF(Piece(White, Pawn), E2),
-                                     PoF(Piece(Black, Pawn), F2)}));
-    turns_calc = tGen.generateTurns(White, cb);
-
-    turns_fine.clear();
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, F2));
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, D2));
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), E2, E3));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), E2, E4));
-
-    // TODO: FALSCH! Koenig steht im Schach und daher sind die
-    // gueltigen Turns nur:
-    //turns_fine.push_back(Turn::move(Piece(White, King), E1, F2));
-    //turns_fine.push_back(Turn::move(Piece(White, King), E1, D2));
-    //turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
-    //turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
-
-    EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true);
-}
-TEST(TurnGenerator, generateTurns_2) {
-    ChessBoard cb(generateChessBoard({PoF(Piece(White, King), E1),
-                                     PoF(Piece(White, Pawn), E2),
-                                     PoF(Piece(White, Pawn), F2)}));
-    turns_calc = tGen.generateTurns(White, cb);
-
-    turns_fine.clear();
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, D2));
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
-    turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), E2, E3));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), E2, E4));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), F2, F3));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), F2, F4));
-
-    EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true);
-
-
-    //LOG(trace) << cb;
-    //LOG(trace) << turnVecToString(turns_calc);
-}
-
-
-TEST(TurnGenerator, generateTurns_3) {
-    ChessBoard cb(generateChessBoard({PoF(Piece(White, Pawn), C5),
-                                     PoF(Piece(White, Pawn), D6)}));
-    turns_calc = tGen.generateTurns(White, cb);
-
-    turns_fine.clear();
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), C5, C6));
-    turns_fine.push_back(Turn::move(Piece(White, Pawn), D6, D7));
-
-    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine));
+TEST(TurnGenerator, calcAllOppTurns) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, Pawn), A7),
+                                     PoF(Piece(Black, Pawn), B7),
+                                     PoF(Piece(Black, Rook), B3)}));
+    bb_calc = tGen.calcAllOppTurns(Black, gs.getChessBoard());
+    //bb_fine = generateBitBoard(A6, A5, B6, B5, A3, B4, B5, B6, C3,
+    //                           D3, E3, F3, G3, H3, B2, B1, ERR);
+    bb_fine = generateBitBoard(A3, B4, B5, B6, C3,
+                               D3, E3, F3, G3, H3, B2, B1, ERR);
+    EXPECT_EQ(bb_calc, bb_fine)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
 }
 
 
@@ -615,9 +601,4 @@ TEST(TurnGenerator, calcPawnTurns_AttackWhite_6) {
     LOG(trace) << bitBoardToString(bb_calc);
     LOG(trace) << bitBoardToString(bb_fine);
 }
-*/
-
-/*
-LOG(trace) << cb;
-LOG(trace) << turnVecToString(turns_calc);
 */
