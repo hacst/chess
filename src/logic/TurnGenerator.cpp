@@ -1,7 +1,5 @@
 #include "TurnGenerator.h"
 
-// TODO: patt?
-
 std::vector<Turn> TurnGenerator::getTurnList() const {
     return turnList;
 }
@@ -13,7 +11,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
     Piece piece;
 
     BitBoard bbCurPieceType, bbCurPiece, bbTurns;
-    BitBoard bbAllTurns = 0;
+    //BitBoard bbAllTurns = 0;
     BitBoard bbShortCastleKingTurn = 0;
     BitBoard bbLongCastleKingTurn = 0;
     BitBoard bbAllPieces = cb.m_bb[White][AllPieces] | cb.m_bb[Black][AllPieces];
@@ -21,6 +19,11 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 
     turnList.clear();
 
+
+
+    // Der gegnerische King kann in keinem Fall im Schach stehen
+    // wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere
+    cb.setKingInCheck(opp, false);
 
 
     BitBoard bbKingInCheck = cb.m_bb[player][King] & bbAllOppTurns;
@@ -34,7 +37,11 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
         // TODO: Um die legalen Zuege der anderen Figuren
         // herauszufinden muss ein Halbzug in die Zukunft
         // geschaut werden
-
+        // welche gegnerische figur setzt den eigenen king in check?
+        // -> diese figur entweder schlagen oder den weg abschneiden
+        // -> von dieser figur brauch ich die position und die turns
+        //    bbPos und bbTurns
+        BitBoard bbUnCheckFields = calcUnCheckFields(opp, cb);
 
         // move turns
         for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
@@ -49,7 +56,11 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                 BIT_SET  (bbCurPiece,     curPiecePos);
 
                 bbTurns     = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
-                bbAllTurns |= bbTurns;
+                //bbAllTurns |= bbTurns;
+
+                if (pieceType != King) {
+                    bbTurns &= bbUnCheckFields;
+                }
 
                 vecMoveTurns = bitBoardToTurns(piece, (Field) curPiecePos, bbTurns);
                 turnList.insert(turnList.end(),
@@ -57,9 +68,6 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                                 vecMoveTurns.end());
             }
         }
-
-
-
 
 
         if (turnList.empty()) {
@@ -77,12 +85,12 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                                                          bbAllOppTurns);
             if (bbShortCastleKingTurn != 0) {
                 if (player == White) {
-                    BIT_SET(bbAllTurns, G1);
+                    //BIT_SET(bbAllTurns, G1);
                     //BIT_SET(bbAllTurns, F1);
                     turnList.push_back(Turn::castle(Piece(White, King), E1, G1));
                     turnList.push_back(Turn::castle(Piece(White, Rook), H1, F1));
                 } else {
-                    BIT_SET(bbAllTurns, G8);
+                    //BIT_SET(bbAllTurns, G8);
                     //BIT_SET(bbAllTurns, F8);
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, G8));
                     turnList.push_back(Turn::castle(Piece(Black, Rook), H8, F8));
@@ -97,12 +105,12 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                                                        bbAllOppTurns);
             if (bbLongCastleKingTurn != 0) {
                 if (player == White) {
-                    BIT_SET(bbAllTurns, C1);
+                    //BIT_SET(bbAllTurns, C1);
                     //BIT_SET(bbAllTurns, D1);
                     turnList.push_back(Turn::castle(Piece(White, King), E1, C1));
                     turnList.push_back(Turn::castle(Piece(White, Rook), A1, D1));
                 } else {
-                    BIT_SET(bbAllTurns, C8);
+                    //BIT_SET(bbAllTurns, C8);
                     //BIT_SET(bbAllTurns, D8);
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, C8));
                     turnList.push_back(Turn::castle(Piece(Black, Rook), A8, D8));
@@ -123,7 +131,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                 BIT_SET  (bbCurPiece,     curPiecePos);
 
                 bbTurns     = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
-                bbAllTurns |= bbTurns;
+                //bbAllTurns |= bbTurns;
 
                 vecMoveTurns = bitBoardToTurns(piece, (Field) curPiecePos, bbTurns);
                 turnList.insert(turnList.end(),
@@ -143,18 +151,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
         }
     }
 
-
-
-
-    // Gegnerischer King (noch) im Schach?
-    bbKingInCheck = cb.m_bb[opp][King] & bbAllTurns;
-    if (bbKingInCheck == cb.m_bb[opp][King]) {
-        // Kann nicht sein bzw. muss schon TRUE sein, da sich der gegnerische
-        // King nicht durch einen eigenen Zug in Schach bringen kann!
-        cb.setKingInCheck(opp, true);
-    } else {
-        cb.setKingInCheck(opp, false);
-    }
+    //turnList.push_back(Turn::Forfeit);
 }
 
 std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, Field from,
@@ -231,8 +228,67 @@ BitBoard TurnGenerator::calcMoveTurns(Piece piece,
     }
 }
 
+BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
+                                          const ChessBoard& cb) {
+    BitBoard bbUnCheckFields = 0;
+
+    Piece piece;
+    Field curPiecePos;
+    PlayerColor player = togglePlayerColor(opp);
+    BitBoard bbCurPieceType, bbCurPiece, bbTurns;
+
+    for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
+        piece.type   = (PieceType) pieceType;
+        piece.player = opp;
+
+        bbCurPieceType = cb.m_bb[opp][pieceType];
+
+
+        if (pieceType == Pawn || pieceType == Knight) {
+            // bei den nonsliding pieces ist das uncheckfield
+            // die position der figur
+            bbTurns = calcMoveTurns(piece, bbCurPieceType, 0, cb);
+
+            BitBoard bbKingInCheck = cb.m_bb[player][King] & bbTurns;
+            if (bbKingInCheck == cb.m_bb[player][King]) {
+                BIT_SET(bbUnCheckFields, BB_SCAN(bbCurPieceType));
+
+                //break;
+                return bbUnCheckFields;
+            }
+
+        } else {
+            // sliding pieces
+            while (bbCurPieceType != 0) {
+                bbCurPiece  = 0;
+                curPiecePos = BB_SCAN(bbCurPieceType);
+                BIT_CLEAR(bbCurPieceType, curPiecePos);
+                BIT_SET  (bbCurPiece,     curPiecePos);
+
+                // Setzt die Queen den King ins Schach?
+                if (pieceType == Queen) {
+                    bbTurns = calcMoveTurns(piece, bbCurPiece, 0, cb);
+
+                    BitBoard bbKingInCheck = cb.m_bb[player][King] & bbTurns;
+                    if (bbKingInCheck == cb.m_bb[player][King]) {
+
+                        BIT_SET(bbUnCheckFields, curPiecePos);
+
+                        //Field kingPos = BB_SCAN(cb.m_bb[player][King]);
+                        //bbTurns &= maskFile(fileFor(kingPos));
+                        //bbUnCheckFields |= bbTurns;
+                    }
+                }
+            }
+        }
+    }
+
+    return bbUnCheckFields;
+}
+
+
 BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
-                                        const ChessBoard &cb) {
+                                        const ChessBoard& cb) {
     Piece piece;
     Field curPiecePos;
     PlayerColor player = togglePlayerColor(opp);
@@ -269,9 +325,11 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
                                                  opp,
                                                  cb.m_enPassantSquare);
 
-        } else if (pieceType == Knight || pieceType == King) {
-            bbAllOppTurns |= calcMoveTurns(piece, bbCurPieceType, 0, cb);
+        } else if (pieceType == King) {
+            bbAllOppTurns |= calcKingTurns(bbCurPieceType, 0, 0);
 
+        } else if (pieceType == Knight) {
+            bbAllOppTurns |= calcKnightTurns(bbCurPieceType, 0);
 
         } else {
             // sliding pieces

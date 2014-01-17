@@ -21,6 +21,8 @@ public:
                                    BitBoard bbPiece,
                                    BitBoard bbAllOppTurns,
                                    const ChessBoard& cb);
+    virtual BitBoard calcUnCheckFields(PlayerColor opp,
+                                       const ChessBoard& cb);
     virtual BitBoard calcAllOppTurns(PlayerColor opp,
                                      const ChessBoard& cb);
     virtual BitBoard calcShortCastleTurns(PlayerColor player,

@@ -1,4 +1,5 @@
 #include "Turn.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -77,4 +78,12 @@ std::string turnVecToString(std::vector<Turn> v) {
     }
 
     return ss.str();
+}
+
+bool turnVecContains(std::vector<Turn> v, Turn t) {
+    if(std::find(v.begin(), v.end(), t) != v.end()) {
+        return true;
+    } else {
+        return false;
+    }
 }

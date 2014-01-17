@@ -214,15 +214,6 @@ TEST(TurnGeneratorExtern, generateTurns_PromotionCheck) {
     gs.applyTurn(Turn::move(Piece(Black, King), G8, G7));
     EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]) << gs;
 }
-TEST(TurnGeneratorExtern, generateTurns_PromotionCheckMate) {
-    GameState gs(generateChessBoard({PoF(Piece(Black, King), G8),
-                                     PoF(Piece(White, Pawn), B8),
-                                     PoF(Piece(White, Rook), D7),
-                                     PoF(Piece(White, Rook), G5)}));
-    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[Black]) << gs;
-    gs.applyTurn(Turn::promotionRook(Piece(White, Pawn), B8, B8));
-    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[Black]) << gs;
-}
 TEST(TurnGeneratorExtern, generateTurns_PromotionCheckAndCheckmate) {
     GameState gs(generateChessBoard({PoF(Piece(White, Pawn), B8),
                                      PoF(Piece(White, Queen), E6),
@@ -335,6 +326,48 @@ TEST(TurnGeneratorExtern, generateTurns_FilterCheckTurns_Queen) {
             << gs << turnVecToString(turns_calc);
 }
 
+
+
+
+TEST(TurnGeneratorExtern, generateTurns_FilterCheckTurns_Pawn) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(White, Rook), F2),
+                                     PoF(Piece(Black, Pawn), D2)}));
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+
+    turns_calc = gs.getTurnList();
+    turns_fine.clear();
+
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, E2));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, D2));
+    turns_fine.push_back(Turn::move(Piece(White, Rook), F2, D2));
+
+    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
+            << gs << turnVecToString(turns_calc);
+}
+TEST(TurnGeneratorExtern, generateTurns_FilterCheckTurns_Knight) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(White, Rook), F3),
+                                     PoF(Piece(Black, Knight), D3)}));
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+
+    turns_calc = gs.getTurnList();
+    turns_fine.clear();
+
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, D2));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, E2));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
+    turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
+    turns_fine.push_back(Turn::move(Piece(White, Rook), F3, D3));
+
+    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
+            << gs << turnVecToString(turns_calc);
+}
+
+
+
 TEST(TurnGeneratorExtern, generateTurns_FilterCheckTurns_Rook_2) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(White, Rook), C2),
@@ -369,8 +402,14 @@ TEST(TurnGeneratorExtern, generateTurns_FilterCheckTurns_misc) {
     turns_fine.push_back(Turn::move(Piece(White, Knight), G1, E2));
     turns_fine.push_back(Turn::move(Piece(White, Rook), D2, E2));
 
+    TurnGenerator tGen;
+    BitBoard bbUnCheckFields = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+
     EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
-            << gs << turnVecToString(turns_calc);
+            << gs << turnVecToString(turns_calc) << bitBoardToString(bbUnCheckFields);
+
+    EXPECT_FALSE(true)
+            << gs << turnVecToString(turns_calc) << bitBoardToString(bbUnCheckFields);
 }
 
 
@@ -399,14 +438,56 @@ TEST(TurnGeneratorExtern, generateTurns_Checkmate_1) {
     EXPECT_TRUE(gs.getChessBoard().getCheckmate()[Black]);
 }
 TEST(TurnGeneratorExtern, generateTurns_Checkmate_2) {
-    GameState gs(generateChessBoard({PoF(Piece(Black, King), A8),
-                                     PoF(Piece(White, Rook), F8),
-                                     PoF(Piece(White, Rook), D6)}));
-    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[Black]);
-    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
-    gs.applyTurn(Turn::move(Piece(White, Rook), D6, D7));
-    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[Black]);
+    GameState gs(generateChessBoard({PoF(Piece(Black, King), H8),
+                                     PoF(Piece(White, King), G6),
+                                     PoF(Piece(White, Queen), B7)}));
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]) << gs;
+    gs.applyTurn(Turn::move(Piece(White, Queen), B7, C8));
+    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[Black]) << gs;
 }
+TEST(TurnGeneratorExtern, generateTurns_Checkmate_3) {
+    GameState gs(generateChessBoard({PoF(Piece(Black, King), H8),
+                                     PoF(Piece(White, King), G6),
+                                     PoF(Piece(White, Queen), B7)}));
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]) << gs;
+    gs.applyTurn(Turn::move(Piece(White, Queen), B7, G7));
+    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[Black]) << gs;
+}
+TEST(TurnGeneratorExtern, generateTurns_FoolCheckmate) {
+    GameState gs(ChessBoard::fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+
+    Turn turn = Turn::move(Piece(White, Pawn), F2, F3);
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turnVecContains(turns_calc, turn));
+    gs.applyTurn(turn);
+
+    turn = Turn::move(Piece(Black, Pawn), E7, E6);
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turnVecContains(turns_calc, turn));
+    gs.applyTurn(turn);
+
+    turn = Turn::move(Piece(White, Pawn), G2, G4);
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turnVecContains(turns_calc, turn));
+    gs.applyTurn(turn);
+
+    turn = Turn::move(Piece(Black, Queen), D8, H4);
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turnVecContains(turns_calc, turn));
+    gs.applyTurn(turn);
+
+
+    TurnGenerator tGen;
+    BitBoard bbUnCheckFields = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[White])
+            << gs << turnVecToString(turns_calc) << bitBoardToString(bbUnCheckFields);
+
+    EXPECT_FALSE(true)
+            << gs << turnVecToString(turns_calc) << bitBoardToString(bbUnCheckFields);
+}
+
 
 
 //TurnGenerator tGen;
@@ -420,5 +501,3 @@ TEST(TurnGeneratorExtern, generateTurns_deathPosition) {
     // tote Stellung? Beispiele auf http://de.wikipedia.org/wiki/Tote_Stellung
 }
 */
-
-
