@@ -10,7 +10,6 @@
 #include <cassert>
 #include "misc/helper.h"
 
-
 const int NUM_FIELDS = 64;
 const int NUM_FILES = 8;
 const int NUM_RANKS = 8;
@@ -43,6 +42,12 @@ enum PieceType {
 enum PlayerColor {
     White, Black, NoPlayer
 };
+
+using Score = int;
+// Provide MAX_SCORE/MIN_SCORE to ensure that both are negatable to reach each other
+const Score MAX_SCORE = std::numeric_limits<Score>::max();
+const Score MIN_SCORE = -std::numeric_limits<Score>::max();
+
 
 //! Toggles player color between white and black
 inline PlayerColor togglePlayerColor(PlayerColor color) {

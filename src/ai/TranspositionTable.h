@@ -3,10 +3,10 @@
 
 #include <array>
 #include <boost/optional.hpp>
+#include <sstream>
 
 #include "logic/ChessTypes.h"
 #include "logic/Turn.h"
-#include "logic/interface/AbstractEvaluator.h"
 
 /**
  * @brief Single entry in transposition table
@@ -28,6 +28,18 @@ struct TranspositionTableEntry {
     bool isLowerBound() const { return boundType == LOWER; }
     bool isUpperBound() const { return boundType == UPPER; }
     bool isExactBound() const { return boundType == EXACT; }
+    
+    std::string toString() const {
+        std::stringstream ss;
+        ss << std::hex << "0x" << hash << std::dec << " " << turn
+           << " Score est.: " << score;
+        if (boundType == LOWER) ss << " LOWER";
+        else if (boundType == UPPER) ss << " UPPER";
+        else ss << " EXACT";
+        ss << " from depth " << depth;
+        
+        return ss.str();
+    }
 };
 
 /**

@@ -10,7 +10,6 @@
 
 #include "misc/helper.h"
 #include "ai/TranspositionTable.h"
-#include "logic/interface/AbstractEvaluator.h"
 #include "logic/GameState.h"
 #include "core/Logging.h"
 
@@ -193,7 +192,7 @@ private:
                     beta = std::min(beta, tableEntry->score);
                 }
                 
-                if (alpha > beta) {
+                if (alpha >= beta) {
                     return { tableEntry->score, tableEntry->turn };
                 }
             }

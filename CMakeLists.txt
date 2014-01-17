@@ -136,8 +136,8 @@ set(LOGIC_SOURCES
     src/logic/TurnGenerator.cpp
     src/logic/Turn.h
     src/logic/Turn.cpp
-    src/logic/Evaluators.h
-    src/logic/Evaluators.cpp
+    src/logic/IncrementalMaterialAndPSTEvaluator.h
+    src/logic/IncrementalMaterialAndPSTEvaluator.cpp
     src/logic/IncrementalZobristHasher.h
     src/logic/IncrementalZobristHasher.cpp
 )
@@ -150,7 +150,6 @@ set(LOGIC_INTERFACE_SOURCES
     src/logic/interface/AbstractPlayer.h
     src/logic/interface/AbstractGameLogic.h
     src/logic/interface/AbstractTurnGenerator.h
-    src/logic/interface/AbstractEvaluator.h
 )
 
 source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})

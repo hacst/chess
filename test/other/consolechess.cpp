@@ -4,7 +4,6 @@
 #include <boost/program_options.hpp>
 
 #include "misc/helper.h"
-#include "logic/Evaluators.h"
 #include "ai/Negamax.h"
 #include "core/Logging.h"
 

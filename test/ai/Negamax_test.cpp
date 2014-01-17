@@ -3,7 +3,7 @@
 #include <vector>
 #include <random>
 #include "ai/Negamax.h"
-#include "logic/Evaluators.h"
+#include "logic/IncrementalMaterialAndPSTEvaluator.h"
 #include "misc/helper.h"
 #include "misc/DebugTools.h"
 
@@ -145,10 +145,10 @@ TEST(Negamax, DISABLED_searchRelaxationUneven) {
 
 
 TEST(Negamax, AlphaBetaCutoff) {
-    const unsigned int TRIES = 3;
+    const unsigned int TRIES = 5;
 
     mt19937 rng(1234);
-    uniform_int_distribution<size_t> depthDist(2, 3);
+    uniform_int_distribution<size_t> depthDist(3, 4);
 
     for (size_t i = 0; i < TRIES; ++i) {
         Negamax<GameState, false, false, false> negamax;
@@ -168,3 +168,105 @@ TEST(Negamax, AlphaBetaCutoff) {
 
 }
 
+TEST(Negamax, TranspositionTableWithMoveOrdering) {
+    const unsigned int TRIES = 5;
+    
+    mt19937 rng(3124);
+    uniform_int_distribution<size_t> depthDist(3,4);
+    for (size_t i = 0; i < TRIES; ++i) {
+        Negamax<GameState, true, false, false> negamaxAB;
+        Negamax<GameState, true, true, true> negamaxTTMO;
+        
+        GameState gs(generateRandomBoard(50, rng));
+        
+        const size_t depth = depthDist(rng);
+        auto withTTMO = negamaxTTMO.search(gs, depth);
+        auto ttdur = negamaxTTMO.m_counters.duration;
+        auto withTTMO2 = negamaxTTMO.search(gs,depth);
+        EXPECT_GT(ttdur, negamaxTTMO.m_counters.duration);
+        EXPECT_LT(0, negamaxTTMO.m_counters.transpositionTableHits);
+        
+        auto withoutTTMO = negamaxAB.search(gs, depth);
+        EXPECT_GT(negamaxAB.m_counters.duration, negamaxTTMO.m_counters.duration);
+        EXPECT_EQ(0, negamaxAB.m_counters.transpositionTableHits);
+        
+        EXPECT_EQ(withoutTTMO.score, withTTMO.score)
+                << "With TT: " << withTTMO << endl
+                << "Without TT: " << withoutTTMO << endl
+                << "Base state (" << i << "): " << gs << endl
+                << "Depth: " << depth << endl;
+        
+        EXPECT_EQ(withTTMO, withTTMO2)
+                << "Base state (" << i << "): " << gs << endl
+                << "Depth: " << depth << endl;
+    }
+}
+
+
+TEST(Negamax, TranspositionTable) {
+    const unsigned int TRIES = 5;
+    
+    mt19937 rng(3124);
+    uniform_int_distribution<size_t> depthDist(3,4);
+    for (size_t i = 0; i < TRIES; ++i) {
+        Negamax<GameState, true, false, false> negamaxAB;
+        Negamax<GameState, true, false, true> negamaxTT;
+        
+        GameState gs(generateRandomBoard(50, rng));
+        
+        const size_t depth = depthDist(rng);
+        auto withTT = negamaxTT.search(gs, depth);
+        auto ttdur = negamaxTT.m_counters.duration;
+        auto withTT2 = negamaxTT.search(gs,depth);
+        EXPECT_GT(ttdur, negamaxTT.m_counters.duration);
+        EXPECT_LT(0, negamaxTT.m_counters.transpositionTableHits);
+        
+        auto withoutTT = negamaxAB.search(gs, depth);
+        EXPECT_GT(negamaxAB.m_counters.duration, negamaxTT.m_counters.duration);
+        EXPECT_EQ(0, negamaxAB.m_counters.transpositionTableHits);
+        
+        EXPECT_EQ(withoutTT, withTT)
+                << " Base state (" << i << "): " << gs << endl;
+        EXPECT_EQ(withTT, withTT2)
+                << "Base state (" << i << "): " << gs << endl;
+    }
+}
+
+
+TEST(Negamax, MoveOrdering) {
+    const unsigned int TRIES = 5;
+    
+    mt19937 rng(3124);
+    uniform_int_distribution<size_t> depthDist(3,4);
+    for (size_t i = 0; i < TRIES; ++i) {
+        Negamax<GameState, true, false, false> negamaxAB;
+        Negamax<GameState, true, true, false> negamaxMO;
+        
+        GameState gs(generateRandomBoard(50, rng));
+        
+        const size_t depth = depthDist(rng);
+        auto withMO = negamaxMO.search(gs, depth);        
+        auto withoutMO = negamaxAB.search(gs, depth);
+        
+        EXPECT_EQ(withoutMO.score, withMO.score)
+                << "Base state (" << i << "): " << gs << endl;
+    }
+}
+
+TEST(Negamax, TTMORegression) {
+    const int depth = 4;
+    //GameState gs(ChessBoard::fromFEN("rNb4N/2p2k1p/6nb/pP3p2/2Q2B2/1P1P3P/P3P1q1/R2K1BR1 b - - 0 25"));
+    // Reduced to:
+    GameState gs(ChessBoard::fromFEN("8/2p2k1p/8/8/8/8/8/3K1BR1 b - - 0 25"));
+    Negamax<GameState, true, false, false> negamaxAB;
+    Negamax<GameState, true, true, true> negamaxTTMO;
+    auto withTTMO = negamaxTTMO.search(gs, depth);
+    auto withoutTTMO = negamaxAB.search(gs, depth);
+    
+    EXPECT_EQ(withoutTTMO.score, withTTMO.score)
+            << "With TT: " << withTTMO << endl
+            << "Without TT: " << withoutTTMO << endl
+            << "Base state: " << gs << endl
+            << "Depth: " << depth << endl;
+    
+}
