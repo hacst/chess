@@ -21,8 +21,8 @@ int main(int argn, char **argv) {
     desc.add_options()
         ("help", "Print help message")
         ("turns", po::value<int>()->default_value(numeric_limits<int>::max()), "Number of turns after which to abort game")
-        ("depthw", po::value<int>()->default_value(6), "Search depth for Negamax search for White player")
-        ("depthb", po::value<int>()->default_value(6), "Search depth for Negamax search for Black player")
+        ("depthw", po::value<int>()->default_value(4), "Search depth for Negamax search for White player")
+        ("depthb", po::value<int>()->default_value(4), "Search depth for Negamax search for Black player")
         ("delay", po::value<int>()->default_value(0), "Sleep in ms between moves")
         ;
 
@@ -60,6 +60,7 @@ int main(int argn, char **argv) {
         GLOG(info) << "Calculating turn " << i << "...";
 
         PlayerColor next = gameState.getNextPlayer();
+        PlayerColor opp = togglePlayerColor(next);
         const int depth = (next == White) ? depthWhite : depthBlack;
         auto result = negamax[next].search(gameState, depth);
         GLOG(info) << "Completed calculation";
@@ -74,7 +75,19 @@ int main(int argn, char **argv) {
         GLOG(info) << "Score: " << result.score;
 
         gameState.applyTurn(turn);
-        GLOG(debug) << gameState.getChessBoard();
+        GLOG(info) << gameState.getChessBoard();
+
+        if (gameState.getChessBoard().getKingInCheck()[opp]) {
+            GLOG(info) << "Player " << opp << " in CHECK";
+        }
+        if (gameState.getChessBoard().getStalemate()) {
+            GLOG(info) << "Stalemate, NO WINNER, GAME OVER";
+            break;
+        }
+        if (gameState.getChessBoard().getCheckmate()[opp]) {
+            GLOG(info) << opp << " is checkmate, " << next << " is the WINNER, GAME OVER";
+            break;
+        }
 
         if (delay != 0) {
             this_thread::sleep_for(milliseconds(delay));

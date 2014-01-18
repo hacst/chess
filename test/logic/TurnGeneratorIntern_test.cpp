@@ -72,6 +72,11 @@ TEST(TurnGenerator, getBitsE_3) {
     bb_fine = 0;
     EXPECT_EQ(bb_calc, bb_fine);
 }
+TEST(TurnGenerator, getBitsE_4) {
+    bb_calc = tGen.getBitsE(BB_SET(C8));
+    bb_fine = generateBitBoard(D8, E8, F8, G8, H8, ERR);
+    EXPECT_EQ(bb_calc, bb_fine);
+}
 TEST(TurnGenerator, getBitsW_1) {
     bb_calc = tGen.getBitsW(BB_SET(D4));
     bb_fine = generateBitBoard(A4, B4, C4, ERR);
@@ -267,26 +272,14 @@ TEST(TurnGenerator, calcKingTurns_F4) {
     bbTurns_fine = generateBitBoard(G5, G4, G3, E3, E4, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
-
-
-// TODO: test check and checkmate
-/*
 TEST(TurnGenerator, calcKingTurns_FilterCheckTurns) {
     bbKing = BB_SET(F4);
-
+    bbOwnPieces = BB_SET(E4);
+    BitBoard bbOppTurns = generateBitBoard(G6, G5, G4, G3, ERR);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, bbKing | bbOwnPieces, bbOppTurns);
+    bbTurns_fine = generateBitBoard(F5, E5, E3, F3, ERR);
+    EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
-
-// TEST(TurnGenerator, check_1)
-TEST(TurnGenerator, check_2) {
-    bbKing = BB_SET(E1);
-}
-*/
-
-
-
-
-
-
 
 
 
@@ -547,29 +540,17 @@ TEST(TurnGenerator, calcRookTurns_misc_6) {
     bb_fine = 0;
     EXPECT_EQ(bb_fine, bb_calc);
 }
-/*
-TEST(TurnGenerator, calcRookTurns_misc_7) {
-    bbRooks = BB_SET(C8);
-    bb_calc = tGen.calcRookTurns(bbRooks, 0, bbRooks);
-    bb_fine = tGen.getBitsE(bbRooks);
 
 
-    EXPECT_EQ(bb_fine, bb_calc)
-            << "\nbb_calc: " << bitBoardToString(bb_calc)
-            << "\nbb_fine: " << bitBoardToString(bb_fine);
-}
-*/
 
-
+/* TESTING calcAllOppTurns */
 TEST(TurnGenerator, calcAllOppTurns) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(Black, Pawn), A7),
                                      PoF(Piece(Black, Pawn), B7),
                                      PoF(Piece(Black, Rook), B3)}));
     bb_calc = tGen.calcAllOppTurns(Black, gs.getChessBoard());
-    //bb_fine = generateBitBoard(A6, A5, B6, B5, A3, B4, B5, B6, C3,
-    //                           D3, E3, F3, G3, H3, B2, B1, ERR);
-    bb_fine = generateBitBoard(A3, B4, B5, B6, C3,
+    bb_fine = generateBitBoard(A3, B4, B5, B6, C3, A6, C6,
                                D3, E3, F3, G3, H3, B2, B1, ERR);
     EXPECT_EQ(bb_calc, bb_fine)
             << "\nbb_calc: " << bitBoardToString(bb_calc)
@@ -577,28 +558,79 @@ TEST(TurnGenerator, calcAllOppTurns) {
 }
 
 
-/*
-TEST(TurnGenerator, calcPawnTurns_AttackWhite_5) {
-    bbPawns = generateBitBoard(F4, G5, ERR);
-    bbOppPieces = 0; //generateBitBoard(D6, ERR);
-    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, White);
-    bb_fine = generateBitBoard(F5, G6, ERR);
-    EXPECT_EQ(bb_calc, bb_fine);
 
-    LOG(trace) << bitBoardToString(bb_calc);
-    LOG(trace) << bitBoardToString(bb_fine);
+
+
+/* TESTING calcRookTurns */
+TEST(TurnGenerator, calcUnCheckFields_S) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, Queen), E7)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(E7, E6, E5, E4, E3, E2, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
 }
-
-TEST(TurnGenerator, calcPawnTurns_AttackWhite_6) {
-    bbPawns = generateBitBoard(F4, ERR);
-    bbOppPieces = generateBitBoard(G5, ERR);
-    bb_calc = tGen.calcPawnTurns(bbPawns, bbOppPieces,
-                                 bbPawns | bbOppPieces, White);
-    bb_fine = generateBitBoard(F5, G5, ERR);
-    EXPECT_EQ(bb_calc, bb_fine);
-
-    LOG(trace) << bitBoardToString(bb_calc);
-    LOG(trace) << bitBoardToString(bb_fine);
+TEST(TurnGenerator, calcUnCheckFields_SW) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, Queen), H4)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(H4, G3, F2, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
 }
-*/
+TEST(TurnGenerator, calcUnCheckFields_SE) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, Queen), A5)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(A5, B4, C3, D2, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcUnCheckFields_W) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), A4),
+                                     PoF(Piece(Black, Queen), E4)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(E4, D4, C4, B4, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcUnCheckFields_E) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), H6),
+                                     PoF(Piece(Black, Queen), B6)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(B6, C6, D6, E6, F6, G6, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcUnCheckFields_N) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E8),
+                                     PoF(Piece(Black, Queen), E3)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(E3, E4, E5, E6, E7, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcUnCheckFields_NW) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), B7),
+                                     PoF(Piece(Black, Queen), E4)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(E4, D5, C6, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
+TEST(TurnGenerator, calcUnCheckFields_NE) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), F8),
+                                     PoF(Piece(Black, Queen), D6)}));
+    bb_calc = tGen.calcUnCheckFields(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(D6, E7, ERR);
+    EXPECT_EQ(bb_fine, bb_calc)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}

@@ -11,39 +11,34 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
     Piece piece;
 
     BitBoard bbCurPieceType, bbCurPiece, bbTurns;
-    //BitBoard bbAllTurns = 0;
-    BitBoard bbShortCastleKingTurn = 0;
-    BitBoard bbLongCastleKingTurn = 0;
-    BitBoard bbAllPieces = cb.m_bb[White][AllPieces] | cb.m_bb[Black][AllPieces];
+    BitBoard bbAllPieces   = cb.m_bb[White][AllPieces] | cb.m_bb[Black][AllPieces];
     BitBoard bbAllOppTurns = calcAllOppTurns(opp, cb);
+    BitBoard bbKingInCheck = cb.m_bb[player][King] & bbAllOppTurns;
 
     turnList.clear();
 
-
-
     // Der gegnerische King kann in keinem Fall im Schach stehen
-    // wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere
+    // wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere,
+    // allerdings kann das Flag noch vom vorherigen Halbzug gesetzt sein,
+    // daher zuruecksetzen
     cb.setKingInCheck(opp, false);
 
 
-    BitBoard bbKingInCheck = cb.m_bb[player][King] & bbAllOppTurns;
+
     if (bbKingInCheck == cb.m_bb[player][King]) {
-        // nur zuege um aus dem schach rauszukommen, wenn keine
-        // gefunden -> spiel beendet
+        // Wenn King im Schach, dann nur Zuege berechnen um aus dem Schach
+        // raus zu kommen. Wenn keine Zuege gefunden -> Schachmatt
         cb.setKingInCheck(player, true);
 
-
-
-        // TODO: Um die legalen Zuege der anderen Figuren
-        // herauszufinden muss ein Halbzug in die Zukunft
-        // geschaut werden
-        // welche gegnerische figur setzt den eigenen king in check?
-        // -> diese figur entweder schlagen oder den weg abschneiden
-        // -> von dieser figur brauch ich die position und die turns
-        //    bbPos und bbTurns
+        // Um die legalen Zuege der Figuren (ausgenommen King)
+        // herauszufinden:
+        // Welche gegnerische Figur setzt den King ins Schach?
+        // -> Diese Figur entweder schlagen oder den Weg abschneiden
+        // -> Von dieser Figur wird also die Position benoetigt und (bei einem
+        //    sliding piece) die Turns, die ihm zum King fuehren (der "Weg")
         BitBoard bbUnCheckFields = calcUnCheckFields(opp, cb);
 
-        // move turns
+        // Normale Zugberechnung, ABER: Turns werden mit bbUnCheckFields verundet
         for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
             piece.type   = (PieceType) pieceType;
             piece.player = player;
@@ -54,9 +49,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                 curPiecePos = BB_SCAN(bbCurPieceType);
                 BIT_CLEAR(bbCurPieceType, curPiecePos);
                 BIT_SET  (bbCurPiece,     curPiecePos);
-
-                bbTurns     = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
-                //bbAllTurns |= bbTurns;
+                bbTurns = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
 
                 if (pieceType != King) {
                     bbTurns &= bbUnCheckFields;
@@ -75,23 +68,20 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
         }
 
     } else {
-        // normale zugberechnung, wenn keine zuege gefunden -> patt
+        // Normale Zugberechnung durchfuehren; werden keine Zuege gefunden
+        // liegt eine Pattstellung vor
         cb.setKingInCheck(player, false);
 
         // short castle turns
         if (cb.m_shortCastleRight[player]) {
-            bbShortCastleKingTurn = calcShortCastleTurns(player,
-                                                         bbAllPieces,
-                                                         bbAllOppTurns);
+            BitBoard bbShortCastleKingTurn = calcShortCastleTurns(player,
+                                                                  bbAllPieces,
+                                                                  bbAllOppTurns);
             if (bbShortCastleKingTurn != 0) {
                 if (player == White) {
-                    //BIT_SET(bbAllTurns, G1);
-                    //BIT_SET(bbAllTurns, F1);
                     turnList.push_back(Turn::castle(Piece(White, King), E1, G1));
                     turnList.push_back(Turn::castle(Piece(White, Rook), H1, F1));
                 } else {
-                    //BIT_SET(bbAllTurns, G8);
-                    //BIT_SET(bbAllTurns, F8);
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, G8));
                     turnList.push_back(Turn::castle(Piece(Black, Rook), H8, F8));
                 }
@@ -100,18 +90,14 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 
         // long castle turns
         if (cb.m_longCastleRight[player]) {
-            bbLongCastleKingTurn = calcLongCastleTurns(player,
-                                                       bbAllPieces,
-                                                       bbAllOppTurns);
+            BitBoard bbLongCastleKingTurn = calcLongCastleTurns(player,
+                                                                bbAllPieces,
+                                                                bbAllOppTurns);
             if (bbLongCastleKingTurn != 0) {
                 if (player == White) {
-                    //BIT_SET(bbAllTurns, C1);
-                    //BIT_SET(bbAllTurns, D1);
                     turnList.push_back(Turn::castle(Piece(White, King), E1, C1));
                     turnList.push_back(Turn::castle(Piece(White, Rook), A1, D1));
                 } else {
-                    //BIT_SET(bbAllTurns, C8);
-                    //BIT_SET(bbAllTurns, D8);
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, C8));
                     turnList.push_back(Turn::castle(Piece(Black, Rook), A8, D8));
                 }
@@ -129,9 +115,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                 curPiecePos = BB_SCAN(bbCurPieceType);
                 BIT_CLEAR(bbCurPieceType, curPiecePos);
                 BIT_SET  (bbCurPiece,     curPiecePos);
-
                 bbTurns     = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
-                //bbAllTurns |= bbTurns;
 
                 vecMoveTurns = bitBoardToTurns(piece, (Field) curPiecePos, bbTurns);
                 turnList.insert(turnList.end(),
@@ -228,65 +212,135 @@ BitBoard TurnGenerator::calcMoveTurns(Piece piece,
     }
 }
 
+// Berechnet die Felder, zu denen eine der eigenen Figuren ziehen muss
+// um den King aus dem Schach zu holen
 BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
                                           const ChessBoard& cb) {
-    BitBoard bbUnCheckFields = 0;
-
     Piece piece;
+    piece.player = opp;
     Field curPiecePos;
     PlayerColor player = togglePlayerColor(opp);
-    BitBoard bbCurPieceType, bbCurPiece, bbTurns;
+    BitBoard bbCurPieceType, bbCurPiece, bbTurns, bbKingInCheck;
+    BitBoard bbUnCheckFields = 0;
 
     for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
-        piece.type   = (PieceType) pieceType;
-        piece.player = opp;
-
+        piece.type     = (PieceType) pieceType;
         bbCurPieceType = cb.m_bb[opp][pieceType];
 
+        while (bbCurPieceType != 0) {
+            bbCurPiece  = 0;
+            curPiecePos = BB_SCAN(bbCurPieceType);
+            BIT_CLEAR(bbCurPieceType, curPiecePos);
+            BIT_SET  (bbCurPiece,     curPiecePos);
 
-        if (pieceType == Pawn || pieceType == Knight) {
-            // bei den nonsliding pieces ist das uncheckfield
-            // die position der figur
-            bbTurns = calcMoveTurns(piece, bbCurPieceType, 0, cb);
+            bbTurns = calcMoveTurns(piece, bbCurPiece, 0, cb);
+            bbKingInCheck = cb.m_bb[player][King] & bbTurns;
 
-            BitBoard bbKingInCheck = cb.m_bb[player][King] & bbTurns;
+            // Zunaechst herausfinden, welche gegnerische Figur den King
+            // ins Schach setzt
             if (bbKingInCheck == cb.m_bb[player][King]) {
-                BIT_SET(bbUnCheckFields, BB_SCAN(bbCurPieceType));
+                if (pieceType == Pawn || pieceType == Knight || pieceType == King) {
+                    // Bei den nonsliding pieces ist das gesuchte "unCheckField"
+                    // nur die Position der gegnerischen Figur
+                    BIT_SET(bbUnCheckFields, curPiecePos);
+                    return bbUnCheckFields;
 
-                //break;
-                return bbUnCheckFields;
-            }
+                } else {
+                    // Bei den sliding pieces kommen alle Felder in Frage, die der
+                    // gegnerischen Figur, die den King in Schach setzt, den Weg
+                    // "abschneiden" koennen.
 
-        } else {
-            // sliding pieces
-            while (bbCurPieceType != 0) {
-                bbCurPiece  = 0;
-                curPiecePos = BB_SCAN(bbCurPieceType);
-                BIT_CLEAR(bbCurPieceType, curPiecePos);
-                BIT_SET  (bbCurPiece,     curPiecePos);
 
-                // Setzt die Queen den King ins Schach?
-                if (pieceType == Queen) {
-                    bbTurns = calcMoveTurns(piece, bbCurPiece, 0, cb);
-
-                    BitBoard bbKingInCheck = cb.m_bb[player][King] & bbTurns;
-                    if (bbKingInCheck == cb.m_bb[player][King]) {
-
-                        BIT_SET(bbUnCheckFields, curPiecePos);
-
-                        //Field kingPos = BB_SCAN(cb.m_bb[player][King]);
-                        //bbTurns &= maskFile(fileFor(kingPos));
-                        //bbUnCheckFields |= bbTurns;
+                    // TODO: Die Pruefung kann eigentlich entfallen, da die
+                    // King-BitBoards immer != 0 sind. Nur aufgrund der Testfaelle
+                    // vorhanden.
+                    Field kingPos = ERR;
+                    if (cb.m_bb[player][King] != 0) {
+                        kingPos = BB_SCAN(cb.m_bb[player][King]);
                     }
+
+
+                    Rank kingRank = rankFor(kingPos);
+                    File kingFile = fileFor(kingPos);
+                    Rank pieceRank = rankFor(curPiecePos);
+                    File pieceFile = fileFor(curPiecePos);
+
+                    int dist = -10;
+                    int rankSign = -10;
+                    int fileSign = -10;
+
+                    if (kingRank < pieceRank) {
+                        // SW, S, SE
+                        dist = pieceRank - kingRank - 1;
+                        rankSign = -1;
+
+                        if (kingFile < pieceFile) {
+                            // SW
+                            fileSign = -1;
+                        } else if (kingFile == pieceFile) {
+                            // S
+                            fileSign = 0;
+                        } else if (kingFile > pieceFile) {
+                            // SE
+                            fileSign = 1;
+                        }
+
+                    } else if (kingRank == pieceRank) {
+                        // W, E
+                        rankSign = 0;
+
+                        if (kingFile < pieceFile) {
+                            // W
+                            dist = pieceFile - kingFile - 1;
+                            fileSign = -1;
+
+                        } else if (kingFile > pieceFile) {
+                            // E
+                            dist = kingFile - pieceFile - 1;
+                            fileSign = 1;
+                        }
+
+                    } else if (kingRank > pieceRank) {
+                        // NW, N, NE
+                        dist = kingRank - pieceRank - 1;
+                        rankSign = 1;
+
+                        if (kingFile < pieceFile) {
+                            // NW
+                            fileSign = -1;
+                        } else if (kingFile == pieceFile) {
+                            // N
+                            fileSign = 0;
+                        } else if (kingFile > pieceFile) {
+                            // NE
+                            fileSign = 1;
+                        }
+                    }
+
+                    int field = 0;
+                    for (int i = 1; i <= dist; i++) {
+                        field = (pieceRank + (i*rankSign)) * 8 +
+                                (pieceFile + (i*fileSign));
+                        BIT_SET(bbUnCheckFields, field);
+                    }
+
+                    // Und die Position der gegnerischen Figur
+                    BIT_SET(bbUnCheckFields, curPiecePos);
+
+                    return bbUnCheckFields;
                 }
             }
         }
     }
 
-    return bbUnCheckFields;
+    return 0;
 }
 
-
+// Berechnet alle Felder, die der Gegner momentan ANGREIFEN koennte, d.h.:
+// * bei den Pawns werden alle potenziellen Angriffszuege benoetigt; die
+//   einfachen Move-Turns der Pawns gehoeren nicht dazu!
+// * Bei den sliding pieces muessen auch die Felder berechnet werden,
+//   die "hinter" dem King liegen
 BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
                                         const ChessBoard& cb) {
     Piece piece;

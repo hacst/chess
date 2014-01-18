@@ -99,6 +99,8 @@ public:
 bool        turnVecCompare(const std::vector<Turn>& left, const std::vector<Turn>& right);
 /* function for printing all turns in the vector */
 std::string turnVecToString(std::vector<Turn> v);
+/* function determindes wheater the given vector is part of the other */
+bool        turnVecContains(std::vector<Turn> v, std::vector<Turn> other);
 /* function determines wheater the given vector contains the given turn or not */
 bool        turnVecContains(std::vector<Turn> v, Turn t);
 

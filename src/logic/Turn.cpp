@@ -80,6 +80,16 @@ std::string turnVecToString(std::vector<Turn> v) {
     return ss.str();
 }
 
+bool turnVecContains(std::vector<Turn> v, std::vector<Turn> other) {
+    for (Turn& turn: other) {
+        if (!turnVecContains(v, turn)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool turnVecContains(std::vector<Turn> v, Turn t) {
     if(std::find(v.begin(), v.end(), t) != v.end()) {
         return true;

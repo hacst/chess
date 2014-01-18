@@ -67,7 +67,7 @@ inline File fileFor(Field field) {
 
 //! Returns the Field identified by Rank and File
 inline Field fieldFor(File file, Rank rank) {
-    return static_cast<Field>(file + rank * 8);
+    return static_cast< Field>(file + rank * 8);
 }
 
 //! Flips the Rank of the given Field
