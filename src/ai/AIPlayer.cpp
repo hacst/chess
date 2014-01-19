@@ -148,8 +148,8 @@ void AIPlayer::searchForPromisedTurn() {
     boost::optional<Turn> turnWithFarthestHorizon;
     size_t iteration = 1;
 
-    while (canStayInState() && iteration <= m_config.maximumDepth) {
-        auto turn = performSearchIteration(iteration, m_gameState);
+    while (canStayInState(PLAYING) && iteration <= m_config.maximumDepth) {
+        auto turn = performSearchIteration(iteration, m_gameState, PLAYING);
         if (!turn) break;
 
         turnWithFarthestHorizon = turn;
@@ -165,6 +165,7 @@ void AIPlayer::searchForPromisedTurn() {
 }
 
 void AIPlayer::play() {
+    LOG(debug) << "Play called";
     setTimeLimit(m_maxTimeForTurn);
 
     if(!tryFindPromisedTurnInOpeningBook()) {
@@ -174,28 +175,29 @@ void AIPlayer::play() {
     changeState(PONDERING);
 }
 
-boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& state) {
+boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& state, States aiState) {
     LOG(info) << "Starting search of depth " << depth;
     
     future<NegamaxResult> result = async(launch::async, [&]{
         return m_negamax.search(state, depth);
     });
 
-    while (canStayInState()) {
+    while (canStayInState(aiState)) {
         future_status status = result.wait_for(milliseconds(50));
         if (status == future_status::ready) {
             return result.get().turn;
         }
     }
-
+    LOG(debug) << "Aborting search";
     m_negamax.abort();
     result.wait(); // Make sure we notice if our async thread hangs due to a bug.
+    LOG(debug) << "Joined search thread. Abort complete.";
 
     return boost::none;
 }
 
-bool AIPlayer::canStayInState() {
-    return chrono::high_resolution_clock::now() < m_timeoutExpirationTime && !m_leaveCurrentState;
+bool AIPlayer::canStayInState(States currentState) {
+    return chrono::high_resolution_clock::now() < m_timeoutExpirationTime && m_playerState == currentState;
 }
 
 void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
@@ -203,12 +205,14 @@ void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
 }
 
 void AIPlayer::ponder() {
+    LOG(debug) << "Ponder called";
+
     if (m_config.ponderDuringOpposingPly) {
         setTimeLimit(chrono::hours(2)); // Practically no limit
 
         performIterativeDeepening();
     } else {
-        while (canStayInState()) {
+        while (canStayInState(PONDERING)) {
             this_thread::sleep_for(milliseconds(100));
         }
     }
@@ -216,9 +220,9 @@ void AIPlayer::ponder() {
 
 void AIPlayer::performIterativeDeepening() {
     size_t iteration = 1;
-    while (canStayInState()
+    while (canStayInState(PONDERING)
         && iteration <= m_config.maximumDepth
-        && performSearchIteration(iteration, m_gameState)) {
+        && performSearchIteration(iteration, m_gameState, PONDERING)) {
 
         LOG(info) << "Pondered " << iteration << " plies deep";
         ++iteration;
@@ -227,8 +231,6 @@ void AIPlayer::performIterativeDeepening() {
 
 void AIPlayer::run() {
     while (m_playerState != STOPPED) {
-        m_leaveCurrentState = false;
-
         switch (m_playerState) {
         case PONDERING: ponder(); break;
         case PLAYING: play(); break;
@@ -250,10 +252,8 @@ void AIPlayer::changeState(States newState) {
     lock_guard<mutex> lock(m_stateMutex);
 
     if (m_playerState != newState && m_playerState != STOPPED) {
-        m_leaveCurrentState = true;
-        LOG(info) << "Now " << newState;
-
         m_playerState = newState;
+        LOG(info) << "Now " << newState;
     }
 }
 

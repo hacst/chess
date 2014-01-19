@@ -91,12 +91,13 @@ private:
      * @brief Performs an abortable negamax search up to the given depth.
      * @param depth Depth to search to.
      * @param state State to search from.
+     * @param aiState Current ai state for abortion checks
      * @return Turn if depth was reached. None otherwise.
      */
-    boost::optional<Turn> performSearchIteration(size_t depth, GameState& state);
+    boost::optional<Turn> performSearchIteration(size_t depth, GameState& state, States aiState);
 
     //! Returns false if a time limit expired or the current state must be left.
-    bool canStayInState();
+    bool canStayInState(States currentState);
     //! Sets a time limit that can be checked with @see canStayInState
     void setTimeLimit(std::chrono::milliseconds limit);
     
@@ -139,9 +140,6 @@ private:
 
     //! Timeout timer (@see setTimeLimit @see canStayInState)
     std::chrono::high_resolution_clock::time_point m_timeoutExpirationTime;
-
-    //! Event that cancels long-running tasks in the current state to end it.
-    std::atomic<bool> m_leaveCurrentState;
 
     //! AI configuration
     const AIConfiguration m_config;
