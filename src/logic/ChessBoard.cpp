@@ -149,6 +149,9 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
 
     BIT_CLEAR(m_bb[turn.piece.player][King], turn.from);
     BIT_SET  (m_bb[turn.piece.player][King], turn.to);
+    
+    m_hasher.moveIncrement(turn);
+    m_evaluator.moveIncrement(turn);
 
     if (turn.to == G1) { // short castle, white
         from = H1;
@@ -167,6 +170,9 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
     BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
     BIT_SET  (m_bb[turn.piece.player][Rook], to);
 
+    Turn rookTurn = Turn::move(Piece(turn.piece.player, Rook), from, to);
+    m_hasher.moveIncrement(rookTurn);
+    m_evaluator.moveIncrement(rookTurn);
 
     assert(!BIT_ISSET(m_bb[togglePlayerColor(turn.piece.player)][AllPieces], turn.to));
     assert(!BIT_ISSET(m_bb[togglePlayerColor(turn.piece.player)][AllPieces], to));
