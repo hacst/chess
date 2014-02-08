@@ -165,6 +165,7 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
         from = A8;
         to = D8;
     } else {
+        to = from = ERR;
         assert(false);
     }
 
