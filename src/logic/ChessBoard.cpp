@@ -145,48 +145,27 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
 
     Field from, to;
 
-    if (turn.piece.type == King) {
-        BIT_CLEAR(m_bb[turn.piece.player][King], turn.from);
-        BIT_SET  (m_bb[turn.piece.player][King], turn.to);
+    assert(turn.piece.type == King);
 
-        if (turn.to == G1) { // short castle, white
-            from = H1;
-            to = F1;
-        } else if (turn.to == G8) { // short castle, black
-            from = H8;
-            to = F8;
-        } else if (turn.to == C1) { // long castle, white
-            from = A1;
-            to = D1;
-        } else if (turn.to == C8) { // long castle, black
-            from = A8;
-            to = D8;
-        }
+    BIT_CLEAR(m_bb[turn.piece.player][King], turn.from);
+    BIT_SET  (m_bb[turn.piece.player][King], turn.to);
 
-        BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
-        BIT_SET  (m_bb[turn.piece.player][Rook], to);
-
-    } else { // Rook
-        BIT_CLEAR(m_bb[turn.piece.player][Rook], turn.from);
-        BIT_SET  (m_bb[turn.piece.player][Rook], turn.to);
-
-        if (turn.to == F1) { // short castle, white
-            from = E1;
-            to = G1;
-        } else if (turn.to == G8) { // short castle, black
-            from = E8;
-            to = G8;
-        } else if (turn.to == C1) { // long castle, white
-            from = E1;
-            to = C1;
-        } else if (turn.to == C8) { // long castle, black
-            from = E8;
-            to = C8;
-        }
-
-        BIT_CLEAR(m_bb[turn.piece.player][King], from);
-        BIT_SET  (m_bb[turn.piece.player][King], to);
+    if (turn.to == G1) { // short castle, white
+        from = H1;
+        to = F1;
+    } else if (turn.to == G8) { // short castle, black
+        from = H8;
+        to = F8;
+    } else if (turn.to == C1) { // long castle, white
+        from = A1;
+        to = D1;
+    } else if (turn.to == C8) { // long castle, black
+        from = A8;
+        to = D8;
     }
+
+    BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
+    BIT_SET  (m_bb[turn.piece.player][Rook], to);
 
     const PlayerColor opp = togglePlayerColor(turn.piece.player);
     if (BIT_ISSET(m_bb[opp][AllPieces], turn.to)) capturePiece(turn);

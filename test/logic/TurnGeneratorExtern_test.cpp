@@ -70,9 +70,7 @@ TEST(TurnGeneratorExtern, generateTurns_Castle_1) {
     turns_calc = gs.getTurnList();
 
     turns_fine.clear();
-    turns_fine.push_back(Turn::castle(Piece(White, Rook), A1, D1));
     turns_fine.push_back(Turn::castle(Piece(White, King), E1, C1));
-    turns_fine.push_back(Turn::castle(Piece(White, Rook), H1, F1));
     turns_fine.push_back(Turn::castle(Piece(White, King), E1, G1));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
@@ -113,7 +111,6 @@ TEST(TurnGeneratorExtern, generateTurns_Castle_2) {
     turns_calc = gs.getTurnList();
 
     turns_fine.clear();
-    turns_fine.push_back(Turn::castle(Piece(White, Rook), H1, F1));
     turns_fine.push_back(Turn::castle(Piece(White, King), E1, G1));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, D1));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
@@ -144,7 +141,6 @@ TEST(TurnGeneratorExtern, generateTurns_Castle_3) {
     turns_calc = gs.getTurnList();
     turns_fine.clear();
     turns_fine.push_back(Turn::castle(Piece(White, King), E1, G1));
-    turns_fine.push_back(Turn::castle(Piece(White, Rook), H1, F1));
     EXPECT_TRUE(turnVecContains(turns_calc, turns_fine))
             << gs << turnVecToString(turns_calc);
 }

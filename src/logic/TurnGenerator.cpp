@@ -80,10 +80,8 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
             if (bbShortCastleKingTurn != 0) {
                 if (player == White) {
                     turnList.push_back(Turn::castle(Piece(White, King), E1, G1));
-                    turnList.push_back(Turn::castle(Piece(White, Rook), H1, F1));
                 } else {
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, G8));
-                    turnList.push_back(Turn::castle(Piece(Black, Rook), H8, F8));
                 }
             }
         }
@@ -96,10 +94,8 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
             if (bbLongCastleKingTurn != 0) {
                 if (player == White) {
                     turnList.push_back(Turn::castle(Piece(White, King), E1, C1));
-                    turnList.push_back(Turn::castle(Piece(White, Rook), A1, D1));
                 } else {
                     turnList.push_back(Turn::castle(Piece(Black, King), E8, C8));
-                    turnList.push_back(Turn::castle(Piece(Black, Rook), A8, D8));
                 }
             }
         }

@@ -28,6 +28,8 @@ public:
     }
 
     static Turn castle(Piece piece, Field from, Field to) {
+        assert(piece.type == King);
+
         return Turn(piece, from, to, Castle);
     }
 
