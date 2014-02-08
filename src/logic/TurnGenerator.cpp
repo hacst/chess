@@ -165,10 +165,10 @@ std::vector<Turn> TurnGenerator::calcPromotionTurns(PlayerColor player,
         from = BB_SCAN(bbPieces);
         BIT_CLEAR(bbPieces, from);
 
-        turns.push_back(Turn::promotionQueen (Piece(player, Pawn), from, from));
-        turns.push_back(Turn::promotionBishop(Piece(player, Pawn), from, from));
-        turns.push_back(Turn::promotionRook  (Piece(player, Pawn), from, from));
-        turns.push_back(Turn::promotionKnight(Piece(player, Pawn), from, from));
+        turns.push_back(Turn::promotionQueen (Piece(player, Pawn), from));
+        turns.push_back(Turn::promotionBishop(Piece(player, Pawn), from));
+        turns.push_back(Turn::promotionRook  (Piece(player, Pawn), from));
+        turns.push_back(Turn::promotionKnight(Piece(player, Pawn), from));
     }
 
     return turns;

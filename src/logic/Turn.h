@@ -3,9 +3,6 @@
 
 #include "ChessTypes.h"
 
-
-
-
 class Turn {
 public:
     Piece piece;
@@ -67,17 +64,40 @@ public:
     }
     */
 
-    static Turn promotionQueen(Piece piece, Field from, Field to) {
-        return Turn(piece, from, to, PromotionQueen);
+    static Turn promotionQueen(Piece piece, Field field) {
+        assert((piece.player == White && rankFor(field) == Eight)
+            || (piece.player == Black && rankFor(field) == One));
+
+        assert(piece.type == Pawn);
+
+        return Turn(piece, field, field, PromotionQueen);
     }
-    static Turn promotionBishop(Piece piece, Field from, Field to) {
-        return Turn(piece, from, to, PromotionBishop);
+
+    static Turn promotionBishop(Piece piece, Field field) {
+        assert((piece.player == White && rankFor(field) == Eight)
+            || (piece.player == Black && rankFor(field) == One));
+
+        assert(piece.type == Pawn);
+
+        return Turn(piece, field, field, PromotionBishop);
     }
-    static Turn promotionRook(Piece piece, Field from, Field to) {
-        return Turn(piece, from, to, PromotionRook);
+
+    static Turn promotionRook(Piece piece, Field field) {
+        assert((piece.player == White && rankFor(field) == Eight)
+            || (piece.player == Black && rankFor(field) == One));
+
+        assert(piece.type == Pawn);
+
+        return Turn(piece, field, field, PromotionRook);
     }
-    static Turn promotionKnight(Piece piece, Field from, Field to) {
-        return Turn(piece, from, to, PromotionKnight);
+
+    static Turn promotionKnight(Piece piece, Field field) {
+        assert((piece.player == White && rankFor(field) == Eight)
+            || (piece.player == Black && rankFor(field) == One));
+
+        assert(piece.type == Pawn);
+
+        return Turn(piece, field, field, PromotionKnight);
     }
 
 
