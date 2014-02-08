@@ -48,7 +48,6 @@ using Score = int;
 const Score MAX_SCORE = std::numeric_limits<Score>::max();
 const Score MIN_SCORE = -std::numeric_limits<Score>::max();
 
-
 //! Toggles player color between white and black
 inline PlayerColor togglePlayerColor(PlayerColor color) {
     assert(White == 0 && Black == 1);

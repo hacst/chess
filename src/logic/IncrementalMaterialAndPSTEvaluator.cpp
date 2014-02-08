@@ -154,6 +154,23 @@ void IncrementalMaterialAndPSTEvaluator::captureIncrement(Field field, const Pie
     }
 }
 
+void IncrementalMaterialAndPSTEvaluator::promotionIncrement(const Turn& turn, const PieceType targetType) {
+    if (turn.piece.player == Black) {
+        m_estimatedScore += PIECE_SQUARE_TABLE[Pawn][turn.to];
+        m_estimatedScore += PIECE_VALUES[Pawn];
+        m_estimatedScore -= PIECE_SQUARE_TABLE[targetType][turn.to];
+        m_estimatedScore -= PIECE_VALUES[targetType];
+    }
+    else {
+        const Field blackPromSquare = flipHorizontal(turn.to);
+
+        m_estimatedScore -= PIECE_SQUARE_TABLE[Pawn][blackPromSquare];
+        m_estimatedScore -= PIECE_VALUES[Pawn];
+        m_estimatedScore += PIECE_SQUARE_TABLE[targetType][blackPromSquare];
+        m_estimatedScore += PIECE_VALUES[targetType];
+    }
+}
+
 Score IncrementalMaterialAndPSTEvaluator::getScore(PlayerColor color) const {
     return color == White ? m_estimatedScore : -m_estimatedScore;
 }

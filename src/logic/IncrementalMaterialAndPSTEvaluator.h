@@ -25,6 +25,8 @@ public:
     void moveIncrement(const Turn& turn);
     //! Updates estimate for a capture of the given piece on the given field.
     void captureIncrement(Field field, const Piece& piece);
+    //! Updates estimate for the promotion of a piece
+    void promotionIncrement(const Turn& turn, PieceType targetType);
 
     //! Gives a full estimate for the given board
     static Score estimateFullBoard(const std::array<Piece, 64> &board);

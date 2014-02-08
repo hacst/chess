@@ -10,7 +10,7 @@ public:
     enum Action {
         Move, Castle, Forfeit, Pass,
         PromotionQueen, PromotionBishop,
-        PromotionRook, PromotionKnight
+        PromotionKnight, PromotionRook
     } action;
 
     Turn()

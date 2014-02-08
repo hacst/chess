@@ -232,6 +232,11 @@ void IncrementalZobristHasher::captureIncrement(Field field, const Piece& captur
     m_hash ^= m_hashConstants.forPieceSquare(capturedPiece.type, field, capturedPiece.player);
 }
 
+void IncrementalZobristHasher::promotionIncrement(const Turn& turn, PieceType targetType) {
+    m_hash ^= m_hashConstants.forPieceSquare(Pawn, turn.from, turn.piece.player);
+    m_hash ^= m_hashConstants.forPieceSquare(targetType, turn.to, turn.piece.player);
+}
+
 void IncrementalZobristHasher::turnAppliedIncrement() {
     m_hash ^= m_hashConstants.forSideToMove(White);
     m_hash ^= m_hashConstants.forSideToMove(Black); // NOP
