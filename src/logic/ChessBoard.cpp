@@ -167,9 +167,9 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
     BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
     BIT_SET  (m_bb[turn.piece.player][Rook], to);
 
-    const PlayerColor opp = togglePlayerColor(turn.piece.player);
-    if (BIT_ISSET(m_bb[opp][AllPieces], turn.to)) capturePiece(turn);
-    if (BIT_ISSET(m_bb[opp][AllPieces], to))      capturePiece(turn);
+
+    assert(!BIT_ISSET(m_bb[togglePlayerColor(turn.piece.player)][AllPieces], turn.to));
+    assert(!BIT_ISSET(m_bb[togglePlayerColor(turn.piece.player)][AllPieces], to));
 }
 
 void ChessBoard::applyPromotionTurn(const Turn& turn, const
