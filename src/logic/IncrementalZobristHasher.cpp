@@ -287,3 +287,8 @@ bool IncrementalZobristHasher::isPolyglotEnPassant(const ChessBoard& board) {
 
     return (neighbouringPawns != 0);
 }
+
+bool IncrementalZobristHasher::operator == (const IncrementalZobristHasher& other) const {
+    return m_hash == other.m_hash
+        && m_isEnPassantApplied == other.m_isEnPassantApplied;
+}

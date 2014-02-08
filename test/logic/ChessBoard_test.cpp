@@ -345,3 +345,12 @@ TEST(ChessBoard, ScoringEvaluationSymmetry) {
     }
 }
 
+TEST(ChessBoard, HashAndScoreChangeWhenCastlingRegression) {
+    ChessBoard cb = ChessBoard::fromFEN("8/8/8/8/8/8/8/4K2R w K - 0 1");
+    ASSERT_EQ(0xad7142702be7486b, cb.getHash()) << cb;
+    cb.applyTurn(Turn::castle(Piece(White, King), E1, G1));
+
+    ChessBoard cbAfterCastle = ChessBoard::fromFEN("8/8/8/8/8/8/8/5RK1 b - - 1 2");
+    
+    EXPECT_EQ(cbAfterCastle, cb);
+}

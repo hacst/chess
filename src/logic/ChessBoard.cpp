@@ -165,6 +165,8 @@ void ChessBoard::applyCastleTurn(const Turn& turn) {
     } else if (turn.to == C8) { // long castle, black
         from = A8;
         to = D8;
+    } else {
+        assert(false);
     }
 
     BIT_CLEAR(m_bb[turn.piece.player][Rook], from);
@@ -327,7 +329,8 @@ bool ChessBoard::operator==(const ChessBoard& other) const {
         && m_enPassantSquare == other.m_enPassantSquare
         && m_nextPlayer == other.m_nextPlayer
     //    && m_capturedPieces == other.m_capturedPieces   // Exluded from comparision
-        && m_evaluator == other.m_evaluator;
+        && m_evaluator == other.m_evaluator
+        && m_hasher == other.m_hasher;
 }
 
 bool ChessBoard::operator!=(const ChessBoard& other) const {

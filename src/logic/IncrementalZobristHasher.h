@@ -40,6 +40,7 @@ public:
         const std::array<bool, NUM_PLAYERS>& longCastleRight
     );
 
+    bool operator==(const IncrementalZobristHasher& other) const;
 private:
     /**
      * @brief Return true if en passant according to polyglot rules.
