@@ -354,3 +354,12 @@ TEST(ChessBoard, HashAndScoreChangeWhenCastlingRegression) {
     
     EXPECT_EQ(cbAfterCastle, cb);
 }
+
+TEST(ChessBoard, HashAndScoreChangeWhenPromotingRegression) {
+    ChessBoard cb = ChessBoard::fromFEN("P7/8/8/8/8/8/8/8 w - - 0 1");
+    cb.applyTurn(Turn::promotionQueen(Piece(White, Pawn), A8));
+
+    ChessBoard cbAfterCastle = ChessBoard::fromFEN("Q7/8/8/8/8/8/8/8 b - - 1 2");
+
+    EXPECT_EQ(cbAfterCastle, cb);
+}
