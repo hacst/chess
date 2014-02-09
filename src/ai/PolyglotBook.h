@@ -27,6 +27,12 @@ struct PolyglotBookEntry {
 
     uint16_t weight;
 
+    bool isPromotion() const;
+    //! Returns true if this might be a castling move
+    bool mightBeCastlingMove() const;
+    //! Returns the target of the king piece for this move if it were a castling one.
+    Field getKingCastlingTarget() const;
+    
     bool operator==(const PolyglotBookEntry& other) const;
     std::string toString() const;
 };

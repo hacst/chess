@@ -18,7 +18,12 @@ public:
     Turn(Piece piece, Field from, Field to, Action action)
         : piece(piece), from(from), to(to), action(action) {}
 
-
+    bool isMove() const { return action == Move; }
+    bool isCastling() const { return action == Castle; }
+    bool isPromotion() const { return action >= PromotionQueen && action <= PromotionRook; }
+    bool isForfeit() const { return action == Forfeit; }
+    bool isPass() const { return action == Pass; }
+    PieceType getPromotionPieceType() const { return static_cast<PieceType>(action - PromotionQueen + 1); }
 
     static Turn move(Piece piece, Field from, Field to) {
         return Turn(piece, from, to, Move);

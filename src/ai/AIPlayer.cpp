@@ -111,11 +111,30 @@ bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
 
         // Check turn against possible moves to detect collisions
         for (const auto& turn : m_gameState.getTurnList()) {
-            if (entry->move.from == turn.from
+            if (turn.isMove()
+                && entry->move.from == turn.from
                 && entry->move.to == turn.to) {
-                //TODO: Fix this for pawn promotion and castling once we support that. For now comparing source and target should do.
+                
                 completePromiseWith(turn);
-                LOG(info) << "Performing turn from book: " << turn;
+                LOG(info) << "Performing move turn from book: " << turn;
+                found = true;
+                break;
+            } else if (turn.isPromotion()
+                       && entry->isPromotion()
+                       && entry->move.promotion_piece == turn.getPromotionPieceType()
+                       && entry->move.from == turn.from) {
+                completePromiseWith(turn);
+                
+                LOG(info) << "Performing promotion turn from book: " << turn;
+                found = true;
+                break;
+            } else if (turn.isCastling()
+                       && entry->mightBeCastlingMove()
+                       && entry->move.from == turn.from
+                       && entry->getKingCastlingTarget() == turn.to) {
+                completePromiseWith(turn);
+                
+                LOG(info) << "Performing castling turn from book: " << turn;
                 found = true;
                 break;
             }
