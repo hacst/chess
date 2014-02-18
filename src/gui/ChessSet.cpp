@@ -228,8 +228,8 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 			GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
 																	//          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
 																	//          the result is the same as if you define only ambient light.
-			halfWidth = 0.95 * halfWidth_t;
-			halfHeight = 1.05 * halfHeight_t;
+			halfWidth = 0.95f * halfWidth_t;
+			halfHeight = 1.05f * halfHeight_t;
 
 			switch (style) {
 				case NORMAL:
