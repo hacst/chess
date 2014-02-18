@@ -6,11 +6,15 @@ using namespace std;
 using namespace std::chrono;
 using namespace Logging;
 
-GameLogic::GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config)
+GameLogic::GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black,
+    GameConfigurationPtr config,
+    GameState initialGameState)
+
     : m_tickLength(500)
     , m_abort(false)
     , m_white(white)
     , m_black(black)
+    , m_gameState(initialGameState)
     , m_config(config)
     , m_log(initLogger("GameLogic")){
     assert(white != black);
@@ -58,6 +62,8 @@ void GameLogic::run() {
     notify([&](AbstractGameObserverPtr& obs) {
         obs->onGameStart(m_gameState, *m_config);
     });
+
+    wait(seconds(m_config->timeBetweenTurnsInSeconds));
 
     while (!isGameOver()) {
         auto& currentPlayer = getCurrentPlayer();

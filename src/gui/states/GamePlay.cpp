@@ -19,13 +19,15 @@
 #include "ai/AIPlayer.h"
 #include "misc/DebugTools.h"
 
+#include "core/Globals.h"
+
 using namespace std;
 using namespace Logging;
 
-GamePlay::GamePlay(GameMode mode, PlayerColor firstPlayerColor)
+GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
 	: m_fsm(StateMachine::getInstance())
 	, m_gameMode(mode)
-    , m_firstPlayerColor(firstPlayerColor)
+    , m_humanPlayerColor(humanPlayerColor)
     , m_nextState(States::KEEP_CURRENT)
     , m_log(initLogger("GUI:GamePlay")) {
 }
@@ -35,7 +37,7 @@ void GamePlay::initMessageBox() {
 	m_messageBox.height = 40;
 	m_messageBox.padding = 10;
 	m_messageBox.text = "";
-	m_messageBox.showDuration = 3000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
+	m_messageBox.showDuration = global_config.timeBetweenTurnsInSeconds * 1000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
 
 	// precalculate absolute position
 	m_messageBox.windowPosX = (m_fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
@@ -69,15 +71,14 @@ void GamePlay::initCapturedPieces() {
 void GamePlay::enter() {
 	// set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	m_internalState = NOT_PAUSED;
 
-	initCamera();
 	initChessSet();
 	initMenuPause();
 	initAnimationHelpers();
 	initLighting();
 	initMessageBox();
 	initCapturedPieces();
+	initCamera();	// init camera always after chessSet, otherwise it causes some trouble when placing the models.
 
 	// connect gui with ai and logic
 	initPlayers();
@@ -97,36 +98,62 @@ void GamePlay::initMenuPause() {
 }
 
 void GamePlay::initPlayers() {
-    random_device rd;
 	if (m_gameMode == PLAYER_VS_AI) {
+		m_kCounter.keyReturn = std::chrono::system_clock::now();
+
 		// Player vs. AI
-		auto firstPlayer = make_shared<AIPlayer>(rd());
+		LOG(info) << "Starting Player vs. AI game with seed: " << global_seed;
+
+		auto firstPlayer = make_shared<AIPlayer>(global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		// @todo
-		auto secondPlayer = make_shared<Player>(rd());
+		auto secondPlayer = make_shared<Player>(*this);
 		m_secondPlayer = secondPlayer;
 
 		m_playerProxy = make_shared<PlayerDispatcherProxy>(m_secondPlayer);
-		secondPlayer->start();
+
+		// white color begins the match, so it depends on the color to
+		// set the correct internal game state
+		if (m_humanPlayerColor == PlayerColor::Black) {
+			// AI is first player -> AI starts the game
+			m_internalState = AI_ON_TURN;
+			m_arrowNavHandler = make_shared<ArrowNavigationHandler>(true);
+		} else {
+			m_internalState = PLAYER_ON_TURN;
+			m_arrowNavHandler = make_shared<ArrowNavigationHandler>(false);
+		}
 	} else if (m_gameMode == AI_VS_AI) {
+		m_kCounter.keyR = std::chrono::system_clock::now();
+
 		// AI vs. AI
-		auto firstPlayer = make_shared<AIPlayer>(rd());
+        LOG(info) << "Starting AI vs. AI game with seed: " << global_seed;
+        
+		auto firstPlayer = make_shared<AIPlayer>(global_seed);
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		auto secondPlayer = make_shared<AIPlayer>(rd());
+		auto secondPlayer = make_shared<AIPlayer>(global_seed+1);
 		secondPlayer->start();
 		m_secondPlayer = secondPlayer;
+
+		m_internalState = AI_ON_TURN;
 	}
+    
+    // Make sure we don't re-use the seed for the next game.
+    global_seed += 2; 
 }
 
 void GamePlay::initGameLogic() {
-	GameConfigurationPtr config = make_shared<GameConfiguration>();
-	config->timeBetweenTurnsInSeconds = 3;
+	GameConfigurationPtr config = make_shared<GameConfiguration>(global_config);
 
-	m_gameLogic = make_shared<GameLogic>(m_firstPlayer, m_secondPlayer, config);
+    GameState initialGameState(ChessBoard::fromFEN(config->initialGameStateFEN)); // FIXME: fromFEN isn't robust
+
+	if (m_humanPlayerColor == PlayerColor::White) {
+		m_gameLogic = make_shared<GameLogic>(m_secondPlayer /* White */, m_firstPlayer /* Black */, config, initialGameState);
+	} else{
+		m_gameLogic = make_shared<GameLogic>(m_firstPlayer /* White */, m_secondPlayer /* Black */, config, initialGameState);
+	}
 	m_observer = make_shared<GuiObserver>(m_chessSet, *this);
 
 	m_observerProxy = make_shared<ObserverDispatcherProxy>(m_observer);
@@ -136,26 +163,23 @@ void GamePlay::initGameLogic() {
 }
 
 void GamePlay::initCamera() {
-	// the camera is looking from -Z to +Z and is placed at X = 0.
-	if (m_firstPlayerColor == PlayerColor::White) {
-		m_rotateFrom = 0;
-		m_rotateTo = 180;
-
-		// we fix the camera orientation to +/-180 degree
-		setCameraPosition(180.0f);
-	} else {
+	if (m_gameMode == AI_VS_AI) {
 		m_rotateFrom = 180;
 		m_rotateTo = 0;
+		setCameraPosition(180.0f);
 
-		// we do not need to correct the camera orientation if the playerColor is black
-		setCameraPosition(0.0f);
+		m_lockCamera = false;
 	}
 
 	// we lock the camera, if the mode is Player vs. AI
 	if (m_gameMode == PLAYER_VS_AI) {
+		if (m_humanPlayerColor == PlayerColor::White) {
+			setCameraPosition(0.0f);
+		} else {
+			setCameraPosition(180.0f);
+		}
+
 		m_lockCamera = true;
-	} else {
-		m_lockCamera = false;
 	}
 
 	// no camera rotation on first turn
@@ -220,8 +244,13 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
 	m_fsm.window->set3DMode();
 }
 
+void GamePlay::onPauseGame() {
+	m_lastInternalState = m_internalState;
+	m_internalState = PAUSE;
+}
+
 void GamePlay::onResumeGame() {
-	m_internalState = NOT_PAUSED;
+	m_internalState = m_lastInternalState;
 	m_pauseMenu->resetAnimation();
 }
 
@@ -236,18 +265,31 @@ void GamePlay::onLeaveGame() {
 	m_nextState = BACK_TO_MENU;
 }
 
-AbstractState* GamePlay::run() {
-	if (m_fsm.eventmap.keyEscape) {
-		m_internalState = PAUSED;
+void GamePlay::onPlayerIsOnTurn(PlayerColor who) {
+	// internal state changes only if the human player is on turn
+	if (m_humanPlayerColor == who) {
+		m_internalState = PLAYER_ON_TURN;
+	} else {
+		m_internalState = AI_ON_TURN;
 	}
+}
 
-    if (m_fsm.eventmap.key0) {
-        LOG(info) << DebugTools::toInitializerList(m_chessBoardState) << endl;
-    }
+std::future<Turn> GamePlay::doMakePlayerTurn() {
+	m_promisedPlayerTurn = promise<Turn>();
+
+	return m_promisedPlayerTurn.get_future();
+}
+
+void GamePlay::onPlayerAbortTurn() {
+	m_internalState = AI_ON_TURN;
+}
+
+AbstractState* GamePlay::run() {
+	handleEvents();
 	
 	// Execute all pending calls from the observer and player
 	m_observerProxy->poll();
-	m_playerProxy->poll();
+	//m_playerProxy->poll();
 
 	this->draw();
 
@@ -336,16 +378,19 @@ void GamePlay::disableLighting() {
 
 void GamePlay::draw() {
 	enableLighting();
-
 	fadeBackgroundForOneTime();
 
 	// 3D
 	m_fsm.window->set3DMode();
 	m_chessSet->draw();	// chessboard and models
 
-	// rotate the camera, if the camera is not locked
-	if (!m_lockCamera) {
+	// rotate the camera
+	if (m_gameMode == AI_VS_AI) {
 		rotateCamera();
+	}
+
+	if (m_internalState == PLAYER_ON_TURN) {
+		drawPlayersTiles();
 	}
 
 	// 2D
@@ -353,29 +398,106 @@ void GamePlay::draw() {
 	disableLighting();
 
 	// draw menu if game is paused
-	if (m_internalState == PAUSED) {
+	if (m_internalState == PAUSE) {
 		drawPauseMenu();
 	}
 	
 	// draw last turns, message box and captured pieces only if we're not in pause mode
-	if (m_internalState != PAUSED) {
+	if (m_internalState != PAUSE) {
 		drawMessageBox();
 		drawLastTurns();
 		drawCapturedPieces();
+
+		if (m_gameMode == AI_VS_AI) {
+			drawInfoBox();
+		}
 	}
 }
 
 void GamePlay::handleEvents() {
-	if (m_fsm.eventmap.mouseMoved) {
-		m_pauseMenu->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
+	// enable/disable camera rotation
+	if (m_gameMode == AI_VS_AI) {
+		if (m_fsm.eventmap.keyR &&
+				std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - m_kCounter.keyR).count() > 500) {
+			m_lockCamera = !m_lockCamera;
+			m_kCounter.keyR = std::chrono::system_clock::now();
+		}
 	}
 
-	if (m_fsm.eventmap.mouseDown) {
-		m_pauseMenu->mousePressed();
+	if (m_fsm.eventmap.key0) {
+		LOG(info) << m_gameState << endl;
 	}
 
-	if (m_fsm.eventmap.mouseUp) {
-		m_pauseMenu->mouseReleased();
+	if (m_internalState == PAUSE) {
+		if (m_fsm.eventmap.mouseMoved) {
+			m_pauseMenu->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
+		}
+
+		if (m_fsm.eventmap.mouseDown) {
+			m_pauseMenu->mousePressed();
+		}
+
+		if (m_fsm.eventmap.mouseUp) {
+			m_pauseMenu->mouseReleased();
+		}
+	}
+
+	if (m_internalState != PAUSE && m_internalState != PLAYER_ON_TURN) {
+		if (m_fsm.eventmap.keyEscape) {
+			onPauseGame();
+		}
+	}
+
+	if (m_internalState == PLAYER_ON_TURN) {
+		if (m_fsm.eventmap.keyUp) {
+			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::UP);
+		}
+
+		if (m_fsm.eventmap.keyRight) {
+			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::RIGHT);
+		}
+
+		if (m_fsm.eventmap.keyDown) {
+			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::DOWN);
+		}
+
+		if (m_fsm.eventmap.keyLeft) {
+			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::LEFT);
+		}
+
+		if (m_possibleTurns.size() > 0 && m_fsm.eventmap.keyEscape) {
+			m_possibleTurns.clear();
+		}
+
+		// get all relevant turns for the chosen field
+		if (m_fsm.eventmap.keyReturn &&
+				std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - m_kCounter.keyReturn).count() > 500) {
+			m_kCounter.keyReturn = std::chrono::system_clock::now();
+
+			// 2. User *may* select one option as target field for the in (1) selected model
+			if (m_possibleTurns.size() > 0) {
+				// a) check if the user will do a turn
+				for (auto& turn : m_possibleTurns) {
+					if (turn.to == m_arrowNavHandler->getCursorPosition()) {
+						m_promisedPlayerTurn.set_value(turn);
+						
+						// assert: clear now all possible turns
+					}
+				}
+
+				// b) if the user will not do a turn, reset possible turn list
+				m_possibleTurns.clear();
+			}
+
+			// 1. User selects one model on the board by choosing a field
+			if (m_possibleTurns.size() == 0) {
+				for (auto& turn : m_gameState.getTurnList()) {
+					if (turn.from == m_arrowNavHandler->getCursorPosition()) {
+						m_possibleTurns.push_back(turn);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -436,6 +558,10 @@ void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
 	setState(state);
 }
 
+void GamePlay::setGameState(const GameState& gameState) {
+    m_gameState = gameState;
+}
+
 void GamePlay::setState(std::array<Piece, 64> state) {
 	m_chessBoardState = state;
 	m_chessSet->setState(state, m_lastPlayer, m_lastTurn);
@@ -466,6 +592,26 @@ void GamePlay::drawLastTurns() {
 
 		++step;
 	}
+}
+
+// must be done in 2D mode
+void GamePlay::drawInfoBox() {
+	string infoString;
+	if (m_lockCamera) {
+		infoString = "Rotation ist deaktiviert.";
+	} else {
+		infoString = "";
+	}
+
+	// config
+	int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
+
+	// precalculations
+	int lineHeight = fontSize + 4;
+	int totalLineHeight = 1 * lineHeight;
+	int offsetY = m_fsm.window->getHeight() - totalLineHeight - fontSize;
+
+	m_fsm.window->printTextSmall(m_fsm.window->getWidth() - 200, offsetY, 0.6f, 0.0f, 0.0f, infoString);
 }
 
 void GamePlay::drawCapturedPieces() {
@@ -530,9 +676,17 @@ string GamePlay::getPieceName(int pieceNumber) {
 	return pieceName;
 }
 
+void GamePlay::drawPlayersTiles() {
+	if (m_possibleTurns.size() > 0) {
+		for (auto& turn : m_possibleTurns) {
+			m_chessSet->drawTileTurnOptionAt(static_cast<Field>(turn.to));
+		}
+	}
+
+	m_chessSet->drawTileSelectorAt(static_cast<Field>(m_arrowNavHandler->getCursorPosition()));
+}
+
 void GamePlay::drawPauseMenu() {
-	handleEvents();
-	
 	// modal dialog with transparent background
 	glEnable(GL_COLOR);
 	glEnable(GL_BLEND);
@@ -589,9 +743,16 @@ void GamePlay::setCameraPosition(float degree) {
 }
 
 void GamePlay::startCameraRotation() {
-	m_animationHelperCamera->reset();
+	// only stop the reset of the rotation to smoothly end
+	// the current rotation
+	if (!m_lockCamera) {
+		m_animationHelperCamera->reset();
+	}
 
 	// also set the coordinates to the opposite
+	// warning: this must be done even if the rotation
+	// is stopped! If not, the rotation may be out of sync with
+	// the player color.
 	m_rotateFrom = (m_rotateFrom + 180) % 360;
 	m_rotateTo = (m_rotateFrom + 180) % 360;
 }
@@ -615,11 +776,10 @@ void GamePlay::switchToPlayerColor(PlayerColor color) {
 }
 
 void GamePlay::onBackToMenu() {
-	std::cout << "go back to menu" << std::endl;
-
+    LOG(info) << "Returning to main menu";
 	m_nextState = BACK_TO_MENU;
 }
 
 void GamePlay::exit() {
-	std::cout << "left GamePlay!" << std::endl;
+    LOG(info) << "Left GamePlay!";
 }

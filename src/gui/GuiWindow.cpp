@@ -194,6 +194,9 @@ void GuiWindow::handleEvents() {
 					case SDLK_y:
 						m_fsm.eventmap.keyY = true;
 						break;
+					case SDLK_r:
+						m_fsm.eventmap.keyR = true;
+						break;
 					default:
 						break;
 				}
@@ -229,6 +232,9 @@ void GuiWindow::handleEvents() {
 					break;
 				case SDLK_y:
 					m_fsm.eventmap.keyY = false;
+					break;
+				case SDLK_r:
+					m_fsm.eventmap.keyR = false;
 					break;
 				default:
 					break;

@@ -48,6 +48,7 @@ public:
 		bool key1 = false;
 		bool keyA = false;
 		bool keyY = false;
+		bool keyR = false;
 	} eventmap;
 
 	//! Holds the pointer to the GuiWindow object, to access gui related methods.

@@ -33,6 +33,10 @@ public:
 	 */
 	void setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn);
 
+	void drawTileSelectorAt(Field which);
+
+	void drawTileTurnOptionAt(Field which);
+
 	/**
 	 * @brief Returns the number of big resources which must be loaded for initializing
 	 *        the ChessSet.
@@ -64,6 +68,18 @@ public:
 private:
 	int m_tileWidth, m_tileHeight;
 
+	struct Coord3D {
+		int x;
+		int y;
+		int z;
+	};
+
+	enum TileStyle {
+		NORMAL,
+		SELECT,
+		OPTION
+	};
+
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard
 	ModelPtr king, pawn, queen, bishop, knight, rook;
 	std::array<ModelPtr, 6> m_models;
@@ -94,8 +110,9 @@ private:
 	void animateModelTurn();
 	void drawModels();
 	void drawBoard();
-	void drawTile(int x, int y, int z, bool odd, bool highlight);
+	void drawTile(int x, int y, int z, bool odd, TileStyle style);
 	void moveModelToTile(ModelPtr model, int row, int col);
+	Coord3D ChessSet::calcCoordinatesForTileAt(Field which);
 
 	using Signal = boost::signals2::signal<void(std::string)>;
 	Signal m_loadCallback;

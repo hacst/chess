@@ -231,38 +231,38 @@ BitBoard bbTurns_fine;
 /* TESTING calcKingTurns */
 TEST(TurnGenerator, calcKingTurns_A1) {
     bbKing = BB_SET(A1);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
     bbTurns_fine = generateBitBoard(B1, B2, A2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_H1) {
     bbKing = BB_SET(H1);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
     bbTurns_fine = generateBitBoard(G1, G2, H2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_A8) {
     bbKing = BB_SET(A8);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
     bbTurns_fine = generateBitBoard(B8, B7, A7, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_H8) {
     bbKing = BB_SET(H8);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
     bbTurns_fine = generateBitBoard(G8, G7, H7, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_C3) {
     bbKing = BB_SET(C3);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, 0);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, 0, true, true);
     bbTurns_fine = generateBitBoard(D4, C4, B4, D3, B3, D2, C2, B2, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }
 TEST(TurnGenerator, calcKingTurns_F4) {
     bbKing = BB_SET(F4);
     bbOwnPieces = generateBitBoard(C5, B3, E5, F5, F3, ERR);
-    bbTurns_calc = tGen.calcKingTurns(bbKing, bbOwnPieces);
+    bbTurns_calc = tGen.calcKingTurns(bbKing, bbOwnPieces, true, true);
     bbTurns_fine = generateBitBoard(G5, G4, G3, E3, E4, ERR);
     EXPECT_EQ(bbTurns_calc, bbTurns_fine);
 }

@@ -130,10 +130,41 @@ void ChessSet::drawBoard() {
 	glCallList(m_boardList);
 }
 
-// replace by translation
+ChessSet::Coord3D ChessSet::calcCoordinatesForTileAt(Field which) {
+	Coord3D coord;
+
+	int col = static_cast<int>(which) % 8;
+	int row = 7 - static_cast<int>(which) / 8;
+
+	coord.x = ((col - 4) * m_tileWidth) + (m_tileWidth / 2);
+	coord.y = 0;
+	coord.z = ((row - 4) * m_tileWidth) + (m_tileWidth / 2);
+
+	return coord;
+}
+
+void ChessSet::drawTileSelectorAt(Field which) {
+	Coord3D coord = calcCoordinatesForTileAt(which);
+	/*int col = static_cast<int>(which) % 8;
+	int row = 7 - static_cast<int>(which) / 8;
+
+	int x, z;
+	int y = 0;
+	x = ((col - 4) * m_tileWidth) + m_tileWidth / 2;
+	z = ((row - 4) * m_tileWidth) + m_tileWidth / 2;*/
+
+	drawTile(coord.x, coord.y, coord.z, false, TileStyle::SELECT);
+}
+
+void ChessSet::drawTileTurnOptionAt(Field which) {
+	Coord3D coord = calcCoordinatesForTileAt(which);
+	drawTile(coord.x, coord.y, coord.z, false, TileStyle::OPTION);
+}
+
+/* replace by translation
 void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
 	glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), static_cast<float>(m_tileHeight), ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
-}
+}*/
 
 // create the list only the first time
 // to update single model positions
@@ -147,14 +178,17 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 		int field = 0;
 		for (auto &p : m_state) {
 			if (p.type != PieceType::NoType) {
-				int row = field % 8;
-				int col = field / 8;
+				Coord3D coord = calcCoordinatesForTileAt(static_cast<Field>(field));
+				//int col = field % 8;
+				//int row = 7 - field / 8;
 				
 				glPushMatrix();
 					
 //					if (withoutTurnDependentModels || (field != m_lastTurn.from && field != m_lastTurn.to)) {
 						// move model to tile
-						glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), 0, ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
+						//float x = ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f);
+						//float z = ((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f);
+						glTranslatef(static_cast<float>(coord.x), static_cast<float>(coord.y), static_cast<float>(coord.z));
 
 						// draw model via list index
 						int listIndex = p.type + (p.player == PlayerColor::Black ? 6 : 0);
@@ -188,7 +222,7 @@ void ChessSet::createChessBoardList() {
 			for (int j = -4; j < 4; j++) {
 				x = j * m_tileWidth + m_tileWidth / 2;
 			
-				drawTile(x, y, z, oddToggler, false);
+				drawTile(x, y, z, oddToggler, TileStyle::NORMAL);
 				oddToggler = !oddToggler;
 			}
 
@@ -197,7 +231,7 @@ void ChessSet::createChessBoardList() {
 	glEndList();
 }
 
-void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
+void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 	int halfWidth = m_tileWidth / 2;
 	int halfHeight = m_tileHeight / 2;
 
@@ -208,17 +242,39 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, bool highlight) {
 			GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
 			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
 			
-			GLfloat ambient[] = { 1.0f, 1.0f, 1.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
+			GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
 																	//          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
 																	//          the result is the same as if you define only ambient light.
-			if (odd) {
-				ambient[0] = 0.14f;
-				ambient[1] = 0.07f;
-				ambient[2] = 0.0f;
+
+			switch (style) {
+				case NORMAL:
+					if (!odd) {
+						ambient[0] = 1.0f;
+						ambient[1] = 1.0f;
+						ambient[2] = 1.0f;
+					} else {
+						ambient[0] = 0.14f;
+						ambient[1] = 0.07f;
+						ambient[2] = 0.0f;
+					}
+					break;
+				case SELECT:
+					ambient[0] = 0.8f;
+					ambient[1] = 0.0f;
+					ambient[2] = 0.0f;
+					break;
+				case OPTION:
+					ambient[0] = 0.8f;
+					ambient[1] = 0.6f;
+					ambient[2] = 0.0f;
+					break;
+				default:
+					break;
 			}
+
 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
 
-			GLfloat diffuse[] = { 0.2f, 0.2f, 0.2f, 1.f };			// example: this light comes from a certain direction but is reflected homogenously from each point of the surface.
+			GLfloat diffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };			// example: this light comes from a certain direction but is reflected homogenously from each point of the surface.
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
 			GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };		// example: highlight point

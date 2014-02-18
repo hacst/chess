@@ -14,17 +14,21 @@ GuiObserver::GuiObserver(ChessSetPtr chessSetPtr, GamePlay& gamePlayState)
 }
 
 void GuiObserver::onGameStart(GameState state, GameConfiguration config) {
+    m_gamePlayState.setGameState(state);
 	m_gamePlayState.setState(state.getChessBoard().getBoard());
 	m_gamePlayState.setCapturedPiecesList(state.getChessBoard().getCapturedPieces());
+    m_gamePlayState.switchToPlayerColor(state.getNextPlayer());
 }
 
 void GuiObserver::onTurnStart(PlayerColor who) {
-	m_gamePlayState.switchToPlayerColor(who);
+	m_gamePlayState.onPlayerIsOnTurn(who);
 }
 
 void GuiObserver::onTurnEnd(PlayerColor who, Turn turn, GameState newState) {
+    m_gamePlayState.setGameState(newState);
 	m_gamePlayState.setState(newState.getChessBoard().getBoard(), who, turn);
 	m_gamePlayState.setCapturedPiecesList(newState.getChessBoard().getCapturedPieces());
+    m_gamePlayState.switchToPlayerColor(newState.getNextPlayer());
 }
 
 void GuiObserver::onTurnTimeout(PlayerColor who, std::chrono::seconds timeout) {
@@ -36,7 +40,15 @@ void GuiObserver::onTurnTimeout(PlayerColor who, std::chrono::seconds timeout) {
 
 void GuiObserver::onGameOver(GameState state, PlayerColor winner) {
 	stringstream strs;
-	strs << (winner == PlayerColor::Black ? "Schwarz" : "Weiss") << " hat gewonnen. Das Spiel ist zu Ende.";
+	if (winner == PlayerColor::Black) {
+		strs << "Schwarz hat gewonnen. Das Spiel ist zu Ende.";
+	} else if (winner == PlayerColor::White) {
+		strs << "Weiss hat gewonnen. Das Spiel ist zu Ende.";
+	} else {
+		assert(winner == PlayerColor::NoPlayer);
+		strs << "Patt! Das Spiel ist zu Ende.";
+	}
 
 	m_gamePlayState.startShowText(strs.str());
+    m_gamePlayState.setGameState(state);
 }

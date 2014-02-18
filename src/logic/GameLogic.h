@@ -22,8 +22,12 @@ public:
      * @param white White player reference
      * @param black Black player reference
      * @param config Configuration for this game
+     * @param initialGameState Initial state when starting the game
      */
-    GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config);
+    GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black,
+        GameConfigurationPtr config,
+        GameState initialGameState = GameState());
+
     ~GameLogic();
 
     virtual AbstractPlayerPtr getWhitePlayer() const override;

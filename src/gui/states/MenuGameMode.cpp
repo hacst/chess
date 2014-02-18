@@ -46,7 +46,7 @@ AbstractState* MenuGameMode::run() {
 	AbstractState* nextState;
 	switch (m_nextState) {
 	case States::GAME_PLAY:
-		nextState = new GamePlay(GamePlay::GameMode::AI_VS_AI, PlayerColor::White);
+		nextState = new GamePlay(GamePlay::GameMode::AI_VS_AI, PlayerColor::NoPlayer);
 		break;
 	case States::MENU_PLAYER_COLOR:
 		nextState = new MenuPlayerColor();

@@ -42,6 +42,9 @@ inline Field getFirstOccupiedField(BitBoard bb) {
 inline Field getFirstOccupiedField(BitBoard bb) {
     assert(bb != 0);
     assert(sizeof(Field) == sizeof(int));
+    //if (bb == 0)
+    //    return static_cast<Field>(0);
+
     return static_cast<Field>(63 - __builtin_clzll(bb));
 }
 #else
@@ -135,8 +138,8 @@ public:
 protected:
     // for internal turn calculation bit boards are used
     // at least 12 bit boards are needed for a complete board
-    // representation + some additional bit boards for turn
-    // faster calculation
+    // representation + some additional bit boards for faster turn
+    // calculation
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
     
 private:

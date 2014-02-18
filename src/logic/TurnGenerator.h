@@ -21,7 +21,8 @@ public:
     virtual std::vector<Turn> bitBoardToTurns(Piece piece, BitBoard bbPiece, BitBoard bbTurns) const;
 
     // nonsliding pieces
-    virtual BitBoard calcKingTurns(BitBoard king, BitBoard allOwnPieces) const;
+    virtual BitBoard calcKingTurns(BitBoard king, BitBoard allOwnPieces,
+                                   bool longCastleRights, bool shortCastleRights) const;
     virtual BitBoard calcKnightTurns(BitBoard knights, BitBoard allOwnPieces) const;
     virtual BitBoard calcPawnTurns(BitBoard pawns, BitBoard allOppPieces,
         BitBoard allPieces, PlayerColor player) const;

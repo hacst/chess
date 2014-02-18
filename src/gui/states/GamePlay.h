@@ -7,10 +7,12 @@
 #include "gui/Menu2D.h"
 #include "gui/ChessSet.h"
 #include "core/Logging.h"
+#include "gui/ArrowNavigationHandler.h"
 
 #include <vector>
 #include <array>
 #include <deque>
+#include <chrono>
 
 class StateMachine;
 class ObserverDispatcherProxy;
@@ -38,7 +40,7 @@ public:
 	 * @param mode The GameMode (*AI vs. AI* or *Player vs. AI*).
 	 * @param firstPlayerColor The color of the player which takes the first turn.
 	 */
-	GamePlay(GameMode mode, PlayerColor firstPlayerColor);
+	GamePlay(GameMode mode, PlayerColor humanPlayerColor);
 
 	/**
 	 * @brief Enters the state for the first time. This will setup all the state related stuff.
@@ -75,6 +77,8 @@ public:
 	void setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn);
 	void setState(std::array<Piece, 64> state);
 
+    void setGameState(const GameState& gameState);
+
 	/**
 	* @brief Method for setting the new turn, which changed the chess state.
 	* @note Be sure to first call this and *after* call setState.
@@ -89,15 +93,30 @@ public:
 	void onSaveGame();
 	void onLeaveGame();
 	void onBackToMenu();
+	void onPlayerIsOnTurn(PlayerColor who);
+	void onPlayerAbortTurn();
+	std::future<Turn> doMakePlayerTurn();
 
 private:
 	StateMachine& m_fsm;
 	int m_rotateFrom, m_rotateTo;
 	GameMode m_gameMode;
-	PlayerColor m_firstPlayerColor;
+	PlayerColor m_humanPlayerColor;
 	bool m_lockCamera;
+	ArrowNavigationHandlerPtr m_arrowNavHandler;
+	
+	std::vector<Turn> m_possibleTurns;
+	
+	//! Holds the promise during fulfillment.
+	std::promise<Turn> m_promisedPlayerTurn;
+	
+	struct KeyboardCounter {
+		std::chrono::time_point<std::chrono::system_clock> keyR;
+		std::chrono::time_point<std::chrono::system_clock> keyReturn;
+	} m_kCounter;
 
 	std::array<Piece, 64> m_chessBoardState;
+    GameState m_gameState;
 
 	// @todo -> own class
 	struct CapturedPieces {
@@ -117,10 +136,11 @@ private:
 	} m_nextState;
 
 	enum InternalState {
-		NOT_PAUSED,
-		PAUSED,
+		AI_ON_TURN,
+		PLAYER_ON_TURN,
+		PAUSE,
 		SAVE_GAME
-	} m_internalState;
+	} m_internalState, m_lastInternalState;
 
 	struct PlayerTurn {
 		PlayerColor who;
@@ -184,12 +204,15 @@ private:
 	void setCameraPosition(float degree);
 	void drawMessageBox();
 	void drawLastTurns();
+	void drawInfoBox();
 	void drawCapturedPieces();
 	void drawPauseMenu();
+	void drawPlayersTiles();
 	void enableLighting();
 	void disableLighting();
 	void handleEvents();
 	void startCameraRotation();
+	void onPauseGame();
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

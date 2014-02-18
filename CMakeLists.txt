@@ -61,6 +61,7 @@ set(GUI_SOURCES
     src/gui/ObjectHelper.h
     src/gui/GuiObserver.h
 	src/gui/Player.h
+	src/gui/ArrowNavigationHandler.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
@@ -74,7 +75,7 @@ set(GUI_SOURCES
     src/gui/Model.cpp
     src/gui/ObjectHelper.cpp
     src/gui/GuiObserver.cpp
-	src/gui/Player.cpp
+	src/gui/ArrowNavigationHandler.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})
@@ -173,6 +174,8 @@ set(CORE_SOURCES
     src/core/GameConfiguration.cpp
     src/core/Logging.h
     src/core/Logging.cpp
+    src/core/Globals.h
+    src/core/Globals.cpp
 )
 
 source_group(core FILES ${CORE_SOURCES})
