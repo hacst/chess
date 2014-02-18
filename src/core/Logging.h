@@ -67,6 +67,31 @@ void addLoggingConsoleSink(
 void addLoggingFileSink(const std::string& fileName, Severity minimalSeverity = info,
     const std::string& formatString = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%");
 
+
+/**
+* @brief Adds a sink for logging to clog for one channel
+* @param specificChannel Channel to log
+* @param minimalSeverity Minimum severity filter
+* @param formatString Format string for log output (default boost log with added Severity variable)
+*/
+void addChannelSpecificLoggingConsoleSink(
+    const std::string& specificChannel,
+    Severity minimalSeverity = info,
+    const std::string& formatString = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%");
+
+/**
+* @brief Adds a sink for logging to a file for one channel
+* @param fileName File to log to
+* @param specificChannel Channel to log
+* @param minimalSeverity Minimum severity filter
+* @param formatString Format string for log output (default boost log with added Severity variable)
+*/
+void addChannelSpecificLoggingFileSink(
+    const std::string& fileName,
+    const std::string& specificChannel,
+    Severity minimalSeverity = info,
+    const std::string& formatString = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%");
+
 /**
  * @return Returns a Logger with the given channel name.
  */

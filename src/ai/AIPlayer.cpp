@@ -2,27 +2,29 @@
 
 #include <boost/log/attributes/constant.hpp>
 #include "misc/helper.h"
-#include "logic/Evaluators.h"
 #include <memory>
-#include <chrono>
+#include <future>
 
 using namespace std;
 using namespace std::chrono;
 using namespace Logging;
 
-AIPlayer::AIPlayer(int seed)
+AIPlayer::AIPlayer(const AIConfiguration& config, const string& name, int seed)
     : m_promisedTurn()
     , m_playerState(STOPPED)
     , m_gameState()
     , m_gameConfig()
     , m_color(PlayerColor::NoPlayer)
-    , m_algorithm()
+    , m_negamax()
     , m_thread()
     , m_openingBook(seed)
     , m_outOfBook(true)
-    , m_log(initLogger("AIPlayer")) {
+    , m_maxIterationDepth(numeric_limits<size_t>::max())
+    , m_config(config)
+    , m_log(initLogger(name)) {
     
     LOG(info) << "Using seed " << seed;
+    LOG(info) << config;
     // Empty
 }
 
@@ -47,19 +49,29 @@ void AIPlayer::onSetColor(PlayerColor color) {
     m_color = color;
 }
 
-void AIPlayer::onGameStart(GameState state, GameConfiguration config) {
+void AIPlayer::onGameStart(GameState state, GameConfiguration gameConfig) {
     LOG(info) << "Game start";
 
     m_gameState = state;
-    m_gameConfig = config;
+    m_ponderGameState = state;
 
-    if (!m_gameConfig.openingBook.empty()) {
-        if (!m_openingBook.open(m_gameConfig.openingBook)) {
+    // The time limits set for the game are important. Give us an extra second
+    // to reply to those to make sure we don't time out on our moves.
+    m_maxTimeForTurn = seconds(
+        std::max(1, // Minimum of one second
+        std::min(
+            m_config.maximumTimeForTurnInSeconds,
+            gameConfig.maximumTurnTimeInSeconds - 1)));
+
+    LOG(info) << "Max turn time set to " << m_maxTimeForTurn.count() << "s";
+
+    if (!m_config.openingBook.empty()) {
+        if (!m_openingBook.open(m_config.openingBook)) {
             LOG(warning) << "Failed to load opening book. AI will play without one";
             m_outOfBook = true;
         } else {
             // Enable book
-            LOG(info) << "Using opening book '" << m_gameConfig.openingBook
+            LOG(info) << "Using opening book '" << m_config.openingBook
                 << "' with " << m_openingBook.getNumberOfEntries() << " entries";
 
             m_outOfBook = false;
@@ -87,61 +99,153 @@ void AIPlayer::doAbortTurn() {
     changeState(PONDERING);
 }
 
-void AIPlayer::play() {
-    const size_t DEPTH = 4;
+bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
+    if (m_outOfBook)
+        return false;
+    
+    const Hash hash = m_gameState.getHash();
+    auto entry = m_openingBook.getWeightedEntry(hash);
+    if (entry) {
+        LOG(info) << "Book entry found for " << std::hex << m_gameState.getHash() << std::dec <<": " << *entry;
+        bool found = false;
 
-    if (!m_outOfBook) {
-        const Hash hash = m_gameState.getHash();
-        auto entry = m_openingBook.getWeightedEntry(hash);
-        if (entry) {
-            LOG(info) << "Book entry found for " << std::hex << m_gameState.getHash() << std::dec <<": " << *entry;
-            bool found = false;
-
-            // Check turn against possible moves to detect collisions
-            for (const auto& turn : m_gameState.getTurnList()) {
-                if (entry->move.from == turn.from
-                    && entry->move.to == turn.to) {
-                    //TODO: Fix this for pawn promotion and castling once we support that. For now comparing source and target should do.
-                    m_promisedTurn.set_value(turn);
-                    LOG(info) << "Performing turn from book: " << turn;
-                    found = true;
-                    break;
-                }
+        // Check turn against possible moves to detect collisions
+        for (const auto& turn : m_gameState.getTurnList()) {
+            if (turn.isMove()
+                && entry->move.from == turn.from
+                && entry->move.to == turn.to) {
+                
+                completePromiseWith(turn);
+                LOG(info) << "Performing move turn from book: " << turn;
+                found = true;
+                break;
+            } else if (turn.isPromotion()
+                       && entry->isPromotion()
+                       && entry->move.promotion_piece == turn.getPromotionPieceType()
+                       && entry->move.from == turn.from) {
+                completePromiseWith(turn);
+                
+                LOG(info) << "Performing promotion turn from book: " << turn;
+                found = true;
+                break;
+            } else if (turn.isCastling()
+                       && entry->mightBeCastlingMove()
+                       && entry->move.from == turn.from
+                       && entry->getKingCastlingTarget() == turn.to) {
+                completePromiseWith(turn);
+                
+                LOG(info) << "Performing castling turn from book: " << turn;
+                found = true;
+                break;
             }
-            
-            if (!found) {
-                LOG(error) << "Book proposed impossible turn. This could either be a turn generation bug or a hash collision";
-                LOG(error) << m_gameState;
-                m_outOfBook = true;
-            }
-
-        } else {
-            m_outOfBook = true;
-            LOG(info) << "Now out of book";
         }
+        
+        if (!found) {
+            LOG(error) << "Book proposed impossible turn. This could either be a turn generation bug or a hash collision";
+            LOG(error) << m_gameState;
+            m_outOfBook = true;
+            return false;
+        }
+
+    } else {
+        m_outOfBook = true;
+        LOG(info) << "Now out of book";
+        return false;
     }
     
-    if (m_outOfBook) {
-        LOG(info) << "Starting search of depth " << DEPTH;
-        auto result = m_algorithm.search(m_gameState, DEPTH);
+    return true;
+}
 
-        // Pass on result for turn
-        if (result.turn) {
-            LOG(info) << "Completed search, best score " << result.score << " with turn " << result.turn.get();
-            m_promisedTurn.set_value(result.turn.get());
-        }
-        else {
-            LOG(info) << "Aborted search, no turn possible";
-            m_promisedTurn.set_value(Turn());
-        }
+void AIPlayer::completePromiseWith(const Turn& turn) {
+    m_ponderGameState = m_gameState;
+    m_ponderGameState.applyTurn(turn);
+
+    m_promisedTurn.set_value(turn);
+}
+
+void AIPlayer::searchForPromisedTurn() {
+    boost::optional<Turn> turnWithFarthestHorizon;
+    size_t iteration = 1;
+
+    while (canStayInState(PLAYING) && iteration <= m_config.maximumDepth) {
+        auto turn = performSearchIteration(iteration, m_gameState, PLAYING);
+        if (!turn) break;
+
+        turnWithFarthestHorizon = turn;
+        ++iteration;
+    }
+    
+    if (turnWithFarthestHorizon) {
+        LOG(info) << "Reached " << iteration - 1 << " plies. Found " << *turnWithFarthestHorizon;
+        completePromiseWith(*turnWithFarthestHorizon);
+    } else {
+        LOG(warning) << "No viable solution found in time. Breaking promise";
+    }
+}
+
+void AIPlayer::play() {
+    LOG(debug) << "Play called";
+    setTimeLimit(m_maxTimeForTurn);
+
+    if(!tryFindPromisedTurnInOpeningBook()) {
+        searchForPromisedTurn();
     }
 
     changeState(PONDERING);
 }
 
+boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& state, States aiState) {
+    LOG(info) << "Starting search of depth " << depth;
+    
+    future<NegamaxResult> result = async(launch::async, [&]{
+        return m_negamax.search(state, depth);
+    });
+
+    while (canStayInState(aiState)) {
+        future_status status = result.wait_for(milliseconds(50));
+        if (status == future_status::ready) {
+            return result.get().turn;
+        }
+    }
+    LOG(debug) << "Aborting search";
+    m_negamax.abort();
+    result.wait(); // Make sure we notice if our async thread hangs due to a bug.
+    LOG(debug) << "Joined search thread. Abort complete.";
+
+    return boost::none;
+}
+
+bool AIPlayer::canStayInState(States currentState) {
+    return chrono::high_resolution_clock::now() < m_timeoutExpirationTime && m_playerState == currentState;
+}
+
+void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
+    m_timeoutExpirationTime = chrono::high_resolution_clock::now() + limit;
+}
+
 void AIPlayer::ponder() {
-    // Not implemented yet, sleep instead
-    this_thread::sleep_for(milliseconds(100));
+    LOG(debug) << "Ponder called";
+
+    if (m_config.ponderDuringOpposingPly) {
+        setTimeLimit(chrono::hours(2)); // Practically no limit
+
+        performIterativeDeepening();
+    } else {
+        while (canStayInState(PONDERING)) {
+            this_thread::sleep_for(milliseconds(100));
+        }
+    }
+}
+
+void AIPlayer::performIterativeDeepening() {
+    size_t iteration = 1;
+    while (canStayInState(PONDERING)
+        && iteration <= m_config.maximumDepth
+        && performSearchIteration(iteration, m_gameState, PONDERING)) {
+
+        LOG(info) << "Pondered " << iteration << " plies deep";
+        ++iteration;
+    }
 }
 
 void AIPlayer::run() {
@@ -167,9 +271,8 @@ void AIPlayer::changeState(States newState) {
     lock_guard<mutex> lock(m_stateMutex);
 
     if (m_playerState != newState && m_playerState != STOPPED) {
-        LOG(info) << "Now " << newState;
-
         m_playerState = newState;
+        LOG(info) << "Now " << newState;
     }
 }
 

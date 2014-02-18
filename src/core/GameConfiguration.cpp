@@ -1,20 +1,41 @@
 #include <fstream>
-
 #include <sstream>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <limits>
 
 #include "GameConfiguration.h"
+#include "misc/helper.h"
 
 using namespace std;
 using namespace chrono;
 
+string AIConfiguration::toString() const {
+    stringstream ss;
+    ss << "AIConfiguration:" << endl
+        << "  Name              : " << name << endl
+        << "  Opening book      : " << openingBook << endl
+        << "  Max. turn time    : " << maximumTimeForTurnInSeconds << "s" << endl
+        << "  Pondering         : " << ponderDuringOpposingPly << endl
+        << "  Max. search depth : " << maximumDepth << endl;
+
+    return ss.str();
+}
+
+AIConfiguration AIConfiguration::defaults() {
+    return { "Default", "resources/Book.bin", 30, true, 10000 };
+}
+
 GameConfiguration::GameConfiguration()
     : timeBetweenTurnsInSeconds(2)
     , maximumTurnTimeInSeconds(std::numeric_limits<int>::max())
-    , openingBook("resources/Book.bin")
-    , initialGameStateFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
+    , initialGameStateFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    , aiSelected(2)
+    , ai({
+        AIConfiguration { "Simplistic Simon", "", 6, false, 3 },
+        AIConfiguration { "Bookish Bert", "resources/Book.bin", 8, false, 10000 },
+        AIConfiguration { "Pondering Paula", "resources/Book.bin", 10, true, 10000 }
+        }) {
     // Empty
 }
 
@@ -55,8 +76,12 @@ string GameConfiguration::toString() const {
     ss << "GameConfiguration:" << endl
         << "  Maximum turn time: " << maximumTurnTimeInSeconds << "s" << endl
         << "  Minimum turn time: " << timeBetweenTurnsInSeconds << "s" << endl
-        << "  Opening book: " << openingBook << endl
-        << "  Initial FEN: " << initialGameStateFEN << endl;
+        << "  Initial FEN: " << initialGameStateFEN << endl
+        << "  AI selected: " << aiSelected << endl;
+    for (const AIConfiguration& aicfg : ai) {
+        ss << aicfg << endl;
+    }
+    
     
     return ss.str();
 }

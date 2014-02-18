@@ -10,7 +10,6 @@
 #include <cassert>
 #include "misc/helper.h"
 
-
 const int NUM_FIELDS = 64;
 const int NUM_FILES = 8;
 const int NUM_RANKS = 8;
@@ -44,6 +43,11 @@ enum PlayerColor {
     White, Black, NoPlayer
 };
 
+using Score = int;
+// Provide MAX_SCORE/MIN_SCORE to ensure that both are negatable to reach each other
+const Score MAX_SCORE = std::numeric_limits<Score>::max();
+const Score MIN_SCORE = -std::numeric_limits<Score>::max();
+
 //! Toggles player color between white and black
 inline PlayerColor togglePlayerColor(PlayerColor color) {
     assert(White == 0 && Black == 1);
@@ -62,7 +66,7 @@ inline File fileFor(Field field) {
 
 //! Returns the Field identified by Rank and File
 inline Field fieldFor(File file, Rank rank) {
-    return static_cast<Field>(file + rank * 8);
+    return static_cast< Field>(file + rank * 8);
 }
 
 //! Flips the Rank of the given Field

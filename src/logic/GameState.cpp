@@ -2,32 +2,35 @@
 #include <algorithm>
 
 GameState::GameState() {
-	init();
+    init();
 }
 
 GameState::GameState(const ChessBoard &chessBoard)
-	: m_chessBoard(chessBoard) {
-	// Empty
+    : m_chessBoard(chessBoard) {
+    init();
 }
 
 void GameState::init() {
-	// TODO: init ChessBoard from savegame
+    m_turnGen.generateTurns(getNextPlayer(),
+                            m_chessBoard);
 }
 
 std::vector<Turn> GameState::getTurnList() const {
-	return m_turnGen.generateTurns(getNextPlayer(), getChessBoard());
+    return m_turnGen.getTurnList();
 }
 
 void GameState::applyTurn(const Turn& turn) {
     m_chessBoard.applyTurn(turn);
+    m_turnGen.generateTurns(getNextPlayer(),
+                            m_chessBoard);
 }
 
 PlayerColor GameState::getNextPlayer() const {
-	return m_chessBoard.getNextPlayer();
+    return m_chessBoard.getNextPlayer();
 }
 
 const ChessBoard& GameState::getChessBoard() const {
-	return m_chessBoard;
+    return m_chessBoard;
 }
 
 bool GameState::isGameOver() const {
@@ -80,11 +83,11 @@ Score GameState::getScore() const {
 }
 
 bool GameState::operator==(const GameState& other) const {
-	return m_chessBoard == other.getChessBoard();
+    return m_chessBoard == other.getChessBoard();
 }
 
 bool GameState::operator!=(const GameState& other) const {
-	return !(*this == other);
+    return !(*this == other);
 }
 
 Hash GameState::getHash() const {
@@ -92,5 +95,5 @@ Hash GameState::getHash() const {
 }
 
 std::string GameState::toString() const {
-	return m_chessBoard.toString();
+    return m_chessBoard.toString();
 }

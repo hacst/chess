@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "misc/helper.h"
-#include "logic/Evaluators.h"
+#include "logic/IncrementalMaterialAndPSTEvaluator.h"
 #include "ai/Negamax.h"
 #include "logic/GameState.h"
 
@@ -14,7 +14,7 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
     GameState gameState(generateChessBoard({ PoF(Piece(White, Pawn), C3),
         PoF(Piece(Black, Pawn), D6) }));
 
-    Negamax negamax;
+    Negamax<> negamax;
 
     vector<Turn> expectedTurns = {
         Turn::move(Piece(White, Pawn), C3, C4),
@@ -46,7 +46,7 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
     GameState gameState(generateChessBoard({ PoF(Piece(White, Pawn), C3),
         PoF(Piece(Black, Pawn), D6) }));
 
-    Negamax negamax;
+    Negamax<> negamax;
 
     vector<Turn> expectedTurns = {
         Turn::move(Piece(Black, Pawn), D6, D5),
@@ -72,7 +72,7 @@ TEST(Gen_Alg_Eval, KnightStrikesPawn) {
     GameState gameState(generateChessBoard({ PoF(Piece(White, Knight), A1),
         PoF(Piece(Black, Pawn), D4) }));
 
-    Negamax negamax;
+    Negamax<> negamax;
 
     vector<Turn> expectedTurns = {
         Turn::move(Piece(White, Knight), A1, B3),

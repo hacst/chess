@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "logic/ChessBoard.h"
 #include "misc/DebugTools.h"
-#include "logic/Evaluators.h"
+#include "logic/IncrementalMaterialAndPSTEvaluator.h"
 
 using namespace DebugTools;
 using namespace std;
@@ -191,12 +191,12 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
     const int TRIES = 50;
     for (int i = 0; i < TRIES; ++i) {
         ChessBoard b = generateRandomBoard(50, rng);
-        ASSERT_EQ(IncrementalBoardEvaluator::estimateFullBoard(b.getBoard()),
+        ASSERT_EQ(IncrementalMaterialAndPSTEvaluator::estimateFullBoard(b.getBoard()),
             b.getScore(White)) << i << "th Board: " << b;
     }
 }
 
-TEST(ChessBoard, EnPassant) {
+TEST(ChessBoard, EnPassant_1) {
     ChessBoard cb;
     ASSERT_EQ(ERR, cb.getEnPassantSquare());
 
@@ -215,6 +215,20 @@ TEST(ChessBoard, EnPassant) {
     }
     cb.applyTurn(Turn::move(Piece(cb.getNextPlayer(), Pawn), A4, A5));
     ASSERT_EQ(ERR, cb.getEnPassantSquare());
+}
+
+TEST(ChessBoard, EnPassant_2) {
+    ChessBoard cb1(generateChessBoard({PoF(Piece(White, Pawn), C2),
+                                       PoF(Piece(Black, Pawn), D4)}, White));
+    ASSERT_EQ(ERR, cb1.getEnPassantSquare());
+    cb1.applyTurn(Turn::move(Piece(cb1.getNextPlayer(), Pawn), C2, C4));
+    ASSERT_EQ(cb1.getEnPassantSquare(), C3);
+    cb1.applyTurn(Turn::move(Piece(cb1.getNextPlayer(), Pawn), D4, C3));
+    ASSERT_EQ(ERR, cb1.getEnPassantSquare());
+
+    ChessBoard cb2(generateChessBoard({PoF(Piece(Black, Pawn), C3)},
+                                      cb1.getNextPlayer()));
+    EXPECT_EQ(cb2, cb1);
 }
 
 TEST(ChessBoard, CastlingRights) {
@@ -257,13 +271,95 @@ TEST(ChessBoard, CastlingRights) {
     }
 }
 
-TEST(MaterialEvaluator, MigrationCheck) {
-    MaterialEvaluator eval;
-    mt19937 rng(45438);
-    const int TRIES = 50;
-    for (int i = 0; i < TRIES; ++i) {
-        GameState gs = generateRandomState(50, rng);
-        ASSERT_EQ(eval.getScore(gs),
-            gs.getScore()) << i << "th State: " << gs;
+
+TEST(ChessBoard, ScoringPieceSquareTableReadout) {
+    // Check whether the scores match for some selected positions
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Pawn), D7)
+        });
+        const Score score = 100 + 50;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
     }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, King), G1)
+        });
+        const Score score = 20000 + 30;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Rook), H8)
+        });
+        const Score score = 500;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+
+    {
+        ChessBoard b = generateChessBoard({
+            PoF(Piece(White, Queen), A5)
+        });
+        const Score score = 900 - 5;
+        EXPECT_EQ(score, b.getScore(White)) << "Board: " << b;
+        EXPECT_EQ(-score, b.getScore(Black)) << "Board: " << b;
+    }
+}
+
+TEST(ChessBoard, ScoringEvaluationSymmetry) {
+    const unsigned int TRIES = 100;
+
+    mt19937 rng;
+    uniform_int_distribution<> fieldDist(0,63);
+    uniform_int_distribution<> pieceDist(0,5);
+
+    for (size_t i = 0; i < TRIES; ++i) {
+        const Field field = static_cast<Field>(fieldDist(rng));
+        const PieceType piece = static_cast<PieceType>(pieceDist(rng));
+        {
+            ChessBoard b = generateChessBoard({
+                PoF(Piece(White, piece), field),
+                PoF(Piece(Black, piece), flipHorizontal(field))
+            });
+
+            // Check PSQ readout and symmetry
+            ASSERT_EQ(0, b.getScore(White)) << "Board: " << b;
+            ASSERT_EQ(0, b.getScore(Black)) << "Board: " << b;
+        }
+
+        {
+            ChessBoard b = generateChessBoard({
+                PoF(Piece(Black, piece), field),
+                PoF(Piece(White, piece), flipHorizontal(field))
+            });
+
+            // Check PSQ readout and symmetry
+            ASSERT_EQ(0, b.getScore(White)) << "Board: " << b;
+            ASSERT_EQ(0, b.getScore(Black)) << "Board: " << b;
+        }
+    }
+}
+
+TEST(ChessBoard, HashAndScoreChangeWhenCastlingRegression) {
+    ChessBoard cb = ChessBoard::fromFEN("8/8/8/8/8/8/8/4K2R w K - 0 1");
+    ASSERT_EQ(0xad7142702be7486b, cb.getHash()) << cb;
+    cb.applyTurn(Turn::castle(Piece(White, King), E1, G1));
+
+    ChessBoard cbAfterCastle = ChessBoard::fromFEN("8/8/8/8/8/8/8/5RK1 b - - 1 2");
+    
+    EXPECT_EQ(cbAfterCastle, cb);
+}
+
+TEST(ChessBoard, HashAndScoreChangeWhenPromotingRegression) {
+    ChessBoard cb = ChessBoard::fromFEN("P7/8/8/8/8/8/8/8 w - - 0 1");
+    cb.applyTurn(Turn::promotionQueen(Piece(White, Pawn), A8));
+
+    ChessBoard cbAfterCastle = ChessBoard::fromFEN("Q7/8/8/8/8/8/8/8 b - - 1 2");
+
+    EXPECT_EQ(cbAfterCastle, cb);
 }

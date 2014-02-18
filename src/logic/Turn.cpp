@@ -1,4 +1,5 @@
 #include "Turn.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -14,11 +15,15 @@ bool Turn::operator!=(const Turn& other) const {
 }
 
 std::string Turn::toString() const {
-    static const char actions[][10] = {
+    static const char actions[][20] = {
         "Move",
-        "Forfeit",
         "Castle",
-        "Pass"
+        "Forfeit",
+        "Pass",
+        "PromotionQueen",
+        "PromotionBishop",
+        "PromotionRook",
+        "PromotionKnight"
     };
 
     std::stringstream ss;
@@ -30,13 +35,7 @@ std::string Turn::toString() const {
 
 
 bool turnVecCompare(const std::vector<Turn>& left, const std::vector<Turn>& right) {
-
     if (left.size() != right.size()) return false;
-
-
-    //for (auto )
-
-
 
     auto leftIter  = left.begin();
     auto rightIter = right.begin();
@@ -69,9 +68,32 @@ std::string turnVecToString(std::vector<Turn> v) {
     std::stringstream ss;
 
     ss << endl << endl;
-    for (Turn& turn: v) {
-        ss << turn << endl;
+
+    if (v.empty()) {
+        ss << "empty turn list" << endl;
+    } else {
+        for (Turn& turn: v) {
+            ss << turn << endl;
+        }
     }
 
     return ss.str();
+}
+
+bool turnVecContains(std::vector<Turn> v, std::vector<Turn> other) {
+    for (Turn& turn: other) {
+        if (!turnVecContains(v, turn)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool turnVecContains(std::vector<Turn> v, Turn t) {
+    if(std::find(v.begin(), v.end(), t) != v.end()) {
+        return true;
+    } else {
+        return false;
+    }
 }

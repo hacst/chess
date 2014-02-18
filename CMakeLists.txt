@@ -139,8 +139,8 @@ set(LOGIC_SOURCES
     src/logic/TurnGenerator.cpp
     src/logic/Turn.h
     src/logic/Turn.cpp
-    src/logic/Evaluators.h
-    src/logic/Evaluators.cpp
+    src/logic/IncrementalMaterialAndPSTEvaluator.h
+    src/logic/IncrementalMaterialAndPSTEvaluator.cpp
     src/logic/IncrementalZobristHasher.h
     src/logic/IncrementalZobristHasher.cpp
 )
@@ -153,7 +153,6 @@ set(LOGIC_INTERFACE_SOURCES
     src/logic/interface/AbstractPlayer.h
     src/logic/interface/AbstractGameLogic.h
     src/logic/interface/AbstractTurnGenerator.h
-    src/logic/interface/AbstractEvaluator.h
 )
 
 source_group(logic\\interface FILES ${LOGIC_INTERFACE_SOURCES})
@@ -185,9 +184,9 @@ set(AI_SOURCES
     src/ai/AIPlayer.h
     src/ai/AIPlayer.cpp
     src/ai/Negamax.h
-    src/ai/Negamax.cpp
     src/ai/PolyglotBook.h
     src/ai/PolyglotBook.cpp
+    src/ai/TranspositionTable.h
 )
 
 source_group(ai FILES ${AI_SOURCES})
@@ -246,9 +245,9 @@ add_definitions(${OpenGL_DEFINITIONS})
 
 if(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # Enable C++11 and stricter warning handling. Also enable debug symbols.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -Wno-missing-braces -g")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -pedantic -Werror -Wall -Wno-missing-braces")
 elseif(MSVC)
-    # Enable warnings as errors on MSVC.
+    # /WX Enable warnings as errors on MSVC.
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
 endif()
 
@@ -298,6 +297,7 @@ if (TEST)
         test/ai/AIPlayer_test.cpp
         test/ai/Negamax_test.cpp
         test/ai/PolyglotBook_test.cpp
+        test/ai/TranspositionTable_test.cpp
     )
 
     add_executable(ai_test ${AI_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
@@ -311,7 +311,8 @@ if (TEST)
     set(LOGIC_TEST_SOURCES
         test/logic/GameState_test.cpp
         test/logic/ChessBoard_test.cpp
-        test/logic/TurnGenerator_test.cpp
+        test/logic/TurnGeneratorIntern_test.cpp
+        test/logic/TurnGeneratorExtern_test.cpp
     )
 
     add_executable(logic_test ${LOGIC_TEST_SOURCES} ${EVERYTHINGBUTGUI_SOURCES})
