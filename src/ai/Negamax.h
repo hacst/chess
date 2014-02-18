@@ -209,7 +209,7 @@ private:
         
         consideredOptions.reserve(possibleTurns.size());
         
-        for (int i = 0; i < possibleTurns.size(); ++i) {
+        for (unsigned int i = 0; i < possibleTurns.size(); ++i) {
             // Need to apply all states at this point to be able to
             // use their data for move ordering.
             consideredStates[i].applyTurn(possibleTurns[i]);

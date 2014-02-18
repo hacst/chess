@@ -140,8 +140,8 @@ private:
 	// States are organized as followed:
 	// 
 	// States
-	//    |-- InternalState
-	//				|-- PlayerState
+	//   |-- InternalState
+	//      |-- PlayerState
 	enum InternalState {
 		AI_ON_TURN,
 		PLAYER_ON_TURN,

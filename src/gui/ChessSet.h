@@ -79,6 +79,11 @@ private:
 		int z;
 	};
 
+	enum InternalState {
+		ANIMATING,
+		STATIC
+	} m_internalState;
+
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard
 	ModelPtr king, pawn, queen, bishop, knight, rook;
 	std::array<ModelPtr, 6> m_models;
@@ -100,7 +105,6 @@ private:
 
 	unsigned int m_turnMoveShowDuration;
 	unsigned int m_turnMoveShownSince;
-	bool m_lastTurnAvailable;
 	Turn m_lastTurn;
 	PlayerColor m_lastPlayer;
 

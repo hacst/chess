@@ -60,7 +60,7 @@ set(GUI_SOURCES
     src/gui/Model.h
     src/gui/ObjectHelper.h
     src/gui/GuiObserver.h
-	src/gui/Player.h
+	src/gui/GUIPlayer.h
 	src/gui/ArrowNavigationHandler.h
 
     src/gui/AnimationHelper.cpp

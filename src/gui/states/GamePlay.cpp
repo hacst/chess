@@ -14,7 +14,7 @@
 #include "gui/AnimationHelper.h"
 #include "gui/ObjectHelper.h"
 #include "gui/GuiWindow.h"
-#include "gui/Player.h"
+#include "gui/GUIPlayer.h"
 
 #include "ai/AIPlayer.h"
 #include "misc/DebugTools.h"
@@ -30,7 +30,9 @@ GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
     , m_humanPlayerColor(humanPlayerColor)
     , m_nextState(States::KEEP_CURRENT)
     , m_log(initLogger("GUI:GamePlay"))
-	, m_playerState(PlayerState::NONE) {
+	, m_playerState(PlayerState::NONE)
+	, m_lastPlayer(PlayerColor::NoPlayer)
+	, m_lastTurn(Turn()) {
 }
 
 void GamePlay::initMessageBox() {
@@ -110,7 +112,7 @@ void GamePlay::initPlayers() {
 		firstPlayer->start();
 		m_firstPlayer = firstPlayer;
 
-		auto secondPlayer = make_shared<Player>(*this);
+		auto secondPlayer = make_shared<GUIPlayer>(*this);
 		m_secondPlayer = secondPlayer;
 
 		m_playerProxy = make_shared<PlayerDispatcherProxy>(m_secondPlayer);
@@ -292,7 +294,7 @@ AbstractState* GamePlay::run() {
 	
 	// Execute all pending calls from the observer and player
 	m_observerProxy->poll();
-	//m_playerProxy->poll();
+	m_playerProxy->poll();
 
 	this->draw();
 

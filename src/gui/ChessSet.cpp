@@ -12,7 +12,7 @@ ChessSet::ChessSet()
 	, m_tileHeight(2)
 	, m_turnMoveShowDuration(2000)
 	, m_turnMoveShownSince(0)
-	, m_lastTurnAvailable(false) {
+	, m_internalState(InternalState::STATIC) {
 
 	// all external resources to load
 	m_extResources = {
@@ -30,7 +30,7 @@ ChessSet::ChessSet()
         { 1, 21, 0, 1, -90, 0, 0 },		// bishop
         { 0, 0, 0, 0.4, -90, 0, 0 },	// knight
         { 20, 12, 0, 1, -90, 0, 0 },	// rook
-        { 0, 12, 0, 1, -90, 0, 0 }		// pawn
+        { 0, 13, 0, 1, -90, 0, 0 }		// pawn
     } };
 }
 
@@ -96,10 +96,16 @@ void ChessSet::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
 	m_lastPlayer = lastPlayer;
 	m_lastTurn = lastTurn;
 
-	m_lastTurnAvailable = true;
-
-	if (m_lastTurn.action == Turn::Action::Move) {
-		m_turnMoveShownSince = SDL_GetTicks();
+	if (m_lastPlayer == PlayerColor::NoPlayer) {
+		// only on first round
+		m_internalState = InternalState::STATIC;
+		createModelsList(false);
+	} else {
+		if (m_lastTurn.action == Turn::Action::Move || m_lastTurn.action == Turn::Action::Castle) {
+			m_internalState = InternalState::ANIMATING;
+			createModelsList(true);
+			m_turnMoveShownSince = SDL_GetTicks();
+		}
 	}
 }
 
@@ -109,21 +115,22 @@ void ChessSet::draw() {
 }
 
 void ChessSet::drawModels() {
-	// if a new turn is made, create a new model list without the turn dependent models
-	if (m_lastTurnAvailable) {
-		createModelsList(true);
-		m_lastTurnAvailable = false;
+	if (m_internalState == InternalState::STATIC) {
+		glCallList(m_modelsList);
 	}
 
-	// do not animate anything if time is up
-	if (m_turnMoveShownSince < (SDL_GetTicks() - m_turnMoveShowDuration)) {
-		animateModelTurn();
-	} else {
-		// if time is up -> create a model list with all models
-		createModelsList(false);
+	if (m_internalState == InternalState::ANIMATING) {
+		bool timeIsUp = (SDL_GetTicks() - m_turnMoveShownSince) > m_turnMoveShowDuration;
+
+		if (!timeIsUp) {
+			animateModelTurn();
+		} else {
+			createModelsList(false);
+			m_internalState = InternalState::STATIC;
+		}
+
+		glCallList(m_modelsList);
 	}
-	
-	glCallList(m_modelsList);
 }
 
 void ChessSet::drawBoard() {
@@ -160,23 +167,17 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 		int field = 0;
 		for (auto &p : m_state) {
 			if (p.type != PieceType::NoType) {
-				Coord3D coord = calcCoordinatesForTileAt(static_cast<Field>(field));
-				//int col = field % 8;
-				//int row = 7 - field / 8;
-				
 				glPushMatrix();
-					
-//					if (withoutTurnDependentModels || (field != m_lastTurn.from && field != m_lastTurn.to)) {
+					if (!withoutTurnDependentModels /* all */ || 
+							(withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */) {
 						// move model to tile
-						//float x = ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f);
-						//float z = ((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f);
+						Coord3D coord = calcCoordinatesForTileAt(static_cast<Field>(field));
 						glTranslatef(static_cast<float>(coord.x), static_cast<float>(coord.y), static_cast<float>(coord.z));
 
 						// draw model via list index
 						int listIndex = p.type + (p.player == PlayerColor::Black ? 6 : 0);
 						glCallList(m_modelList[listIndex]);
-//					}
-					
+					}
 				glPopMatrix();
 			}
 			++field;
@@ -186,7 +187,6 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 
 void ChessSet::animateModelTurn() {
 	
-
 }
 
 void ChessSet::createChessBoardList() {
@@ -228,8 +228,8 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 			GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
 																	//          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
 																	//          the result is the same as if you define only ambient light.
-			halfWidth = 0.95 * halfWidth_t;
-			halfHeight = 1.05 * halfHeight_t;
+			halfWidth = 0.95f * halfWidth_t;
+			halfHeight = 1.05f * halfHeight_t;
 
 			switch (style) {
 				case NORMAL:

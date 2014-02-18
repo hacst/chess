@@ -16,9 +16,9 @@
 /**
 * @brief Player implementation for a real user.
 */
-class Player : public AbstractPlayer, public ServiceDispatcherThread {
+class GUIPlayer : public AbstractPlayer {
 public:
-	Player(GamePlay& gp, int seed = 1234)
+	GUIPlayer(GamePlay& gp, int seed = 1234)
 		: m_seed(seed)
 		, m_rng(m_seed)
 		, m_msDist(0, 5)
@@ -27,8 +27,7 @@ public:
 		LOG(Logging::info) << "Seed: " << m_seed;
 	}
 
-	virtual ~Player() {
-		stop(true);
+	virtual ~GUIPlayer() {
 	}
 
 	virtual void onSetColor(PlayerColor color) override {
@@ -69,6 +68,6 @@ private:
 	Logging::Logger m_log;
 };
 
-using DummyPlayerPtr = std::shared_ptr<Player>;
+using GUIPlayerPtr = std::shared_ptr<GUIPlayer>;
 
 #endif // PLAYER_H
