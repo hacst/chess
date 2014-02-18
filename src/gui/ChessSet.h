@@ -33,9 +33,14 @@ public:
 	 */
 	void setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn);
 
-	void drawTileSelectorAt(Field which);
+	enum TileStyle {
+		NORMAL,
+		CURSOR,
+		MOVE,
+		CASTLE
+	};
 
-	void drawTileTurnOptionAt(Field which);
+	void drawActionTileAt(Field which, TileStyle style);
 
 	/**
 	 * @brief Returns the number of big resources which must be loaded for initializing
@@ -72,12 +77,6 @@ private:
 		int x;
 		int y;
 		int z;
-	};
-
-	enum TileStyle {
-		NORMAL,
-		SELECT,
-		OPTION
 	};
 
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard

@@ -46,6 +46,9 @@ public:
 		bool keyReturn = false;
 		bool key0 = false;
 		bool key1 = false;
+		bool key2 = false;
+		bool key3 = false;
+		bool key4 = false;
 		bool keyA = false;
 		bool keyY = false;
 		bool keyR = false;

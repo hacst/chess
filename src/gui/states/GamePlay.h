@@ -106,6 +106,8 @@ private:
 	ArrowNavigationHandlerPtr m_arrowNavHandler;
 	
 	std::vector<Turn> m_possibleTurns;
+	Turn m_userChosenPromotionTurn;
+	bool m_promotionTurnAvailable;
 	
 	//! Holds the promise during fulfillment.
 	std::promise<Turn> m_promisedPlayerTurn;
@@ -135,12 +137,24 @@ private:
 		BACK_TO_MENU
 	} m_nextState;
 
+	// States are organized as followed:
+	// 
+	// States
+	//    |-- InternalState
+	//				|-- PlayerState
 	enum InternalState {
 		AI_ON_TURN,
 		PLAYER_ON_TURN,
 		PAUSE,
 		SAVE_GAME
 	} m_internalState, m_lastInternalState;
+
+	enum PlayerState {
+		NONE,
+		CHOOSE_PROMOTION_TURN
+	} m_playerState;
+
+	Turn m_promotionTurns[4];
 
 	struct PlayerTurn {
 		PlayerColor who;
@@ -202,12 +216,14 @@ private:
 	void fadeBackgroundForOneTime();
 	void rotateCamera();
 	void setCameraPosition(float degree);
+	void draw2D();
+	void draw3D();
 	void drawMessageBox();
 	void drawLastTurns();
-	void drawInfoBox();
+	void drawInfoBox(string msg);
 	void drawCapturedPieces();
 	void drawPauseMenu();
-	void drawPlayersTiles();
+	void drawPlayerActions();
 	void enableLighting();
 	void disableLighting();
 	void handleEvents();

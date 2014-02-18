@@ -188,6 +188,15 @@ void GuiWindow::handleEvents() {
 					case SDLK_1:
 						m_fsm.eventmap.key1 = true;
 						break;
+					case SDLK_2:
+						m_fsm.eventmap.key2 = true;
+						break;
+					case SDLK_3:
+						m_fsm.eventmap.key3 = true;
+						break;
+					case SDLK_4:
+						m_fsm.eventmap.key4 = true;
+						break;
 					case SDLK_a:
 						m_fsm.eventmap.keyA = true;
 						break;
@@ -226,6 +235,15 @@ void GuiWindow::handleEvents() {
 					break;
 				case SDLK_1:
 					m_fsm.eventmap.key1 = false;
+					break;
+				case SDLK_2:
+					m_fsm.eventmap.key2 = false;
+					break;
+				case SDLK_3:
+					m_fsm.eventmap.key3 = false;
+					break;
+				case SDLK_4:
+					m_fsm.eventmap.key4 = false;
 					break;
 				case SDLK_a:
 					m_fsm.eventmap.keyA = false;

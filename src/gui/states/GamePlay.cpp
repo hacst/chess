@@ -29,7 +29,8 @@ GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
 	, m_gameMode(mode)
     , m_humanPlayerColor(humanPlayerColor)
     , m_nextState(States::KEEP_CURRENT)
-    , m_log(initLogger("GUI:GamePlay")) {
+    , m_log(initLogger("GUI:GamePlay"))
+	, m_playerState(PlayerState::NONE) {
 }
 
 void GamePlay::initMessageBox() {
@@ -381,8 +382,15 @@ void GamePlay::disableLighting() {
 void GamePlay::draw() {
 	enableLighting();
 	fadeBackgroundForOneTime();
-
+	
 	// 3D
+	draw3D();
+
+	// 2D
+	draw2D();
+}
+
+void GamePlay::draw3D() {
 	m_fsm.window->set3DMode();
 	m_chessSet->draw();	// chessboard and models
 
@@ -392,10 +400,11 @@ void GamePlay::draw() {
 	}
 
 	if (m_internalState == PLAYER_ON_TURN) {
-		drawPlayersTiles();
+		drawPlayerActions();
 	}
+}
 
-	// 2D
+void GamePlay::draw2D() {
 	m_fsm.window->set2DMode();
 	disableLighting();
 
@@ -403,7 +412,7 @@ void GamePlay::draw() {
 	if (m_internalState == PAUSE) {
 		drawPauseMenu();
 	}
-	
+
 	// draw last turns, message box and captured pieces only if we're not in pause mode
 	if (m_internalState != PAUSE) {
 		drawMessageBox();
@@ -411,8 +420,20 @@ void GamePlay::draw() {
 		drawCapturedPieces();
 
 		if (m_gameMode == AI_VS_AI) {
-			drawInfoBox();
+			string msg;
+			if (m_lockCamera) {
+				msg = "Rotation ist deaktiviert.";
+			}
+			else {
+				msg = "";
+			}
+
+			drawInfoBox(msg);
 		}
+	}
+
+	if (m_playerState == PlayerState::CHOOSE_PROMOTION_TURN) {
+		drawInfoBox("1: Läufer, 2: Springer, 3: Dame, 4: Turm");
 	}
 }
 
@@ -444,13 +465,30 @@ void GamePlay::handleEvents() {
 		}
 	}
 
-	if (m_internalState != PAUSE && m_internalState != PLAYER_ON_TURN) {
+	if (m_internalState != PAUSE) {
 		if (m_fsm.eventmap.keyEscape) {
 			onPauseGame();
 		}
 	}
 
 	if (m_internalState == PLAYER_ON_TURN) {
+		
+		if (m_playerState == PlayerState::CHOOSE_PROMOTION_TURN) {
+			if (m_fsm.eventmap.key1) {
+				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionBishop]);
+				m_playerState = PlayerState::NONE;
+			} else if (m_fsm.eventmap.key2) {
+				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionKnight]);
+				m_playerState = PlayerState::NONE;
+			} else if (m_fsm.eventmap.key3) {
+				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionQueen]);
+				m_playerState = PlayerState::NONE;
+			} else if (m_fsm.eventmap.key4) {
+				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionRook]);
+				m_playerState = PlayerState::NONE;
+			}
+		}
+
 		if (m_fsm.eventmap.keyUp) {
 			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::UP);
 		}
@@ -467,21 +505,27 @@ void GamePlay::handleEvents() {
 			m_arrowNavHandler->onKey(ArrowNavigationHandler::ArrowKey::LEFT);
 		}
 
-		if (m_possibleTurns.size() > 0 && m_fsm.eventmap.keyEscape) {
-			m_possibleTurns.clear();
-		}
-
 		// get all relevant turns for the chosen field
 		if (m_fsm.eventmap.keyReturn &&
 				std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - m_kCounter.keyReturn).count() > 500) {
 			m_kCounter.keyReturn = std::chrono::system_clock::now();
 
-			// 2. User *may* select one option as target field for the in (1) selected model
+			// 2. User *may* select one option as target field for the in (1) (see below) selected model
 			if (m_possibleTurns.size() > 0) {
 				// a) check if the user will do a turn
 				for (auto& turn : m_possibleTurns) {
 					if (turn.to == m_arrowNavHandler->getCursorPosition()) {
-						m_promisedPlayerTurn.set_value(turn);
+						// check for promotion turns
+						if (turn.action == Turn::Action::PromotionBishop || turn.action == Turn::Action::PromotionKnight ||
+								turn.action == Turn::Action::PromotionQueen || turn.action == Turn::Action::PromotionRook) {
+							// do nothing here, just switch the state and let the user choose
+							// one of the four turns
+							m_promotionTurns[turn.action] = turn;
+							m_playerState = PlayerState::CHOOSE_PROMOTION_TURN;
+						} else {
+							// this is a normal Turn
+							m_promisedPlayerTurn.set_value(turn);
+						}
 						
 						// assert: clear now all possible turns
 					}
@@ -597,14 +641,7 @@ void GamePlay::drawLastTurns() {
 }
 
 // must be done in 2D mode
-void GamePlay::drawInfoBox() {
-	string infoString;
-	if (m_lockCamera) {
-		infoString = "Rotation ist deaktiviert.";
-	} else {
-		infoString = "";
-	}
-
+void GamePlay::drawInfoBox(string msg) {
 	// config
 	int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
 
@@ -613,7 +650,7 @@ void GamePlay::drawInfoBox() {
 	int totalLineHeight = 1 * lineHeight;
 	int offsetY = m_fsm.window->getHeight() - totalLineHeight - fontSize;
 
-	m_fsm.window->printTextSmall(m_fsm.window->getWidth() - 200, offsetY, 0.6f, 0.0f, 0.0f, infoString);
+	m_fsm.window->printTextSmall(m_fsm.window->getWidth() - 400, offsetY, 0.6f, 0.0f, 0.0f, msg);
 }
 
 void GamePlay::drawCapturedPieces() {
@@ -678,14 +715,38 @@ string GamePlay::getPieceName(int pieceNumber) {
 	return pieceName;
 }
 
-void GamePlay::drawPlayersTiles() {
+void GamePlay::drawPlayerActions() {
 	if (m_possibleTurns.size() > 0) {
 		for (auto& turn : m_possibleTurns) {
-			m_chessSet->drawTileTurnOptionAt(static_cast<Field>(turn.to));
+			switch (turn.action) {
+			case Turn::Action::Castle:
+				m_chessSet->drawActionTileAt(static_cast<Field>(turn.to), ChessSet::TileStyle::CASTLE);
+				break;
+			case Turn::Action::Forfeit:
+				// nothing to do here
+				break;
+			case Turn::Action::Move:
+				m_chessSet->drawActionTileAt(static_cast<Field>(turn.to), ChessSet::TileStyle::MOVE);
+				break;
+			case Turn::Action::Pass:
+				// just for testing, nothing to do
+				break;
+			case Turn::Action::PromotionBishop:
+			case Turn::Action::PromotionKnight:
+			case Turn::Action::PromotionQueen:
+			case Turn::Action::PromotionRook:
+				// nothing to do here as we are not showing information when the
+				// user can make a promotion. We show instead an infomation box
+				// with keys (1-4) to let the user choose a promotion action *after*
+				// the move was made through the user. This is more intuitive.
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
-	m_chessSet->drawTileSelectorAt(static_cast<Field>(m_arrowNavHandler->getCursorPosition()));
+	m_chessSet->drawActionTileAt(static_cast<Field>(m_arrowNavHandler->getCursorPosition()), ChessSet::TileStyle::CURSOR);
 }
 
 void GamePlay::drawPauseMenu() {

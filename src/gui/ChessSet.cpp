@@ -143,28 +143,10 @@ ChessSet::Coord3D ChessSet::calcCoordinatesForTileAt(Field which) {
 	return coord;
 }
 
-void ChessSet::drawTileSelectorAt(Field which) {
+void ChessSet::drawActionTileAt(Field which, TileStyle style) {
 	Coord3D coord = calcCoordinatesForTileAt(which);
-	/*int col = static_cast<int>(which) % 8;
-	int row = 7 - static_cast<int>(which) / 8;
-
-	int x, z;
-	int y = 0;
-	x = ((col - 4) * m_tileWidth) + m_tileWidth / 2;
-	z = ((row - 4) * m_tileWidth) + m_tileWidth / 2;*/
-
-	drawTile(coord.x, coord.y, coord.z, false, TileStyle::SELECT);
+	drawTile(coord.x, coord.y, coord.z, false, style);
 }
-
-void ChessSet::drawTileTurnOptionAt(Field which) {
-	Coord3D coord = calcCoordinatesForTileAt(which);
-	drawTile(coord.x, coord.y, coord.z, false, TileStyle::OPTION);
-}
-
-/* replace by translation
-void ChessSet::moveModelToTile(ModelPtr model, int row, int col) {
-	glTranslatef(((row - 4.f) * m_tileWidth) + (m_tileWidth / 2.f), static_cast<float>(m_tileHeight), ((col - 4.f) * m_tileWidth) + (m_tileWidth / 2.f));
-}*/
 
 // create the list only the first time
 // to update single model positions
@@ -232,8 +214,9 @@ void ChessSet::createChessBoardList() {
 }
 
 void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
-	int halfWidth = m_tileWidth / 2;
-	int halfHeight = m_tileHeight / 2;
+	float halfWidth_t = m_tileWidth / 2.0f;
+	float halfHeight_t = m_tileHeight / 2.0f;
+	float halfWidth, halfHeight;
 
 	glPushMatrix();
     glTranslatef(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
@@ -245,9 +228,14 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 			GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
 																	//          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
 																	//          the result is the same as if you define only ambient light.
+			halfWidth = 0.95 * halfWidth_t;
+			halfHeight = 1.05 * halfHeight_t;
 
 			switch (style) {
 				case NORMAL:
+					halfWidth = halfWidth_t;
+					halfHeight = halfHeight_t;
+
 					if (!odd) {
 						ambient[0] = 1.0f;
 						ambient[1] = 1.0f;
@@ -258,15 +246,20 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 						ambient[2] = 0.0f;
 					}
 					break;
-				case SELECT:
+				case CURSOR:
 					ambient[0] = 0.8f;
 					ambient[1] = 0.0f;
 					ambient[2] = 0.0f;
 					break;
-				case OPTION:
+				case MOVE:
 					ambient[0] = 0.8f;
 					ambient[1] = 0.6f;
 					ambient[2] = 0.0f;
+					break;
+				case CASTLE:
+					ambient[0] = 0.2f;
+					ambient[1] = 0.6f;
+					ambient[2] = 1.0f;
 					break;
 				default:
 					break;
@@ -285,45 +278,45 @@ void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
 
 			// front face
 			glNormal3f(0.0f, 0.0f, -1.0f);
-			glVertex3i(halfWidth, halfHeight, halfWidth);	// top right
-			glVertex3i(-halfWidth, halfHeight, halfWidth);	// top left
-			glVertex3i(-halfWidth, -halfHeight, halfWidth);	// bottom left
-			glVertex3i(halfWidth, -halfHeight, halfWidth);	// bottom right
+			glVertex3f(halfWidth, halfHeight, halfWidth);	// top right
+			glVertex3f(-halfWidth, halfHeight, halfWidth);	// top left
+			glVertex3f(-halfWidth, -halfHeight, halfWidth);	// bottom left
+			glVertex3f(halfWidth, -halfHeight, halfWidth);	// bottom right
 
 			// left face
 			glNormal3f(-1.0f, 0.0f, 0.0f);
-			glVertex3i(-halfWidth, halfHeight, halfWidth);
-			glVertex3i(-halfWidth, halfHeight, -halfWidth);
-			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3i(-halfWidth, -halfHeight, halfWidth);
+			glVertex3f(-halfWidth, halfHeight, halfWidth);
+			glVertex3f(-halfWidth, halfHeight, -halfWidth);
+			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(-halfWidth, -halfHeight, halfWidth);
 
 			// back face
 			glNormal3f(0.0f, 0.0f, 1.0f);
-			glVertex3i(halfWidth, halfHeight, -halfWidth);
-			glVertex3i(-halfWidth, halfHeight, -halfWidth);
-			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3i(halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(halfWidth, halfHeight, -halfWidth);
+			glVertex3f(-halfWidth, halfHeight, -halfWidth);
+			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
 			// right face
 			glNormal3f(1.0f, 0.0f, 0.0f);
-			glVertex3i(halfWidth, halfHeight, -halfWidth);
-			glVertex3i(halfWidth, halfHeight, halfWidth);
-			glVertex3i(halfWidth, -halfHeight, halfWidth);
-			glVertex3i(halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(halfWidth, halfHeight, -halfWidth);
+			glVertex3f(halfWidth, halfHeight, halfWidth);
+			glVertex3f(halfWidth, -halfHeight, halfWidth);
+			glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
 			// bottom face
 			glNormal3f(0.0f, -1.0f, 0.0f);
-			glVertex3i(halfWidth, -halfHeight, halfWidth);
-			glVertex3i(-halfWidth, -halfHeight, halfWidth);
-			glVertex3i(-halfWidth, -halfHeight, -halfWidth);
-			glVertex3i(halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(halfWidth, -halfHeight, halfWidth);
+			glVertex3f(-halfWidth, -halfHeight, halfWidth);
+			glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+			glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
 			// top face
 			glNormal3f(0.0f, 1.0f, 0.0f);
-			glVertex3i(halfWidth, halfHeight, halfWidth);
-			glVertex3i(-halfWidth, halfHeight, halfWidth);
-			glVertex3i(-halfWidth, halfHeight, -halfWidth);
-			glVertex3i(halfWidth, halfHeight, -halfWidth);
+			glVertex3f(halfWidth, halfHeight, halfWidth);
+			glVertex3f(-halfWidth, halfHeight, halfWidth);
+			glVertex3f(-halfWidth, halfHeight, -halfWidth);
+			glVertex3f(halfWidth, halfHeight, -halfWidth);
 		glEnd();
 	glPopMatrix();
 }
