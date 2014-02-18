@@ -6,9 +6,8 @@
 #include <cmath>
 #include <string>
 
-//#include "ChessTypes.h"
 #include "Turn.h"
-#include "Evaluators.h"
+#include "IncrementalMaterialAndPSTEvaluator.h"
 #include "IncrementalZobristHasher.h"
 
 #ifdef _MSC_VER
@@ -42,8 +41,6 @@ inline Field getFirstOccupiedField(BitBoard bb) {
 inline Field getFirstOccupiedField(BitBoard bb) {
     assert(bb != 0);
     assert(sizeof(Field) == sizeof(int));
-    //if (bb == 0)
-    //    return static_cast<Field>(0);
 
     return static_cast<Field>(63 - __builtin_clzll(bb));
 }
@@ -109,11 +106,6 @@ public:
     //! Returns full move clock
     int getFullMoveClock() const;
     
-    bool operator==(const ChessBoard& other) const;
-    bool operator!=(const ChessBoard& other) const;
-
-    std::string toString() const;
-    
     /**
      * @brief Create a chessboard from a Forsyth–Edwards Notation string.
      * http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
@@ -130,10 +122,28 @@ public:
 
     //! Returns the field where en-passant rights exist. ERR if none.
     Field getEnPassantSquare() const;
+    //! Returns whether the king of the player is in check or not.
+    std::array<bool, NUM_PLAYERS> getKingInCheck() const;
+
+
+
+    void setKingInCheck(PlayerColor player, bool kingInCheck);
+
+    bool getStalemate() const;
+    void setStalemate(bool stalemate);
+
+    void setCheckmate(PlayerColor player, bool checkmate);
+    std::array<bool, NUM_PLAYERS> getCheckmate() const;
+
+
     //! Returns short castle rights for players.
     std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
     //! Returns long castle rights for players.
     std::array<bool, NUM_PLAYERS> getLongCastleRights() const;
+
+    bool operator==(const ChessBoard& other) const;
+    bool operator!=(const ChessBoard& other) const;
+    std::string toString() const;
 
 protected:
     // for internal turn calculation bit boards are used
@@ -143,11 +153,34 @@ protected:
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
     
 private:
+    //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);
+
     void updateBitBoards();
+
+    //! Applies a "simple" move turn.
+    void applyMoveTurn(const Turn& turn);
+    //! Performs a long/short castle turn
+    void applyCastleTurn(const Turn& turn);
+    //! Promotes a pawn to a given piece type (Queen | Bishop | Rook | Knight).
+    void applyPromotionTurn(const Turn& turn, const PieceType pieceType);
+
+    //! Determines the type of a captured piece and takes it from the board.
+    void capturePiece(const Turn& turn);
+    //! Takes a Piece from the board and adds it to the captured piece list.
+    void addCapturedPiece(const Piece capturedPiece, Field field);
+    //! Resets the enPassantSquare or sets it to the possible field.
+    void updateEnPassantSquare(const Turn& turn);
     //! Checks whether the given turn affects castling rights and updates them accordingly.
     void updateCastlingRights(const Turn& turn);
 
+
+    bool m_stalemate;
+
+    std::array<bool, NUM_PLAYERS> m_checkmate;
+
+    //! King of player in check postion.
+    std::array<bool, NUM_PLAYERS> m_kingInCheck;
     //! Short castle rights for players.
     std::array<bool, NUM_PLAYERS> m_shortCastleRight;
     //! Long castle rights for players.
@@ -160,10 +193,10 @@ private:
     int m_fullMoveClock;
     //! Player doing the next turn
     PlayerColor m_nextPlayer;
-    
+    //! List with all captured piece
     std::vector<Piece> m_capturedPieces;
     
-    IncrementalBoardEvaluator m_evaluator;
+    IncrementalMaterialAndPSTEvaluator m_evaluator;
     IncrementalZobristHasher m_hasher;
 };
 

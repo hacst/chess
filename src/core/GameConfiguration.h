@@ -11,12 +11,46 @@
 #include <boost/optional.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>
+#include <boost/serialization/vector.hpp>
+
+/**
+ * @brief AI configuration class
+ */
+class AIConfiguration {
+public:
+    //! Name of this configuration
+    std::string name;
+    //! Relative path to opening book. Empty for none
+    std::string openingBook;
+    //! Time allowed to take for turn
+    int maximumTimeForTurnInSeconds;
+    //! Ponder when not playing
+    bool ponderDuringOpposingPly;
+    //! Hard depth limit
+    size_t maximumDepth;
+
+    static AIConfiguration defaults();
+
+    std::string toString() const;
+
+private:
+    friend class boost::serialization::access;
+
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int /*version*/) {
+        ar & BOOST_SERIALIZATION_NVP(name);
+        ar & BOOST_SERIALIZATION_NVP(openingBook);
+        ar & BOOST_SERIALIZATION_NVP(maximumTimeForTurnInSeconds);
+        ar & BOOST_SERIALIZATION_NVP(ponderDuringOpposingPly);
+        ar & BOOST_SERIALIZATION_NVP(maximumDepth);
+    }
+};
 
 /**
  * @brief Class for holding game configuration parameters.
  * @note Can be stored and read from disc using save/load.
  */
-struct GameConfiguration {
+class GameConfiguration {
 public:
     GameConfiguration();
 
@@ -24,10 +58,15 @@ public:
     int timeBetweenTurnsInSeconds;
     //! Maximum time between turns after which to time out a move.
     int maximumTurnTimeInSeconds;
-    //! Relative path to opening book
-    std::string openingBook;
+
     //! Initial game state as FEN string
     std::string initialGameStateFEN;
+
+    //! Selected ai configuration (must match entry in ai)
+    int aiSelected;
+
+    //! List of ai configurations ordered by difficulty (simplest first)
+    std::vector<AIConfiguration> ai;
 
     /**
      * @brief Loads a game configuration from disk.
@@ -59,13 +98,19 @@ private:
     friend class boost::serialization::access;
 
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int /*version*/) {
+    void serialize(Archive& ar, const unsigned int version) {
         ar & BOOST_SERIALIZATION_NVP(timeBetweenTurnsInSeconds);
         ar & BOOST_SERIALIZATION_NVP(maximumTurnTimeInSeconds);
-        ar & BOOST_SERIALIZATION_NVP(openingBook);
         ar & BOOST_SERIALIZATION_NVP(initialGameStateFEN);
+        if (version > 1) {
+            ar & BOOST_SERIALIZATION_NVP(aiSelected);
+            ar & BOOST_SERIALIZATION_NVP(ai);
+        }
     }
 };
+
+BOOST_CLASS_VERSION(GameConfiguration, 2)
+BOOST_CLASS_VERSION(AIConfiguration, 1)
 
 using GameConfigurationPtr = std::shared_ptr<GameConfiguration>;
 

@@ -27,7 +27,7 @@ public:
 
     virtual void OnTestPartResult(const TestPartResult& test_part_result) {
         if (test_part_result.failed()) {
-            LOG(warning) << "Failure "
+            LOG(error) << "Failure "
                 << test_part_result.file_name() << ":" << test_part_result.line_number()
                 << endl
                 << test_part_result.summary();
@@ -49,7 +49,6 @@ private:
 
 int main(int argc, char **argv) {
     initializeLogging();
-    addLoggingConsoleSink(error);
     addLoggingFileSink(TEST_LOG_NAME, TEST_LOG_LEVEL);
 
     // Register our own event listener so the test log contains enough information

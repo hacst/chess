@@ -1,12 +1,8 @@
-#include "Evaluators.h"
+#include "IncrementalMaterialAndPSTEvaluator.h"
 
 #include "GameState.h"
 #include <array>
 #include <iostream>
-
-Score MaterialEvaluator::getScore(const GameState& gameState) const {
-    return getMaterialWorth(gameState.getNextPlayer(), gameState.getChessBoard());
-}
 
 using PieceSquareTable = std::array<Score, NUM_FIELDS>;
 
@@ -99,46 +95,16 @@ const std::array<Score, NUM_PIECETYPES> PIECE_VALUES = {
 } // namespace
 
 
-Score MaterialEvaluator::getMaterialWorth(const PlayerColor player, const ChessBoard& board) const {
-    // Uses fixed scoring for pieces. Kings are set
-    // at a value higher than all other pieces combined to make
-    // their loss unacceptable
-    Score score = 0;
-
-    // Calculate from white's perspective
-    Field position = A1;
-    for (Piece& piece: board.getBoard()) {
-        if (piece.type <= Pawn) {
-            const Field psqPosition = (piece.player == Black) ? position : flipHorizontal(position);
-
-            const Score pieceSquareScore = PIECE_SQUARE_TABLE[piece.type][psqPosition];
-            const Score pieceOverallScore = PIECE_VALUES[piece.type] + pieceSquareScore;
-            
-            if (piece.player == player) {
-                score += pieceOverallScore;
-
-            }
-            else {
-                score -= pieceOverallScore;
-            }
-        }
-        position = nextField(position);
-    }
-
-    return score;
-}
-
-
-IncrementalBoardEvaluator::IncrementalBoardEvaluator()
+IncrementalMaterialAndPSTEvaluator::IncrementalMaterialAndPSTEvaluator()
     : m_estimatedScore(0) {
     // Empty
 }
 
-IncrementalBoardEvaluator::IncrementalBoardEvaluator(const std::array<Piece, 64> &board)
+IncrementalMaterialAndPSTEvaluator::IncrementalMaterialAndPSTEvaluator(const std::array<Piece, 64> &board)
     : m_estimatedScore(estimateFullBoard(board)) {
 }
 
-Score IncrementalBoardEvaluator::estimateFullBoard(const std::array<Piece, 64> &board) {
+Score IncrementalMaterialAndPSTEvaluator::estimateFullBoard(const std::array<Piece, 64> &board) {
     // Calculate from white's perspective
     Score score = 0;
 
@@ -163,7 +129,7 @@ Score IncrementalBoardEvaluator::estimateFullBoard(const std::array<Piece, 64> &
     return score;
 }
 
-void IncrementalBoardEvaluator::moveIncrement(const Turn& turn) {
+void IncrementalMaterialAndPSTEvaluator::moveIncrement(const Turn& turn) {
     // Only effects PSQT evaluation due to the move. Always from white's perspective.
 
     if (turn.piece.player == Black) {
@@ -176,7 +142,7 @@ void IncrementalBoardEvaluator::moveIncrement(const Turn& turn) {
     }
 }
 
-void IncrementalBoardEvaluator::captureIncrement(Field field, const Piece& piece) {
+void IncrementalMaterialAndPSTEvaluator::captureIncrement(Field field, const Piece& piece) {
     // Effects material and PSQT evaluation
     if (piece.player == Black) {
         m_estimatedScore += PIECE_SQUARE_TABLE[piece.type][field];
@@ -188,10 +154,27 @@ void IncrementalBoardEvaluator::captureIncrement(Field field, const Piece& piece
     }
 }
 
-Score IncrementalBoardEvaluator::getScore(PlayerColor color) const {
+void IncrementalMaterialAndPSTEvaluator::promotionIncrement(const Turn& turn, const PieceType targetType) {
+    if (turn.piece.player == Black) {
+        m_estimatedScore += PIECE_SQUARE_TABLE[Pawn][turn.to];
+        m_estimatedScore += PIECE_VALUES[Pawn];
+        m_estimatedScore -= PIECE_SQUARE_TABLE[targetType][turn.to];
+        m_estimatedScore -= PIECE_VALUES[targetType];
+    }
+    else {
+        const Field blackPromSquare = flipHorizontal(turn.to);
+
+        m_estimatedScore -= PIECE_SQUARE_TABLE[Pawn][blackPromSquare];
+        m_estimatedScore -= PIECE_VALUES[Pawn];
+        m_estimatedScore += PIECE_SQUARE_TABLE[targetType][blackPromSquare];
+        m_estimatedScore += PIECE_VALUES[targetType];
+    }
+}
+
+Score IncrementalMaterialAndPSTEvaluator::getScore(PlayerColor color) const {
     return color == White ? m_estimatedScore : -m_estimatedScore;
 }
 
-bool IncrementalBoardEvaluator::operator == (const IncrementalBoardEvaluator& other) const {
+bool IncrementalMaterialAndPSTEvaluator::operator == (const IncrementalMaterialAndPSTEvaluator& other) const {
     return m_estimatedScore == other.m_estimatedScore;
 }

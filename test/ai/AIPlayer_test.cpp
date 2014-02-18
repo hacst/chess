@@ -9,7 +9,8 @@ void sleep_ms(unsigned int ms) {
 }
 
 TEST(AIPlayer, initialization) {
-	AIPlayer player;
+    AIPlayer player(AIConfiguration::defaults());
+
 	EXPECT_EQ(player.getState(), AIPlayer::STOPPED);
 	player.start();
 	EXPECT_EQ(player.getState(), AIPlayer::PREPARATION);

@@ -10,6 +10,38 @@
 using namespace std;
 using namespace Logging;
 
+bool PolyglotBookEntry::isPromotion() const {
+    assert(move.from == move.to);
+    return move.promotion_piece != NoType;
+}
+
+bool PolyglotBookEntry::mightBeCastlingMove() const {
+    /*
+    white short      e1h1
+    white long       e1a1
+    black short      e8h8
+    black long       e8a8
+    */
+    return (   (move.from == E1 && move.to == H1)
+            || (move.from == E1 && move.to == A1)
+            || (move.from == E8 && move.to == H8)
+            || (move.from == E8 && move.to == A8));
+}
+
+Field PolyglotBookEntry::getKingCastlingTarget() const {
+    assert(mightBeCastlingMove());
+    
+    switch (move.to) {
+        case H1: return G1;
+        case A1: return B1;
+        case H8: return G8;
+        case A8: return B8;
+        default: return ERR;
+    }
+    
+    return ERR;
+}
+
 bool PolyglotBookEntry::operator==(const PolyglotBookEntry &other) const {
     return other.key == key
         && other.move == move

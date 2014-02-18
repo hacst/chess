@@ -2,6 +2,8 @@
 #define AIPLAYER_H
 
 #include <mutex>
+#include <atomic>
+#include <chrono>
 #include "logic/interface/AbstractPlayer.h"
 #include "ai/Negamax.h"
 #include "ai/PolyglotBook.h"
@@ -14,10 +16,16 @@ class AIPlayer: public AbstractPlayer {
 public:
     /**
      * @brief Creates a new AIPlayer.
+     * @param AIConfiguration configuration to use for AI
+     * @param name Logger channel name to use
      * @param seed Seed to use for random operations for the player.
      * @note Don't forget to start() it.
      */
-    AIPlayer(int seed = 5253);
+    AIPlayer(
+        const AIConfiguration& config,
+        const std::string& name = "AIPlayer",
+        int seed = 5253);
+
     ~AIPlayer();
 
     /**
@@ -70,6 +78,29 @@ private:
      */
     void changeState(States newState);
 
+    //! Search opening book and fulfill promise if possible. If not return false.
+    bool tryFindPromisedTurnInOpeningBook();
+    //! Use negamax to iteratively search for the turn an fulfill with best found.
+    void searchForPromisedTurn();
+    //! Use negamax while discarding its results to fill transposition table.
+    void performIterativeDeepening();
+    //! Complete the promise and prepare the AI for pondering.
+    void completePromiseWith(const Turn& turn);
+
+    /**
+     * @brief Performs an abortable negamax search up to the given depth.
+     * @param depth Depth to search to.
+     * @param state State to search from.
+     * @param aiState Current ai state for abortion checks
+     * @return Turn if depth was reached. None otherwise.
+     */
+    boost::optional<Turn> performSearchIteration(size_t depth, GameState& state, States aiState);
+
+    //! Returns false if a time limit expired or the current state must be left.
+    bool canStayInState(States currentState);
+    //! Sets a time limit that can be checked with @see canStayInState
+    void setTimeLimit(std::chrono::milliseconds limit);
+    
     //! Holds the promise during fulfillment (@see play).
     std::promise<Turn> m_promisedTurn;
 
@@ -77,12 +108,15 @@ private:
      * @brief State of the AI.
      * @warning Protected by m_stateMutex.
      */
-    States m_playerState;
+    std::atomic<States> m_playerState;
     //! Mutex for m_playerState
     std::mutex m_stateMutex;
 
     //! Last notion of game state for the AI
     GameState m_gameState;
+    //! State for the AI to ponder on between turns
+    GameState m_ponderGameState;
+
     //! Game configuration the AI works with.
     GameConfiguration m_gameConfig;
 
@@ -90,7 +124,7 @@ private:
     PlayerColor m_color;
     
     //! Algorithm used for search.
-    Negamax m_algorithm;
+    Negamax<> m_negamax;
     //! Thread the AI is run on.
     std::thread m_thread;
     
@@ -98,6 +132,17 @@ private:
     PolyglotBook m_openingBook;
     //! Indicates that we had a miss on the book and no longer use it
     bool m_outOfBook;
+
+    //! Depth limit for iterative deepening
+    size_t m_maxIterationDepth;
+    //! Maximum time usable for turn
+    std::chrono::seconds m_maxTimeForTurn;
+
+    //! Timeout timer (@see setTimeLimit @see canStayInState)
+    std::chrono::high_resolution_clock::time_point m_timeoutExpirationTime;
+
+    //! AI configuration
+    const AIConfiguration m_config;
 
     Logging::Logger m_log;
 };

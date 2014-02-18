@@ -26,6 +26,8 @@ public:
     void clearedEnPassantSquare(Field enPassantSquare);
     //! Called for a move update.
     void moveIncrement(const Turn& turn);
+    //! Called for the promotion of a pawn
+    void promotionIncrement(const Turn& turn, PieceType targetType);
     //! Called when a piece is captured
     void captureIncrement(Field field, const Piece& capturedPiece);
     //! Updates hash for now active player
@@ -40,6 +42,7 @@ public:
         const std::array<bool, NUM_PLAYERS>& longCastleRight
     );
 
+    bool operator==(const IncrementalZobristHasher& other) const;
 private:
     /**
      * @brief Return true if en passant according to polyglot rules.

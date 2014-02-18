@@ -16,6 +16,7 @@ namespace keywords = boost::log::keywords;
 namespace Logging {
 
 BOOST_LOG_ATTRIBUTE_KEYWORD(severity, "Severity", Severity)
+BOOST_LOG_ATTRIBUTE_KEYWORD(channel, "Channel", std::string)
 
 static const vector<string> stringSeverities = {
     "trace",
@@ -62,10 +63,26 @@ void addLoggingConsoleSink(Severity minimalSeverity, const string& formatString)
 void addLoggingFileSink(const string& fileName, Severity minimalSeverity, const string& formatString) {
     boost::log::add_file_log(
         keywords::file_name = fileName,
-        keywords::format = "%TimeStamp% | %Severity% @ <%Channel%>: %Message%",
+        keywords::format = formatString,
         keywords::auto_flush = true,
         keywords::filter = severity >= minimalSeverity
     );
+}
+
+void addChannelSpecificLoggingConsoleSink(const std::string& specificChannel, Severity minimalSeverity, const string& formatString) {
+    boost::log::add_console_log(clog,
+        keywords::format = formatString,
+        keywords::filter = severity >= minimalSeverity && (channel == specificChannel)
+        );
+}
+
+void addChannelSpecificLoggingFileSink(const string& fileName, const std::string& specificChannel, Severity minimalSeverity, const string& formatString) {
+    boost::log::add_file_log(
+        keywords::file_name = fileName,
+        keywords::format = formatString,
+        keywords::auto_flush = true,
+        keywords::filter = severity >= minimalSeverity && (channel == specificChannel)
+        );
 }
 
 Logger initLogger(const string &channel) {
