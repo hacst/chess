@@ -72,7 +72,7 @@ public:
 	void draw();
 
 private:
-	bool m_firstRun;
+
 	int m_tileWidth, m_tileHeight;
 
 	struct Coord3D {
@@ -88,6 +88,9 @@ private:
 		ANIMATING,
 		STATIC
 	} m_internalState;
+
+    float m_animationElevationHeight, m_animationElevationStrikeHeight;
+    bool m_firstRun;
 
 	// each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard
 	ModelPtr king, pawn, queen, bishop, knight, rook;
@@ -120,7 +123,7 @@ private:
 		DOWN
 	};
 	Elevation m_animationDirectionY;
-	float m_animationElevationHeight, m_animationElevationStrikeHeight;
+
 
 	struct StrikedModel {
 		Piece piece;
@@ -128,8 +131,7 @@ private:
 	};
 	std::vector<StrikedModel> m_modelStrikes;
 
-	unsigned int m_turnMoveShowDuration;
-	unsigned int m_turnMoveShownSince;
+
 	Turn m_lastTurn;
 	PlayerColor m_lastPlayer;
 
