@@ -13,6 +13,7 @@ class Turn;
  * incrementally calculate a score for the current board position during
  * the game.
  * @see ChessBoard
+ * @note Not valid once game is over.
  */
 class IncrementalMaterialAndPSTEvaluator {
 public:

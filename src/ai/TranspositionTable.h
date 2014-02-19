@@ -52,7 +52,7 @@ struct TranspositionTableEntry {
 class TranspositionTable {
 public:
     //! Creates an empty transposition table
-    TranspositionTable(size_t tablesize = 1048583)
+    TranspositionTable(size_t tablesize = 4000037)
         : m_table(tablesize)
         , m_tablesize(tablesize) {
         // Empty
@@ -60,7 +60,12 @@ public:
     
     //! Set entry in table
     void update(TranspositionTableEntry entry) {
-        m_table[entry.hash % m_tablesize] = entry;
+        TranspositionTableEntry &oldEntry = m_table[entry.hash % m_tablesize];
+
+        if (oldEntry.hash == entry.hash && oldEntry.depth > entry.depth)
+            return;
+
+        oldEntry = entry;
     }
     
     /**

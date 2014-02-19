@@ -158,8 +158,6 @@ bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
 
 void AIPlayer::completePromiseWith(const Turn& turn) {
     m_ponderGameState = m_gameState;
-    m_ponderGameState.applyTurn(turn);
-
     m_promisedTurn.set_value(turn);
 }
 
@@ -241,7 +239,7 @@ void AIPlayer::performIterativeDeepening() {
     size_t iteration = 1;
     while (canStayInState(PONDERING)
         && iteration <= m_config.maximumDepth
-        && performSearchIteration(iteration, m_gameState, PONDERING)) {
+        && performSearchIteration(iteration, m_ponderGameState, PONDERING)) {
 
         LOG(info) << "Pondered " << iteration << " plies deep";
         ++iteration;
