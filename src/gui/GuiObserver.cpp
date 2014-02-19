@@ -44,8 +44,9 @@ void GuiObserver::onGameOver(GameState state, PlayerColor winner) {
 		strs << "Schwarz hat gewonnen. Das Spiel ist zu Ende.";
 	} else if (winner == PlayerColor::White) {
 		strs << "Weiss hat gewonnen. Das Spiel ist zu Ende.";
-	} else if (state.isDrawDueTo50MovesRule() || winner == PlayerColor::NoPlayer) {
-		strs << "Remis. Das Spiel ist zu Ende.";
+	} else {
+		assert(winner == PlayerColor::NoPlayer);
+		strs << "Patt! Das Spiel ist zu Ende.";
 	}
 
 	m_gamePlayState.startShowText(strs.str());

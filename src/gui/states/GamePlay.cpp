@@ -294,7 +294,10 @@ AbstractState* GamePlay::run() {
 	
 	// Execute all pending calls from the observer and player
 	m_observerProxy->poll();
-	m_playerProxy->poll();
+
+	if (m_gameMode == PLAYER_VS_AI) {
+		m_playerProxy->poll();
+	}
 
 	this->draw();
 
