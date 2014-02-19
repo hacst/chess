@@ -92,18 +92,18 @@ TEST(Misc, flipHorizontal) {
 
 TEST(Turn, getPromotionPieceType) {
     Piece p(White, Pawn);
-    EXPECT_EQ(Bishop, Turn::promotionBishop(p, A8).getPromotionPieceType());
-    EXPECT_EQ(Queen, Turn::promotionQueen(p, A8).getPromotionPieceType());
-    EXPECT_EQ(Rook, Turn::promotionRook(p, A8).getPromotionPieceType());
-    EXPECT_EQ(Knight, Turn::promotionKnight(p, A8).getPromotionPieceType());
+    EXPECT_EQ(Bishop, Turn::promotionBishop(p, A7, A8).getPromotionPieceType());
+    EXPECT_EQ(Queen, Turn::promotionQueen(p, A7, A8).getPromotionPieceType());
+    EXPECT_EQ(Rook, Turn::promotionRook(p, A7, A8).getPromotionPieceType());
+    EXPECT_EQ(Knight, Turn::promotionKnight(p, A7, A8).getPromotionPieceType());
 }
 
 TEST(Turn, isPromotion) {
     Piece p(White, Pawn);
-    EXPECT_TRUE(Turn::promotionBishop(p, A8).isPromotion());
-    EXPECT_TRUE(Turn::promotionQueen(p, A8).isPromotion());
-    EXPECT_TRUE(Turn::promotionRook(p, A8).isPromotion());
-    EXPECT_TRUE(Turn::promotionKnight(p, A8).isPromotion());
+    EXPECT_TRUE(Turn::promotionBishop(p, A7, A8).isPromotion());
+    EXPECT_TRUE(Turn::promotionQueen(p, A7, A8).isPromotion());
+    EXPECT_TRUE(Turn::promotionRook(p, A7, A8).isPromotion());
+    EXPECT_TRUE(Turn::promotionKnight(p, A7, A8).isPromotion());
     EXPECT_FALSE(Turn::move(p, A7, A8).isPromotion());
 }
 

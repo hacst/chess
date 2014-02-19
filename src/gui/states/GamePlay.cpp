@@ -477,16 +477,20 @@ void GamePlay::handleEvents() {
 		
 		if (m_playerState == PlayerState::CHOOSE_PROMOTION_TURN) {
 			if (m_fsm.eventmap.key1) {
-				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionBishop]);
+                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionBishop]);
+                m_promisedPlayerTurn.set_value(m_promotionTurns[0]);
 				m_playerState = PlayerState::NONE;
 			} else if (m_fsm.eventmap.key2) {
-				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionKnight]);
+                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionKnight]);
+                m_promisedPlayerTurn.set_value(m_promotionTurns[1]);
 				m_playerState = PlayerState::NONE;
 			} else if (m_fsm.eventmap.key3) {
-				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionQueen]);
+                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionQueen]);
+                m_promisedPlayerTurn.set_value(m_promotionTurns[2]);
 				m_playerState = PlayerState::NONE;
 			} else if (m_fsm.eventmap.key4) {
-				m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionRook]);
+                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionRook]);
+                m_promisedPlayerTurn.set_value(m_promotionTurns[3]);
 				m_playerState = PlayerState::NONE;
 			}
 		}
@@ -522,7 +526,7 @@ void GamePlay::handleEvents() {
 								turn.action == Turn::Action::PromotionQueen || turn.action == Turn::Action::PromotionRook) {
 							// do nothing here, just switch the state and let the user choose
 							// one of the four turns
-							m_promotionTurns[turn.action] = turn;
+                            m_promotionTurns[turn.action-4] = turn;
 							m_playerState = PlayerState::CHOOSE_PROMOTION_TURN;
 						} else {
 							// this is a normal Turn

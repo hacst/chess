@@ -69,40 +69,36 @@ public:
     }
     */
 
-    static Turn promotionQueen(Piece piece, Field field) {
-        assert((piece.player == White && rankFor(field) == Eight)
-            || (piece.player == Black && rankFor(field) == One));
-
+    static Turn promotionQueen(Piece piece, Field from, Field to) {
+        assert((piece.player == White && rankFor(to) == Eight)
+            || (piece.player == Black && rankFor(to) == One));
         assert(piece.type == Pawn);
 
-        return Turn(piece, field, field, PromotionQueen);
+        return Turn(piece, from, to, PromotionQueen);
     }
 
-    static Turn promotionBishop(Piece piece, Field field) {
-        assert((piece.player == White && rankFor(field) == Eight)
-            || (piece.player == Black && rankFor(field) == One));
-
+    static Turn promotionBishop(Piece piece, Field from, Field to) {
+        assert((piece.player == White && rankFor(to) == Eight)
+            || (piece.player == Black && rankFor(to) == One));
         assert(piece.type == Pawn);
 
-        return Turn(piece, field, field, PromotionBishop);
+        return Turn(piece, from, to, PromotionBishop);
     }
 
-    static Turn promotionRook(Piece piece, Field field) {
-        assert((piece.player == White && rankFor(field) == Eight)
-            || (piece.player == Black && rankFor(field) == One));
-
+    static Turn promotionRook(Piece piece, Field from, Field to) {
+        assert((piece.player == White && rankFor(to) == Eight)
+            || (piece.player == Black && rankFor(to) == One));
         assert(piece.type == Pawn);
 
-        return Turn(piece, field, field, PromotionRook);
+        return Turn(piece, from, to, PromotionRook);
     }
 
-    static Turn promotionKnight(Piece piece, Field field) {
-        assert((piece.player == White && rankFor(field) == Eight)
-            || (piece.player == Black && rankFor(field) == One));
-
+    static Turn promotionKnight(Piece piece, Field from, Field to) {
+        assert((piece.player == White && rankFor(to) == Eight)
+            || (piece.player == Black && rankFor(to) == One));
         assert(piece.type == Pawn);
 
-        return Turn(piece, field, field, PromotionKnight);
+        return Turn(piece, from, to, PromotionKnight);
     }
 
 

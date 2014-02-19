@@ -79,6 +79,9 @@ private:
 		int z;
 	};
 
+    unsigned int m_turnMoveShowDuration;
+    unsigned int m_turnMoveShownSince;
+
 	enum InternalState {
 		ANIMATING,
 		STATIC
@@ -103,8 +106,6 @@ private:
 	GLuint m_modelsList;			// models translated and models itself
 	std::array<Piece, 64> m_state;	// whole chess state
 
-	unsigned int m_turnMoveShowDuration;
-	unsigned int m_turnMoveShownSince;
 	Turn m_lastTurn;
 	PlayerColor m_lastPlayer;
 
@@ -115,7 +116,7 @@ private:
 	void drawBoard();
 	void drawTile(int x, int y, int z, bool odd, TileStyle style);
 	void moveModelToTile(ModelPtr model, int row, int col);
-	Coord3D ChessSet::calcCoordinatesForTileAt(Field which);
+    Coord3D calcCoordinatesForTileAt(Field which);
 
 	using Signal = boost::signals2::signal<void(std::string)>;
 	Signal m_loadCallback;
