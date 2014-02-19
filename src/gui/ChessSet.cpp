@@ -263,15 +263,6 @@ void ChessSet::drawModelAt(Coord3D coords, PieceType type, PlayerColor color) {
 // will only be called if we're in the animation state
 void ChessSet::animateModelTurn() {
 	for (auto& ac : m_animationCapsules) {
-		// ac.piece must finally be drawn at ac.field
-		// target field is ac.field
-		// animation depends on ac.turn:
-		//		ac.turn.from == ac.field ? -> move ac.piece towards ac.turn.to
-		//		ac.piece.type == PieceType::NoType ? -> *do nothing* : (ac.turn.to == ac.field ? -> move ac.piece upwards to "heaven")
-
-		// we must only animate anything if there's a model on the tile
-		//if (ac.piece.type != PieceType::NoType) {
-
 		// strikes
 		for (auto& sm : m_modelStrikes) {
 			Coord3D coords = calcCoordinatesForTileAt(sm.field);
@@ -281,43 +272,6 @@ void ChessSet::animateModelTurn() {
 		// turned model
 		Coord3D coords = calcCoordinatesForTileAt(ac.turn.from);
 		animateModelTurn(coords, ac);
-
-			// this is the target field where potentially a model could be
-			/*if (m_lastState.at(ac.turn.to).type != PieceType::NoType) {
-				// ok, here's a model -> strike it!
-				Coord3D coords = calcCoordinatesForTileAt(ac.turn.to);
-				animateModelStrike(coords, ac);
-			}*/
-
-			/*
-			// 1) move source model from ac.turn.from -> ac.turn.to
-			Coord3D coords = calcCoordinatesForTileAt(ac.turn.from);
-
-			// ============ move along x-axis ============
-
-			// ============ move along y-axis ============
-			m_animationHelperModelY->setStartNowOrKeepIt();
-
-			if (m_animationDirectionY == Elevation::UP && m_animationHelperModelY->hasStopped()) {
-				// we reached the top -> move down now
-				m_animationHelperModelY->reset();
-				m_animationHelperModelY->setStartNowOrKeepIt();
-				m_animationDirectionY = Elevation::DOWN;
-			}
-
-			if (m_animationDirectionY == Elevation::UP) {
-				coords.y = (coords.y + 0.f) + m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// UP
-			}
-			else {
-				coords.y = (coords.y + m_animationElevationHeight) - m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// DOWN
-			}
-
-			// ============ move along z-axis ============
-
-			glPushMatrix();
-				drawModelAt(coords, ac.piece.type, ac.piece.player);
-			glPopMatrix();*/
-		//}
 	}
 }
 
@@ -349,11 +303,39 @@ void ChessSet::animateModelTurn(Coord3D coordsFrom, AnimationCapsule animCapsule
 		coordsFrom.y = (coordsFrom.y + m_animationElevationHeight) - m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// DOWN
 	}
 
+
+	Coord3D coordsTo = calcCoordinatesForTileAt(animCapsule.turn.to);
+	// first normalize the range from -96 - +96 --> 0 - +192
+	float normFactor = m_tileWidth * 4.f;
+
 	// ============================ back and forth ============================
-    //Coord3D coordsTo = calcCoordinatesForTileAt(animCapsule.turn.to);
-	//abs(coordsTo.z) - abs(coordsFrom.z)
+	float newFromZ = coordsFrom.z + normFactor;
+	float newToZ = coordsTo.z + normFactor;
+	float distZ = abs(newFromZ - newToZ);
+
+	float currAnimationDistanceZ = m_animationHelperModelZ->ease(AnimationHelper::EASE_OUTSINE, 0.f, distZ);
+	if (newFromZ > newToZ) {
+		// forth to back
+		coordsFrom.z -= currAnimationDistanceZ;
+	} else {
+		// back to forth
+		coordsFrom.z += currAnimationDistanceZ;
+	}
 
 	// ============================ left and right ============================
+	float newFromX = coordsFrom.x + normFactor;
+	float newToX = coordsTo.x + normFactor;
+	float distX = abs(newFromX - newToX);
+
+	float currAnimationDistanceX = m_animationHelperModelX->ease(AnimationHelper::EASE_OUTSINE, 0.f, distX);
+	if (newFromX > newToX) {
+		// right to left
+		coordsFrom.x -= currAnimationDistanceX;
+	}
+	else {
+		// left to right
+		coordsFrom.x += currAnimationDistanceX;
+	}
 
 	glPushMatrix();
 		drawModelAt(coordsFrom, animCapsule.piece.type, animCapsule.piece.player);
