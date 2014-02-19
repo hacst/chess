@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "gui/AssimpHelper.h"
+#include "gui/AnimationHelper.h"
 #include "gui/Model.h"
 #include "logic/ChessTypes.h"
 #include "logic/Turn.h"
@@ -71,12 +72,13 @@ public:
 	void draw();
 
 private:
+	bool m_firstRun;
 	int m_tileWidth, m_tileHeight;
 
 	struct Coord3D {
-		int x;
-		int y;
-		int z;
+		float x;
+		float y;
+		float z;
 	};
 
 	enum InternalState {
@@ -101,7 +103,27 @@ private:
 	GLuint m_boardList;				// 8x8 fields
 	GLuint m_modelList[12];			// first 6 white, last 6 black
 	GLuint m_modelsList;			// models translated and models itself
-	std::array<Piece, 64> m_state;	// whole chess state
+	std::array<Piece, 64> m_state, m_lastState;	// whole chess state
+
+	struct AnimationCapsule {
+		Piece piece;
+		Field field;
+		Turn turn;
+	};
+	std::vector<AnimationCapsule> m_animationCapsules;
+	AnimationHelperPtr m_animationHelperModelX, m_animationHelperModelY, m_animationHelperModelZ, m_animationHelperModelStrike;
+	enum Elevation {
+		UP,
+		DOWN
+	};
+	Elevation m_animationDirectionY;
+	float m_animationElevationHeight, m_animationElevationStrikeHeight;
+
+	struct StrikedModel {
+		Piece piece;
+		Field field;
+	};
+	std::vector<StrikedModel> m_modelStrikes;
 
 	unsigned int m_turnMoveShowDuration;
 	unsigned int m_turnMoveShownSince;
@@ -110,12 +132,17 @@ private:
 
 	void createChessBoardList();
 	void createModelsList(bool withoutTurnDependentModels);
+	void drawModelAt(Field field, PieceType type, PlayerColor color);
+	void drawModelAt(Coord3D coords, PieceType type, PlayerColor color);
 	void animateModelTurn();
 	void drawModels();
 	void drawBoard();
-	void drawTile(int x, int y, int z, bool odd, TileStyle style);
+	void drawTile(Coord3D coords, bool odd, TileStyle style);
 	void moveModelToTile(ModelPtr model, int row, int col);
-	Coord3D ChessSet::calcCoordinatesForTileAt(Field which);
+	Coord3D calcCoordinatesForTileAt(Field which);
+
+	void animateModelStrike(Coord3D coords, Piece piece);
+	void animateModelTurn(Coord3D coords, AnimationCapsule animCapsule);
 
 	using Signal = boost::signals2::signal<void(std::string)>;
 	Signal m_loadCallback;

@@ -21,7 +21,7 @@ void MenuOptions::enter() {
 
 	menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
 	menu->addButton("OptVideoMode.png")->onClick(boost::bind(&MenuOptions::onResolutionChange, this));
-	menu->addButton("LoadGameBack.png")->onClick(boost::bind(&MenuOptions::onMenuBack, this));
+	menu->addButton("Back.png")->onClick(boost::bind(&MenuOptions::onMenuBack, this));
 }
 
 AbstractState* MenuOptions::run() {

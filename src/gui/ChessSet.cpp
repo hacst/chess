@@ -12,7 +12,10 @@ ChessSet::ChessSet()
 	, m_tileHeight(2)
 	, m_turnMoveShowDuration(2000)
 	, m_turnMoveShownSince(0)
-	, m_internalState(InternalState::STATIC) {
+	, m_internalState(InternalState::STATIC)
+	, m_animationElevationHeight(20.f)
+	, m_animationElevationStrikeHeight(200.f)
+	, m_firstRun(true) {
 
 	// all external resources to load
 	m_extResources = {
@@ -32,6 +35,11 @@ ChessSet::ChessSet()
         { 20, 12, 0, 1, -90, 0, 0 },	// rook
         { 0, 13, 0, 1, -90, 0, 0 }		// pawn
     } };
+
+	m_animationHelperModelX = make_shared<AnimationHelper>(m_turnMoveShowDuration);
+	m_animationHelperModelY = make_shared<AnimationHelper>(m_turnMoveShowDuration / 2);
+	m_animationHelperModelZ = make_shared<AnimationHelper>(m_turnMoveShowDuration);
+	m_animationHelperModelStrike = make_shared<AnimationHelper>(m_turnMoveShowDuration);
 }
 
 ChessSet::~ChessSet() {
@@ -92,9 +100,26 @@ void ChessSet::registerLoadCallback(const boost::function<void(std::string)>& sl
 }
 
 void ChessSet::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn) {
+	m_lastState = m_state;	// save old state
 	m_state = state;
-	m_lastPlayer = lastPlayer;
 	m_lastTurn = lastTurn;
+
+	if (!m_firstRun) {
+		// gather all models who was striked in the last turn
+		m_modelStrikes.clear();
+		for (size_t i = 0; i < m_state.size(); i++) {
+			if (m_state[i].type != m_lastState[i].type /* field is different as before */ && 
+					m_lastState[i].type != PieceType::NoType /* lastState must had a model on the field */ &&
+					static_cast<Field>(i) != m_lastTurn.from /* only those fields which are not the .from field of the turn */) {
+				StrikedModel m = { m_lastState[i], static_cast<Field>(i) };
+				m_modelStrikes.push_back(m);
+			}
+		}
+	}
+
+	m_firstRun = false;
+
+	m_lastPlayer = lastPlayer;
 
 	if (m_lastPlayer == PlayerColor::NoPlayer) {
 		// only on first round
@@ -103,6 +128,14 @@ void ChessSet::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
 	} else {
 		if (m_lastTurn.action == Turn::Action::Move || m_lastTurn.action == Turn::Action::Castle) {
 			m_internalState = InternalState::ANIMATING;
+			
+			m_animationHelperModelX->reset();
+			m_animationHelperModelY->reset();
+			m_animationHelperModelZ->reset();
+			m_animationHelperModelStrike->reset();
+
+			m_animationDirectionY = Elevation::UP;
+
 			createModelsList(true);
 			m_turnMoveShownSince = SDL_GetTicks();
 		}
@@ -137,27 +170,50 @@ void ChessSet::drawBoard() {
 	glCallList(m_boardList);
 }
 
+/**
+ * The chess board is sectioned in the following way.
+ * The origin is in the center of the board.
+ *
+ *  x/z:
+ *
+ * -96/-96                   +96/-96
+ *    +__ __ __ __   __ __ __ __+
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *     __ __ __ __0/0__ __ __ __ 
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *    |__|__|__|__| |__|__|__|__|
+ *    +                         +
+ *  -96/+96                  +96/+96
+ *
+ */
 ChessSet::Coord3D ChessSet::calcCoordinatesForTileAt(Field which) {
 	Coord3D coord;
 
 	int col = static_cast<int>(which) % 8;
 	int row = 7 - static_cast<int>(which) / 8;
 
-	coord.x = ((col - 4) * m_tileWidth) + (m_tileWidth / 2);
-	coord.y = 0;
-	coord.z = ((row - 4) * m_tileWidth) + (m_tileWidth / 2);
+	coord.x = static_cast<float>(((col - 4) * m_tileWidth) + (m_tileWidth / 2));
+	coord.y = 0.f;
+	coord.z = static_cast<float>(((row - 4) * m_tileWidth) + (m_tileWidth / 2));
 
 	return coord;
 }
 
 void ChessSet::drawActionTileAt(Field which, TileStyle style) {
 	Coord3D coord = calcCoordinatesForTileAt(which);
-	drawTile(coord.x, coord.y, coord.z, false, style);
+	drawTile(coord, false, style);
 }
 
 // create the list only the first time
 // to update single model positions
 void ChessSet::createModelsList(bool withoutTurnDependentModels) {
+	m_animationCapsules.clear();
+
 	// draw all models without the model on position .from and .to
 	// these models will be drawn in a separate method with animation
 	// -> fade out .to model
@@ -165,18 +221,20 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 	m_modelsList = glGenLists(1);
 	glNewList(m_modelsList, GL_COMPILE);
 		int field = 0;
-		for (auto &p : m_state) {
+		for (auto p : m_state) {
 			if (p.type != PieceType::NoType) {
 				glPushMatrix();
-					if (!withoutTurnDependentModels /* all */ || 
+					if (p.type != PieceType::NoType && 
+							!withoutTurnDependentModels /* all */ ||
 							(withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */) {
 						// move model to tile
-						Coord3D coord = calcCoordinatesForTileAt(static_cast<Field>(field));
-						glTranslatef(static_cast<float>(coord.x), static_cast<float>(coord.y), static_cast<float>(coord.z));
-
-						// draw model via list index
-						int listIndex = p.type + (p.player == PlayerColor::Black ? 6 : 0);
-						glCallList(m_modelList[listIndex]);
+						drawModelAt(static_cast<Field>(field), p.type, p.player);
+					} else {
+						AnimationCapsule ac;
+						ac.field = static_cast<Field>(field);
+						ac.piece = p;
+						ac.turn = m_lastTurn;
+						m_animationCapsules.push_back(ac);
 					}
 				glPopMatrix();
 			}
@@ -185,13 +243,126 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 	glEndList();
 }
 
+void ChessSet::drawModelAt(Field field, PieceType type, PlayerColor color) {
+	Coord3D coords = calcCoordinatesForTileAt(field);
+	glTranslatef(coords.x, coords.y, coords.z);
+
+	// draw model via list index
+	int listIndex = type + (color == PlayerColor::Black ? 6 : 0);
+	glCallList(m_modelList[listIndex]);
+}
+
+void ChessSet::drawModelAt(Coord3D coords, PieceType type, PlayerColor color) {
+	glTranslatef(coords.x, coords.y, coords.z);
+
+	// draw model via list index
+	int listIndex = type + (color == PlayerColor::Black ? 6 : 0);
+	glCallList(m_modelList[listIndex]);
+}
+
+// will only be called if we're in the animation state
 void ChessSet::animateModelTurn() {
-	
+	for (auto& ac : m_animationCapsules) {
+		// ac.piece must finally be drawn at ac.field
+		// target field is ac.field
+		// animation depends on ac.turn:
+		//		ac.turn.from == ac.field ? -> move ac.piece towards ac.turn.to
+		//		ac.piece.type == PieceType::NoType ? -> *do nothing* : (ac.turn.to == ac.field ? -> move ac.piece upwards to "heaven")
+
+		// we must only animate anything if there's a model on the tile
+		//if (ac.piece.type != PieceType::NoType) {
+
+		// strikes
+		for (auto& sm : m_modelStrikes) {
+			Coord3D coords = calcCoordinatesForTileAt(sm.field);
+			animateModelStrike(coords, sm.piece);
+		}
+
+		// turned model
+		Coord3D coords = calcCoordinatesForTileAt(ac.turn.from);
+		animateModelTurn(coords, ac);
+
+			// this is the target field where potentially a model could be
+			/*if (m_lastState.at(ac.turn.to).type != PieceType::NoType) {
+				// ok, here's a model -> strike it!
+				Coord3D coords = calcCoordinatesForTileAt(ac.turn.to);
+				animateModelStrike(coords, ac);
+			}*/
+
+			/*
+			// 1) move source model from ac.turn.from -> ac.turn.to
+			Coord3D coords = calcCoordinatesForTileAt(ac.turn.from);
+
+			// ============ move along x-axis ============
+
+			// ============ move along y-axis ============
+			m_animationHelperModelY->setStartNowOrKeepIt();
+
+			if (m_animationDirectionY == Elevation::UP && m_animationHelperModelY->hasStopped()) {
+				// we reached the top -> move down now
+				m_animationHelperModelY->reset();
+				m_animationHelperModelY->setStartNowOrKeepIt();
+				m_animationDirectionY = Elevation::DOWN;
+			}
+
+			if (m_animationDirectionY == Elevation::UP) {
+				coords.y = (coords.y + 0.f) + m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// UP
+			}
+			else {
+				coords.y = (coords.y + m_animationElevationHeight) - m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// DOWN
+			}
+
+			// ============ move along z-axis ============
+
+			glPushMatrix();
+				drawModelAt(coords, ac.piece.type, ac.piece.player);
+			glPopMatrix();*/
+		//}
+	}
+}
+
+void ChessSet::animateModelStrike(Coord3D coords, Piece piece) {
+	m_animationHelperModelStrike->setStartNowOrKeepIt();
+
+	coords.y = (coords.y + 0.f) + m_animationHelperModelStrike->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationStrikeHeight); // UP
+
+	glPushMatrix();
+		drawModelAt(coords, piece.type, piece.player);
+	glPopMatrix();
+}
+
+void ChessSet::animateModelTurn(Coord3D coordsFrom, AnimationCapsule animCapsule) {
+	// ============================ up and down ============================
+	m_animationHelperModelY->setStartNowOrKeepIt();
+
+	if (m_animationDirectionY == Elevation::UP && m_animationHelperModelY->hasStopped()) {
+		// we reached the top -> move down now
+		m_animationHelperModelY->reset();
+		m_animationHelperModelY->setStartNowOrKeepIt();
+		m_animationDirectionY = Elevation::DOWN;
+	}
+
+	if (m_animationDirectionY == Elevation::UP) {
+		coordsFrom.y = (coordsFrom.y + 0.f) + m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight); // UP
+	}
+	else {
+		coordsFrom.y = (coordsFrom.y + m_animationElevationHeight) - m_animationHelperModelY->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationHeight);	// DOWN
+	}
+
+	// ============================ back and forth ============================
+	Coord3D coordsTo = calcCoordinatesForTileAt(animCapsule.turn.to);
+	//abs(coordsTo.z) - abs(coordsFrom.z)
+
+	// ============================ left and right ============================
+
+	glPushMatrix();
+		drawModelAt(coordsFrom, animCapsule.piece.type, animCapsule.piece.player);
+	glPopMatrix();
 }
 
 void ChessSet::createChessBoardList() {
 	m_boardList = glGenLists(1);
-
+	
 	glNewList(m_boardList, GL_COMPILE);
 		int x = 0;
 		int y = 0;
@@ -203,8 +374,9 @@ void ChessSet::createChessBoardList() {
 
 			for (int j = -4; j < 4; j++) {
 				x = j * m_tileWidth + m_tileWidth / 2;
-			
-				drawTile(x, y, z, oddToggler, TileStyle::NORMAL);
+				
+				Coord3D coords = { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
+				drawTile(coords, oddToggler, TileStyle::NORMAL);
 				oddToggler = !oddToggler;
 			}
 
@@ -213,13 +385,13 @@ void ChessSet::createChessBoardList() {
 	glEndList();
 }
 
-void ChessSet::drawTile(int x, int y, int z, bool odd, TileStyle style) {
+void ChessSet::drawTile(Coord3D coords, bool odd, TileStyle style) {
 	float halfWidth_t = m_tileWidth / 2.0f;
 	float halfHeight_t = m_tileHeight / 2.0f;
 	float halfWidth, halfHeight;
 
 	glPushMatrix();
-    glTranslatef(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z));
+	glTranslatef(coords.x, coords.y, coords.z);
 		
 		glBegin(GL_QUADS);
 			GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
