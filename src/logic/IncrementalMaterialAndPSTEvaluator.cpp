@@ -187,15 +187,16 @@ void IncrementalMaterialAndPSTEvaluator::captureIncrement(Field field, const Pie
 
 void IncrementalMaterialAndPSTEvaluator::promotionIncrement(const Turn& turn, const PieceType targetType) {
     if (turn.piece.player == Black) {
-        m_estimatedScore += PIECE_SQUARE_TABLE[Pawn][turn.to];
+        m_estimatedScore += PIECE_SQUARE_TABLE[Pawn][turn.from];
         m_estimatedScore += PIECE_VALUES[Pawn];
         m_estimatedScore -= PIECE_SQUARE_TABLE[targetType][turn.to];
         m_estimatedScore -= PIECE_VALUES[targetType];
     }
     else {
         const Field blackPromSquare = flipHorizontal(turn.to);
+        const Field blackToSquare = flipHorizontal(turn.from);
 
-        m_estimatedScore -= PIECE_SQUARE_TABLE[Pawn][blackPromSquare];
+        m_estimatedScore -= PIECE_SQUARE_TABLE[Pawn][blackToSquare];
         m_estimatedScore -= PIECE_VALUES[Pawn];
         m_estimatedScore += PIECE_SQUARE_TABLE[targetType][blackPromSquare];
         m_estimatedScore += PIECE_VALUES[targetType];
