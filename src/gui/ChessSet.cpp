@@ -140,11 +140,18 @@ void ChessSet::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
         // gather all models who was striked in the last turn
         m_modelStrikes.clear();
         for (size_t i = 0; i < m_state.size(); i++) {
-            if (m_state[i].type != m_lastState[i].type /* field is different as before */ &&
-                m_lastState[i].type != PieceType::NoType /* lastState must had a model on the field */ &&
-                static_cast<Field>(i) != m_lastTurn.from /* only those fields which are not the .from field of the turn */) {
-                StrikedModel m = { m_lastState[i], static_cast<Field>(i) };
-                m_modelStrikes.push_back(m);
+            if (m_lastState[i].type != PieceType::NoType /* lastState must had a model on the field */ &&
+                    static_cast<Field>(i) != m_lastTurn.from /* only those fields which are not the .from field of the turn */) {
+
+                if (m_state[i].type != m_lastState[i].type /* field has a different model (in type) */) {
+                    StrikedModel m = { m_lastState[i], static_cast<Field>(i) };
+                    m_modelStrikes.push_back(m);
+                }
+
+                if (m_state[i].type == m_lastState[i].type && m_state[i].player != m_lastState[i].player) {
+                    StrikedModel m = { m_lastState[i], static_cast<Field>(i) };
+                    m_modelStrikes.push_back(m);
+                }
             }
         }
     }

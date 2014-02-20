@@ -84,9 +84,9 @@ void Model::draw() {
         emission[1] = 0.05f;
         emission[2] = 0.05f;
 
-        diffuse[0] = 0.0f;
-        diffuse[1] = 0.0f;
-        diffuse[2] = 0.0f;
+        diffuse[0] = 0.1f;
+        diffuse[1] = 0.1f;
+        diffuse[2] = 0.1f;
     }
     glMaterialfv(GL_FRONT, GL_EMISSION, emission);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
