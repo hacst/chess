@@ -11,13 +11,14 @@ public:
     GameState();
     explicit GameState(const ChessBoard& chessBoard);
 
-    void init();
-    //virtual void init(SaveGame* sg);
+
 
     std::vector<Turn>   getTurnList() const;
     void                applyTurn(const Turn& turn);
     PlayerColor         getNextPlayer() const;
     const ChessBoard&   getChessBoard() const;
+
+    Piece getLastCapturedPiece() const;
 
     //! Returns true if the game is over
     bool isGameOver() const;
@@ -33,7 +34,7 @@ public:
     bool isDrawDueTo50MovesRule() const;
 
     //! Returns current score estimate from next players POV.
-    Score getScore() const;
+    Score getScore(size_t depth = 0) const;
     //! Returns hash for current position
     Hash getHash() const;
 
@@ -42,6 +43,7 @@ public:
     std::string toString() const;
 
 private:
+    void init();
     ChessBoard      m_chessBoard;
     TurnGenerator   m_turnGen;
 };

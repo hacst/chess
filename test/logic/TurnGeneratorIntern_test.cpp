@@ -544,7 +544,7 @@ TEST(TurnGenerator, calcRookTurns_misc_6) {
 
 
 /* TESTING calcAllOppTurns */
-TEST(TurnGenerator, calcAllOppTurns) {
+TEST(TurnGenerator, calcAllOppTurns_1) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(Black, Pawn), A7),
                                      PoF(Piece(Black, Pawn), B7),
@@ -556,8 +556,18 @@ TEST(TurnGenerator, calcAllOppTurns) {
             << "\nbb_calc: " << bitBoardToString(bb_calc)
             << "\nbb_fine: " << bitBoardToString(bb_fine);
 }
-
-
+TEST(TurnGenerator, calcAllOppTurns_2) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, Pawn), B5),
+                                     PoF(Piece(Black, Pawn), B6),
+                                     PoF(Piece(Black, Rook), B3)}));
+    bb_calc = tGen.calcAllOppTurns(Black, gs.getChessBoard());
+    bb_fine = generateBitBoard(A3, B4, B5, C3, A5, C5, A4, C4,
+                               D3, E3, F3, G3, H3, B2, B1, ERR);
+    EXPECT_EQ(bb_calc, bb_fine)
+            << "\nbb_calc: " << bitBoardToString(bb_calc)
+            << "\nbb_fine: " << bitBoardToString(bb_fine);
+}
 
 
 

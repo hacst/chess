@@ -117,6 +117,7 @@ public:
     std::string toString() const;
 };
 
+using Turns = std::vector<Turn>;
 
 /* function for comparing (unsorted) turn vectors */
 bool        turnVecCompare(const std::vector<Turn>& left, const std::vector<Turn>& right);

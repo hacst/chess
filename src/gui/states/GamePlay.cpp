@@ -86,7 +86,7 @@ void GamePlay::initMessageBox() {
         static_cast<float>(m_messageBox.windowPosX), static_cast<float>(m_messageBox.windowPosY),
         0.0f, 0.0f, 0.4f,
         0.0f, 0.0f, 0.3f
-        );
+    );
 }
 
 void GamePlay::resetCapturedPieces() {
@@ -107,12 +107,12 @@ void GamePlay::enter() {
     // set background color to black
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+    initCapturedPieces();
     initChessSet();
     initMenuPause();
     initAnimationHelpers();
     initLighting();
     initMessageBox();
-    initCapturedPieces();
     initCamera();	// init camera always after chessSet, otherwise it causes some trouble when placing the models.
 
     // connect gui with ai and logic
@@ -612,20 +612,6 @@ void GamePlay::drawMessageBox() {
         );
 }
 
-void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
-    resetCapturedPieces();
-
-    for (auto &cp : piecesList) {
-        if (cp.player == PlayerColor::Black) {
-            ++m_capturedPieces.countBlack[cp.type];
-        }
-
-        if (cp.player == PlayerColor::White) {
-            ++m_capturedPieces.countWhite[cp.type];
-        }
-    }
-}
-
 void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn) {
     m_lastTurn = lastTurn;
     m_lastPlayer = lastPlayer;
@@ -640,6 +626,14 @@ void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
 
 void GamePlay::setGameState(const GameState& gameState) {
     m_gameState = gameState;
+
+    Piece p = gameState.getLastCapturedPiece();
+
+    if (p.player == PlayerColor::White) {
+        ++m_capturedPieces.countWhite[p.type];
+    } else if (p.player == PlayerColor::Black) {
+        ++m_capturedPieces.countBlack[p.type];
+    }
 }
 
 void GamePlay::setState(std::array<Piece, 64> state) {
@@ -721,8 +715,8 @@ void GamePlay::drawCapturedPieces() {
         m_fsm.window->printTextSmall(offsetX, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, strs.str());
     }
 
-    m_fsm.window->printTextSmall(35, 12, 0.0f, 0.0f, 0.0f, "VERLOREN");
-    m_fsm.window->printTextSmall(offsetX - 30, 12, 1.0f, 1.0f, 1.0f, "VERLOREN");
+    m_fsm.window->printTextSmall(40, 12, 0.0f, 0.0f, 0.0f, "ABLAGE");
+    m_fsm.window->printTextSmall(offsetX - 25, 12, 1.0f, 1.0f, 1.0f, "ABLAGE");
 }
 
 string GamePlay::getPieceName(int pieceNumber) {

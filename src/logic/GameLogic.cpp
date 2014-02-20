@@ -55,8 +55,7 @@ void GameLogic::stop() {
 void GameLogic::run() {
     m_white->onSetColor(White);
     m_black->onSetColor(Black);
-
-    assert(m_gameState.getNextPlayer() == PlayerColor::White);
+    assert(m_gameState.getNextPlayer() == White);
 
     LOG(info) << "Game start";
     notify([&](AbstractGameObserverPtr& obs) {
@@ -138,8 +137,7 @@ bool GameLogic::isGameOver() const {
 }
 
 PlayerColor GameLogic::getWinner() const {
-    if (m_abort)
-        return PlayerColor::NoPlayer;
+    if (m_abort) return NoPlayer;
 
     return m_gameState.getWinner();
 }

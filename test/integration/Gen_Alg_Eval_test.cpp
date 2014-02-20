@@ -40,83 +40,48 @@
 
 using namespace std;
 
-// Plays the white player only
-TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
-    GameState gameState(generateChessBoard({ PoF(Piece(White, Pawn), C3),
-        PoF(Piece(Black, Pawn), D6) }));
-
-    Negamax<> negamax;
-
-    vector<Turn> expectedTurns = {
-        Turn::move(Piece(White, Pawn), C3, C4),
-        Turn::move(Piece(White, Pawn), C4, C5),
-        Turn::move(Piece(White, Pawn), C5, D6)
-    };
-
-    for (Turn& expectedTurn : expectedTurns) {
-        auto result = negamax.search(gameState, 2);
-        ASSERT_TRUE(result.turn) << "Turn: " << expectedTurn;
-
-        Turn turn = result.turn.get();
-        EXPECT_EQ(expectedTurn, turn) << "Result: " << result;
-
-        /* //DEBUG OUTPUT
-                LOG(trace) << gameState << endl;
-                for (Turn& option: gameState.getTurnList()) {
-                LOG(trace) << "Option: " << option;
-                }
-                LOG(trace) << "Chose: " << turn;
-                */
-        gameState.applyTurn(turn);
-        gameState.applyTurn(Turn());
-    }
+//! Performs a iterative deepening emulation with given state and negamax.
+template <typename TNegamax>
+void deepen(TNegamax &negamax, GameState &state, size_t depth) {
+    for (size_t i = 1; i <= depth; ++i)
+        negamax.search(state, depth);
 }
 
-// Plays the black player only
-TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
-    GameState gameState(generateChessBoard({ PoF(Piece(White, Pawn), C3),
-        PoF(Piece(Black, Pawn), D6) }));
+// https://github.com/dD0T/chess/issues/34
+TEST(Gen_Alg_Eval, MateInTwoRegression34) {
+    const GameState origState(ChessBoard::fromFEN("7k/8/1B6/5K2/8/3Q4/8/8 w - - 1 135"));
+    GameState gameState = origState;
 
-    Negamax<> negamax;
+    Negamax<> white;
+    Negamax<> black;
 
-    vector<Turn> expectedTurns = {
-        Turn::move(Piece(Black, Pawn), D6, D5),
-        Turn::move(Piece(Black, Pawn), D5, D4),
-        Turn::move(Piece(Black, Pawn), D4, C3)
-    };
+    // Simulate pondering and iterative deepening
+    deepen(white, gameState, 5);
+    deepen(white, gameState, 3);
+    NegamaxResult first = white.search(gameState, 4);
+    ASSERT_TRUE(first.turn) << "1" << gameState << first;
+    gameState.applyTurn(*first.turn);
+    ASSERT_FALSE(gameState.isGameOver()) << "1" << gameState << first;
 
-    for (Turn& expectedTurn : expectedTurns) {
-        gameState.applyTurn(Turn());
+    deepen(black, gameState, 5);
+    deepen(black, gameState, 3);
+    NegamaxResult second = black.search(gameState, 4);
+    ASSERT_TRUE(second.turn) << "2" << gameState << first;
+    gameState.applyTurn(*second.turn);
+    ASSERT_FALSE(gameState.isGameOver()) << "2" << gameState << first;
+    
+    // Simulate pondering and iterative deepening
+    deepen(white, gameState, 6);
+    deepen(white, gameState, 4);
+    NegamaxResult third = white.search(gameState, 5);
+    ASSERT_TRUE(third.turn) << "3" << gameState << third;
+    gameState.applyTurn(*third.turn);
 
-        auto result = negamax.search(gameState, 2);
-        ASSERT_TRUE(result.turn) << "Turn: " << expectedTurn;
+    ASSERT_TRUE(gameState.isGameOver())
+        << origState << "Results: " << first << second << third
+        << "Afterwards: " << gameState;
 
-        Turn turn = result.turn.get();
-        EXPECT_EQ(expectedTurn, turn) << "Result: " << result;
-        gameState.applyTurn(turn);
-    }
-}
-
-
-// Plays the white player only
-TEST(Gen_Alg_Eval, KnightStrikesPawn) {
-    GameState gameState(generateChessBoard({ PoF(Piece(White, Knight), A1),
-        PoF(Piece(Black, Pawn), D4) }));
-
-    Negamax<> negamax;
-
-    vector<Turn> expectedTurns = {
-        Turn::move(Piece(White, Knight), A1, B3),
-        Turn::move(Piece(White, Knight), B3, D4)
-    };
-
-    for (Turn& expectedTurn : expectedTurns) {
-        auto result = negamax.search(gameState, 2);
-        ASSERT_TRUE(result.turn) << "Turn: " << expectedTurn;
-
-        Turn turn = result.turn.get();
-        EXPECT_EQ(expectedTurn, turn) << "Result: " << result;
-        gameState.applyTurn(turn);
-        gameState.applyTurn(Turn());
-    }
+    EXPECT_EQ(White, gameState.getWinner())
+        << origState << "Results: " << first << second << third
+        << "Afterwards: " << gameState;
 }

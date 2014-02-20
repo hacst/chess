@@ -50,6 +50,7 @@ const Score MIN_SCORE = -std::numeric_limits<Score>::max();
 // Provide a WIN_SCORE/LOOSE_SCORE to ensure that results with it are preferred to MAX_SCORE/MIN_SCORE
 const Score WIN_SCORE = std::numeric_limits<Score>::max() - 1;
 const Score LOOSE_SCORE = -std::numeric_limits<Score>::max() + 1;
+const Score WIN_SCORE_THRESHOLD = WIN_SCORE - 100000; //! Threshold above which a score is considered a certain victory.
 
 //! Toggles player color between white and black
 inline PlayerColor togglePlayerColor(PlayerColor color) {

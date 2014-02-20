@@ -39,12 +39,11 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
     m_stalemate = false;
     m_checkmate[White] = false;
     m_checkmate[Black] = false;
-
+    m_lastCapturedPiece = Piece(NoPlayer, NoType);
     initBitBoards(board);
 }
 
 void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
-
     // init all bit boards with 0
     for (int player = White; player < NUM_PLAYERS; player++) {
         for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
@@ -75,6 +74,7 @@ void ChessBoard::updateBitBoards() {
 
 void ChessBoard::applyTurn(const Turn& turn) {
     ++m_halfMoveClock;
+    m_lastCapturedPiece = Piece(NoPlayer, NoType);
 
     if (turn.action == Turn::Action::Move) {
         applyMoveTurn(turn);
@@ -206,11 +206,14 @@ void ChessBoard::addCapturedPiece(const Piece capturedPiece, Field field) {
     m_halfMoveClock = 0;
 
     BIT_CLEAR(m_bb[capturedPiece.player][capturedPiece.type], field);
-    m_capturedPieces.push_back(capturedPiece);
-    //m_capturedPiece = capturedPiece;
+    m_lastCapturedPiece = capturedPiece;
 
     m_evaluator.captureIncrement(field, capturedPiece);
     m_hasher.captureIncrement(field, capturedPiece);
+}
+
+Piece ChessBoard::getLastCapturedPiece() const {
+    return m_lastCapturedPiece;
 }
 
 void ChessBoard::updateEnPassantSquare(const Turn &turn) {
@@ -287,10 +290,6 @@ std::array<Piece, 64> ChessBoard::getBoard() const {
     return board;
 }
 
-std::vector<Piece> ChessBoard::getCapturedPieces() const {
-    return m_capturedPieces;
-}
-
 bool ChessBoard::hasBlackPieces() const {
     return m_bb[Black][AllPieces] != 0;
 }
@@ -303,15 +302,15 @@ PlayerColor ChessBoard::getNextPlayer() const {
     return m_nextPlayer;
 }
 
-Score ChessBoard::getScore(PlayerColor color) const {
+Score ChessBoard::getScore(PlayerColor color, size_t depth) const {
     if (isGameOver()) {
         const PlayerColor winner = getWinner();
         if (winner == color) {
-            return WIN_SCORE;
+            return WIN_SCORE - static_cast<int>(depth);
         } else if (winner == NoPlayer) {
             return 0;
         } else {
-            return LOOSE_SCORE;
+            return LOOSE_SCORE + static_cast<int>(depth);
         }
     }
 

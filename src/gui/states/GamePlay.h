@@ -117,7 +117,7 @@ public:
     * This method is non-blocking.
     */
     //void addTurn(PlayerColor who, Turn turn);
-    void setCapturedPiecesList(std::vector<Piece> piecesList);
+    //void setCapturedPiecesList(std::vector<Piece> piecesList);
 
     // events and callbacks
     void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet

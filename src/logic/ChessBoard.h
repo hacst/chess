@@ -88,8 +88,9 @@ public:
     
     void                  applyTurn(const Turn& t);
     std::array<Piece, 64> getBoard()          const;
-    std::vector<Piece>    getCapturedPieces() const;
-    //Piece m_capturedPiece;
+
+    Piece getLastCapturedPiece() const;
+
 
     //! Returns true if black pieces are on the board.
     bool hasBlackPieces() const;
@@ -99,7 +100,7 @@ public:
     PlayerColor getNextPlayer() const;
 
     //! Returns the current estimated score.
-    Score getScore(PlayerColor color) const;
+    Score getScore(PlayerColor color, size_t depth = 0) const;
     //! Returns hash for current position
     Hash getHash() const;
     //! Returns half move clock
@@ -162,11 +163,13 @@ protected:
     void setStalemate();
     void setCheckmate(PlayerColor player);
 
+    void updateBitBoards();
+
+
 private:
     //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);
 
-    void updateBitBoards();
 
     //! Applies a "simple" move turn.
     void applyMoveTurn(const Turn& turn);
@@ -185,6 +188,7 @@ private:
     void updateCastlingRights(const Turn& turn);
 
 
+    Piece m_lastCapturedPiece;
     bool m_stalemate;
 
     std::array<bool, NUM_PLAYERS> m_checkmate;
