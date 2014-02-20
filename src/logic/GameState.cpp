@@ -50,6 +50,10 @@ Score GameState::getScore(size_t depth) const {
     return m_chessBoard.getScore(m_chessBoard.getNextPlayer(), depth);
 }
 
+Piece GameState::getLastCapturedPiece() const {
+    return m_chessBoard.getLastCapturedPiece();
+}
+
 bool GameState::operator==(const GameState& other) const {
     return m_chessBoard == other.getChessBoard();
 }

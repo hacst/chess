@@ -11,13 +11,14 @@ public:
     GameState();
     explicit GameState(const ChessBoard& chessBoard);
 
-    void init();
-    //virtual void init(SaveGame* sg);
+
 
     std::vector<Turn>   getTurnList() const;
     void                applyTurn(const Turn& turn);
     PlayerColor         getNextPlayer() const;
     const ChessBoard&   getChessBoard() const;
+
+    Piece getLastCapturedPiece() const;
 
     //! Returns true if the game is over
     bool isGameOver() const;
@@ -42,6 +43,7 @@ public:
     std::string toString() const;
 
 private:
+    void init();
     ChessBoard      m_chessBoard;
     TurnGenerator   m_turnGen;
 };

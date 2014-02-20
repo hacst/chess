@@ -212,6 +212,10 @@ void ChessBoard::addCapturedPiece(const Piece capturedPiece, Field field) {
     m_hasher.captureIncrement(field, capturedPiece);
 }
 
+Piece ChessBoard::getLastCapturedPiece() const {
+    return m_lastCapturedPiece;
+}
+
 void ChessBoard::updateEnPassantSquare(const Turn &turn) {
     if (m_enPassantSquare != ERR) {
         m_hasher.clearedEnPassantSquare(m_enPassantSquare);

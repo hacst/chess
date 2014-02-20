@@ -88,7 +88,9 @@ public:
     
     void                  applyTurn(const Turn& t);
     std::array<Piece, 64> getBoard()          const;
-    Piece m_capturedPiece;
+
+    Piece getLastCapturedPiece() const;
+
 
     //! Returns true if black pieces are on the board.
     bool hasBlackPieces() const;
@@ -186,6 +188,7 @@ private:
     void updateCastlingRights(const Turn& turn);
 
 
+    Piece m_lastCapturedPiece;
     bool m_stalemate;
 
     std::array<bool, NUM_PLAYERS> m_checkmate;
