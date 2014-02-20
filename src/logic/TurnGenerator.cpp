@@ -1,11 +1,25 @@
 #include "TurnGenerator.h"
 
+void TurnGenerator::initFlags(ChessBoard &cb) {
+    BitBoard bbAllOppTurns = calcAllOppTurns(Black, cb);
+    BitBoard bbKingInCheck = cb.m_bb[White][King] & bbAllOppTurns;
+    if (bbKingInCheck == cb.m_bb[White][King]) {
+        cb.setKingInCheck(White, true);
+    }
+
+    bbAllOppTurns = calcAllOppTurns(White, cb);
+    bbKingInCheck = cb.m_bb[Black][King] & bbAllOppTurns;
+    if (bbKingInCheck == cb.m_bb[Black][King]) {
+        cb.setKingInCheck(Black, true);
+    }
+}
+
 std::vector<Turn> TurnGenerator::getTurnList() const {
     return turnList;
 }
 
 void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
-    std::vector<Turn> vecMoveTurns; //, vecPromotionTurns;
+    std::vector<Turn> vecMoveTurns;
     PlayerColor opp = togglePlayerColor(player);
     Field curPiecePos;
     Piece piece;
@@ -17,21 +31,29 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 
     turnList.clear();
 
-    // Der gegnerische King kann in keinem Fall im Schach stehen
+    // Der gegnerische King kann in keinem (korrekten) Fall im Schach stehen
     // wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere,
     // allerdings kann das Flag noch vom vorherigen Halbzug gesetzt sein,
     // daher zuruecksetzen
-    cb.setKingInCheck(opp, false);
+    if (cb.getKingInCheck()[opp]) {
+        // Immernoch im Schach? -> Kann nur der Fall sein, wenn der GameState
+        // aus einem ungueltigen (bereits "beendetem") Chessboard geladen wurde!
+        BitBoard bb = calcAllOppTurns(player, cb);
+        BitBoard bb2 = cb.m_bb[opp][King] & bb;
+        if (bb2 == cb.m_bb[opp][King]) {
+            cb.setCheckmate(opp);
+            return;
+        }
 
-
+        cb.setKingInCheck(opp, false);
+    }
 
     if (bbKingInCheck == cb.m_bb[player][King]) {
         // Wenn King im Schach, dann nur Zuege berechnen um aus dem Schach
         // raus zu kommen. Wenn keine Zuege gefunden -> Schachmatt
         cb.setKingInCheck(player, true);
 
-        // Um die legalen Zuege der Figuren (ausgenommen King)
-        // herauszufinden:
+        // Um die legalen Zuege der Figuren (ausgenommen King) herauszufinden:
         // Welche gegnerische Figur setzt den King ins Schach?
         // -> Diese Figur entweder schlagen oder den Weg abschneiden
         // -> Von dieser Figur wird also die Position benoetigt und (bei einem
@@ -61,7 +83,6 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                                 vecMoveTurns.end());
             }
         }
-
 
         if (turnList.empty()) {
             cb.setCheckmate(player);

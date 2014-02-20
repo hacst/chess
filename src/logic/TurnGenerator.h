@@ -6,6 +6,7 @@
 
 class TurnGenerator {
 public:
+    virtual void              initFlags(ChessBoard &cb);
     virtual std::vector<Turn> getTurnList() const;
     virtual void              generateTurns(PlayerColor player,
                                             ChessBoard& cb);

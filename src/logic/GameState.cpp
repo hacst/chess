@@ -11,6 +11,7 @@ GameState::GameState(const ChessBoard &chessBoard)
 }
 
 void GameState::init() {
+    m_turnGen.initFlags(m_chessBoard);
     m_turnGen.generateTurns(getNextPlayer(),
                             m_chessBoard);
 }
