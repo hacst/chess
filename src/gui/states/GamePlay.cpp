@@ -56,7 +56,7 @@
 using namespace std;
 using namespace Logging;
 
-GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
+GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor, std::string initialFen)
     : m_fsm(StateMachine::getInstance())
     , m_gameMode(mode)
     , m_humanPlayerColor(humanPlayerColor)
@@ -64,7 +64,8 @@ GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
     , m_log(initLogger("GUI:GamePlay"))
     , m_playerState(PlayerState::NONE)
     , m_lastPlayer(PlayerColor::NoPlayer)
-    , m_lastTurn(Turn()) {
+    , m_lastTurn(Turn())
+    , m_initialFen(initialFen) {
 }
 
 void GamePlay::initMessageBox() {
@@ -186,7 +187,9 @@ void GamePlay::initPlayers() {
 void GamePlay::initGameLogic() {
     GameConfigurationPtr config = make_shared<GameConfiguration>(global_config);
 
-    GameState initialGameState(ChessBoard::fromFEN(config->initialGameStateFEN)); // FIXME: fromFEN isn't robust
+    GameState initialGameState = GameState::fromFEN(m_initialFen.empty()
+        ? config->initialGameStateFEN
+        : m_initialFen);  // FIXME: fromFEN isn't robust
 
     if (m_humanPlayerColor == PlayerColor::White) {
         m_gameLogic = make_shared<GameLogic>(m_secondPlayer /* White */, m_firstPlayer /* Black */, config, initialGameState);

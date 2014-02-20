@@ -69,6 +69,9 @@ boost::optional<SaveGame> SaveGame::load(const std::string& path) {
     }
 }
 
+boost::optional<SaveGame> SaveGame::loadFromSlot(int slot) {
+    return load(pathForSlot(slot));
+}
 
 bool SaveGame::save(const SaveGame& saveGame, const std::string& path) {
     try {
@@ -85,4 +88,14 @@ bool SaveGame::save(const SaveGame& saveGame, const std::string& path) {
 
 bool SaveGame::save(const std::string& path) const {
     return save(*this, path);
+}
+
+bool SaveGame::saveToSlot(int slot) {
+    return save(pathForSlot(slot));
+}
+
+std::string SaveGame::pathForSlot(int slot) {
+    stringstream ss;
+    ss << "saveGame-" << slot << ".xml";
+    return ss.str();
 }

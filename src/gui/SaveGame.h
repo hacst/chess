@@ -63,6 +63,14 @@ public:
     */
     static boost::optional<SaveGame> load(const std::string& path);
 
+
+    /**
+    * @brief Loads a savegame from a slot path.
+    * @param slot number
+    * @return SaveGame on success. boost::none on failure.
+    */
+    static boost::optional<SaveGame> loadFromSlot(int slot);
+
     /**
     * @brief Saves a given save game to a file.
     * @param saveGame Save game to save.
@@ -78,6 +86,12 @@ public:
     */
     bool save(const std::string& path) const;
 
+    /**
+     * @brief Convinience function which saves to a path determined by the slot.
+     * @return true on success
+     */
+    bool saveToSlot(int slot);
+
 private:
     friend class boost::serialization::access;
 
@@ -87,6 +101,9 @@ private:
         ar & BOOST_SERIALIZATION_NVP(gameMode);
         ar & BOOST_SERIALIZATION_NVP(humanPlayerColor);
     }
+
+    //! Returns the path a given save slot has
+    static std::string pathForSlot(int slot);
 };
 
 
