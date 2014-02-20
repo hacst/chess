@@ -602,12 +602,6 @@ void GamePlay::drawMessageBox() {
     if (m_messageBox.text == "")
         return;
 
-    // show only if the show time is not over
-    /*if (m_messageBox.shownSince < (SDL_GetTicks() - m_messageBox.showDuration)) {
-        m_messageBox.text = "";
-        return;
-        }*/
-
     glCallList(m_messageBox.displayList);
 
     m_fsm.window->printText(
