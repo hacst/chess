@@ -695,6 +695,9 @@ void GamePlay::drawCapturedPieces() {
 
 		m_fsm.window->printTextSmall(offsetX, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, strs.str());
 	}
+
+	m_fsm.window->printTextSmall(35, 12, 0.0f, 0.0f, 0.0f, "VERLOREN");
+	m_fsm.window->printTextSmall(offsetX - 30, 12, 1.0f, 1.0f, 1.0f, "VERLOREN");
 }
 
 string GamePlay::getPieceName(int pieceNumber) {

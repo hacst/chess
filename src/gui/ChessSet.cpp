@@ -376,7 +376,7 @@ void ChessSet::drawTile(Coord3D coords, bool odd, TileStyle style) {
 	glTranslatef(coords.x, coords.y, coords.z);
 		
 		glBegin(GL_QUADS);
-			GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 1.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
+			GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 0.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
 			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
 			
 			GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
