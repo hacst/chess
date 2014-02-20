@@ -5,28 +5,31 @@
 #include "ChessBoard.h"
 #include "TurnGenerator.h"
 
-
 class GameState {
 public:
     GameState();
     explicit GameState(const ChessBoard& chessBoard);
 
+    //! Returns a list with all possible and legal turns.
+    std::vector<Turn> getTurnList() const;
+    //! Applies the given turn on current chessboard.
+    void applyTurn(const Turn& turn);
 
-
-    std::vector<Turn>   getTurnList() const;
-    void                applyTurn(const Turn& turn);
-    PlayerColor         getNextPlayer() const;
-    const ChessBoard&   getChessBoard() const;
-
+    //! Return next player to make a turn.
+    PlayerColor getNextPlayer() const;
+    //! Provides access to the chessboard.
+    const ChessBoard& getChessBoard() const;
+    /**
+     * @brief Returns the captured piece from the last turn or
+     * Piece(NoPlayer, NoType) if no piece was captured
+     */
     Piece getLastCapturedPiece() const;
 
     //! Returns true if the game is over
     bool isGameOver() const;
-
     /**
     * @brief Returns the winner of the game.
     * Returns Player color or NoPlayer on draw.
-    * @warning Only valid is isGameOver
     */
     PlayerColor getWinner() const;
 
@@ -43,12 +46,13 @@ public:
     std::string toString() const;
 
 private:
+    //! Initialize the turn generator with the given chessboard.
     void init();
-    ChessBoard      m_chessBoard;
-    TurnGenerator   m_turnGen;
+    //! Chessboard representation and logic.
+    ChessBoard m_chessBoard;
+    //! Turn generator and gameover detection.
+    TurnGenerator m_turnGen;
 };
-
-using GameStatePtr = std::shared_ptr<GameState>;
 
 
 #endif // GAMESTATE_H
