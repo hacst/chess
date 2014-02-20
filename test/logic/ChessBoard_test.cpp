@@ -195,11 +195,11 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
             ASSERT_EQ(IncrementalMaterialAndPSTEvaluator::estimateFullBoard(b.getBoard()),
                 b.getScore(White)) << i << "th Board: " << b;
         } else if (b.getWinner() == White) {
-            ASSERT_EQ(MAX_SCORE, b.getScore(White)) << i << "th Board: " << b;
-            ASSERT_EQ(MIN_SCORE, b.getScore(Black)) << i << "th Board: " << b;
+            ASSERT_EQ(WIN_SCORE, b.getScore(White)) << i << "th Board: " << b;
+            ASSERT_EQ(LOOSE_SCORE, b.getScore(Black)) << i << "th Board: " << b;
         } else if (b.getWinner() == Black) {
-            ASSERT_EQ(MIN_SCORE, b.getScore(White)) << i << "th Board: " << b;
-            ASSERT_EQ(MAX_SCORE, b.getScore(Black)) << i << "th Board: " << b;
+            ASSERT_EQ(LOOSE_SCORE, b.getScore(White)) << i << "th Board: " << b;
+            ASSERT_EQ(WIN_SCORE, b.getScore(Black)) << i << "th Board: " << b;
         } else {
             ASSERT_EQ(0, b.getScore(White)) << i << "th Board: " << b;
             ASSERT_EQ(0, b.getScore(Black)) << i << "th Board: " << b;

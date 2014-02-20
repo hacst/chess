@@ -312,11 +312,11 @@ Score ChessBoard::getScore(PlayerColor color) const {
     if (isGameOver()) {
         const PlayerColor winner = getWinner();
         if (winner == color) {
-            return MAX_SCORE;
+            return WIN_SCORE;
         } else if (winner == NoPlayer) {
             return 0;
         } else {
-            return MIN_SCORE;
+            return LOOSE_SCORE;
         }
     }
 

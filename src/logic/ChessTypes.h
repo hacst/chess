@@ -47,6 +47,9 @@ using Score = int;
 // Provide MAX_SCORE/MIN_SCORE to ensure that both are negatable to reach each other
 const Score MAX_SCORE = std::numeric_limits<Score>::max();
 const Score MIN_SCORE = -std::numeric_limits<Score>::max();
+// Provide a WIN_SCORE/LOOSE_SCORE to ensure that results with it are preferred to MAX_SCORE/MIN_SCORE
+const Score WIN_SCORE = std::numeric_limits<Score>::max() - 1;
+const Score LOOSE_SCORE = -std::numeric_limits<Score>::max() + 1;
 
 //! Toggles player color between white and black
 inline PlayerColor togglePlayerColor(PlayerColor color) {

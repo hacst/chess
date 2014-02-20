@@ -284,6 +284,8 @@ private:
         }
         
         if (TRANSPOSITION_TABLES_ENABLED) {
+            assert(bestResult.turn);
+
             TranspositionTableEntry entry;
             entry.score = bestResult.score;
             entry.turn = *bestResult.turn;
