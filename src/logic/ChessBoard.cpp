@@ -15,12 +15,7 @@ ChessBoard::ChessBoard()
   Piece(Black, Rook), Piece(Black, Knight), Piece(Black, Bishop), Piece(Black, Queen), Piece(Black, King), Piece(Black, Bishop), Piece(Black, Knight), Piece(Black, Rook) }
                  }, White, {{true, true}}, {{true,true}}, ERR, 0, 1)
 {
-    m_kingInCheck[White] = false;
-    m_kingInCheck[Black] = false;
-    m_stalemate = false;
-    m_checkmate[White] = false;
-    m_checkmate[Black] = false;
-    //m_capturedPiece = ERR;
+    // Empty
 }
 
 ChessBoard::ChessBoard(std::array<Piece, 64> board,
@@ -37,14 +32,14 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
     , m_fullMoveClock(fullMoveClock)
     , m_nextPlayer(nextPlayer)
     , m_evaluator(board)
-    , m_hasher() {
-
+    , m_hasher()
+{
     m_kingInCheck[White] = false;
     m_kingInCheck[Black] = false;
     m_stalemate = false;
     m_checkmate[White] = false;
     m_checkmate[Black] = false;
-    //m_capturedPiece = ERR;
+
     initBitBoards(board);
 }
 
@@ -308,8 +303,18 @@ PlayerColor ChessBoard::getNextPlayer() const {
     return m_nextPlayer;
 }
 
-//! Returns the current estimated score according to the internal estimator.
 Score ChessBoard::getScore(PlayerColor color) const {
+    if (isGameOver()) {
+        const PlayerColor winner = getWinner();
+        if (winner == color) {
+            return WIN_SCORE;
+        } else if (winner == NoPlayer) {
+            return 0;
+        } else {
+            return LOOSE_SCORE;
+        }
+    }
+
     return m_evaluator.getScore(color);
 }
 
@@ -323,44 +328,6 @@ int ChessBoard::getHalfMoveClock() const {
 
 int ChessBoard::getFullMoveClock() const {
     return m_fullMoveClock;
-}
-
-
-/* for test and debug purposes */
-
-bool ChessBoard::operator==(const ChessBoard& other) const {
-    return m_bb == other.m_bb
-        && m_shortCastleRight == other.m_shortCastleRight
-        && m_longCastleRight == other.m_longCastleRight
-        && m_enPassantSquare == other.m_enPassantSquare
-        && m_nextPlayer == other.m_nextPlayer
-    //    && m_capturedPieces == other.m_capturedPieces   // Exluded from comparision
-        && m_evaluator == other.m_evaluator
-        && m_hasher == other.m_hasher;
-}
-
-bool ChessBoard::operator!=(const ChessBoard& other) const {
-    return !(*this == other);
-}
-
-std::string ChessBoard::toString() const {
-    std::array<Piece, 64> board = getBoard();
-    stringstream ss;
-
-    ss << endl;
-    for (int row = NUM_FIELDS; row > 0; row -= 8) {
-        //if (!(row % 8)) ss << endl;
-        ss << endl;
-        for (int col = 0; col < 8; col++) {
-            ss << board[row + col - 8] << ' ';
-        }
-    }
-    ss << endl << endl;
-    ss << toFEN() << endl;
-    ss << std::hex << "Hash: " << m_hasher.getHash() << std::dec << endl;
-    ss << "Score estimate       : " << m_evaluator.getScore(m_nextPlayer) << endl;
-
-    return ss.str();
 }
 
 ChessBoard ChessBoard::fromFEN(const string &fen) {
@@ -525,8 +492,8 @@ std::array<bool, NUM_PLAYERS> ChessBoard::getKingInCheck() const {
     return m_kingInCheck;
 }
 
-void ChessBoard::setCheckmate(PlayerColor player, bool checkmate) {
-    m_checkmate[player] = checkmate;
+void ChessBoard::setCheckmate(PlayerColor player) {
+    m_checkmate[player] = true;
 }
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getCheckmate() const {
@@ -537,12 +504,12 @@ void ChessBoard::setKingInCheck(PlayerColor player, bool kingInCheck) {
     m_kingInCheck[player] = kingInCheck;
 }
 
-bool ChessBoard::getStalemate() const {
+bool ChessBoard::isStalemate() const {
     return m_stalemate;
 }
 
-void ChessBoard::setStalemate(bool stalemate) {
-    m_stalemate = stalemate;
+void ChessBoard::setStalemate() {
+    m_stalemate = true;
 }
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {
@@ -551,6 +518,73 @@ std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getLongCastleRights() const {
     return m_longCastleRight;
+}
+
+bool ChessBoard::isGameOver() const {
+    if (m_checkmate[White]) {
+        return true;
+    }
+    else if (m_checkmate[Black]) {
+        return true;
+    }
+
+    if (isDrawDueTo50MovesRule() || isStalemate()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool ChessBoard::isDrawDueTo50MovesRule() const {
+    return getHalfMoveClock() >= 50 * 2;
+}
+
+PlayerColor ChessBoard::getWinner() const {
+    if (m_checkmate[White]) {
+        return Black;
+    }
+    else if (m_checkmate[Black]) {
+        return White;
+    }
+
+    return NoPlayer;
+}
+
+/* for test and debug purposes */
+
+bool ChessBoard::operator==(const ChessBoard& other) const {
+    return m_bb == other.m_bb
+        && m_shortCastleRight == other.m_shortCastleRight
+        && m_longCastleRight == other.m_longCastleRight
+        && m_enPassantSquare == other.m_enPassantSquare
+        && m_nextPlayer == other.m_nextPlayer
+    //    && m_capturedPieces == other.m_capturedPieces   // Exluded from comparision
+        && m_evaluator == other.m_evaluator
+        && m_hasher == other.m_hasher;
+}
+
+bool ChessBoard::operator!=(const ChessBoard& other) const {
+    return !(*this == other);
+}
+
+std::string ChessBoard::toString() const {
+    std::array<Piece, 64> board = getBoard();
+    stringstream ss;
+
+    ss << endl;
+    for (int row = NUM_FIELDS; row > 0; row -= 8) {
+        //if (!(row % 8)) ss << endl;
+        ss << endl;
+        for (int col = 0; col < 8; col++) {
+            ss << board[row + col - 8] << ' ';
+        }
+    }
+    ss << endl << endl;
+    ss << toFEN() << endl;
+    ss << std::hex << "Hash: " << m_hasher.getHash() << std::dec << endl;
+    ss << "Score estimate       : " << m_evaluator.getScore(m_nextPlayer) << endl;
+
+    return ss.str();
 }
 
 std::string bitBoardToString(BitBoard b) {

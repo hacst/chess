@@ -550,7 +550,7 @@ TEST(TurnGenerator, calcAllOppTurns) {
                                      PoF(Piece(Black, Pawn), B7),
                                      PoF(Piece(Black, Rook), B3)}));
     bb_calc = tGen.calcAllOppTurns(Black, gs.getChessBoard());
-    bb_fine = generateBitBoard(A3, B4, B5, B6, C3, A6, C6,
+    bb_fine = generateBitBoard(A3, B4, B5, B6, C3, A6, C6, B7,
                                D3, E3, F3, G3, H3, B2, B1, ERR);
     EXPECT_EQ(bb_calc, bb_fine)
             << "\nbb_calc: " << bitBoardToString(bb_calc)

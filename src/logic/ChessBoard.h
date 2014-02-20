@@ -98,7 +98,7 @@ public:
     //! Return next player to make a turn
     PlayerColor getNextPlayer() const;
 
-    //! Returns the current estimated score according to the internal estimator.
+    //! Returns the current estimated score.
     Score getScore(PlayerColor color) const;
     //! Returns hash for current position
     Hash getHash() const;
@@ -123,24 +123,29 @@ public:
 
     //! Returns the field where en-passant rights exist. ERR if none.
     Field getEnPassantSquare() const;
-    //! Returns whether the king of the player is in check or not.
-    std::array<bool, NUM_PLAYERS> getKingInCheck() const;
-
-
-
-    void setKingInCheck(PlayerColor player, bool kingInCheck);
-
-    bool getStalemate() const;
-    void setStalemate(bool stalemate);
-
-    void setCheckmate(PlayerColor player, bool checkmate);
-    std::array<bool, NUM_PLAYERS> getCheckmate() const;
-
-
     //! Returns short castle rights for players.
     std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
     //! Returns long castle rights for players.
     std::array<bool, NUM_PLAYERS> getLongCastleRights() const;
+
+    //! Returns whether the king of the player is in check or not.
+    std::array<bool, NUM_PLAYERS> getKingInCheck() const;
+    //! Gameover-Flag for stalemate position (gameover, no winner).
+    bool isStalemate() const;
+    //! Gameover-Flag for checkmate.
+    std::array<bool, NUM_PLAYERS> getCheckmate() const;
+    //! Returns true if the game is over
+    bool isGameOver() const;
+    
+    /**
+     * @brief Returns the winner of the game.
+     * Returns Player color or NoPlayer on draw.
+     * @warning Only valid is isGameOver
+     */
+    PlayerColor getWinner() const;
+
+    //! Returns true if the game is draw due to the 50 moves rule
+    bool isDrawDueTo50MovesRule() const;
 
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
@@ -153,6 +158,10 @@ protected:
     // calculation
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
     
+    void setKingInCheck(PlayerColor player, bool kingInCheck);
+    void setStalemate();
+    void setCheckmate(PlayerColor player);
+
 private:
     //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);

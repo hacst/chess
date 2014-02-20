@@ -111,7 +111,7 @@ int main(int argn, char **argv) {
         if (gameState.getChessBoard().getKingInCheck()[opp]) {
             GLOG(info) << "Player " << opp << " in CHECK";
         }
-        if (gameState.getChessBoard().getStalemate()) {
+        if (gameState.getChessBoard().isStalemate()) {
             GLOG(info) << "Stalemate, NO WINNER, GAME OVER";
             break;
         }

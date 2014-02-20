@@ -26,7 +26,9 @@ TEST(GameState, equality) {
     EXPECT_EQ(a.getChessBoard(), b.getChessBoard());
 }
 
-TEST(GameState, fiftyMoveRule) {
+
+/* Gameover Detection */
+TEST(GameState, gameOverDetection_FiftyMoveRule) {
     GameState gs(ChessBoard::fromFEN("8/k7/8/8/8/8/K7/8 b - - 99 90"));
     ASSERT_FALSE(gs.isGameOver());
     ASSERT_FALSE(gs.isDrawDueTo50MovesRule());
@@ -36,18 +38,19 @@ TEST(GameState, fiftyMoveRule) {
     EXPECT_TRUE(gs.isDrawDueTo50MovesRule()) << gs;
     EXPECT_EQ(NoPlayer, gs.getWinner()) << gs;
 }
-
-TEST(GameState, gameOverDetection_checkMate) {
-    GameState gs(generateChessBoard({PoF(Piece(Black, King), A8),
+TEST(GameState, gameOverDetection_Checkmate) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), H1),
+                                     PoF(Piece(Black, King), A8),
                                      PoF(Piece(White, Rook), A5),
                                      PoF(Piece(White, Rook), B5)}, Black));
     gs.getTurnList();
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[Black]);
     EXPECT_TRUE(gs.isGameOver());
     EXPECT_EQ(gs.getWinner(), White);
 }
-
-TEST(GameState, gameOverDetection_staleMate) {
-    GameState gs(generateChessBoard({PoF(Piece(Black, King), A1),
+TEST(GameState, gameOverDetection_Stalemate) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), H1),
+                                     PoF(Piece(Black, King), A1),
                                      PoF(Piece(Black, Pawn), A2),
                                      PoF(Piece(White, Queen), B3)}, Black));
     gs.getTurnList();
@@ -55,4 +58,86 @@ TEST(GameState, gameOverDetection_staleMate) {
     EXPECT_EQ(gs.getWinner(), NoPlayer);
 }
 
+/* Set Flags correctly on GameState init */
+TEST(GameState, setFlagsOnGameStateLoad_KingInCheck_1) {
+    GameState gs(ChessBoard::fromFEN("2br4/1pp2p1k/4p2P/3r2K/8/4q3/8/8 w - - 0 40"));
 
+    std::vector<Turn> turns_calc = gs.getTurnList();
+    EXPECT_FALSE(turns_calc.empty())
+            << gs << turnVecToString(turns_calc);
+
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]);
+
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
+
+    EXPECT_FALSE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), NoPlayer);
+}
+TEST(GameState, setFlagsOnGameStateLoad_KingInCheck_2) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, King), G8),
+                                     PoF(Piece(White, Pawn), F7)}, Black));
+    std::vector<Turn> turns_calc = gs.getTurnList();
+    EXPECT_FALSE(turns_calc.empty())
+            << gs << turnVecToString(turns_calc);
+
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[Black]);
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[White]);
+
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
+
+    EXPECT_FALSE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), NoPlayer);
+}
+TEST(GameState, setFlagsOnGameStateLoad_KingInCheck_3) {
+    GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
+                                     PoF(Piece(Black, King), E8),
+                                     PoF(Piece(Black, Queen), C7)}, Black));
+    std::vector<Turn> turns_calc = gs.getTurnList();
+    EXPECT_FALSE(turns_calc.empty())
+            << gs << turnVecToString(turns_calc);
+
+    gs.applyTurn(Turn::move(Piece(Black, Queen), C7, E5));
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
+
+    EXPECT_FALSE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), NoPlayer);
+}
+TEST(GameState, setFlagsOnGameStateLoad_Checkmate) {
+    GameState gs(ChessBoard::fromFEN("2br4/1pp2p1k/4p2P/3r2K/8/4q3/8/8 b - - 0 39"));
+
+    std::vector<Turn> turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turns_calc.empty())
+            << gs << turnVecToString(turns_calc);
+
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]);
+
+    EXPECT_TRUE(gs.getChessBoard().getCheckmate()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
+
+    EXPECT_TRUE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), Black);
+}
+TEST(GameState, setFlagsOnGameStateLoad_Stalemate) {
+    GameState gs(ChessBoard::fromFEN("8/8/8/8/8/1Q5K/p7/k7 b - - 0 39"));
+
+    std::vector<Turn> turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turns_calc.empty())
+            << gs << turnVecToString(turns_calc);
+
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[Black]);
+
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[White]);
+    EXPECT_FALSE(gs.getChessBoard().getCheckmate()[Black]);
+
+    EXPECT_TRUE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), NoPlayer);
+}

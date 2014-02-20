@@ -31,6 +31,9 @@ public:
     Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces);
     ~Mesh(void);
 
+    //! The number of vertices
+    GLuint m_numVertices;
+
     //! The model's vertices
     aiVector3D* m_vertices;
 
@@ -42,9 +45,6 @@ public:
 
     //! The model's indices
     GLuint* m_indices;
-
-    //! The number of vertices
-    GLuint m_numVertices;
 
     //! The number of indices
     GLuint m_numIndices;

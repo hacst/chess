@@ -191,8 +191,19 @@ TEST(ChessBoard, IncrementalScoreEvaluation) {
     const int TRIES = 50;
     for (int i = 0; i < TRIES; ++i) {
         ChessBoard b = generateRandomBoard(50, rng);
-        ASSERT_EQ(IncrementalMaterialAndPSTEvaluator::estimateFullBoard(b.getBoard()),
-            b.getScore(White)) << i << "th Board: " << b;
+        if (!b.isGameOver()) {
+            ASSERT_EQ(IncrementalMaterialAndPSTEvaluator::estimateFullBoard(b.getBoard()),
+                b.getScore(White)) << i << "th Board: " << b;
+        } else if (b.getWinner() == White) {
+            ASSERT_EQ(WIN_SCORE, b.getScore(White)) << i << "th Board: " << b;
+            ASSERT_EQ(LOOSE_SCORE, b.getScore(Black)) << i << "th Board: " << b;
+        } else if (b.getWinner() == Black) {
+            ASSERT_EQ(LOOSE_SCORE, b.getScore(White)) << i << "th Board: " << b;
+            ASSERT_EQ(WIN_SCORE, b.getScore(Black)) << i << "th Board: " << b;
+        } else {
+            ASSERT_EQ(0, b.getScore(White)) << i << "th Board: " << b;
+            ASSERT_EQ(0, b.getScore(Black)) << i << "th Board: " << b;
+        }
     }
 }
 
