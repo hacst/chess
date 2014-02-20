@@ -5,7 +5,7 @@ std::vector<Turn> TurnGenerator::getTurnList() const {
 }
 
 void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
-    std::vector<Turn> vecMoveTurns, vecPromotionTurns;
+    std::vector<Turn> vecMoveTurns; //, vecPromotionTurns;
     PlayerColor opp = togglePlayerColor(player);
     Field curPiecePos;
     Piece piece;
@@ -310,10 +310,12 @@ BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
 }
 
 // Berechnet alle Felder, die der Gegner momentan ANGREIFEN koennte, d.h.:
-// * bei den Pawns werden alle potenziellen Angriffszuege benoetigt; die
+// * Bei den Pawns werden alle potenziellen Angriffszuege benoetigt; die
 //   einfachen Move-Turns der Pawns gehoeren nicht dazu!
 // * Bei den sliding pieces muessen auch die Felder berechnet werden,
 //   die "hinter" dem King liegen
+
+// * Felder, die
 BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
                                         const ChessBoard& cb) {
     Piece piece;
@@ -322,7 +324,7 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
 
     BitBoard bbAllOppTurns = 0;
     BitBoard bbAllPieces = cb.m_bb[White][AllPieces] | cb.m_bb[Black][AllPieces];
-    BitBoard bbAllOppPiecesWhitoutKing = cb.m_bb[player][AllPieces] ^ cb.m_bb[player][King];
+    //BitBoard bbAllOppPiecesWhitoutKing = cb.m_bb[player][AllPieces] ^ cb.m_bb[player][King];
     BitBoard bbAllPiecesWhitoutKing = bbAllPieces ^ cb.m_bb[player][King];
 
     BitBoard bbCurPieceType, bbCurPiece;
@@ -368,15 +370,15 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
 
                 if (pieceType == Rook) {
                     bbAllOppTurns |= calcRookTurns(bbCurPiece,
-                                                   bbAllOppPiecesWhitoutKing,
+                                                   bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
                                                    bbAllPiecesWhitoutKing);
                 } else if (pieceType == Queen) {
                     bbAllOppTurns |= calcQueenTurns(bbCurPiece,
-                                                    bbAllOppPiecesWhitoutKing,
+                                                    bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
                                                     bbAllPiecesWhitoutKing);
                 } else if (pieceType == Bishop) {
                     bbAllOppTurns |= calcBishopTurns(bbCurPiece,
-                                                     bbAllOppPiecesWhitoutKing,
+                                                     bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
                                                      bbAllPiecesWhitoutKing);
                 }
             }

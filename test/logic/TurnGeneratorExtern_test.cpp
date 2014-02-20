@@ -7,7 +7,7 @@ std::vector<Turn> turns_fine;
 
 
 
-TEST(TurnGeneratorExtern, generateTurns_1) {
+TEST(TurnGeneratorExtern, generateTurns_misc_1) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
                                      PoF(Piece(White, Pawn), E2),
                                      PoF(Piece(White, Pawn), F2)}));
@@ -25,7 +25,7 @@ TEST(TurnGeneratorExtern, generateTurns_1) {
     EXPECT_EQ(turnVecCompare(turns_calc, turns_fine), true)
             << gs << turnVecToString(turns_calc);
 }
-TEST(TurnGeneratorExtern, generateTurns_2) {
+TEST(TurnGeneratorExtern, generateTurns_misc_2) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), H1),
                                      PoF(Piece(White, Pawn), C5),
                                      PoF(Piece(White, Pawn), D6)}));
@@ -511,6 +511,79 @@ TEST(TurnGeneratorExtern, generateTurns_FoolCheckmate) {
 
     turns_calc = gs.getTurnList();
     EXPECT_TRUE(gs.getChessBoard().getCheckmate()[White])
+            << gs << turnVecToString(turns_calc);
+}
+
+
+
+
+
+
+// Bug-Report #24 1
+TEST(TurnGeneratorExtern, generateTurns_bug_1) {
+    GameState gs(ChessBoard::fromFEN("2br2k1/1ppn1p1p/4p1p1/r5P1/3P3P/4qNK1/8/8 w - - 0 33"));
+    turns_calc = gs.getTurnList();
+
+    Turn turn = Turn::move(Piece(White, Knight), F3, E1);
+    EXPECT_FALSE(turnVecContains(turns_calc, turn))
+            << gs << turnVecToString(turns_calc);
+
+}
+
+// Bug-Report #24 2
+TEST(TurnGeneratorExtern, generateTurns_bug_2_1) {
+    GameState gs(ChessBoard::fromFEN("2br4/1pp2p1k/4p2P/4Pr1p/6K1/4q3/8/8 w - - 0 38"));
+    turns_calc = gs.getTurnList();
+
+    Turn turn = Turn::move(Piece(White, King), G4, H5);
+    EXPECT_FALSE(turnVecContains(turns_calc, turn))
+            << gs << turnVecToString(turns_calc);
+}
+
+// Bug-Report #24 2
+TEST(TurnGeneratorExtern, generateTurns_bug_2_2) {
+    GameState gs(ChessBoard::fromFEN("2br4/1pp2p1k/4p2P/4PrPp/6K1/4q3/8/8 w - - 0 38"));
+    turns_calc = gs.getTurnList();
+
+    Turn turn = Turn::move(Piece(White, King), G4, H5);
+    EXPECT_TRUE(turnVecContains(turns_calc, turn))
+            << gs << turnVecToString(turns_calc);
+
+    turn = Turn::move(Piece(White, Pawn), G5, G6);
+    EXPECT_FALSE(turnVecContains(turns_calc, turn))
+            << gs << turnVecToString(turns_calc);
+}
+
+// Bug-Report #25
+TEST(TurnGeneratorExtern, generateTurns_bug_3) {
+    GameState gs(ChessBoard::fromFEN("2br4/1pp2p1k/4p2P/7K/4r3/4q3/8/8 b - - 0 40"));
+
+    gs.applyTurn(Turn::move(Piece(Black, Rook), E4, E5));
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+
+    turns_calc = gs.getTurnList();
+    turns_fine.clear();
+    turns_fine.push_back(Turn::move(Piece(White, King), H5, G4));
+    turns_fine.push_back(Turn::move(Piece(White, King), H5, H4));
+    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
+            << gs << turnVecToString(turns_calc);
+    gs.applyTurn(Turn::move(Piece(White, King), H5, G4));
+
+    gs.applyTurn(Turn::move(Piece(Black, Rook), D8, D4));
+    turns_calc = gs.getTurnList();
+    EXPECT_TRUE(turns_calc.empty());
+    EXPECT_TRUE(gs.getChessBoard().getKingInCheck()[White]);
+    EXPECT_TRUE(gs.getChessBoard().isGameOver());
+    EXPECT_EQ(gs.getChessBoard().getWinner(), Black);
+}
+
+// Bug-Report #33
+TEST(TurnGeneratorExtern, generateTurns_bug_4) {
+    GameState gs(ChessBoard::fromFEN("6K1/8/8/8/3B4/6k1/5Q2/8 b - - 33 163"));
+
+    turns_calc = gs.getTurnList();
+    Turn turn = Turn::move(Piece(Black, King), G3, F2);
+    EXPECT_FALSE(turnVecContains(turns_calc, turn))
             << gs << turnVecToString(turns_calc);
 }
 
