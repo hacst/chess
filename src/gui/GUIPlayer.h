@@ -62,10 +62,10 @@ public:
 
 private:
 	const unsigned int m_seed;
-	GamePlay& m_gameplay;
 	std::mt19937 m_rng;
 	std::uniform_int_distribution<int> m_msDist;
 	Logging::Logger m_log;
+    GamePlay& m_gameplay;
 };
 
 using GUIPlayerPtr = std::shared_ptr<GUIPlayer>;

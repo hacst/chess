@@ -137,6 +137,8 @@ private:
 		BACK_TO_MENU
 	} m_nextState;
 
+    Logging::Logger m_log;
+
 	// States are organized as followed:
 	// 
 	// States
@@ -162,8 +164,8 @@ private:
 	};
 
 	std::deque<PlayerTurn> m_playerTurns;
-	Turn m_lastTurn;
-	PlayerColor m_lastPlayer;
+    PlayerColor m_lastPlayer;
+    Turn m_lastTurn;
 	bool m_firstTurn;
 
 	// smart pointers
@@ -198,8 +200,6 @@ private:
 	PlayerDispatcherProxyPtr m_playerProxy;
 	
 	int posNumber;
-
-    Logging::Logger m_log;
 	
 	// methods
 	void initLighting();

@@ -153,22 +153,23 @@ std::vector<Turn> TurnGenerator::calcPromotionTurns(PlayerColor player,
                                                     BitBoard bbPawns) {
     std::vector<Turn> turns;
     BitBoard bbPieces;
-    Field from;
+    Field from, to;
 
     if (player == White) {
-        bbPieces = bbPawns & maskRank(Eight);
+        bbPieces = bbPawns & maskRank(Seven);
     } else {
-        bbPieces = bbPawns & maskRank(One);
+        bbPieces = bbPawns & maskRank(Two);
     }
 
     while (bbPieces != 0) {
         from = BB_SCAN(bbPieces);
         BIT_CLEAR(bbPieces, from);
+        to = static_cast<Field>(from + 8);
 
-        turns.push_back(Turn::promotionQueen (Piece(player, Pawn), from));
-        turns.push_back(Turn::promotionBishop(Piece(player, Pawn), from));
-        turns.push_back(Turn::promotionRook  (Piece(player, Pawn), from));
-        turns.push_back(Turn::promotionKnight(Piece(player, Pawn), from));
+        turns.push_back(Turn::promotionQueen (Piece(player, Pawn), from, to));
+        turns.push_back(Turn::promotionBishop(Piece(player, Pawn), from, to));
+        turns.push_back(Turn::promotionRook  (Piece(player, Pawn), from, to));
+        turns.push_back(Turn::promotionKnight(Piece(player, Pawn), from, to));
     }
 
     return turns;
@@ -539,12 +540,13 @@ BitBoard TurnGenerator::calcPawnAttackTurns(BitBoard pawns,
         leftAttacks  = (pawns & clearFile(A)) >> 9;
         rightAttacks = (pawns & clearFile(H)) >> 7;
     }
-    BitBoard pawnAttacks = (leftAttacks | rightAttacks) & allOppPieces;
 
     // en passant
     if (enPassantSquare != ERR) {
-        BIT_SET(pawnAttacks, enPassantSquare);
+        BIT_SET(allOppPieces, enPassantSquare);
     }
+
+    BitBoard pawnAttacks = (leftAttacks | rightAttacks) & allOppPieces;
 
     return pawnAttacks;
 }

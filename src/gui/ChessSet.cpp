@@ -224,9 +224,9 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
 		for (auto p : m_state) {
 			if (p.type != PieceType::NoType) {
 				glPushMatrix();
-					if (p.type != PieceType::NoType && 
-							!withoutTurnDependentModels /* all */ ||
-							(withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */) {
+                    if ((p.type != PieceType::NoType) &&
+                            (!withoutTurnDependentModels /* all */ ||
+                            (withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */)) {
 						// move model to tile
 						drawModelAt(static_cast<Field>(field), p.type, p.player);
 					} else {
