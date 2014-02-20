@@ -47,6 +47,7 @@
 #include "gui/ObjectHelper.h"
 #include "gui/GuiWindow.h"
 #include "gui/GUIPlayer.h"
+#include "gui/SaveGame.h"
 
 #include "ai/AIPlayer.h"
 #include "misc/DebugTools.h"
@@ -494,6 +495,24 @@ void GamePlay::handleEvents() {
 
     if (m_fsm.eventmap.key0) {
         LOG(info) << m_gameState << endl;
+    } else if (m_playerState != PlayerState::CHOOSE_PROMOTION_TURN) {
+        int slot = -1;
+        if (m_fsm.eventmap.key1) {
+            slot = 0;
+        } else if (m_fsm.eventmap.key2) {
+            slot = 1;
+        } else if (m_fsm.eventmap.key3) {
+            slot = 2;
+        }
+
+        if (slot != -1) {
+            const bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor).saveToSlot(slot);
+            if (success) {
+                LOG(info) << "Game saved in slot " << slot;
+            } else {
+                LOG(error) << "Failed to save game to slot " << slot;
+            }
+        }
     }
 
     if (m_internalState == PAUSE) {
