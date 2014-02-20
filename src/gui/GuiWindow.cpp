@@ -129,7 +129,6 @@ void GuiWindow::init() {
 
 	if (window == nullptr) {
 		cerr << "Failed to create window: " << SDL_GetError() << endl;
-		//return 1;
 	}
 
 	ogl = SDL_GL_CreateContext(window);

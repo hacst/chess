@@ -4,6 +4,7 @@
 #include <random>
 
 #include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
 
 #include "gui/GuiWindow.h"
 
@@ -18,8 +19,7 @@ using namespace std;
 using namespace Logging;
 
 int main(int argn, char **argv) {
-    // Boost program options for commandline parsing
-
+	// Boost program options for commandline parsing
     po::options_description desc("Test");
     desc.add_options()
             ("help", "Print help message")
@@ -53,6 +53,33 @@ int main(int argn, char **argv) {
     addLoggingFileSink("3dchess.log", severity.get());
     
     Logger log = initLogger("main");
+
+	std::vector<string> resourceFiles;
+	resourceFiles.push_back("resources/3dmodels/bishop.3DS");
+	resourceFiles.push_back("resources/3dmodels/chessboard.3DS");
+	resourceFiles.push_back("resources/3dmodels/king.3DS");
+	resourceFiles.push_back("resources/3dmodels/knight.3DS");
+	resourceFiles.push_back("resources/3dmodels/pawn.3DS");
+	resourceFiles.push_back("resources/3dmodels/queen.3DS");
+	resourceFiles.push_back("resources/3dmodels/rook.3DS");
+	resourceFiles.push_back("resources/Book.bin");
+	resourceFiles.push_back("resources/Lato-Bla.ttf");
+	resourceFiles.push_back("resources/Lato-BlaIta.ttf");
+	resourceFiles.push_back("resources/Signika.ttf");
+
+	int errCount = 0;
+	for (auto& f : resourceFiles) {
+		if (!boost::filesystem::exists(f)) {
+			GLOG(error) << "Could not find file '" << f << "'.";
+			++errCount;
+		}
+	}
+
+	if (errCount > 0) {
+		GLOG(error) << "Could not find " << errCount << " file(s).";
+
+		return 0;
+	}
 
     auto configFromFile = GameConfiguration::load(vm["config"].as<string>());
     if (!configFromFile) {
