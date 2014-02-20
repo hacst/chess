@@ -162,11 +162,13 @@ protected:
     void setStalemate();
     void setCheckmate(PlayerColor player);
 
+    void updateBitBoards();
+
+
 private:
     //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);
 
-    void updateBitBoards();
 
     //! Applies a "simple" move turn.
     void applyMoveTurn(const Turn& turn);

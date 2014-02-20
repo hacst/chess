@@ -15,7 +15,9 @@ public:
 
     virtual std::vector<Turn> bitBoardToTurns(Piece piece,
                                               Field from,
-                                              BitBoard bbTurns);
+                                              BitBoard bbTurns,
+                                              BitBoard bbAllOppTurns,
+                                              ChessBoard& cb);
 
     virtual BitBoard calcMoveTurns(Piece piece,
                                    BitBoard bbPiece,

@@ -42,8 +42,8 @@ using namespace std;
 
 // Plays the white player only
 TEST(Gen_Alg_Eval, PawnOnesidedStandoff) {
-    GameState gameState(generateChessBoard({ PoF(Piece(White, Pawn), C3),
-        PoF(Piece(Black, Pawn), D6) }));
+    GameState gameState(generateChessBoard({PoF(Piece(White, Pawn), C3),
+                                            PoF(Piece(Black, Pawn), D6) }));
 
     Negamax<> negamax;
 
@@ -96,7 +96,6 @@ TEST(Gen_Alg_Eval, PawnOnesidedStandoffReverse) {
         gameState.applyTurn(turn);
     }
 }
-
 
 // Plays the white player only
 TEST(Gen_Alg_Eval, KnightStrikesPawn) {
