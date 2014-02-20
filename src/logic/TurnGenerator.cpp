@@ -148,11 +148,11 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 }
 
 void TurnGenerator::bitBoardToTurns(Piece piece,
-                                                 Field from,
-                                                 BitBoard bbTurns,
-                                                 BitBoard bbAllOppTurns,
-                                                 ChessBoard& cb,
-                                                 Turns& turnsOut) {
+                                    Field from,
+                                    BitBoard bbTurns,
+                                    BitBoard bbAllOppTurns,
+                                    ChessBoard& cb,
+                                    Turns& turnsOut) {
     Field to;
 
     while (bbTurns != 0) {
@@ -801,7 +801,6 @@ BitBoard TurnGenerator::getBitsS(BitBoard bbPiece) const {
 
     return bb;
 }
-
 
 BitBoard TurnGenerator::maskRank(Rank rank) const {
     // Geht nicht! Da die Zahl als 32 Bit Integer aufgefasst wird

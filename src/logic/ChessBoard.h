@@ -51,27 +51,18 @@ inline Field getFirstOccupiedField(BitBoard bb) {
 }
 #endif
 
-#define BB_SCAN(bb)    getFirstOccupiedField(bb) /* returns the field of MS1B */
-#define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field))    /* returns the value 2^field */
-
+/* Some helpful macros for bit pushing */
+#define BB_SCAN(   bb)         getFirstOccupiedField(bb) /* returns the field of MS1B */
 #define BIT_SET(   bb, field) (bb |=   (BitBoard)1 << (field))
 #define BIT_CLEAR( bb, field) (bb &= ~((BitBoard)1 << (field)))
 #define BIT_TOGGLE(bb, field) (bb ^=   (BitBoard)1 << (field))
 #define BIT_ISSET( bb, field) (bb & (  (BitBoard)1 << (field)))
 
-std::string bitBoardToString(BitBoard b);
-BitBoard    generateBitBoard(Field f1, ...);
 
 
-
-struct PoF {
-    Piece piece;
-    Field field;
-
-    PoF(Piece piece, Field field)
-        : piece(piece), field(field) {}
-};
-
+/**
+ * @brief Chessboard representation and logic implementation.
+ */
 class ChessBoard {
     friend class TurnGenerator;
     friend class IncrementalZobristHasher;
@@ -86,11 +77,10 @@ public:
                int halfMoveClock,
                int fullMoveClock);
     
-    void                  applyTurn(const Turn& t);
-    std::array<Piece, 64> getBoard()          const;
-
-    Piece getLastCapturedPiece() const;
-
+    //! Applies the given turn on current chessboard.
+    void applyTurn(const Turn& t);
+    //! Returns the chessboard in array representation.
+    std::array<Piece, 64> getBoard() const;
 
     //! Returns true if black pieces are on the board.
     bool hasBlackPieces() const;
@@ -131,45 +121,51 @@ public:
 
     //! Returns whether the king of the player is in check or not.
     std::array<bool, NUM_PLAYERS> getKingInCheck() const;
+
     //! Gameover-Flag for stalemate position (gameover, no winner).
     bool isStalemate() const;
     //! Gameover-Flag for checkmate.
     std::array<bool, NUM_PLAYERS> getCheckmate() const;
     //! Returns true if the game is over
     bool isGameOver() const;
-    
-    /**
-     * @brief Returns the winner of the game.
-     * Returns Player color or NoPlayer on draw.
-     * @warning Only valid is isGameOver
-     */
-    PlayerColor getWinner() const;
-
     //! Returns true if the game is draw due to the 50 moves rule
     bool isDrawDueTo50MovesRule() const;
+    /**
+    * @brief Returns the winner of the game.
+    * Returns Player color or NoPlayer on draw.
+    */
+    PlayerColor getWinner() const;
+
+    /**
+     * @brief Returns the captured piece from the last turn or
+     * Piece(NoPlayer, NoType) if no piece was captured
+     */
+    Piece getLastCapturedPiece() const;
 
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
     std::string toString() const;
 
 protected:
-    // for internal turn calculation bit boards are used
-    // at least 12 bit boards are needed for a complete board
-    // representation + some additional bit boards for faster turn
-    // calculation
+    /**
+     * @brief We use bit boards for internal turn generation. At least
+     * twelve bit boards are needed for complete board representation + some
+     * additional helper boards.
+     */
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
-    
-    void setKingInCheck(PlayerColor player, bool kingInCheck);
-    void setStalemate();
-    void setCheckmate(PlayerColor player);
-
+    //! Updates the helper bit boards.
     void updateBitBoards();
 
+    //! Set or unset the kingInCheck-Flag.
+    void setKingInCheck(PlayerColor player, bool kingInCheck);
+    //! Set the stalemate-Flag
+    void setStalemate();
+    //! Set the checkmate-Flag
+    void setCheckmate(PlayerColor player);
 
 private:
     //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);
-
 
     //! Applies a "simple" move turn.
     void applyMoveTurn(const Turn& turn);
@@ -187,35 +183,54 @@ private:
     //! Checks whether the given turn affects castling rights and updates them accordingly.
     void updateCastlingRights(const Turn& turn);
 
-
-    Piece m_lastCapturedPiece;
-    bool m_stalemate;
-
-    std::array<bool, NUM_PLAYERS> m_checkmate;
-
     //! King of player in check postion.
     std::array<bool, NUM_PLAYERS> m_kingInCheck;
+    //! King of player is checkmate.
+    std::array<bool, NUM_PLAYERS> m_checkmate;
+    //! Game is stalemate.
+    bool m_stalemate;
+
     //! Short castle rights for players.
     std::array<bool, NUM_PLAYERS> m_shortCastleRight;
     //! Long castle rights for players.
     std::array<bool, NUM_PLAYERS> m_longCastleRight;
     //! En passant square
     Field m_enPassantSquare;
+
     //! Half-move clock
     int m_halfMoveClock;
     //! Full move clock
     int m_fullMoveClock;
+
     //! Player doing the next turn
     PlayerColor m_nextPlayer;
-    //! List with all captured piece
-    std::vector<Piece> m_capturedPieces;
-    
+    //! Capured piece from last turn
+    Piece m_lastCapturedPiece;
+
     IncrementalMaterialAndPSTEvaluator m_evaluator;
     IncrementalZobristHasher m_hasher;
 };
 
+
+
+/* for debug purposes */
+
+#define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field)) /* returns the value 2^field */
+
+std::string bitBoardToString(BitBoard b);
+
+BitBoard generateBitBoard(Field f1, ...);
+
+struct PoF {
+    Piece piece;
+    Field field;
+
+    PoF(Piece piece, Field field)
+        : piece(piece), field(field) {}
+};
+
 ChessBoard generateChessBoard(std::vector<PoF> pieces, PlayerColor nextPlayer = White);
 
-using ChessBoardPtr = std::shared_ptr<ChessBoard>;
+
 
 #endif // CHESSBOARD_H
