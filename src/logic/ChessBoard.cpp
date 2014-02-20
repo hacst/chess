@@ -39,7 +39,7 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
     m_stalemate = false;
     m_checkmate[White] = false;
     m_checkmate[Black] = false;
-
+    m_capturedPiece = Piece(NoPlayer, NoType);
     initBitBoards(board);
 }
 
@@ -206,8 +206,7 @@ void ChessBoard::addCapturedPiece(const Piece capturedPiece, Field field) {
     m_halfMoveClock = 0;
 
     BIT_CLEAR(m_bb[capturedPiece.player][capturedPiece.type], field);
-    m_capturedPieces.push_back(capturedPiece);
-    //m_capturedPiece = capturedPiece;
+    m_capturedPiece = capturedPiece;
 
     m_evaluator.captureIncrement(field, capturedPiece);
     m_hasher.captureIncrement(field, capturedPiece);
