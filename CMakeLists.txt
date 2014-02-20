@@ -60,8 +60,9 @@ set(GUI_SOURCES
     src/gui/Model.h
     src/gui/ObjectHelper.h
     src/gui/GuiObserver.h
-	src/gui/GUIPlayer.h
-	src/gui/ArrowNavigationHandler.h
+    src/gui/GUIPlayer.h
+    src/gui/ArrowNavigationHandler.h
+    src/gui/SaveGame.h
 
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
@@ -75,7 +76,8 @@ set(GUI_SOURCES
     src/gui/Model.cpp
     src/gui/ObjectHelper.cpp
     src/gui/GuiObserver.cpp
-	src/gui/ArrowNavigationHandler.cpp
+    src/gui/ArrowNavigationHandler.cpp
+    src/gui/SaveGame.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})

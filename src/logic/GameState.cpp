@@ -67,3 +67,11 @@ Hash GameState::getHash() const {
 std::string GameState::toString() const {
     return m_chessBoard.toString();
 }
+
+GameState GameState::fromFEN(const std::string& fen) {
+    return GameState(ChessBoard::fromFEN(fen));
+}
+
+std::string GameState::toFEN() const {
+    return m_chessBoard.toFEN();
+}

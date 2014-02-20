@@ -37,6 +37,7 @@
 #include "gui/Menu2DItem.h"
 #include "gui/StateMachine.h"
 #include "gui/GuiWindow.h"
+#include "gui/SaveGame.h"
 
 using namespace std;
 
@@ -52,9 +53,15 @@ void MenuLoadGame::enter() {
     glClearColor(0.6f, 0.21f, 0, 0);
 
     menu = make_shared<Menu2D>(fsm.window->getWidth(), fsm.window->getHeight());
-    menu->addButton("LoadGameSlot1.png");
-    menu->addButton("LoadGameSlot2.png");
-    menu->addButton("LoadGameSlot3.png");
+    menu->addButton("LoadGameSlot1.png")->onClick([&]() {
+        m_nextState = States::LOAD_SLOT_A;
+    });
+    menu->addButton("LoadGameSlot2.png")->onClick([&]() {
+        m_nextState = States::LOAD_SLOT_B;
+    });
+    menu->addButton("LoadGameSlot3.png")->onClick([&]() {
+        m_nextState = States::LOAD_SLOT_C;
+    });
     menu->addButton("Back.png")->onClick(boost::bind(&MenuLoadGame::onMenuBack, this));
 }
 
@@ -77,14 +84,23 @@ AbstractState* MenuLoadGame::run() {
     AbstractState* nextState;
     switch (m_nextState) {
     case States::LOAD_SLOT_A:
-        nextState = this;	// @todo
-        break;
     case States::LOAD_SLOT_B:
-        nextState = this;	// @todo
+    case States::LOAD_SLOT_C: {
+        int slot = m_nextState - States::LOAD_SLOT_A;
+        auto saveGame = SaveGame::loadFromSlot(slot);
+        if (!saveGame) {
+            // Failed to load
+            nextState = this;
+            break;
+        }
+        
+        nextState = new GamePlay(
+            saveGame->gameMode,
+            saveGame->humanPlayerColor,
+            saveGame->fen);
+
         break;
-    case States::LOAD_SLOT_C:
-        nextState = this;	// @todo
-        break;
+    }
     case States::MENU_MAIN:
         nextState = new MenuMain();
         break;
