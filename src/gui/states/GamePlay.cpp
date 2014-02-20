@@ -577,16 +577,6 @@ void GamePlay::drawMessageBox() {
 	);
 }
 
-/*
-void GamePlay::addTurn(PlayerColor who, Turn turn) {
-	PlayerTurn pt;
-	pt.who = who;
-	pt.turn = turn;
-	
-	m_playerTurns.push_front(pt);
-	m_lastTurn = turn;
-}*/
-
 void GamePlay::setCapturedPiecesList(std::vector<Piece> piecesList) {
 	resetCapturedPieces();
 
@@ -631,7 +621,7 @@ void GamePlay::drawLastTurns() {
 	// precalculations
 	int lineHeight = fontSize + 4;
 	int totalLineHeight = numberOfTurnsToDraw * lineHeight;
-	int offsetY = m_fsm.window->getHeight() - totalLineHeight - fontSize;
+	int offsetY = m_fsm.window->getHeight() - totalLineHeight;
 
 	int step = 0;
 	for (auto& turn : m_playerTurns) {
@@ -722,6 +712,9 @@ string GamePlay::getPieceName(int pieceNumber) {
 		case PieceType::Rook:
 			pieceName = "Turm";
 			break;
+		default:
+			pieceName = "-";
+			break;
 	}
 
 	return pieceName;
@@ -758,7 +751,12 @@ void GamePlay::drawPlayerActions() {
 		}
 	}
 
-	m_chessSet->drawActionTileAt(static_cast<Field>(m_arrowNavHandler->getCursorPosition()), ChessSet::TileStyle::CURSOR);
+	Field currField = m_arrowNavHandler->getCursorPosition();
+	m_chessSet->drawActionTileAt(currField, ChessSet::TileStyle::CURSOR);
+
+	std::stringstream strstr;
+	strstr << "Feld: " << currField << " / Figur: " << getPieceName(m_chessBoardState[currField].type);
+	drawInfoBox(strstr.str());
 }
 
 void GamePlay::drawPauseMenu() {
