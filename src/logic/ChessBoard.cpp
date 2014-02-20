@@ -525,8 +525,8 @@ std::array<bool, NUM_PLAYERS> ChessBoard::getKingInCheck() const {
     return m_kingInCheck;
 }
 
-void ChessBoard::setCheckmate(PlayerColor player, bool checkmate) {
-    m_checkmate[player] = checkmate;
+void ChessBoard::setCheckmate(PlayerColor player) {
+    m_checkmate[player] = true;
 }
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getCheckmate() const {
@@ -541,8 +541,8 @@ bool ChessBoard::isStalemate() const {
     return m_stalemate;
 }
 
-void ChessBoard::setStalemate(bool stalemate) {
-    m_stalemate = stalemate;
+void ChessBoard::setStalemate() {
+    m_stalemate = true;
 }
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {

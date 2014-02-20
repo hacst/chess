@@ -131,9 +131,10 @@ public:
     void setKingInCheck(PlayerColor player, bool kingInCheck);
 
     bool isStalemate() const;
-    void setStalemate(bool stalemate);
+    void setStalemate();
 
-    void setCheckmate(PlayerColor player, bool checkmate);
+    void setCheckmate(PlayerColor player);
+
     std::array<bool, NUM_PLAYERS> getCheckmate() const;
 
 

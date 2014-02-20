@@ -64,7 +64,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 
 
         if (turnList.empty()) {
-            cb.setCheckmate(player, true);
+            cb.setCheckmate(player);
         }
 
     } else {
@@ -121,7 +121,7 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
         }
 
         if (turnList.empty()) {
-            cb.setStalemate(true);
+            cb.setStalemate();
         }
     }
 
