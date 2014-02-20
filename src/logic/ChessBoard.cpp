@@ -307,11 +307,11 @@ Score ChessBoard::getScore(PlayerColor color, size_t depth) const {
     if (isGameOver()) {
         const PlayerColor winner = getWinner();
         if (winner == color) {
-            return WIN_SCORE - depth;
+            return WIN_SCORE - static_cast<int>(depth);
         } else if (winner == NoPlayer) {
             return 0;
         } else {
-            return LOOSE_SCORE + depth;
+            return LOOSE_SCORE + static_cast<int>(depth);
         }
     }
 
