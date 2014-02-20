@@ -6,78 +6,79 @@
 
 class TurnGenerator {
 public:
-    virtual void              initFlags(ChessBoard &cb);
-    virtual std::vector<Turn> getTurnList() const;
-    virtual void              generateTurns(PlayerColor player,
+    void              initFlags(ChessBoard &cb);
+    std::vector<Turn> getTurnList() const;
+    void              generateTurns(PlayerColor player,
                                             ChessBoard& cb);
 //private:
     std::vector<Turn> turnList;
 
-    virtual std::vector<Turn> bitBoardToTurns(Piece piece,
-                                              Field from,
-                                              BitBoard bbTurns,
-                                              BitBoard bbAllOppTurns,
-                                              ChessBoard& cb);
+    void bitBoardToTurns(Piece piece,
+                                Field from,
+                                BitBoard bbTurns,
+                                BitBoard bbAllOppTurns,
+                                ChessBoard& cb,
+                                Turns& turnsOut);
 
-    virtual BitBoard calcMoveTurns(Piece piece,
+    BitBoard calcMoveTurns(Piece piece,
                                    BitBoard bbPiece,
                                    BitBoard bbAllOppTurns,
                                    const ChessBoard& cb);
-    virtual BitBoard calcUnCheckFields(PlayerColor opp,
+    BitBoard calcUnCheckFields(PlayerColor opp,
                                        const ChessBoard& cb);
-    virtual BitBoard calcAllOppTurns(PlayerColor opp,
+    BitBoard calcAllOppTurns(PlayerColor opp,
                                      const ChessBoard& cb);
-    virtual BitBoard calcShortCastleTurns(PlayerColor player,
+    BitBoard calcShortCastleTurns(PlayerColor player,
                                           BitBoard bbAllPieces,
                                           BitBoard bbAllOppTurns);
-    virtual BitBoard calcLongCastleTurns(PlayerColor player,
+    BitBoard calcLongCastleTurns(PlayerColor player,
                                          BitBoard bbAllPieces,
                                          BitBoard bbAllOppTurns);
 
     // nonsliding pieces
-    virtual BitBoard calcKingTurns      (BitBoard king,
+    BitBoard calcKingTurns      (BitBoard king,
                                          BitBoard allOwnPieces,
                                          BitBoard allOppTurns) const;
-    virtual BitBoard calcKnightTurns    (BitBoard knights,
+    BitBoard calcKnightTurns    (BitBoard knights,
                                          BitBoard allOwnPieces) const;
-    virtual BitBoard calcPawnTurns      (BitBoard pawns,
+    BitBoard calcPawnTurns      (BitBoard pawns,
                                          BitBoard allPieces,
                                          BitBoard allOppPieces,
                                          PlayerColor player,
                                          Field enPassantSquare) const;
-    virtual BitBoard calcPawnMoveTurns  (BitBoard pawns,
+    BitBoard calcPawnMoveTurns  (BitBoard pawns,
                                          BitBoard allPieces,
                                          PlayerColor player) const;
-    virtual BitBoard calcPawnAttackTurns(BitBoard pawns,
+    BitBoard calcPawnAttackTurns(BitBoard pawns,
                                          BitBoard allOppPieces,
                                          PlayerColor player,
                                          Field enPassantSquare) const;
     // sliding pieces
-    virtual BitBoard calcQueenTurns (BitBoard queens,
+    BitBoard calcQueenTurns (BitBoard queens,
                                      BitBoard allOppPieces,
                                      BitBoard allPieces) const;
-    virtual BitBoard calcBishopTurns(BitBoard bishops,
+    BitBoard calcBishopTurns(BitBoard bishops,
                                      BitBoard allOppPieces,
                                      BitBoard allPieces) const;
-    virtual BitBoard calcRookTurns  (BitBoard rooks,
+    BitBoard calcRookTurns  (BitBoard rooks,
                                      BitBoard allOppPieces,
                                      BitBoard allPieces) const;
 
     // some helper functions
-    virtual BitBoard maskRank (Rank rank) const;
-    virtual BitBoard clearRank(Rank rank) const;
-    virtual BitBoard maskFile (File file) const;
-    virtual BitBoard clearFile(File file) const;
+    BitBoard maskRank (Rank rank) const;
+    BitBoard clearRank(Rank rank) const;
+    BitBoard maskFile (File file) const;
+    BitBoard clearFile(File file) const;
 
-    virtual BitBoard getBitsE(BitBoard bbPiece) const;
-    virtual BitBoard getBitsW(BitBoard bbPiece) const;
-    virtual BitBoard getBitsN(BitBoard bbPiece) const;
-    virtual BitBoard getBitsS(BitBoard bbPiece) const;
+    BitBoard getBitsE(BitBoard bbPiece) const;
+    BitBoard getBitsW(BitBoard bbPiece) const;
+    BitBoard getBitsN(BitBoard bbPiece) const;
+    BitBoard getBitsS(BitBoard bbPiece) const;
 
-    virtual BitBoard getBitsNE(BitBoard bbPiece) const;
-    virtual BitBoard getBitsNW(BitBoard bbPiece) const;
-    virtual BitBoard getBitsSE(BitBoard bbPiece) const;
-    virtual BitBoard getBitsSW(BitBoard bbPiece) const;
+    BitBoard getBitsNE(BitBoard bbPiece) const;
+    BitBoard getBitsNW(BitBoard bbPiece) const;
+    BitBoard getBitsSE(BitBoard bbPiece) const;
+    BitBoard getBitsSW(BitBoard bbPiece) const;
 };
 
 using TurnGeneratorPtr = std::shared_ptr<TurnGenerator>;

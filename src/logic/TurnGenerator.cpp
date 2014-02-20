@@ -19,7 +19,6 @@ std::vector<Turn> TurnGenerator::getTurnList() const {
 }
 
 void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
-    std::vector<Turn> vecMoveTurns;
     PlayerColor opp = togglePlayerColor(player);
     Field curPiecePos;
     Piece piece;
@@ -77,11 +76,10 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                     bbTurns &= bbUnCheckFields;
                 }
 
-                vecMoveTurns = bitBoardToTurns(piece, (Field) curPiecePos,
-                                               bbTurns, bbAllOppTurns, cb);
-                turnList.insert(turnList.end(),
-                                vecMoveTurns.begin(),
-                                vecMoveTurns.end());
+                bitBoardToTurns(
+                    piece, (Field) curPiecePos,
+                    bbTurns, bbAllOppTurns, cb,
+                    turnList);
             }
         }
 
@@ -135,11 +133,9 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
                 BIT_SET  (bbCurPiece,     curPiecePos);
                 bbTurns     = calcMoveTurns(piece, bbCurPiece, bbAllOppTurns, cb);
 
-                vecMoveTurns = bitBoardToTurns(piece, (Field) curPiecePos,
-                                               bbTurns, bbAllOppTurns, cb);
-                turnList.insert(turnList.end(),
-                                vecMoveTurns.begin(),
-                                vecMoveTurns.end());
+                bitBoardToTurns(piece, (Field) curPiecePos,
+                                bbTurns, bbAllOppTurns, cb,
+                                turnList);
             }
         }
 
@@ -151,12 +147,12 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
     //turnList.push_back(Turn::Forfeit);
 }
 
-std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece,
+void TurnGenerator::bitBoardToTurns(Piece piece,
                                                  Field from,
                                                  BitBoard bbTurns,
                                                  BitBoard bbAllOppTurns,
-                                                 ChessBoard& cb) {
-    std::vector<Turn> turns;
+                                                 ChessBoard& cb,
+                                                 Turns& turnsOut) {
     Field to;
 
     while (bbTurns != 0) {
@@ -174,7 +170,7 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece,
             PieceType capturedPieceType = NoType;
             // Zug anwenden (ziehen und evtl. schlagen)
             BIT_CLEAR(cb.m_bb[piece.player][piece.type], from);
-            BIT_SET  (cb.m_bb[piece.player][piece.type], to);
+            BIT_SET(cb.m_bb[piece.player][piece.type], to);
             for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
                 if (BIT_ISSET(cb.m_bb[opp][pieceType], to)) {
                     BIT_CLEAR(cb.m_bb[opp][pieceType], to);
@@ -191,8 +187,8 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece,
 
             // Zug wieder rueckgaengig machen!
             BIT_CLEAR(cb.m_bb[piece.player][piece.type], to);
-            BIT_SET  (cb.m_bb[piece.player][piece.type], from);
-            if (captured) BIT_SET (cb.m_bb[opp][capturedPieceType], to);
+            BIT_SET(cb.m_bb[piece.player][piece.type], from);
+            if (captured) BIT_SET(cb.m_bb[opp][capturedPieceType], to);
             cb.updateBitBoards();
 
             // Falls King im Schach, Zug nicht aufnehmen
@@ -204,17 +200,15 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece,
 
 
         if ((rankFor(to) == Eight || rankFor(to) == One) && piece.type == Pawn) {
-            turns.push_back(Turn::promotionQueen (piece, from, to));
-            turns.push_back(Turn::promotionBishop(piece, from, to));
-            turns.push_back(Turn::promotionRook  (piece, from, to));
-            turns.push_back(Turn::promotionKnight(piece, from, to));
+            turnsOut.push_back(Turn::promotionQueen(piece, from, to));
+            turnsOut.push_back(Turn::promotionBishop(piece, from, to));
+            turnsOut.push_back(Turn::promotionRook(piece, from, to));
+            turnsOut.push_back(Turn::promotionKnight(piece, from, to));
 
         } else {
-            turns.push_back(Turn::move(piece, from, to));
+            turnsOut.push_back(Turn::move(piece, from, to));
         }
     }
-
-    return turns;
 }
 
 BitBoard TurnGenerator::calcMoveTurns(Piece piece,
