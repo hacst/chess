@@ -123,24 +123,17 @@ public:
 
     //! Returns the field where en-passant rights exist. ERR if none.
     Field getEnPassantSquare() const;
-    //! Returns whether the king of the player is in check or not.
-    std::array<bool, NUM_PLAYERS> getKingInCheck() const;
-
-
-
-    void setKingInCheck(PlayerColor player, bool kingInCheck);
-
-    bool getStalemate() const;
-    void setStalemate(bool stalemate);
-
-    void setCheckmate(PlayerColor player, bool checkmate);
-    std::array<bool, NUM_PLAYERS> getCheckmate() const;
-
-
     //! Returns short castle rights for players.
     std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
     //! Returns long castle rights for players.
     std::array<bool, NUM_PLAYERS> getLongCastleRights() const;
+
+    //! Returns whether the king of the player is in check or not.
+    std::array<bool, NUM_PLAYERS> getKingInCheck() const;
+    //! Gameover-Flag for stalemate position (gameover, no winner)
+    bool getStalemate() const;
+    //! Gameover-Flag for checkmate
+    std::array<bool, NUM_PLAYERS> getCheckmate() const;
 
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
@@ -153,6 +146,10 @@ protected:
     // calculation
     std::array<std::array<BitBoard,NUM_PIECETYPES+1>, NUM_PLAYERS> m_bb;
     
+    void setKingInCheck(PlayerColor player, bool kingInCheck);
+    void setStalemate(bool stalemate);
+    void setCheckmate(PlayerColor player, bool checkmate);
+
 private:
     //! Init the bit boards from the given chess board in array presentation.
     void initBitBoards(std::array<Piece, 64> board);
