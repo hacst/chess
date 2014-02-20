@@ -44,7 +44,6 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
 }
 
 void ChessBoard::initBitBoards(std::array<Piece, 64> board) {
-
     // init all bit boards with 0
     for (int player = White; player < NUM_PLAYERS; player++) {
         for (int pieceType = King; pieceType < NUM_PIECETYPES; pieceType++) {
@@ -75,6 +74,7 @@ void ChessBoard::updateBitBoards() {
 
 void ChessBoard::applyTurn(const Turn& turn) {
     ++m_halfMoveClock;
+    m_capturedPiece = Piece(NoPlayer, NoType);
 
     if (turn.action == Turn::Action::Move) {
         applyMoveTurn(turn);
@@ -288,10 +288,6 @@ std::array<Piece, 64> ChessBoard::getBoard() const {
     }
 
     return board;
-}
-
-std::vector<Piece> ChessBoard::getCapturedPieces() const {
-    return m_capturedPieces;
 }
 
 bool ChessBoard::hasBlackPieces() const {
