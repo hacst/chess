@@ -88,8 +88,7 @@ public:
     
     void                  applyTurn(const Turn& t);
     std::array<Piece, 64> getBoard()          const;
-    std::vector<Piece>    getCapturedPieces() const;
-    //Piece m_capturedPiece;
+    Piece m_capturedPiece;
 
     //! Returns true if black pieces are on the board.
     bool hasBlackPieces() const;
