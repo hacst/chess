@@ -153,7 +153,8 @@ bool AIPlayer::tryFindPromisedTurnInOpeningBook() {
             } else if (turn.isPromotion()
                        && entry->isPromotion()
                        && entry->move.promotion_piece == turn.getPromotionPieceType()
-                       && entry->move.from == turn.from) {
+                       && entry->move.from == turn.from
+                       && entry->move.to == turn.to) {
                 completePromiseWith(turn);
                 
                 LOG(info) << "Performing promotion turn from book: " << turn;
