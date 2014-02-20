@@ -687,7 +687,7 @@ void GamePlay::drawCapturedPieces() {
 		int relativeOffsetY = i * lineHeight;
 
 		stringstream strs;
-		strs << m_capturedPieces.countWhite[i] << " " << getPieceName(i);
+		strs << m_capturedPieces.countBlack[i] << " " << getPieceName(i);
 
 		m_fsm.window->printTextSmall(offsetX, offsetY + relativeOffsetY, 1.0f, 1.0f, 1.0f, strs.str());
 	}
