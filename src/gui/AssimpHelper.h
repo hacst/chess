@@ -1,3 +1,7 @@
+/*
+    Taken from http://www.hightech-journal.net/opengl-tutorial-03-3d-modelle-zeichnen-beleuchten-assimp-importieren
+*/
+
 #ifndef ASSIMPHELPER_H
 #define ASSIMPHELPER_H
 
@@ -11,33 +15,33 @@
  */
 class AssimpHelper {
 public:
-	/**
-	 * @brief Imports the scene by filename.
-	 * @param filename The filename of the scene to import.
-	 */
-	void importScene(std::string filename);
-	~AssimpHelper();
+    /**
+     * @brief Imports the scene by filename.
+     * @param filename The filename of the scene to import.
+     */
+    void importScene(std::string filename);
+    ~AssimpHelper();
 
-	/**
-	 * @brief Draws the scene.
-	 */
-	void drawScene();
+    /**
+     * @brief Draws the scene.
+     */
+    void drawScene();
 
 private:
-	//! The scene object
-	const aiScene* scene;
+    //! The scene object
+    const aiScene* scene;
 
-	//! The Assimp Importer pointer
-	Assimp::Importer* importer;
+    //! The Assimp Importer pointer
+    Assimp::Importer* importer;
 
-	//! The scene Meshes
-	std::vector<Mesh*> meshes;
+    //! The scene Meshes
+    std::vector<Mesh*> meshes;
 
-	/**
-	 * @brief Draws the given mesh.
-	 * @param mesh The mesh to draw.
-	 */
-	void drawMesh(Mesh* mesh);
+    /**
+     * @brief Draws the given mesh.
+     * @param mesh The mesh to draw.
+     */
+    void drawMesh(Mesh* mesh);
 };
 
 using AssimpHelperPtr = std::shared_ptr<AssimpHelper>; // Shared pointer for better garbage handling.

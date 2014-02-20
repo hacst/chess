@@ -1,3 +1,7 @@
+/*
+    Taken from http://www.hightech-journal.net/opengl-tutorial-03-3d-modelle-zeichnen-beleuchten-assimp-importieren
+*/
+
 #ifndef MESH_H
 #define MESH_H
 
@@ -16,34 +20,34 @@
  */
 class Mesh {
 public:
-	/**
-	 * @brief Creates a new Mesh object.
-	 * @param numVertices The number of model vertices.
-	 * @param vertices The model's vertices itself.
-	 * @param normals The model's normals itself.
-	 * @param numFaces The number of model faces.
-	 * @param faces The model's faces itself.
-	 */
-	Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces);
-	~Mesh(void);
+    /**
+     * @brief Creates a new Mesh object.
+     * @param numVertices The number of model vertices.
+     * @param vertices The model's vertices itself.
+     * @param normals The model's normals itself.
+     * @param numFaces The number of model faces.
+     * @param faces The model's faces itself.
+     */
+    Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces);
+    ~Mesh(void);
 
-	//! The model's vertices
-	aiVector3D* vertices;
+    //! The model's vertices
+    aiVector3D* m_vertices;
 
-	//! The model's normals
-	aiVector3D* normals;
+    //! The model's normals
+    aiVector3D* m_normals;
 
-	//! The model's texture coordinates
-	aiVector3D* textureCoords;
+    //! The model's texture coordinates
+    aiVector3D* m_textureCoords;
 
-	//! The model's indices
-	GLuint* indices;
+    //! The model's indices
+    GLuint* m_indices;
 
-	//! The number of vertices
-	GLuint numVertices;
+    //! The number of vertices
+    GLuint m_numVertices;
 
-	//! The number of indices
-	GLuint numIndices;
+    //! The number of indices
+    GLuint m_numIndices;
 };
 
 #endif // MESH_H

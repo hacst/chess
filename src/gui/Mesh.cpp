@@ -1,24 +1,24 @@
-// Mesh.cpp - Implementiert die Mesh-Klasse und dessen Konstruktor
-// und Destruktor.
+/*
+    Taken from http://www.hightech-journal.net/opengl-tutorial-03-3d-modelle-zeichnen-beleuchten-assimp-importieren
+*/
+
 #include "Mesh.h"
 
-// übergibt die Werte des Meshes an die eigenen Variablen
-// und extrahiert die Indices aus den einzelnen Faces.
-Mesh::Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces) {
-	this->numVertices = numVertices;
-	this->vertices = vertices;
-	this->normals = normals;
-	this->numIndices = numFaces * 3;
-	this->indices = new GLuint[this->numIndices];
+Mesh::Mesh(unsigned int numVertices, aiVector3D* vertices, aiVector3D* normals, unsigned int numFaces, aiFace* faces)
+    : m_numVertices(numVertices)
+    , m_vertices(vertices)
+    , m_normals(normals)
+    , m_numIndices(numFaces * 3) {
 
-	for (unsigned int i = 0; i < numFaces; i++) {
-		indices[i * 3] = (GLuint)faces[i].mIndices[0];
-		indices[i * 3 + 1] = (GLuint)faces[i].mIndices[1];
-		indices[i * 3 + 2] = (GLuint)faces[i].mIndices[2];
-	}
+    m_indices = new GLuint[m_numIndices];
+
+    for (unsigned int i = 0; i < numFaces; i++) {
+        m_indices[i * 3] = (GLuint)faces[i].mIndices[0];
+        m_indices[i * 3 + 1] = (GLuint)faces[i].mIndices[1];
+        m_indices[i * 3 + 2] = (GLuint)faces[i].mIndices[2];
+    }
 }
 
-// Löscht die gespeicherten Indices
 Mesh::~Mesh(void) {
-	delete[] indices;
+    delete[] m_indices;
 }
