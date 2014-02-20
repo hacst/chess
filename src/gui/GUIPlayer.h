@@ -75,21 +75,6 @@ public:
 
     virtual std::future<Turn> doMakeTurn(GameState state) override {
         return m_gameplay.doMakePlayerTurn();
-
-        /*return postPromise([=]() mutable {
-            // Always choose a random turn after a random amount of time
-            // Obviously can't be aborted
-            auto turns = state.getTurnList();
-            auto turnIt = random_selection(turns, m_rng);
-            Turn turn = (turnIt == std::end(turns)) ? Turn() : (*turnIt);
-            int duration = m_msDist(m_rng);
-
-            LOG(Logging::debug) << "(" << m_seed << ") "
-            << "Will select " << turn << " after " << duration << " seconds sleep";
-            std::this_thread::sleep_for(std::chrono::seconds(duration));
-            return turn;
-
-            });*/
     }
 
 private:
