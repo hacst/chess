@@ -19,11 +19,19 @@ public:
     PlayerColor         getNextPlayer() const;
     const ChessBoard&   getChessBoard() const;
 
+    //! Returns true if the game is over
     bool isGameOver() const;
+
+    /**
+    * @brief Returns the winner of the game.
+    * Returns Player color or NoPlayer on draw.
+    * @warning Only valid is isGameOver
+    */
     PlayerColor getWinner() const;
 
-    //! Returns true if the game ended in a draw due to the 50 moves rule
+    //! Returns true if the game is draw due to the 50 moves rule
     bool isDrawDueTo50MovesRule() const;
+
     //! Returns current score estimate from next players POV.
     Score getScore() const;
     //! Returns hash for current position

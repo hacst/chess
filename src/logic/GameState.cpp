@@ -34,78 +34,15 @@ const ChessBoard& GameState::getChessBoard() const {
 }
 
 bool GameState::isGameOver() const {
-    std::array<bool, NUM_PLAYERS> checkmate = m_chessBoard.getCheckmate();
-
-    if (checkmate[White]) {
-        return true;
-    } else if (checkmate[Black]) {
-        return true;
-    }
-
-    if (isDrawDueTo50MovesRule() || m_chessBoard.getStalemate()) {
-        return true;
-    }
-
-    return false;
-
-    /*
-    // When debugging we might want to work with boards without a king. Alternatively
-    // check for all pieces of a player being gone.
-    if (!(m_chessBoard.hasBlackPieces() && m_chessBoard.hasWhitePieces())) {
-        return true;
-    }
-
-    // Assume game is over once king is captured.
-    // FIXME: Figure out whether it's ok for the state to have the king captured. Sure would make the AI's life easier. Also this is horribly inefficient
-    const auto captures = m_chessBoard.getCapturedPieces();
-    auto hit = std::find_if(begin(captures), end(captures), [](const Piece& piece) {
-        return piece.type == King;
-    });
-
-    if (hit != end(captures)) {
-        return true;
-    }
-
-    return getTurnList().size() == 0;
-    */
+    return m_chessBoard.isGameOver();
 }
 
 bool GameState::isDrawDueTo50MovesRule() const {
-    return m_chessBoard.getHalfMoveClock() >= 50 * 2;
+    return m_chessBoard.isDrawDueTo50MovesRule();
 }
 
 PlayerColor GameState::getWinner() const {
-    std::array<bool, NUM_PLAYERS> checkmate = m_chessBoard.getCheckmate();
-
-    if (checkmate[White]) {
-        return Black;
-    } else if (checkmate[Black]) {
-        return White;
-    }
-
-    /*
-    if (isDrawDueTo50MovesRule() || m_chessBoard.getStalemate()) {
-        return NoPlayer;
-    }
-    */
-
-    return NoPlayer;
-
-    /*
-    if (isDrawDueTo50MovesRule()) return NoPlayer;
-
-    //FIXME: Same as isGameOver. Assumes king capture or eradication.
-    if (!m_chessBoard.hasBlackPieces()) return White;
-    else if (!m_chessBoard.hasWhitePieces()) return Black;
-
-    // If we find a captured king the corresponding color has lost
-    const auto captures = m_chessBoard.getCapturedPieces();
-    auto hit = std::find_if(begin(captures), end(captures), [](const Piece& piece) {
-        return piece.type == King;
-    });
-
-    return togglePlayerColor(hit->player);
-    */
+    return m_chessBoard.getWinner();
 }
 
 Score GameState::getScore() const {

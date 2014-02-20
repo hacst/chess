@@ -537,7 +537,7 @@ void ChessBoard::setKingInCheck(PlayerColor player, bool kingInCheck) {
     m_kingInCheck[player] = kingInCheck;
 }
 
-bool ChessBoard::getStalemate() const {
+bool ChessBoard::isStalemate() const {
     return m_stalemate;
 }
 
@@ -551,6 +551,38 @@ std::array<bool, NUM_PLAYERS> ChessBoard::getShortCastleRights() const {
 
 std::array<bool, NUM_PLAYERS> ChessBoard::getLongCastleRights() const {
     return m_longCastleRight;
+}
+
+
+bool ChessBoard::isGameOver() const {
+    if (m_checkmate[White]) {
+        return true;
+    }
+    else if (m_checkmate[Black]) {
+        return true;
+    }
+
+    if (isDrawDueTo50MovesRule() || isStalemate()) {
+        return true;
+    }
+
+    return false;
+}
+
+bool ChessBoard::isDrawDueTo50MovesRule() const {
+    return getHalfMoveClock() >= 50 * 2;
+}
+
+PlayerColor ChessBoard::getWinner() const {
+
+    if (m_checkmate[White]) {
+        return Black;
+    }
+    else if (m_checkmate[Black]) {
+        return White;
+    }
+
+    return NoPlayer;
 }
 
 std::string bitBoardToString(BitBoard b) {

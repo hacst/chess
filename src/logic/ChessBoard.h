@@ -130,7 +130,7 @@ public:
 
     void setKingInCheck(PlayerColor player, bool kingInCheck);
 
-    bool getStalemate() const;
+    bool isStalemate() const;
     void setStalemate(bool stalemate);
 
     void setCheckmate(PlayerColor player, bool checkmate);
@@ -141,6 +141,19 @@ public:
     std::array<bool, NUM_PLAYERS> getShortCastleRights() const;
     //! Returns long castle rights for players.
     std::array<bool, NUM_PLAYERS> getLongCastleRights() const;
+
+    //! Returns true if the game is over
+    bool isGameOver() const;
+    
+    /**
+     * @brief Returns the winner of the game.
+     * Returns Player color or NoPlayer on draw.
+     * @warning Only valid is isGameOver
+     */
+    PlayerColor getWinner() const;
+
+    //! Returns true if the game is draw due to the 50 moves rule
+    bool isDrawDueTo50MovesRule() const;
 
     bool operator==(const ChessBoard& other) const;
     bool operator!=(const ChessBoard& other) const;
