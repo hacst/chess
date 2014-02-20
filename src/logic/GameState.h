@@ -33,7 +33,7 @@ public:
     bool isDrawDueTo50MovesRule() const;
 
     //! Returns current score estimate from next players POV.
-    Score getScore() const;
+    Score getScore(size_t depth = 0) const;
     //! Returns hash for current position
     Hash getHash() const;
 

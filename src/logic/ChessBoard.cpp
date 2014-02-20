@@ -303,15 +303,15 @@ PlayerColor ChessBoard::getNextPlayer() const {
     return m_nextPlayer;
 }
 
-Score ChessBoard::getScore(PlayerColor color) const {
+Score ChessBoard::getScore(PlayerColor color, size_t depth) const {
     if (isGameOver()) {
         const PlayerColor winner = getWinner();
         if (winner == color) {
-            return WIN_SCORE;
+            return WIN_SCORE - depth;
         } else if (winner == NoPlayer) {
             return 0;
         } else {
-            return LOOSE_SCORE;
+            return LOOSE_SCORE + depth;
         }
     }
 

@@ -50,7 +50,7 @@ public:
     virtual PlayerColor getNextPlayer() const { return nextPlayer; }
     virtual std::vector<Turn> getTurnList() { return std::vector<Turn> { Turn() }; }
     virtual void applyTurn(Turn) { nextPlayer = togglePlayerColor(nextPlayer); }
-    virtual Score getScore() const { return 0; }
+    virtual Score getScore(size_t) const { return 0; }
     virtual Score getHash() const { return 0; }
 
     PlayerColor nextPlayer;
@@ -95,7 +95,7 @@ struct MockIncreasingState : public MockGameState {
         MockGameState::applyTurn(t);
     }
 
-    virtual Score getScore() const override {
+    virtual Score getScore(size_t) const override {
         return (nextPlayer == White) ? score : -score;
     }
 
@@ -280,6 +280,8 @@ TEST(Negamax, MoveOrdering) {
         auto withoutMO = negamaxAB.search(gs, depth);
         
         EXPECT_EQ(withoutMO.score, withMO.score)
+                << "Base state (" << i << "): " << gs << endl;
+        EXPECT_GT(negamaxAB.m_counters.duration, negamaxMO.m_counters.duration)
                 << "Base state (" << i << "): " << gs << endl;
     }
 }

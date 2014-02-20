@@ -46,8 +46,8 @@ PlayerColor GameState::getWinner() const {
     return m_chessBoard.getWinner();
 }
 
-Score GameState::getScore() const {
-    return m_chessBoard.getScore(m_chessBoard.getNextPlayer());
+Score GameState::getScore(size_t depth) const {
+    return m_chessBoard.getScore(m_chessBoard.getNextPlayer(), depth);
 }
 
 bool GameState::operator==(const GameState& other) const {

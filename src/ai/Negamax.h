@@ -55,6 +55,9 @@ struct NegamaxResult {
 
     //! Negates score. Syntax sugar to get closer to algorithm notation.
     NegamaxResult operator-() const { return{ -score, turn }; }
+    
+    //! Returns true if the search found a certain victory.
+    bool isVictoryCertain() const { return score > WIN_SCORE_THRESHOLD; }
 
     bool operator<(const NegamaxResult& other) { return score < other.score; }
     bool operator<=(const NegamaxResult& other) { return score <= other.score; }
@@ -191,8 +194,8 @@ private:
      * @param state Game state to search from.
      * @param depth Depth in plys already searched.
      * @param maxDepth Maximum depth in plys to search.
-     * @param alpha Alpha score.
-     * @param beta Beta score.
+     * @param alpha Minimum score current (maximizing) player is assured of
+     * @param beta Maximum score enemy (minimizing) player is assured of
      */
     NegamaxResult search_recurse(TGameState state, size_t depth, const size_t maxDepth, Score alpha, Score beta) {
         if (m_abort) return{ 0, boost::none };
@@ -200,7 +203,7 @@ private:
         const size_t pliesLeft = maxDepth - depth;
 
         if (state.isGameOver() || pliesLeft == 0) {
-            return { state.getScore(), boost::none };
+            return { state.getScore(depth), boost::none };
         }
         
         const Score initialAlpha = alpha;
@@ -223,7 +226,11 @@ private:
                     beta = std::min(beta, tableEntry->score);
                 }
                 
-                if (alpha >= beta) {
+                if (AB_CUTOFF_ENABLED && alpha >= beta) {
+                    // Upper or lower bound known for this position will
+                    // trigger an alpha beta cutoff. No need to continue
+                    // search.
+                    ++m_counters.cutoffs;
                     return { tableEntry->score, tableEntry->turn };
                 }
             }
@@ -246,7 +253,8 @@ private:
             consideredStates[i].applyTurn(possibleTurns[i]);
             consideredOptions.emplace_back(consideredStates[i],
                                              possibleTurns[i],
-                                             estimateScoreFor(consideredStates[i]));
+                                             estimateScoreFor(consideredStates[i],
+                                                             depth + 1));
         }
         
         if (MOVE_ORDERING_ENABLED) {
@@ -266,7 +274,6 @@ private:
             // Check if we improved upon previous turns
             if (result > bestResult) {
                 ++m_counters.updates;
-                //LOG(trace) << "(" << depth << ") Improved score " << bestResult.score << " to " << result.score;
 
                 bestResult = result;
                 bestResult.turn = turn;
@@ -276,7 +283,10 @@ private:
 
             if (AB_CUTOFF_ENABLED && alpha >= beta) {
                 ++m_counters.cutoffs;
-                // Prune the rest of the sibling branches
+                // Enemy player won't let us reach a better score than
+                // his guaranteed beta score. No use in continuing to
+                // search this position as the results would be discarded
+                // anyways.
                 break;
             }
 
@@ -293,10 +303,15 @@ private:
             entry.depth = pliesLeft; // Our results comes from pliesLeft deep
     
             if (bestResult.score <= initialAlpha) {
+                // Opponent might have omitted results with a lower score from
+                // this position meaning this is a upper bound.
                 entry.boundType = TranspositionTableEntry::UPPER;
             } else if (bestResult.score >= beta) {
+                // We might have omitted results with a higher score from this position
+                // meaning this is a lower bound.
                 entry.boundType = TranspositionTableEntry::LOWER;
             } else {
+                // No cutoff occured. The result is exact.
                 entry.boundType = TranspositionTableEntry::EXACT;
             }
             
@@ -306,14 +321,16 @@ private:
         return bestResult;
     }
     
-    Score estimateScoreFor(const TGameState& state) const {
+    Score estimateScoreFor(const TGameState& state, size_t depth) const {
+        // Note: Need to negate results as they are from the enemys POV
         if (TRANSPOSITION_TABLES_ENABLED) {
             auto entry = m_transpositionTable.lookup(state.getHash());
-            if (!entry) return MIN_SCORE; //TODO: Is it negative or neutral to not have a tpt entry
-            else return entry->score;
+            if (!entry) return -state.getScore(depth);
+            else if (entry->isUpperBound()) return -MIN_SCORE;
+            else return -entry->score;
         } else {
             // Greedy estimate based on next move
-            return state.getScore();
+            return -state.getScore(depth);
         }
     }
     

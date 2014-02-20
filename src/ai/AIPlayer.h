@@ -155,7 +155,7 @@ private:
     PlayerColor m_color;
     
     //! Algorithm used for search.
-    Negamax<> m_negamax;
+    Negamax<GameState, true, true, true> m_negamax;
     //! Thread the AI is run on.
     std::thread m_thread;
     
@@ -175,6 +175,9 @@ private:
     //! AI configuration
     const AIConfiguration m_config;
 
+    //! True if the AI has found a way to win.
+    bool m_hasWinningMove;
+    
     Logging::Logger m_log;
 };
 

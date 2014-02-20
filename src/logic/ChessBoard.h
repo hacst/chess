@@ -99,7 +99,7 @@ public:
     PlayerColor getNextPlayer() const;
 
     //! Returns the current estimated score.
-    Score getScore(PlayerColor color) const;
+    Score getScore(PlayerColor color, size_t depth = 0) const;
     //! Returns hash for current position
     Hash getHash() const;
     //! Returns half move clock

@@ -52,6 +52,7 @@ AIPlayer::AIPlayer(const AIConfiguration& config, const string& name, int seed)
     , m_outOfBook(true)
     , m_maxIterationDepth(numeric_limits<size_t>::max())
     , m_config(config)
+    , m_hasWinningMove(false)
     , m_log(initLogger(name)) {
     
     LOG(info) << "Using seed " << seed;
@@ -197,7 +198,10 @@ void AIPlayer::searchForPromisedTurn() {
     boost::optional<Turn> turnWithFarthestHorizon;
     size_t iteration = 1;
 
-    while (canStayInState(PLAYING) && iteration <= m_config.maximumDepth) {
+    while (canStayInState(PLAYING)
+           && iteration <= m_config.maximumDepth
+           && !m_hasWinningMove) {
+        
         auto turn = performSearchIteration(iteration, m_gameState, PLAYING);
         if (!turn) break;
 
@@ -216,7 +220,8 @@ void AIPlayer::searchForPromisedTurn() {
 void AIPlayer::play() {
     LOG(debug) << "Play called";
     setTimeLimit(m_maxTimeForTurn);
-
+    m_hasWinningMove = false; // If we had a winning move we need to find the next one now
+    
     if(!tryFindPromisedTurnInOpeningBook()) {
         searchForPromisedTurn();
     }
@@ -234,7 +239,13 @@ boost::optional<Turn> AIPlayer::performSearchIteration(size_t depth, GameState& 
     while (canStayInState(aiState)) {
         future_status status = result.wait_for(milliseconds(50));
         if (status == future_status::ready) {
-            return result.get().turn;
+            const NegamaxResult negamaxResult = result.get();
+            if (negamaxResult.isVictoryCertain()) {
+                LOG(info) << "AI is certain it will win";
+                
+                m_hasWinningMove = true;
+            }
+            return negamaxResult.turn;
         }
     }
     LOG(debug) << "Aborting search";
@@ -256,14 +267,13 @@ void AIPlayer::setTimeLimit(chrono::milliseconds limit) {
 void AIPlayer::ponder() {
     LOG(debug) << "Ponder called";
 
-    if (m_config.ponderDuringOpposingPly) {
-        setTimeLimit(chrono::hours(2)); // Practically no limit
-
+    setTimeLimit(chrono::hours(2)); // Practically no limit
+    if (m_config.ponderDuringOpposingPly && !m_hasWinningMove) {
         performIterativeDeepening();
-    } else {
-        while (canStayInState(PONDERING)) {
-            this_thread::sleep_for(milliseconds(100));
-        }
+    }
+
+    while (canStayInState(PONDERING)) {
+        this_thread::sleep_for(milliseconds(100));
     }
 }
 
@@ -271,6 +281,7 @@ void AIPlayer::performIterativeDeepening() {
     size_t iteration = 1;
     while (canStayInState(PONDERING)
         && iteration <= m_config.maximumDepth
+        && !m_hasWinningMove
         && performSearchIteration(iteration, m_ponderGameState, PONDERING)) {
 
         LOG(info) << "Pondered " << iteration << " plies deep";
