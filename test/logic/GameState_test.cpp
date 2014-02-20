@@ -36,3 +36,23 @@ TEST(GameState, fiftyMoveRule) {
     EXPECT_TRUE(gs.isDrawDueTo50MovesRule()) << gs;
     EXPECT_EQ(NoPlayer, gs.getWinner()) << gs;
 }
+
+TEST(GameState, gameOverDetection_checkMate) {
+    GameState gs(generateChessBoard({PoF(Piece(Black, King), A8),
+                                     PoF(Piece(White, Rook), A5),
+                                     PoF(Piece(White, Rook), B5)}, Black));
+    gs.getTurnList();
+    EXPECT_TRUE(gs.isGameOver());
+    EXPECT_EQ(gs.getWinner(), White);
+}
+
+TEST(GameState, gameOverDetection_staleMate) {
+    GameState gs(generateChessBoard({PoF(Piece(Black, King), A1),
+                                     PoF(Piece(Black, Pawn), A2),
+                                     PoF(Piece(White, Queen), B3)}, Black));
+    gs.getTurnList();
+    EXPECT_TRUE(gs.isGameOver());
+    EXPECT_EQ(gs.getWinner(), NoPlayer);
+}
+
+

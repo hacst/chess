@@ -120,12 +120,6 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
             }
         }
 
-        // promotion turns
-        vecPromotionTurns = calcPromotionTurns(player, cb.m_bb[player][Pawn]);
-        turnList.insert(turnList.end(),
-                        vecPromotionTurns.begin(),
-                        vecPromotionTurns.end());
-
         if (turnList.empty()) {
             cb.setStalemate(true);
         }
@@ -143,33 +137,15 @@ std::vector<Turn> TurnGenerator::bitBoardToTurns(Piece piece, Field from,
         to = BB_SCAN(bbTurns);
         BIT_CLEAR(bbTurns, to);
 
-        turns.push_back(Turn::move(piece, from, to));
-    }
+        if ((rankFor(to) == Eight || rankFor(to) == One) && piece.type == Pawn) {
+            turns.push_back(Turn::promotionQueen (piece, from, to));
+            turns.push_back(Turn::promotionBishop(piece, from, to));
+            turns.push_back(Turn::promotionRook  (piece, from, to));
+            turns.push_back(Turn::promotionKnight(piece, from, to));
 
-    return turns;
-}
-
-std::vector<Turn> TurnGenerator::calcPromotionTurns(PlayerColor player,
-                                                    BitBoard bbPawns) {
-    std::vector<Turn> turns;
-    BitBoard bbPieces;
-    Field from, to;
-
-    if (player == White) {
-        bbPieces = bbPawns & maskRank(Seven);
-    } else {
-        bbPieces = bbPawns & maskRank(Two);
-    }
-
-    while (bbPieces != 0) {
-        from = BB_SCAN(bbPieces);
-        BIT_CLEAR(bbPieces, from);
-        to = static_cast<Field>(from + 8);
-
-        turns.push_back(Turn::promotionQueen (Piece(player, Pawn), from, to));
-        turns.push_back(Turn::promotionBishop(Piece(player, Pawn), from, to));
-        turns.push_back(Turn::promotionRook  (Piece(player, Pawn), from, to));
-        turns.push_back(Turn::promotionKnight(Piece(player, Pawn), from, to));
+        } else {
+            turns.push_back(Turn::move(piece, from, to));
+        }
     }
 
     return turns;

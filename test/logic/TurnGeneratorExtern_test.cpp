@@ -172,9 +172,9 @@ TEST(TurnGeneratorExtern, generateTurns_Castle_Check_2) {
 
 TEST(TurnGeneratorExtern, generateTurns_PromotionWhite) {
     GameState gs(generateChessBoard({PoF(Piece(White, King), E1),
-                                     PoF(Piece(Black, Pawn), A3),
-                                     PoF(Piece(White, Pawn), B8),
-                                     PoF(Piece(White, Pawn), E8)}));
+                                     PoF(Piece(Black, Pawn), B8),
+                                     PoF(Piece(White, Pawn), B7),
+                                     PoF(Piece(White, Pawn), E7)}));
     EXPECT_FALSE(gs.getChessBoard().getKingInCheck()[White]);
     turns_calc = gs.getTurnList();
 
@@ -184,10 +184,10 @@ TEST(TurnGeneratorExtern, generateTurns_PromotionWhite) {
     turns_fine.push_back(Turn::move(Piece(White, King), E1, E2));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, F2));
     turns_fine.push_back(Turn::move(Piece(White, King), E1, F1));
-    turns_fine.push_back(Turn::promotionQueen (Piece(White, Pawn), B7, B8));
-    turns_fine.push_back(Turn::promotionBishop(Piece(White, Pawn), B7, B8));
-    turns_fine.push_back(Turn::promotionRook  (Piece(White, Pawn), B7, B8));
-    turns_fine.push_back(Turn::promotionKnight(Piece(White, Pawn), B7, B8));
+    //turns_fine.push_back(Turn::promotionQueen (Piece(White, Pawn), B7, B8));
+    //turns_fine.push_back(Turn::promotionBishop(Piece(White, Pawn), B7, B8));
+    //turns_fine.push_back(Turn::promotionRook  (Piece(White, Pawn), B7, B8));
+    //turns_fine.push_back(Turn::promotionKnight(Piece(White, Pawn), B7, B8));
     turns_fine.push_back(Turn::promotionQueen (Piece(White, Pawn), E7, E8));
     turns_fine.push_back(Turn::promotionBishop(Piece(White, Pawn), E7, E8));
     turns_fine.push_back(Turn::promotionRook  (Piece(White, Pawn), E7, E8));
@@ -198,7 +198,7 @@ TEST(TurnGeneratorExtern, generateTurns_PromotionWhite) {
 }
 TEST(TurnGeneratorExtern, generateTurns_PromotionBlack) {
     GameState gs(generateChessBoard({PoF(Piece(Black, King), E8),
-                                     PoF(Piece(Black, Pawn), F1)}, Black));
+                                     PoF(Piece(Black, Pawn), F2)}, Black));
     turns_calc = gs.getTurnList();
 
     turns_fine.clear();
@@ -215,6 +215,20 @@ TEST(TurnGeneratorExtern, generateTurns_PromotionBlack) {
     EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
             << gs << turnVecToString(turns_calc);
 }
+TEST(TurnGeneratorExtern, generateTurns_PromotionCapture) {
+    GameState gs(generateChessBoard({PoF(Piece(Black, Pawn), B8),
+                                     PoF(Piece(White, Pawn), C7)}));
+    turns_calc = gs.getTurnList();
+
+    turns_fine.clear();
+    turns_fine.push_back(Turn::promotionQueen (Piece(White, Pawn), C7, B8));
+    turns_fine.push_back(Turn::promotionBishop(Piece(White, Pawn), C7, B8));
+    turns_fine.push_back(Turn::promotionRook  (Piece(White, Pawn), C7, B8));
+    turns_fine.push_back(Turn::promotionKnight(Piece(White, Pawn), C7, B8));
+    EXPECT_TRUE(turnVecCompare(turns_calc, turns_fine))
+            << gs << turnVecToString(turns_calc);
+}
+
 TEST(TurnGeneratorExtern, generateTurns_PromotionCheck) {
     GameState gs(generateChessBoard({PoF(Piece(Black, King), G8),
                                      PoF(Piece(White, King), E1),

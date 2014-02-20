@@ -189,10 +189,10 @@ void ChessBoard::applyPromotionTurn(const Turn& turn, const
     BIT_CLEAR(m_bb[turn.piece.player][turn.piece.type], turn.from);
     BIT_SET  (m_bb[turn.piece.player][pieceType],       turn.to);
 
+    capturePiece(turn);
+
     m_evaluator.promotionIncrement(turn, pieceType);
     m_hasher.promotionIncrement(turn, pieceType);
-
-    // TODO: update m_evaluator, m_hasher?
 }
 
 void ChessBoard::capturePiece(const Turn& turn) {

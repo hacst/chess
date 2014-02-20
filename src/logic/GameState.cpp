@@ -34,10 +34,21 @@ const ChessBoard& GameState::getChessBoard() const {
 }
 
 bool GameState::isGameOver() const {
-    if (isDrawDueTo50MovesRule()) {
+    std::array<bool, NUM_PLAYERS> checkmate = m_chessBoard.getCheckmate();
+
+    if (checkmate[White]) {
+        return true;
+    } else if (checkmate[Black]) {
         return true;
     }
 
+    if (isDrawDueTo50MovesRule() || m_chessBoard.getStalemate()) {
+        return true;
+    }
+
+    return false;
+
+    /*
     // When debugging we might want to work with boards without a king. Alternatively
     // check for all pieces of a player being gone.
     if (!(m_chessBoard.hasBlackPieces() && m_chessBoard.hasWhitePieces())) {
@@ -56,6 +67,7 @@ bool GameState::isGameOver() const {
     }
 
     return getTurnList().size() == 0;
+    */
 }
 
 bool GameState::isDrawDueTo50MovesRule() const {
@@ -63,6 +75,23 @@ bool GameState::isDrawDueTo50MovesRule() const {
 }
 
 PlayerColor GameState::getWinner() const {
+    std::array<bool, NUM_PLAYERS> checkmate = m_chessBoard.getCheckmate();
+
+    if (checkmate[White]) {
+        return Black;
+    } else if (checkmate[Black]) {
+        return White;
+    }
+
+    /*
+    if (isDrawDueTo50MovesRule() || m_chessBoard.getStalemate()) {
+        return NoPlayer;
+    }
+    */
+
+    return NoPlayer;
+
+    /*
     if (isDrawDueTo50MovesRule()) return NoPlayer;
 
     //FIXME: Same as isGameOver. Assumes king capture or eradication.
@@ -76,6 +105,7 @@ PlayerColor GameState::getWinner() const {
     });
 
     return togglePlayerColor(hit->player);
+    */
 }
 
 Score GameState::getScore() const {
