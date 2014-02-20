@@ -42,7 +42,6 @@ using namespace std;
 using namespace Logging;
 
 bool PolyglotBookEntry::isPromotion() const {
-    assert(move.from == move.to);
     return move.promotion_piece != NoType;
 }
 
