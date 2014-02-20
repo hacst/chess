@@ -452,7 +452,7 @@ TEST(TurnGeneratorExtern, generateTurns_Stalemate_1) {
                                      PoF(Piece(White, King), B6),
                                      PoF(Piece(White, Knight), C6)}, Black));
     turns_calc = gs.getTurnList();
-    EXPECT_TRUE(gs.getChessBoard().getStalemate())
+    EXPECT_TRUE(gs.getChessBoard().isStalemate())
             << gs << turnVecToString(turns_calc);
 }
 TEST(TurnGeneratorExtern, generateTurns_Stalemate_2) {
@@ -460,7 +460,7 @@ TEST(TurnGeneratorExtern, generateTurns_Stalemate_2) {
                                      PoF(Piece(Black, Pawn), A2),
                                      PoF(Piece(White, Queen), B3)}, Black));
     turns_calc = gs.getTurnList();
-    EXPECT_TRUE(gs.getChessBoard().getStalemate())
+    EXPECT_TRUE(gs.getChessBoard().isStalemate())
             << gs << turnVecToString(turns_calc);
 }
 TEST(TurnGeneratorExtern, generateTurns_Checkmate_1) {

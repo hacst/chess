@@ -43,6 +43,7 @@ class Turn;
  * Uses fixed piece square tables and a fixed material evaluation to
  * incrementally calculate a score for the current board position during
  * the game.
+ * @warning Does not handle game over conditions
  * @see ChessBoard
  * @note Not valid once game is over.
  */
