@@ -12,8 +12,7 @@ GameState::GameState(const ChessBoard &chessBoard)
 
 void GameState::init() {
     m_turnGen.initFlags(m_chessBoard);
-    m_turnGen.generateTurns(getNextPlayer(),
-                            m_chessBoard);
+    m_turnGen.generateTurns(getNextPlayer(), m_chessBoard);
 }
 
 std::vector<Turn> GameState::getTurnList() const {
@@ -22,8 +21,7 @@ std::vector<Turn> GameState::getTurnList() const {
 
 void GameState::applyTurn(const Turn& turn) {
     m_chessBoard.applyTurn(turn);
-    m_turnGen.generateTurns(getNextPlayer(),
-                            m_chessBoard);
+    m_turnGen.generateTurns(getNextPlayer(), m_chessBoard);
 }
 
 PlayerColor GameState::getNextPlayer() const {

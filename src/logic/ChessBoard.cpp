@@ -39,7 +39,7 @@ ChessBoard::ChessBoard(std::array<Piece, 64> board,
     m_stalemate = false;
     m_checkmate[White] = false;
     m_checkmate[Black] = false;
-    m_capturedPiece = Piece(NoPlayer, NoType);
+    m_lastCapturedPiece = Piece(NoPlayer, NoType);
     initBitBoards(board);
 }
 
