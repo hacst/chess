@@ -308,8 +308,18 @@ PlayerColor ChessBoard::getNextPlayer() const {
     return m_nextPlayer;
 }
 
-//! Returns the current estimated score according to the internal estimator.
 Score ChessBoard::getScore(PlayerColor color) const {
+    if (isGameOver()) {
+        const PlayerColor winner = getWinner();
+        if (winner == color) {
+            return MAX_SCORE;
+        } else if (winner == NoPlayer) {
+            return 0;
+        } else {
+            return MIN_SCORE;
+        }
+    }
+
     return m_evaluator.getScore(color);
 }
 

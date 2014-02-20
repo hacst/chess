@@ -98,7 +98,7 @@ public:
     //! Return next player to make a turn
     PlayerColor getNextPlayer() const;
 
-    //! Returns the current estimated score according to the internal estimator.
+    //! Returns the current estimated score.
     Score getScore(PlayerColor color) const;
     //! Returns hash for current position
     Hash getHash() const;
