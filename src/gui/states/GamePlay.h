@@ -40,7 +40,6 @@
 #include "gui/ChessSet.h"
 #include "core/Logging.h"
 #include "gui/ArrowNavigationHandler.h"
-#include "gui/states/ResourceInitializer.h"
 
 #include <vector>
 #include <array>
@@ -138,7 +137,6 @@ public:
 
 private:
     StateMachine& m_fsm;
-    ResourceInitializerPtr m_ResourceInitializer;
     int m_rotateFrom, m_rotateTo;
     GameMode m_gameMode;
     PlayerColor m_humanPlayerColor;
