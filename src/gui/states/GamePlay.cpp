@@ -47,6 +47,7 @@
 #include "gui/ObjectHelper.h"
 #include "gui/GuiWindow.h"
 #include "gui/GUIPlayer.h"
+#include "gui/SaveGame.h"
 
 #include "ai/AIPlayer.h"
 #include "misc/DebugTools.h"
@@ -56,7 +57,7 @@
 using namespace std;
 using namespace Logging;
 
-GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
+GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor, std::string initialFen)
     : m_fsm(StateMachine::getInstance())
     , m_gameMode(mode)
     , m_humanPlayerColor(humanPlayerColor)
@@ -64,7 +65,8 @@ GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor)
     , m_log(initLogger("GUI:GamePlay"))
     , m_playerState(PlayerState::NONE)
     , m_lastPlayer(PlayerColor::NoPlayer)
-    , m_lastTurn(Turn()) {
+    , m_lastTurn(Turn())
+    , m_initialFen(initialFen) {
 }
 
 void GamePlay::initMessageBox() {
@@ -191,7 +193,11 @@ void GamePlay::initPlayers() {
 void GamePlay::initGameLogic() {
     GameConfigurationPtr config = make_shared<GameConfiguration>(global_config);
 
-    GameState initialGameState(ChessBoard::fromFEN(config->initialGameStateFEN)); // FIXME: fromFEN isn't robust
+    GameState initialGameState = GameState::fromFEN(m_initialFen.empty()
+        ? config->initialGameStateFEN
+        : m_initialFen);  // FIXME: fromFEN isn't robust
+
+    initializePieceCounters(initialGameState);
 
     if (m_humanPlayerColor == PlayerColor::White) {
         m_gameLogic = make_shared<GameLogic>(m_secondPlayer /* White */, m_firstPlayer /* Black */, config, initialGameState);
@@ -205,6 +211,21 @@ void GamePlay::initGameLogic() {
     m_gameLogic->addObserver(m_observerProxy);
 
     m_gameLogic->start();
+}
+
+void GamePlay::initializePieceCounters(GameState& initialGameState) {
+    // King, Queen, Bishop, Knight, Rook, Pawn, AllPieces, NoType
+    m_capturedPieces.countBlack = { { 1, 1, 2, 2, 2, 8 } };
+    m_capturedPieces.countWhite = m_capturedPieces.countBlack;
+
+    for (const Piece& piece : initialGameState.getChessBoard().getBoard()) {
+        if (piece.player == White && m_capturedPieces.countWhite[piece.type] > 0) {
+            --m_capturedPieces.countWhite[piece.type];
+        }
+        else if (piece.player == Black && m_capturedPieces.countBlack[piece.type] > 0) {
+            --m_capturedPieces.countBlack[piece.type];
+        }
+    }
 }
 
 void GamePlay::initCamera() {
@@ -512,6 +533,24 @@ void GamePlay::handleEvents() {
 
     if (m_fsm.eventmap.key0) {
         LOG(info) << m_gameState << endl;
+    } else if (m_playerState != PlayerState::CHOOSE_PROMOTION_TURN) {
+        int slot = -1;
+        if (m_fsm.eventmap.key1) {
+            slot = 0;
+        } else if (m_fsm.eventmap.key2) {
+            slot = 1;
+        } else if (m_fsm.eventmap.key3) {
+            slot = 2;
+        }
+
+        if (slot != -1) {
+            const bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor).saveToSlot(slot);
+            if (success) {
+                LOG(info) << "Game saved in slot " << slot;
+            } else {
+                LOG(error) << "Failed to save game to slot " << slot;
+            }
+        }
     }
 
     if (m_internalState == PAUSE) {

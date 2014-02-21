@@ -31,43 +31,8 @@ public:
 
     static Turn castle(Piece piece, Field from, Field to) {
         assert(piece.type == King);
-
         return Turn(piece, from, to, Castle);
     }
-
-    /*
-    static Turn shortCastle(PlayerColor player, PieceType pieceType) {
-        if (player == White) {
-            if (pieceType == King) {
-                return Turn(Piece(White, King), E1, G1);
-            } else if (pieceType == Rook) {
-                return Turn(Piece(White, Rook), H1, F1);
-            }
-        } else {
-            if (pieceType == King) {
-                return Turn(Piece(Black, King), E8, G8);
-            } else if (pieceType == Rook) {
-                return Turn(Piece(Black, Rook), G8, F8);
-            }
-        }
-    }
-
-    static Turn longCastle(PlayerColor player, PieceType pieceType) {
-        if (player == White) {
-            if (pieceType == King) {
-                return Turn(Piece(White, King), E1, C1);
-            } else if (pieceType == Rook) {
-                return Turn(Piece(White, Rook), A1, D1);
-            }
-        } else {
-            if (pieceType == King) {
-                return Turn(Piece(Black, King), E8, C8);
-            } else if (pieceType == Rook) {
-                return Turn(Piece(Black, Rook), A8, D8);
-            }
-        }
-    }
-    */
 
     static Turn promotionQueen(Piece piece, Field from, Field to) {
         assert((piece.player == White && rankFor(to) == Eight)
@@ -101,12 +66,6 @@ public:
         return Turn(piece, from, to, PromotionKnight);
     }
 
-
-    /*
-    static Turn forfeit() {
-        return Turn(Position(), Position(), Forfeit);
-    }
-    */
     static Turn pass(PlayerColor player) {
         return Turn(Piece(player, NoType), ERR, ERR, Pass);
     }

@@ -41,6 +41,20 @@ public:
     //! Returns hash for current position
     Hash getHash() const;
 
+    /**
+    * @brief Create a GameState from a Forsyth–Edwards Notation string.
+    * http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+    * @warning This function does no validation. Do not pass invalid FEN.
+    * @param fen FEN String.
+    */
+    static GameState fromFEN(const std::string& fen);
+
+    /**
+    * @brief Converts the current game state into FEN notation.
+    * @return State in FEN notation.
+    */
+    std::string toFEN() const;
+
     bool operator==(const GameState& other) const;
     bool operator!=(const GameState& other) const;
     std::string toString() const;

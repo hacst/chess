@@ -51,27 +51,18 @@ inline Field getFirstOccupiedField(BitBoard bb) {
 }
 #endif
 
-#define BB_SCAN(bb)    getFirstOccupiedField(bb) /* returns the field of MS1B */
-#define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field))    /* returns the value 2^field */
-
+/* Some helpful macros for bit pushing */
+#define BB_SCAN(   bb)         getFirstOccupiedField(bb) /* returns the field of MS1B */
 #define BIT_SET(   bb, field) (bb |=   (BitBoard)1 << (field))
 #define BIT_CLEAR( bb, field) (bb &= ~((BitBoard)1 << (field)))
 #define BIT_TOGGLE(bb, field) (bb ^=   (BitBoard)1 << (field))
 #define BIT_ISSET( bb, field) (bb & (  (BitBoard)1 << (field)))
 
-std::string bitBoardToString(BitBoard b);
-BitBoard    generateBitBoard(Field f1, ...);
-
-struct PoF {
-    Piece piece;
-    Field field;
-
-    PoF(Piece piece, Field field)
-        : piece(piece), field(field) {}
-};
 
 
-
+/**
+ * @brief Chessboard representation and logic implementation.
+ */
 class ChessBoard {
     friend class TurnGenerator;
     friend class IncrementalZobristHasher;
@@ -220,7 +211,26 @@ private:
     IncrementalZobristHasher m_hasher;
 };
 
+
+
+/* for debug purposes */
+
+#define BB_SET( field) static_cast<BitBoard>(std::pow(2, (int)field)) /* returns the value 2^field */
+
+std::string bitBoardToString(BitBoard b);
+
+BitBoard generateBitBoard(Field f1, ...);
+
+struct PoF {
+    Piece piece;
+    Field field;
+
+    PoF(Piece piece, Field field)
+        : piece(piece), field(field) {}
+};
+
 ChessBoard generateChessBoard(std::vector<PoF> pieces, PlayerColor nextPlayer = White);
+
 
 
 #endif // CHESSBOARD_H

@@ -72,8 +72,9 @@ public:
      * @brief Creates a new game.
      * @param mode The GameMode (*AI vs. AI* or *Player vs. AI*).
      * @param firstPlayerColor The color of the player which takes the first turn.
+     * @param initialFen If set overrides the configured initial FEN
      */
-    GamePlay(GameMode mode, PlayerColor humanPlayerColor);
+    GamePlay(GameMode mode, PlayerColor humanPlayerColor, std::string initialFen = "");
 
     /**
      * @brief Enters the state for the first time. This will setup all the state related stuff.
@@ -239,6 +240,8 @@ private:
 
     int posNumber;
 
+    std::string m_initialFen;
+
     // methods
     void initLighting();
     void initChessSet();
@@ -267,6 +270,7 @@ private:
     void handleEvents();
     void startCameraRotation();
     void onPauseGame();
+    void initializePieceCounters(GameState& initialGameState);
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;

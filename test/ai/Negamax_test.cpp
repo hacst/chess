@@ -281,8 +281,6 @@ TEST(Negamax, MoveOrdering) {
         
         EXPECT_EQ(withoutMO.score, withMO.score)
                 << "Base state (" << i << "): " << gs << endl;
-        EXPECT_GT(negamaxAB.m_counters.duration, negamaxMO.m_counters.duration)
-                << "Base state (" << i << "): " << gs << endl;
     }
 }
 
