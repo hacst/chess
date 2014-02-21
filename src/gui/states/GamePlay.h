@@ -40,6 +40,7 @@
 #include "gui/ChessSet.h"
 #include "core/Logging.h"
 #include "gui/ArrowNavigationHandler.h"
+#include "gui/states/ResourceInitializer.h"
 
 #include <vector>
 #include <array>
@@ -123,6 +124,10 @@ public:
     void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
     void onResumeGame();
     void onSaveGame();
+    void onSaveSlot1();
+    void onSaveSlot2();
+    void onSaveSlot3();
+    void onMenuSaveBack();
     void onLeaveGame();
     void onBackToMenu();
     void onPlayerIsOnTurn(PlayerColor who);
@@ -131,6 +136,7 @@ public:
 
 private:
     StateMachine& m_fsm;
+    ResourceInitializerPtr m_ResourceInitializer;
     int m_rotateFrom, m_rotateTo;
     GameMode m_gameMode;
     PlayerColor m_humanPlayerColor;
@@ -203,7 +209,7 @@ private:
     // smart pointers
     AnimationHelperPtr m_animationHelperCamera, m_animationHelperBackground;
     ChessSetPtr m_chessSet;
-    Menu2DPtr m_pauseMenu;
+    Menu2DPtr m_pauseMenuMain, m_pauseMenuSave;
 
     // @todo: -> own class
     struct MessageBox {

@@ -121,15 +121,20 @@ void GamePlay::enter() {
 }
 
 void GamePlay::initMenuPause() {
-    m_pauseMenu = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
-    m_pauseMenu->addButton("ResumeGame.png")->onClick(boost::bind(&GamePlay::onResumeGame, this));
+    m_pauseMenuMain = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
+    m_pauseMenuMain->addButton("ResumeGame.png")->onClick(boost::bind(&GamePlay::onResumeGame, this));
 
     // saving a game is only available in Player vs AI mode.
     if (m_gameMode == PLAYER_VS_AI) {
-        m_pauseMenu->addButton("SaveGame.png")->onClick(boost::bind(&GamePlay::onSaveGame, this));
+        m_pauseMenuMain->addButton("SaveGame.png")->onClick(boost::bind(&GamePlay::onSaveGame, this));
     }
+    m_pauseMenuMain->addButton("BackToMainMenu.png")->onClick(boost::bind(&GamePlay::onLeaveGame, this));
 
-    m_pauseMenu->addButton("BackToMainMenu.png")->onClick(boost::bind(&GamePlay::onLeaveGame, this));
+    m_pauseMenuSave = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
+    m_pauseMenuSave->addButton("LoadGameSlot1.png")->onClick(boost::bind(&GamePlay::onSaveSlot1, this));
+    m_pauseMenuSave->addButton("LoadGameSlot2.png")->onClick(boost::bind(&GamePlay::onSaveSlot2, this));
+    m_pauseMenuSave->addButton("LoadGameSlot3.png")->onClick(boost::bind(&GamePlay::onSaveSlot3, this));
+    m_pauseMenuSave->addButton("Back.png")->onClick(boost::bind(&GamePlay::onMenuSaveBack, this));
 }
 
 void GamePlay::initPlayers() {
@@ -264,17 +269,17 @@ void GamePlay::onBeforeLoadNextResource(string resourceName) {
     m_fsm.window->set2DMode();
 
     glPushMatrix();
-    glBegin(GL_QUADS);
-    // left side is grey
-    glColor3f(0.6f, 0.6f, 0.6f);
-    glVertex3f(topLeftVertex[0], topLeftVertex[1], -0.1f);
-    glVertex3f(bottomLeftVertex[0], bottomLeftVertex[1], -0.1f);
+        glBegin(GL_QUADS);
+            // left side is grey
+            glColor3f(0.6f, 0.6f, 0.6f);
+            glVertex3f(topLeftVertex[0], topLeftVertex[1], -0.1f);
+            glVertex3f(bottomLeftVertex[0], bottomLeftVertex[1], -0.1f);
 
-    // right side is white
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(bottomRightVertex[0], bottomRightVertex[1], -0.1f);
-    glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
-    glEnd();
+            // right side is white
+            glColor3f(1.0f, 1.0f, 1.0f);
+            glVertex3f(bottomRightVertex[0], bottomRightVertex[1], -0.1f);
+            glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
+        glEnd();
     glPopMatrix();
 
     m_fsm.window->printText(10, m_fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
@@ -292,11 +297,27 @@ void GamePlay::onPauseGame() {
 
 void GamePlay::onResumeGame() {
     m_internalState = m_lastInternalState;
-    m_pauseMenu->resetAnimation();
+    m_pauseMenuMain->resetAnimation();
 }
 
 void GamePlay::onSaveGame() {
     m_internalState = SAVE_GAME;
+}
+
+void GamePlay::onSaveSlot1() {
+
+}
+
+void GamePlay::onSaveSlot2() {
+
+}
+
+void GamePlay::onSaveSlot3() {
+
+}
+
+void GamePlay::onMenuSaveBack() {
+    m_internalState = PAUSE;
 }
 
 void GamePlay::onLeaveGame() {
@@ -495,15 +516,15 @@ void GamePlay::handleEvents() {
 
     if (m_internalState == PAUSE) {
         if (m_fsm.eventmap.mouseMoved) {
-            m_pauseMenu->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
+            m_pauseMenuMain->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
         }
 
         if (m_fsm.eventmap.mouseDown) {
-            m_pauseMenu->mousePressed();
+            m_pauseMenuMain->mousePressed();
         }
 
         if (m_fsm.eventmap.mouseUp) {
-            m_pauseMenu->mouseReleased();
+            m_pauseMenuMain->mouseReleased();
         }
     }
 
@@ -793,20 +814,25 @@ void GamePlay::drawPauseMenu() {
     glEnable(GL_COLOR);
     glEnable(GL_BLEND);
     glPushMatrix();
-    glBegin(GL_QUADS);
-    glColor4f(0.0f, 0.0f, 0.0f, 0.25f);
+        glBegin(GL_QUADS);
+            glColor4f(0.0f, 0.0f, 0.0f, 0.25f);
 
-    glVertex3f(0.0f, 0.0f, 0.0f);
-    glVertex3f(static_cast<float>(m_fsm.window->getWidth()), 0.0f, 0.0f);
-    glVertex3f(static_cast<float>(m_fsm.window->getWidth()), static_cast<float>(m_fsm.window->getHeight()), 0.0f);
-    glVertex3f(0.0f, static_cast<float>(m_fsm.window->getHeight()), 0.0f);
-    glEnd();
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glVertex3f(static_cast<float>(m_fsm.window->getWidth()), 0.0f, 0.0f);
+            glVertex3f(static_cast<float>(m_fsm.window->getWidth()), static_cast<float>(m_fsm.window->getHeight()), 0.0f);
+            glVertex3f(0.0f, static_cast<float>(m_fsm.window->getHeight()), 0.0f);
+        glEnd();
     glPopMatrix();
     glDisable(GL_BLEND);
     glDisable(GL_COLOR);
 
     m_fsm.window->printHeadline("M E N U");
-    m_pauseMenu->draw();
+
+    if (m_internalState == SAVE_GAME) {
+        m_pauseMenuSave->draw();
+    } else if (m_internalState == PAUSE) {
+        m_pauseMenuMain->draw();
+    }
 }
 
 void GamePlay::fadeBackgroundForOneTime() {

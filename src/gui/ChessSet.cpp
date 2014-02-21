@@ -137,7 +137,7 @@ void ChessSet::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Tur
     m_lastTurn = lastTurn;
 
     if (!m_firstRun) {
-        // gather all models who was striked in the last turn
+        // collect all models who was striked in the last turn
         m_modelStrikes.clear();
         for (size_t i = 0; i < m_state.size(); i++) {
             if (m_lastState[i].type != PieceType::NoType /* lastState must had a model on the field */ &&

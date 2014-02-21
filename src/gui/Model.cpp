@@ -101,7 +101,7 @@ void Model::draw() {
     glTranslatef((float)m_position.x, (float)m_position.y, (float)m_position.z);							// 5) translate to world space coordinates
     glScalef(m_correctScaling, m_correctScaling, m_correctScaling);											// 4) scale
     glRotatef(flipModelDirection ? 180.0f : 0.0f, 0.0f, 1.0f, 0.0f);										// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
-    glTranslatef((float)m_correctPosition.x, (float)m_correctPosition.y, (float)m_correctPosition.z);	// 2) correct local origin
+    glTranslatef((float)m_correctPosition.x, (float)m_correctPosition.y, (float)m_correctPosition.z);	    // 2) correct local origin
     glRotatef(-90.0, 1.0f, 0.0f, 0.0f);																		// 1) correct rotation around x-axis to "stand-up" the model
 
     model->drawScene();																						// 6) draw the scene
