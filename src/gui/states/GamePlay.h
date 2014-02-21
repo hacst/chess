@@ -133,6 +133,7 @@ public:
     void onBackToMenu();
     void onPlayerIsOnTurn(PlayerColor who);
     void onPlayerAbortTurn();
+    void saveGameToSlot(unsigned int slot);
     std::future<Turn> doMakePlayerTurn();
 
 private:

@@ -319,22 +319,37 @@ void GamePlay::onPauseGame() {
 void GamePlay::onResumeGame() {
     m_internalState = m_lastInternalState;
     m_pauseMenuMain->resetAnimation();
+    m_pauseMenuSave->resetAnimation();
 }
 
 void GamePlay::onSaveGame() {
     m_internalState = SAVE_GAME;
 }
 
-void GamePlay::onSaveSlot1() {
+void GamePlay::saveGameToSlot(unsigned int slot) {
+    bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor).saveToSlot(slot);
 
+    if (success) {
+        LOG(info) << "Game saved in slot " << slot;
+        m_messageBox.text = "Spiel gespeichert!";
+    } else {
+        LOG(error) << "Failed to save game to slot " << slot;
+        m_messageBox.text = "Spiel konnte nicht gespeichert werden.";
+    }
+
+    onResumeGame();
+}
+
+void GamePlay::onSaveSlot1() {
+    saveGameToSlot(0);
 }
 
 void GamePlay::onSaveSlot2() {
-
+    saveGameToSlot(1);
 }
 
 void GamePlay::onSaveSlot3() {
-
+    saveGameToSlot(2);
 }
 
 void GamePlay::onMenuSaveBack() {
@@ -493,12 +508,12 @@ void GamePlay::draw2D() {
     disableLighting();
 
     // draw menu if game is paused
-    if (m_internalState == PAUSE) {
+    if (m_internalState == PAUSE || m_internalState == SAVE_GAME) {
         drawPauseMenu();
     }
 
     // draw last turns, message box and captured pieces only if we're not in pause mode
-    if (m_internalState != PAUSE) {
+    if (m_internalState != PAUSE && m_internalState != SAVE_GAME) {
         drawMessageBox();
         drawLastTurns();
         drawCapturedPieces();
@@ -533,41 +548,26 @@ void GamePlay::handleEvents() {
 
     if (m_fsm.eventmap.key0) {
         LOG(info) << m_gameState << endl;
-    } else if (m_playerState != PlayerState::CHOOSE_PROMOTION_TURN) {
-        int slot = -1;
-        if (m_fsm.eventmap.key1) {
-            slot = 0;
-        } else if (m_fsm.eventmap.key2) {
-            slot = 1;
-        } else if (m_fsm.eventmap.key3) {
-            slot = 2;
-        }
-
-        if (slot != -1) {
-            const bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor).saveToSlot(slot);
-            if (success) {
-                LOG(info) << "Game saved in slot " << slot;
-            } else {
-                LOG(error) << "Failed to save game to slot " << slot;
-            }
-        }
     }
 
-    if (m_internalState == PAUSE) {
+    if (m_internalState == PAUSE || m_internalState == SAVE_GAME) {
         if (m_fsm.eventmap.mouseMoved) {
             m_pauseMenuMain->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
+            m_pauseMenuSave->mouseMoved(m_fsm.eventmap.mouseX, m_fsm.eventmap.mouseY);
         }
 
         if (m_fsm.eventmap.mouseDown) {
             m_pauseMenuMain->mousePressed();
+            m_pauseMenuSave->mousePressed();
         }
 
         if (m_fsm.eventmap.mouseUp) {
             m_pauseMenuMain->mouseReleased();
+            m_pauseMenuSave->mouseReleased();
         }
     }
 
-    if (m_internalState != PAUSE) {
+    if (m_internalState != PAUSE && m_internalState != SAVE_GAME) {
         if (m_fsm.eventmap.keyEscape) {
             onPauseGame();
         }
