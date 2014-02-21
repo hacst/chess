@@ -192,6 +192,8 @@ void GamePlay::initGameLogic() {
         ? config->initialGameStateFEN
         : m_initialFen);  // FIXME: fromFEN isn't robust
 
+    initializePieceCounters(initialGameState);
+
     if (m_humanPlayerColor == PlayerColor::White) {
         m_gameLogic = make_shared<GameLogic>(m_secondPlayer /* White */, m_firstPlayer /* Black */, config, initialGameState);
     }
@@ -204,6 +206,21 @@ void GamePlay::initGameLogic() {
     m_gameLogic->addObserver(m_observerProxy);
 
     m_gameLogic->start();
+}
+
+void GamePlay::initializePieceCounters(GameState& initialGameState) {
+    // King, Queen, Bishop, Knight, Rook, Pawn, AllPieces, NoType
+    m_capturedPieces.countBlack = { { 1, 1, 2, 2, 2, 8 } };
+    m_capturedPieces.countWhite = m_capturedPieces.countBlack;
+
+    for (const Piece& piece : initialGameState.getChessBoard().getBoard()) {
+        if (piece.player == White && m_capturedPieces.countWhite[piece.type] > 0) {
+            --m_capturedPieces.countWhite[piece.type];
+        }
+        else if (piece.player == Black && m_capturedPieces.countBlack[piece.type] > 0) {
+            --m_capturedPieces.countBlack[piece.type];
+        }
+    }
 }
 
 void GamePlay::initCamera() {

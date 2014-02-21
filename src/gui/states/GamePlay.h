@@ -264,6 +264,7 @@ private:
     void handleEvents();
     void startCameraRotation();
     void onPauseGame();
+    void initializePieceCounters(GameState& initialGameState);
 };
 
 using GamePlayPtr = std::shared_ptr<GamePlay>;
