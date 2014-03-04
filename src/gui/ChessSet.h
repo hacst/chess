@@ -106,13 +106,6 @@ public:
 private:
 
     int m_tileWidth, m_tileHeight;
-
-    struct Coord3D {
-        float x;
-        float y;
-        float z;
-    };
-
     unsigned int m_turnMoveShowDuration;
     unsigned int m_turnMoveShownSince;
 
@@ -123,6 +116,12 @@ private:
 
     float m_animationElevationHeight, m_animationElevationStrikeHeight;
     bool m_firstRun;
+
+    struct Coord3D {
+        float x;
+        float y;
+        float z;
+    };
 
     // each figure is one time present in memory, so we are stupid here and only draw what we get with the bitboard
     ModelPtr king, pawn, queen, bishop, knight, rook;
