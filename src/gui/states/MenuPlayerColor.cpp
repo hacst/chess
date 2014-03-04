@@ -116,5 +116,5 @@ void MenuPlayerColor::onColorBlack() {
 }
 
 void MenuPlayerColor::exit() {
-    // @todo
+    
 }

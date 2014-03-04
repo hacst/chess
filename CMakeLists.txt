@@ -63,7 +63,8 @@ set(GUI_SOURCES
     src/gui/GUIPlayer.h
     src/gui/ArrowNavigationHandler.h
     src/gui/SaveGame.h
-
+	src/gui/ResourceInitializer.h
+	
     src/gui/AnimationHelper.cpp
     src/gui/GuiWindow.cpp
     src/gui/Menu2D.cpp
@@ -78,6 +79,7 @@ set(GUI_SOURCES
     src/gui/GuiObserver.cpp
     src/gui/ArrowNavigationHandler.cpp
     src/gui/SaveGame.cpp
+	src/gui/ResourceInitializer.cpp
 )
 
 source_group(gui FILES ${GUI_SOURCES})

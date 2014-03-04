@@ -255,60 +255,14 @@ void GamePlay::initCamera() {
 
 // create a whole new ChessSet (2x6 models + 1 board)
 void GamePlay::initChessSet() {
-    m_chessSet = make_shared<ChessSet>();
-
-    m_resourcesLoaded = 0;
-    m_resourcesTotal = m_chessSet->getResourcesCount();
-
-    m_chessSet->registerLoadCallback(boost::bind(&GamePlay::onBeforeLoadNextResource, this, _1));
-    m_chessSet->loadResources();
+    m_resourceInitializer = make_shared<ResourceInitializer>();
+    m_chessSet = m_resourceInitializer->load();
 }
 
 // creates new animation helpers for camera movement and background fading
 void GamePlay::initAnimationHelpers() {
     m_animationHelperCamera = make_shared<AnimationHelper>(1000);
     m_animationHelperBackground = make_shared<AnimationHelper>(1000);
-}
-
-void GamePlay::onBeforeLoadNextResource(string resourceName) {
-    // swap the frame buffer for the first time to
-    if (m_resourcesLoaded == 0) {
-        m_fsm.window->swapFrameBufferNow();
-    }
-
-    // print what is loaded (resource name + progress bar)
-    ++m_resourcesLoaded;
-
-    int windowWidth = m_fsm.window->getWidth();
-    float percentLoaded = m_resourcesLoaded / static_cast<float>(m_resourcesTotal);
-
-    array<float, 2> topLeftVertex = { 0.0f, 0.0f };
-    array<float, 2> bottomLeftVertex = { 0.0f, 10.0f };
-    array<float, 2> bottomRightVertex = { windowWidth * percentLoaded, 10.0f };
-    array<float, 2> topRightVertex = { windowWidth * percentLoaded, 0.0f };
-
-    m_fsm.window->set2DMode();
-
-    glPushMatrix();
-        glBegin(GL_QUADS);
-            // left side is grey
-            glColor3f(0.6f, 0.6f, 0.6f);
-            glVertex3f(topLeftVertex[0], topLeftVertex[1], -0.1f);
-            glVertex3f(bottomLeftVertex[0], bottomLeftVertex[1], -0.1f);
-
-            // right side is white
-            glColor3f(1.0f, 1.0f, 1.0f);
-            glVertex3f(bottomRightVertex[0], bottomRightVertex[1], -0.1f);
-            glVertex3f(topRightVertex[0], topRightVertex[1], -0.1f);
-        glEnd();
-    glPopMatrix();
-
-    m_fsm.window->printText(10, m_fsm.window->getHeight() - 30, 1.0, 1.0, 1.0, resourceName + " (" + to_string(m_resourcesLoaded) + " of " + to_string(m_resourcesTotal) + ")");
-
-    // we must now swap the frame buffer
-    m_fsm.window->swapFrameBufferNow();
-
-    m_fsm.window->set3DMode();
 }
 
 void GamePlay::onPauseGame() {
@@ -694,6 +648,9 @@ void GamePlay::setGameState(const GameState& gameState) {
     } else if (p.player == PlayerColor::Black) {
         ++m_capturedPieces.countBlack[p.type];
     }
+
+    //if (m_gameState.getChessBoard().getKingInCheck()[PlayerColor::White]
+
 }
 
 void GamePlay::setState(std::array<Piece, 64> state) {

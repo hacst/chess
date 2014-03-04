@@ -40,6 +40,7 @@
 #include "gui/ChessSet.h"
 #include "core/Logging.h"
 #include "gui/ArrowNavigationHandler.h"
+#include "gui/ResourceInitializer.h"
 
 #include <vector>
 #include <array>
@@ -121,7 +122,6 @@ public:
     //void setCapturedPiecesList(std::vector<Piece> piecesList);
 
     // events and callbacks
-    void onBeforeLoadNextResource(std::string resourceName);	// callback method for ChessSet
     void onResumeGame();
     void onSaveGame();
     void onSaveSlot1();
@@ -142,6 +142,7 @@ private:
     PlayerColor m_humanPlayerColor;
     bool m_lockCamera;
     ArrowNavigationHandlerPtr m_arrowNavHandler;
+    ResourceInitializerPtr m_resourceInitializer;
 
     std::vector<Turn> m_possibleTurns;
     Turn m_userChosenPromotionTurn;
@@ -158,7 +159,6 @@ private:
     std::array<Piece, 64> m_chessBoardState;
     GameState m_gameState;
 
-    // @todo -> own class
     struct CapturedPieces {
         std::array<int, 6> countBlack;
         std::array<int, 6> countWhite;
@@ -211,7 +211,6 @@ private:
     ChessSetPtr m_chessSet;
     Menu2DPtr m_pauseMenuMain, m_pauseMenuSave;
 
-    // @todo: -> own class
     struct MessageBox {
         unsigned int width;
         unsigned int height;
@@ -226,8 +225,6 @@ private:
         GLuint displayList;
     } m_messageBox;
 
-    int m_resourcesTotal;
-    int m_resourcesLoaded;
     GLfloat m_lightPos0[3];
     GLfloat m_lightPos1[3];
 
