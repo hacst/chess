@@ -59,32 +59,32 @@ public:
     static GLuint createCubeList(float size, float x, float y, float z);
 
     /**
-    * @brief Creates a new OpenGL display list for a 2D rectangle box.
-    * @param width The width of the rectangle.
-    * @param height The height of the rectangle.
-    * @param viewportX The viewport x coordinate from the left top corner.
-    * @param viewportY The viewport y coordinate from the left top corner.
-    * @param colorR The red color value between 0.0 and 1.0.
-    * @param colorG The green color value between 0.0 and 1.0.
-    * @param colorB The blue color value between 0.0 and 1.0.
-    * @return GLuint A display list index which holds the compiled rectangle.
-    */
+     * @brief Creates a new OpenGL display list for a 2D rectangle box.
+     * @param width The width of the rectangle.
+     * @param height The height of the rectangle.
+     * @param viewportX The viewport x coordinate from the left top corner.
+     * @param viewportY The viewport y coordinate from the left top corner.
+     * @param colorR The red color value between 0.0 and 1.0.
+     * @param colorG The green color value between 0.0 and 1.0.
+     * @param colorB The blue color value between 0.0 and 1.0.
+     * @return GLuint A display list index which holds the compiled rectangle.
+     */
     static GLuint create2DRectList(float width, float height, float viewportX, float viewportY, float colorR, float colorG, float colorB);
 
     /**
-    * @brief Creates a new OpenGL display list for a 2D rectangle box with gradient color from top to bottom.
-    * @param width The width of the rectangle.
-    * @param height The height of the rectangle.
-    * @param viewportX The viewport x coordinate from the left top corner.
-    * @param viewportY The viewport y coordinate from the left top corner.
-    * @param fromColorR The red color value between 0.0 and 1.0 at the top edge of the rectangle.
-    * @param fromColorG The green color value between 0.0 and 1.0 at the top edge of the rectangle.
-    * @param fromColorB The blue color value between 0.0 and 1.0 at the top edge of the rectangle.
-    * @param toColorR The red color value between 0.0 and 1.0 at the bottom edge of the rectangle.
-    * @param toColorG The green color value between 0.0 and 1.0 at the bottom edge of the rectangle.
-    * @param toColorB The blue color value between 0.0 and 1.0 at the bottom edge of the rectangle.
-    * @return GLuint A display list index which holds the compiled rectangle.
-    */
+     * @brief Creates a new OpenGL display list for a 2D rectangle box with gradient color from top to bottom.
+     * @param width The width of the rectangle.
+     * @param height The height of the rectangle.
+     * @param viewportX The viewport x coordinate from the left top corner.
+     * @param viewportY The viewport y coordinate from the left top corner.
+     * @param fromColorR The red color value between 0.0 and 1.0 at the top edge of the rectangle.
+     * @param fromColorG The green color value between 0.0 and 1.0 at the top edge of the rectangle.
+     * @param fromColorB The blue color value between 0.0 and 1.0 at the top edge of the rectangle.
+     * @param toColorR The red color value between 0.0 and 1.0 at the bottom edge of the rectangle.
+     * @param toColorG The green color value between 0.0 and 1.0 at the bottom edge of the rectangle.
+     * @param toColorB The blue color value between 0.0 and 1.0 at the bottom edge of the rectangle.
+     * @return GLuint A display list index which holds the compiled rectangle.
+     */
     static GLuint create2DGradientRectList(float width, float height, float viewportX, float viewportY, float fromColorR, float fromColorG, float fromColorB, float toColorR, float toColorG, float toColorB);
 
 private:

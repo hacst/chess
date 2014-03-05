@@ -33,8 +33,8 @@
 #include <iostream>
 #include <SDL.h>
 
-// ObsDisProx include Must be first to be before all windows.h
-// includes in other headers to satisfy the angry gods
+//! ObserverDispatcherProxy include *must* be first to be before all windows.h
+//! includes in other headers to satisfy the angry gods
 #include "logic/threading/ObserverDispatcherProxy.h"
 #include "logic/threading/PlayerDispatcherProxy.h"
 
@@ -74,7 +74,7 @@ void GamePlay::initMessageBox() {
     m_messageBox.height = 40;
     m_messageBox.padding = 10;
     m_messageBox.text = "";
-    m_messageBox.showDuration = global_config.timeBetweenTurnsInSeconds * 1000;	// this should be the same as timeBetweenTurnsInSeconds of the GameConfiguration
+    m_messageBox.showDuration = global_config.timeBetweenTurnsInSeconds * 1000;
 
     // precalculate absolute position
     m_messageBox.windowPosX = (m_fsm.window->getWidth() / 2) - (m_messageBox.width / 2);
@@ -197,7 +197,7 @@ void GamePlay::initGameLogic() {
         ? config->initialGameStateFEN
         : m_initialFen);  // FIXME: fromFEN isn't robust
 
-    initializePieceCounters(initialGameState);
+    initPieceCounters(initialGameState);
 
     if (m_humanPlayerColor == PlayerColor::White) {
         m_gameLogic = make_shared<GameLogic>(m_secondPlayer /* White */, m_firstPlayer /* Black */, config, initialGameState);
@@ -213,7 +213,7 @@ void GamePlay::initGameLogic() {
     m_gameLogic->start();
 }
 
-void GamePlay::initializePieceCounters(GameState& initialGameState) {
+void GamePlay::initPieceCounters(GameState& initialGameState) {
     // King, Queen, Bishop, Knight, Rook, Pawn, AllPieces, NoType
     m_capturedPieces.countBlack = { { 1, 1, 2, 2, 2, 8 } };
     m_capturedPieces.countWhite = m_capturedPieces.countBlack;
@@ -340,7 +340,7 @@ void GamePlay::onPlayerAbortTurn() {
 AbstractState* GamePlay::run() {
     handleEvents();
 
-    // Execute all pending calls from the observer and player
+    // execute all pending calls from the observer and player
     m_observerProxy->poll();
 
     if (m_gameMode == PLAYER_VS_AI) {
@@ -531,22 +531,18 @@ void GamePlay::handleEvents() {
 
         if (m_playerState == PlayerState::CHOOSE_PROMOTION_TURN) {
             if (m_fsm.eventmap.key1) {
-                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionBishop]);
                 m_promisedPlayerTurn.set_value(m_promotionTurns[0]);
                 m_playerState = PlayerState::NONE;
             }
             else if (m_fsm.eventmap.key2) {
-                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionKnight]);
                 m_promisedPlayerTurn.set_value(m_promotionTurns[1]);
                 m_playerState = PlayerState::NONE;
             }
             else if (m_fsm.eventmap.key3) {
-                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionQueen]);
                 m_promisedPlayerTurn.set_value(m_promotionTurns[2]);
                 m_playerState = PlayerState::NONE;
             }
             else if (m_fsm.eventmap.key4) {
-                //m_promisedPlayerTurn.set_value(m_promotionTurns[Turn::Action::PromotionRook]);
                 m_promisedPlayerTurn.set_value(m_promotionTurns[3]);
                 m_playerState = PlayerState::NONE;
             }
@@ -573,7 +569,7 @@ void GamePlay::handleEvents() {
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - m_kCounter.keyReturn).count() > 500) {
             m_kCounter.keyReturn = std::chrono::system_clock::now();
 
-            // 2. User *may* select one option as target field for the in (1) (see below) selected model
+            // (2) User *may* select one option as target field for the in (1) (see below) selected model
             if (m_possibleTurns.size() > 0) {
                 // a) check if the user will do a turn
                 for (auto& turn : m_possibleTurns) {
@@ -599,7 +595,7 @@ void GamePlay::handleEvents() {
                 m_possibleTurns.clear();
             }
 
-            // 1. User selects one model on the board by choosing a field
+            // (1) User selects one model on the board by choosing a field
             if (m_possibleTurns.size() == 0) {
                 for (auto& turn : m_gameState.getTurnList()) {
                     if (turn.from == m_arrowNavHandler->getCursorPosition()) {
@@ -623,7 +619,7 @@ void GamePlay::drawMessageBox() {
         m_messageBox.windowPosY + m_messageBox.padding,
         1.0f, 1.0f, 1.0f,
         m_messageBox.text
-        );
+    );
 }
 
 void GamePlay::setState(std::array<Piece, 64> state, PlayerColor lastPlayer, Turn lastTurn) {
@@ -648,9 +644,6 @@ void GamePlay::setGameState(const GameState& gameState) {
     } else if (p.player == PlayerColor::Black) {
         ++m_capturedPieces.countBlack[p.type];
     }
-
-    //if (m_gameState.getChessBoard().getKingInCheck()[PlayerColor::White]
-
 }
 
 void GamePlay::setState(std::array<Piece, 64> state) {
@@ -698,6 +691,7 @@ void GamePlay::drawInfoBox(string msg) {
     m_fsm.window->printTextSmall(m_fsm.window->getWidth() - 400, offsetY, 0.6f, 0.0f, 0.0f, msg);
 }
 
+// must be done in 2D mode
 void GamePlay::drawCapturedPieces() {
     // config
     int fontSize = m_fsm.window->fontSize::TEXT_SMALL;
@@ -780,7 +774,7 @@ void GamePlay::drawPlayerActions() {
                 m_chessSet->drawActionTileAt(static_cast<Field>(turn.to), ChessSet::TileStyle::MOVE);
                 break;
             case Turn::Action::Pass:
-                // just for testing, nothing to do
+                // just for testing, nothing to animate
                 break;
             case Turn::Action::PromotionBishop:
             case Turn::Action::PromotionKnight:
@@ -840,7 +834,7 @@ void GamePlay::fadeBackgroundForOneTime() {
         m_animationHelperBackground->ease(AnimationHelper::EASE_LINEAR, 0.0f, 0.64f),
         0.0,
         1.0
-        );
+    );
 }
 
 void GamePlay::rotateCamera() {
@@ -898,11 +892,6 @@ void GamePlay::switchToPlayerColor(PlayerColor color) {
     startShowText(colorStr + " ist jetzt an der Reihe.");
 
     m_firstTurn = false; // camera should rotate with the next turn
-}
-
-void GamePlay::onBackToMenu() {
-    LOG(info) << "Returning to main menu";
-    m_nextState = BACK_TO_MENU;
 }
 
 void GamePlay::exit() {

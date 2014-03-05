@@ -102,10 +102,10 @@ void Menu2DItem::draw() {
     // we could abstact the openGL binding with an abstract graphic class which implements OpenGL, DirectX, ...
     glColor4f(1.f, 1.f, 1.f, 1.f);
     glBegin(GL_QUADS);
-    glTexCoord2i(0, 1); glVertex2i(m_positionX, m_positionY);
-    glTexCoord2i(1, 1); glVertex2i(m_positionX + m_width, m_positionY);
-    glTexCoord2i(1, 0); glVertex2i(m_positionX + m_width, m_positionY + m_height);
-    glTexCoord2i(0, 0); glVertex2i(m_positionX, m_positionY + m_height);
+        glTexCoord2i(0, 1); glVertex2i(m_positionX, m_positionY);
+        glTexCoord2i(1, 1); glVertex2i(m_positionX + m_width, m_positionY);
+        glTexCoord2i(1, 0); glVertex2i(m_positionX + m_width, m_positionY + m_height);
+        glTexCoord2i(0, 0); glVertex2i(m_positionX, m_positionY + m_height);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);

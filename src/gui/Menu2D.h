@@ -52,47 +52,118 @@
 
 class GuiWindow;
 
+/**
+ * @brief 2D Menu to create a simple mouse-interacted menu.
+ */
 class Menu2D {
 public:
+    /**
+     * @brief Creates a new 2D menu.
+     * @param windowWidth The width of the window.
+     * @param windowHeight The height of the window.
+     */
     Menu2D(int windowWidth, int windowHeight);
+
     virtual ~Menu2D();
 
+    /**
+     * @brief Add a new button to the Menu.
+     * @param filename The name of the button without the prefixes:
+     *  - bt_a (active button state)
+     *  - bt_h (hover button state) 
+     *  - bt_n (normal button state)
+     * @code
+     *   m_pauseMenuMain = make_shared<Menu2D>(m_fsm.window->getWidth(), m_fsm.window->getHeight());
+     *   m_pauseMenuMain->addButton("ResumeGame.png")->onClick(boost::bind(&GamePlay::onResumeGame, this));
+     * @encdode
+     */
     Menu2DItemPtr addButton(std::string filename);
 
+    /**
+     * @brief Draws the menu.
+     */
     void draw();
+
+    /**
+     * @brief Tells the menu where the mouse is moved.
+     * @note Call this every time the mouse coordinates changed.
+     * @param x The x coordinate in the viewport.
+     * @param y The y coordinate in the viewport.
+     */
     void mouseMoved(const int x, const int y);
+
+    /**
+     * @brief Tells the menu that the first mouse key is pressed.
+     * @note Call this every time the mouse is pressed. Make sure that there
+     * was at least one mouseMoved(x, y) call to tell the menu the location
+     * of where the mouse key is pressed.
+     */
     void mousePressed();
+
+    /**
+     * @brief Tells the menu that the mouse key is relased.
+     * @note Call this every time the mouse is released. Make sure that there
+     * was at least one mouseMoved(x, y) call to tell the menu the location
+     * of where the mouse key is released.
+     */
     void mouseReleased();
+
+    /**
+     * @brief If the window is resized, the menu must adjust the position again.
+     * @param newWith The new width of the window.
+     * @param newHeight The new height of the window.
+     */
     void windowResized(int newWidth, int newHeight);
+
+    /**
+     * @brief Resets the background-fading-animation.
+     * @note Call this every time this menu is left for another
+     * game context.
+     */
     void resetAnimation();
 
 private:
-
+    //! All items/buttons of this menu.
     std::vector<Menu2DItemPtr> items;
 
-    // config
+    //! The width of the button
     const int m_buttonWidth = 200;
+    //! The height of the button
     const int m_buttonHeight = 50;
+    //! The margin (outer space) of the button
     const int m_buttonMargin = 10;
+    //! The background-fading-animation duration
     const int m_animationDuration = 1500;
 
+    //! The window width
     int m_windowWidth;
+    //! The window height
     int m_windowHeight;
+    //! The button count
     int m_btCount;
-    int m_height;						// menu height in total with margin
-    int m_marginLeft;					// distance from left
-    int m_marginTop;					// distance from top
+    //! The total height of the menu including all buttons and margin
+    int m_height;
+    //! The viewport distance to the left edge
+    int m_marginLeft;
+    //! The viewport distance to the top edge
+    int m_marginTop;
 
+    //! Internal mouse state
     struct mouseState {
         int x;
         int y;
         bool pressed;
     } mouseState;
 
+    //! Active button of the menu
     Menu2DItemPtr activeButton;
+    //! AnimationHelper for the background-fading.
     AnimationHelperPtr animationHelper;
 
-    // methods
+    /**
+     * @brief Updates the absolute position within the viewport after
+     * the window changes or new buttons are added.
+     */
     void updateAbsolutePosition();
 };
 

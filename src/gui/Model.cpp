@@ -69,41 +69,41 @@ void Model::loadScene() {
 
 void Model::draw() {
     glPushMatrix();
-    bool flipModelDirection = true;
-    GLfloat emission[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+        bool flipModelDirection = true;
+        GLfloat emission[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
-    GLfloat ambient[] = { 0.05f, 0.05f, 0.05f, 1.0f };
-    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+        GLfloat ambient[] = { 0.05f, 0.05f, 0.05f, 1.0f };
+        glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 
-    GLfloat diffuse[] = { 0.97f, 0.92f, 0.79f, 1.0f };
+        GLfloat diffuse[] = { 0.97f, 0.92f, 0.79f, 1.0f };
 
-    if (m_color == Color::BLACK) {
-        flipModelDirection = false;
+        if (m_color == Color::BLACK) {
+            flipModelDirection = false;
 
-        emission[0] = 0.05f;
-        emission[1] = 0.05f;
-        emission[2] = 0.05f;
+            emission[0] = 0.05f;
+            emission[1] = 0.05f;
+            emission[2] = 0.05f;
 
-        diffuse[0] = 0.1f;
-        diffuse[1] = 0.1f;
-        diffuse[2] = 0.1f;
-    }
-    glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+            diffuse[0] = 0.1f;
+            diffuse[1] = 0.1f;
+            diffuse[2] = 0.1f;
+        }
+        glMaterialfv(GL_FRONT, GL_EMISSION, emission);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 
-    GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+        GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 
-    GLfloat shininess[] = { 128 };
-    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+        GLfloat shininess[] = { 128 };
+        glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 
-    // note: transformation matrices are multiplied from right -> last matrix first!
-    glTranslatef((float)m_position.x, (float)m_position.y, (float)m_position.z);							// 5) translate to world space coordinates
-    glScalef(m_correctScaling, m_correctScaling, m_correctScaling);											// 4) scale
-    glRotatef(flipModelDirection ? 180.0f : 0.0f, 0.0f, 1.0f, 0.0f);										// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
-    glTranslatef((float)m_correctPosition.x, (float)m_correctPosition.y, (float)m_correctPosition.z);	    // 2) correct local origin
-    glRotatef(-90.0, 1.0f, 0.0f, 0.0f);																		// 1) correct rotation around x-axis to "stand-up" the model
+        // note: transformation matrices are multiplied from right -> last matrix first!
+        glTranslatef((float)m_position.x, (float)m_position.y, (float)m_position.z);							// 5) translate to world space coordinates
+        glScalef(m_correctScaling, m_correctScaling, m_correctScaling);											// 4) scale
+        glRotatef(flipModelDirection ? 180.0f : 0.0f, 0.0f, 1.0f, 0.0f);										// 3) correct rotation y (assertion: we are now in (0,0,0) local space because of step 2)
+        glTranslatef((float)m_correctPosition.x, (float)m_correctPosition.y, (float)m_correctPosition.z);	    // 2) correct local origin
+        glRotatef(-90.0, 1.0f, 0.0f, 0.0f);																		// 1) correct rotation around x-axis to "stand-up" the model
 
-    model->drawScene();																						// 6) draw the scene
+        model->drawScene();																						// 6) draw the scene
     glPopMatrix();
 }

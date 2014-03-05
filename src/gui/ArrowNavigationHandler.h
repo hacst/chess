@@ -37,10 +37,18 @@
 #include <memory>
 #include "logic/ChessTypes.h"
 
+/**
+ * @brief The class helps to handle the keyboard navigation with the arrow keys.
+ */
 class ArrowNavigationHandler {
 public:
+    /**
+     * @brief Creates a new ArrowNavigationHandler object.
+     * @param inverseNavigation If true left/right and up/down are changed to the opposite.
+     */
     ArrowNavigationHandler(bool inverseNavigation);
 
+    //! Enumeration for the arrow keys directions.
     enum ArrowKey {
         UP,
         RIGHT,
@@ -48,25 +56,71 @@ public:
         LEFT
     };
 
+    /**
+     * @brief This method must be called if an arrow key is pressed.
+     * @param direction the ArrowKey direction (see above).
+     */
     void onKey(ArrowKey direction);
+
+    /**
+     * @brief Returns the current cursor position.
+     * @return The cursor position as Field.
+     */
     Field getCursorPosition();
 
 private:
+    //! The Configuration
     struct Config {
         unsigned int throttleMilliseconds;
         bool inverseNavigation;
     } m_config;
 
+    //! The current cursor position.
     unsigned int m_tileCursor;
+
+    //! The last stroke-time for the direction keys.
     std::chrono::time_point<std::chrono::system_clock> m_timeStart[4], m_timeNow[4];
+
+    //! Flag, if a direction key must be throttled.
     bool m_throttling[4];
 
+    /**
+     * @brief Checks the time between the current and last keystroke and sets the
+     * throttle flag.
+     * @param direction The arrow key direction to check the time.
+     */
     void checkTimeBetweenKeyStrokes(ArrowKey direction);
+
+    /**
+     * @brief Calculates the new vertical position depending on the given step-width.
+     * @param steps The step-count (8 or -8) for the vertical (up/down) move.
+     */
     void moveCursorVertical(int steps);
+
+    /**
+     * @brief Calculates the new horizontal position depending on the given step-width.
+     * @param steps The step-count (1 or -1) for the horizontal (left/right) move.
+     */
     void moveCursorHorizontal(int steps);
+
+    /**
+     * @brief Moves the cursor up with respect to the configured inversion of the keys.
+     */
     void moveCursorUp();
+
+    /**
+     * @brief Moves the cursor right with respect to the configured inversion of the keys.
+     */
     void moveCursorRight();
+    
+    /**
+     * @brief Moves the cursor down with respect to the configured inversion of the keys.
+     */
     void moveCursorDown();
+
+    /**
+     * @brief Moves the cursor left with respect to the configured inversion of the keys.
+     */
     void moveCursorLeft();
 };
 

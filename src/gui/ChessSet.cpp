@@ -98,7 +98,7 @@ void ChessSet::loadResources() {
             cor.x, cor.y, cor.z,
             cor.scale,
             cor.rotX, cor.rotY, cor.rotZ
-            );
+        );
 
         // cache the model in a display list
 
@@ -107,7 +107,7 @@ void ChessSet::loadResources() {
         m_modelList[i] = glGenLists(1);
 
         glNewList(m_modelList[i], GL_COMPILE);
-        m_models[i]->draw();
+            m_models[i]->draw();
         glEndList();
 
         // black models
@@ -115,7 +115,7 @@ void ChessSet::loadResources() {
         m_modelList[i + 6] = glGenLists(1);
 
         glNewList(m_modelList[i + 6], GL_COMPILE);
-        m_models[i]->draw();
+            m_models[i]->draw();
         glEndList();
 
         ++i;
@@ -261,27 +261,27 @@ void ChessSet::createModelsList(bool withoutTurnDependentModels) {
     // -> move animation .from model
     m_modelsList = glGenLists(1);
     glNewList(m_modelsList, GL_COMPILE);
-    int field = 0;
-    for (auto p : m_state) {
-        if (p.type != PieceType::NoType) {
-            glPushMatrix();
-            if ((p.type != PieceType::NoType) &&
-                (!withoutTurnDependentModels /* all */ ||
-                (withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */)) {
-                // move model to tile
-                drawModelAt(static_cast<Field>(field), p.type, p.player);
+        int field = 0;
+        for (auto p : m_state) {
+            if (p.type != PieceType::NoType) {
+                glPushMatrix();
+                if ((p.type != PieceType::NoType) &&
+                    (!withoutTurnDependentModels /* all */ ||
+                    (withoutTurnDependentModels && field != m_lastTurn.from && field != m_lastTurn.to) /* all but without destination and target field */)) {
+                    // move model to tile
+                    drawModelAt(static_cast<Field>(field), p.type, p.player);
+                }
+                else {
+                    AnimationCapsule ac;
+                    ac.field = static_cast<Field>(field);
+                    ac.piece = p;
+                    ac.turn = m_lastTurn;
+                    m_animationCapsules.push_back(ac);
+                }
+                glPopMatrix();
             }
-            else {
-                AnimationCapsule ac;
-                ac.field = static_cast<Field>(field);
-                ac.piece = p;
-                ac.turn = m_lastTurn;
-                m_animationCapsules.push_back(ac);
-            }
-            glPopMatrix();
+            ++field;
         }
-        ++field;
-    }
     glEndList();
 }
 
@@ -323,7 +323,7 @@ void ChessSet::animateModelStrike(Coord3D coords, Piece piece) {
     coords.y = (coords.y + 0.f) + m_animationHelperModelStrike->ease(AnimationHelper::EASE_OUTSINE, 0.f, m_animationElevationStrikeHeight); // UP
 
     glPushMatrix();
-    drawModelAt(coords, piece.type, piece.player);
+        drawModelAt(coords, piece.type, piece.player);
     glPopMatrix();
 }
 
@@ -389,24 +389,24 @@ void ChessSet::createChessBoardList() {
     m_boardList = glGenLists(1);
 
     glNewList(m_boardList, GL_COMPILE);
-    int x = 0;
-    int y = 0;
-    int z = 0;
+        int x = 0;
+        int y = 0;
+        int z = 0;
 
-    bool oddToggler = false;
-    for (int i = -4; i < 4; i++) {
-        z = i * m_tileWidth + m_tileWidth / 2;
+        bool oddToggler = false;
+        for (int i = -4; i < 4; i++) {
+            z = i * m_tileWidth + m_tileWidth / 2;
 
-        for (int j = -4; j < 4; j++) {
-            x = j * m_tileWidth + m_tileWidth / 2;
+            for (int j = -4; j < 4; j++) {
+                x = j * m_tileWidth + m_tileWidth / 2;
 
-            Coord3D coords = { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
-            drawTile(coords, oddToggler, TileStyle::NORMAL);
+                Coord3D coords = { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
+                drawTile(coords, oddToggler, TileStyle::NORMAL);
+                oddToggler = !oddToggler;
+            }
+
             oddToggler = !oddToggler;
         }
-
-        oddToggler = !oddToggler;
-    }
     glEndList();
 }
 
@@ -416,105 +416,105 @@ void ChessSet::drawTile(Coord3D coords, bool odd, TileStyle style) {
     float halfWidth, halfHeight;
 
     glPushMatrix();
-    glTranslatef(coords.x, coords.y, coords.z);
+        glTranslatef(coords.x, coords.y, coords.z);
 
-    glBegin(GL_QUADS);
-    GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 0.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
+        glBegin(GL_QUADS);
+            GLfloat emission[] = { 0.0f, 0.0f, 0.0f, 0.0f };		// example: glowing clock hand (Uhrzeiger) of an alarm clock at night -> we dont need this here
+            glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
 
-    GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
-    //          is uniformly distributed in the environment. If you specify no lighting in OpenGL,
-    //          the result is the same as if you define only ambient light.
-    halfWidth = 0.95f * halfWidth_t;
-    halfHeight = 1.05f * halfHeight_t;
+            GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 0.5f };			// example: this light scattered so often, that it comes from no particular direction but 
+                                                                    // is uniformly distributed in the environment. If you specify no lighting in OpenGL,
+                                                                    // the result is the same as if you define only ambient light.
+            halfWidth = 0.95f * halfWidth_t;
+            halfHeight = 1.05f * halfHeight_t;
 
-    switch (style) {
-    case NORMAL:
-        halfWidth = halfWidth_t;
-        halfHeight = halfHeight_t;
+            switch (style) {
+            case NORMAL:
+                halfWidth = halfWidth_t;
+                halfHeight = halfHeight_t;
 
-        if (!odd) {
-            ambient[0] = 1.0f;
-            ambient[1] = 1.0f;
-            ambient[2] = 1.0f;
-        }
-        else {
-            ambient[0] = 0.14f;
-            ambient[1] = 0.07f;
-            ambient[2] = 0.0f;
-        }
-        break;
-    case CURSOR:
-        ambient[0] = 0.8f;
-        ambient[1] = 0.0f;
-        ambient[2] = 0.0f;
-        break;
-    case MOVE:
-        ambient[0] = 0.8f;
-        ambient[1] = 0.6f;
-        ambient[2] = 0.0f;
-        break;
-    case CASTLE:
-        ambient[0] = 0.2f;
-        ambient[1] = 0.6f;
-        ambient[2] = 1.0f;
-        break;
-    default:
-        break;
-    }
+                if (!odd) {
+                    ambient[0] = 1.0f;
+                    ambient[1] = 1.0f;
+                    ambient[2] = 1.0f;
+                }
+                else {
+                    ambient[0] = 0.14f;
+                    ambient[1] = 0.07f;
+                    ambient[2] = 0.0f;
+                }
+                break;
+            case CURSOR:
+                ambient[0] = 0.8f;
+                ambient[1] = 0.0f;
+                ambient[2] = 0.0f;
+                break;
+            case MOVE:
+                ambient[0] = 0.8f;
+                ambient[1] = 0.6f;
+                ambient[2] = 0.0f;
+                break;
+            case CASTLE:
+                ambient[0] = 0.2f;
+                ambient[1] = 0.6f;
+                ambient[2] = 1.0f;
+                break;
+            default:
+                break;
+            }
 
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
 
-    GLfloat diffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };			// example: this light comes from a certain direction but is reflected homogenously from each point of the surface.
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
+            GLfloat diffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };			// example: this light comes from a certain direction but is reflected homogenously from each point of the surface.
+            glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
-    GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };		// example: highlight point
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+            GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };		// example: highlight point
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
 
-    GLfloat shininess[] = { 100 };
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+            GLfloat shininess[] = { 100 };
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
-    // front face
-    glNormal3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(halfWidth, halfHeight, halfWidth);	// top right
-    glVertex3f(-halfWidth, halfHeight, halfWidth);	// top left
-    glVertex3f(-halfWidth, -halfHeight, halfWidth);	// bottom left
-    glVertex3f(halfWidth, -halfHeight, halfWidth);	// bottom right
+            // front face
+            glNormal3f(0.0f, 0.0f, -1.0f);
+            glVertex3f(halfWidth, halfHeight, halfWidth);	// top right
+            glVertex3f(-halfWidth, halfHeight, halfWidth);	// top left
+            glVertex3f(-halfWidth, -halfHeight, halfWidth);	// bottom left
+            glVertex3f(halfWidth, -halfHeight, halfWidth);	// bottom right
 
-    // left face
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(-halfWidth, halfHeight, halfWidth);
-    glVertex3f(-halfWidth, halfHeight, -halfWidth);
-    glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-    glVertex3f(-halfWidth, -halfHeight, halfWidth);
+            // left face
+            glNormal3f(-1.0f, 0.0f, 0.0f);
+            glVertex3f(-halfWidth, halfHeight, halfWidth);
+            glVertex3f(-halfWidth, halfHeight, -halfWidth);
+            glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+            glVertex3f(-halfWidth, -halfHeight, halfWidth);
 
-    // back face
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(halfWidth, halfHeight, -halfWidth);
-    glVertex3f(-halfWidth, halfHeight, -halfWidth);
-    glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-    glVertex3f(halfWidth, -halfHeight, -halfWidth);
+            // back face
+            glNormal3f(0.0f, 0.0f, 1.0f);
+            glVertex3f(halfWidth, halfHeight, -halfWidth);
+            glVertex3f(-halfWidth, halfHeight, -halfWidth);
+            glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+            glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
-    // right face
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(halfWidth, halfHeight, -halfWidth);
-    glVertex3f(halfWidth, halfHeight, halfWidth);
-    glVertex3f(halfWidth, -halfHeight, halfWidth);
-    glVertex3f(halfWidth, -halfHeight, -halfWidth);
+            // right face
+            glNormal3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(halfWidth, halfHeight, -halfWidth);
+            glVertex3f(halfWidth, halfHeight, halfWidth);
+            glVertex3f(halfWidth, -halfHeight, halfWidth);
+            glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
-    // bottom face
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(halfWidth, -halfHeight, halfWidth);
-    glVertex3f(-halfWidth, -halfHeight, halfWidth);
-    glVertex3f(-halfWidth, -halfHeight, -halfWidth);
-    glVertex3f(halfWidth, -halfHeight, -halfWidth);
+            // bottom face
+            glNormal3f(0.0f, -1.0f, 0.0f);
+            glVertex3f(halfWidth, -halfHeight, halfWidth);
+            glVertex3f(-halfWidth, -halfHeight, halfWidth);
+            glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+            glVertex3f(halfWidth, -halfHeight, -halfWidth);
 
-    // top face
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(halfWidth, halfHeight, halfWidth);
-    glVertex3f(-halfWidth, halfHeight, halfWidth);
-    glVertex3f(-halfWidth, halfHeight, -halfWidth);
-    glVertex3f(halfWidth, halfHeight, -halfWidth);
-    glEnd();
+            // top face
+            glNormal3f(0.0f, 1.0f, 0.0f);
+            glVertex3f(halfWidth, halfHeight, halfWidth);
+            glVertex3f(-halfWidth, halfHeight, halfWidth);
+            glVertex3f(-halfWidth, halfHeight, -halfWidth);
+            glVertex3f(halfWidth, halfHeight, -halfWidth);
+        glEnd();
     glPopMatrix();
 }

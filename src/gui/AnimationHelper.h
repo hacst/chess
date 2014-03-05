@@ -39,7 +39,7 @@
 using namespace std;
 
 /**
- * The class helps to create animations by providing time dependent methods.
+ * @brief The class helps to create animations by providing time dependent methods.
  */
 class AnimationHelper {
 public:

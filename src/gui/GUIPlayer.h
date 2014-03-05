@@ -46,42 +46,60 @@
 #include <iostream>
 
 /**
-* @brief Player implementation for a real user.
+* @brief Player implementation for a real/human user.
 */
 class GUIPlayer : public AbstractPlayer {
 public:
-    GUIPlayer(GamePlay& gp, int seed = 1234)
-        : m_seed(seed)
-        , m_rng(m_seed)
-        , m_msDist(0, 5)
-        , m_log(Logging::initLogger("Player"))
+    /**
+     * @brief Creates a new human player.
+     * @param gp The reference to the GamePlay state.
+     */
+    GUIPlayer(GamePlay& gp)
+        : m_log(Logging::initLogger("Player"))
         , m_gameplay(gp) {
-        LOG(Logging::info) << "Seed: " << m_seed;
     }
 
     virtual ~GUIPlayer() {
     }
 
+    /**
+     * @brief Notifies that player what color he will be playing.
+     * Called before onGameStart.
+     * @param color Color the player has.
+     */
     virtual void onSetColor(PlayerColor color) override {
-        LOG(Logging::info) << "(" << m_seed << ") "
-            << "Will be playing " << color;
+        LOG(Logging::info) << "Will be playing " << color;
     }
 
-    virtual void doAbortTurn() override {
-        LOG(Logging::warning) << "(" << m_seed << ") "
-            << "Asked to abort turn. This is not implemented";
-        m_gameplay.onPlayerAbortTurn();
-    }
-
+    /**
+     * @brief Asks the player to make his turn.
+     * @warning This function must not block. It is to return immediatly.
+     * The players turn is to be set on the returned future.
+     * @note The game logic can abort its request for a player to make
+     * his turn using the doAbortTurn function at any time.
+     * @param state Current state of the game.
+     * @return A future to the turn to make.
+     */
     virtual std::future<Turn> doMakeTurn(GameState state) override {
         return m_gameplay.doMakePlayerTurn();
     }
 
+    /**
+     * @brief Asks the player to abort a turn asked for with doMakeTurn.
+     * When this is called the GameLogic will no longer react to the
+     * completion of the future for that turn. A use of this function
+     * is the abortion of a turn due to timeout.
+     */
+    virtual void doAbortTurn() override {
+        LOG(Logging::warning) << "Asked to abort turn. This is not implemented";
+        m_gameplay.onPlayerAbortTurn();
+    }
+
 private:
-    const unsigned int m_seed;
-    std::mt19937 m_rng;
-    std::uniform_int_distribution<int> m_msDist;
+    //! The boost::Logger
     Logging::Logger m_log;
+
+    //! Reference to the GamePlay state
     GamePlay& m_gameplay;
 };
 

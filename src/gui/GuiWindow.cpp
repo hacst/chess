@@ -354,7 +354,7 @@ void GuiWindow::exec() {
         }
 
         swapFrameBufferNow();
-        handleEvents();											// we handle events after the first frame is drawn
+        handleEvents(); // we handle events after the first frame is drawn
 
         // limit the fps rate
         int tp1f = 1000 / 30;
@@ -482,9 +482,9 @@ void GuiWindow::drawText(fontObject fo) {
     glLoadIdentity();
 
     glPushMatrix();
-    glColor3f(fo.red, fo.green, fo.blue);
-    int inverseOffset = m_height - fo.fontSize;
-    freetype::print(fo.font, static_cast<float>(fo.x), static_cast<float>(inverseOffset - fo.y), fo.text.c_str());
+        glColor3f(fo.red, fo.green, fo.blue);
+        int inverseOffset = m_height - fo.fontSize;
+        freetype::print(fo.font, static_cast<float>(fo.x), static_cast<float>(inverseOffset - fo.y), fo.text.c_str());
     glPopMatrix();
 
     set2DMode();

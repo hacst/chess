@@ -77,31 +77,31 @@ void Menu2D::draw() {
 
     glPushMatrix();
 
-    // now we know how many buttons are on our list, so we can position them right now
-    int index = 0;
-    for (auto& item : items) {
-        int x = m_marginLeft;	// always the same distance to left
-        int y = (index * m_buttonHeight) + ((index + 1) * m_buttonMargin) + m_marginTop - (m_buttonMargin / 2);
+        // now we know how many buttons are on our list, so we can position them right now
+        int index = 0;
+        for (auto& item : items) {
+            int x = m_marginLeft;	// always the same distance to left
+            int y = (index * m_buttonHeight) + ((index + 1) * m_buttonMargin) + m_marginTop - (m_buttonMargin / 2);
 
-        item->setPosition(x, y);
-        ++index;
-    }
+            item->setPosition(x, y);
+            ++index;
+        }
 
-    // draw a transparent background for the menu with an animation
-    animationHelper->setStartNowOrKeepIt();
-    glColor4f(0.2f, 0.2f, 0.3f, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
+        // draw a transparent background for the menu with an animation
+        animationHelper->setStartNowOrKeepIt();
+        glColor4f(0.2f, 0.2f, 0.3f, animationHelper->ease(AnimationHelper::EASE_LINEAR, 0.1f, 0.9f));
 
-    glBegin(GL_QUADS);
-    glVertex2i(m_marginLeft - 20, m_marginTop - 20);
-    glVertex2i(m_marginLeft + m_buttonWidth + 20, m_marginTop - 20);
-    glVertex2i(m_marginLeft + m_buttonWidth + 20, m_marginTop + m_height + 20);
-    glVertex2i(m_marginLeft - 20, m_marginTop + m_height + 20);
-    glEnd();
+        glBegin(GL_QUADS);
+            glVertex2i(m_marginLeft - 20, m_marginTop - 20);
+            glVertex2i(m_marginLeft + m_buttonWidth + 20, m_marginTop - 20);
+            glVertex2i(m_marginLeft + m_buttonWidth + 20, m_marginTop + m_height + 20);
+            glVertex2i(m_marginLeft - 20, m_marginTop + m_height + 20);
+        glEnd();
 
-    // iterate over all items and let them draw
-    for (auto& item : items) {
-        item->draw();
-    }
+        // iterate over all items and let them draw
+        for (auto& item : items) {
+            item->draw();
+        }
 
     glPopMatrix();
 

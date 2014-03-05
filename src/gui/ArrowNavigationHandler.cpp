@@ -114,7 +114,7 @@ void ArrowNavigationHandler::moveCursorHorizontal(int steps) {
         case 15:
         case 7:
         case -1:
-            /* border corssed -> do nothing - keep old value */
+            /* border crossed -> do nothing - keep old value */
             break;
         default:
             m_tileCursor = newTileCursor;
@@ -133,7 +133,7 @@ void ArrowNavigationHandler::moveCursorHorizontal(int steps) {
         case 24:
         case 16:
         case 8:
-            /* border corssed -> do nothing - keep old value */
+            /* border crossed -> do nothing - keep old value */
             break;
         default:
             m_tileCursor = newTileCursor;
