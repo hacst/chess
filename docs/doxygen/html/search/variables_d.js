@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['score',['score',['../struct_negamax_1_1_result.html#a6f06ce45f663b3e21798b7dd56b76045',1,'Negamax::Result']]]
+  ['score',['score',['../struct_negamax_result.html#aba9695a07875203aa6c754501e113c3b',1,'NegamaxResult::score()'],['../struct_transposition_table_entry.html#a21cb85b29cd2ce47beb1dd33142972dd',1,'TranspositionTableEntry::score()']]]
 ];

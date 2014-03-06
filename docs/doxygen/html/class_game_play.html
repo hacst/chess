@@ -112,14 +112,14 @@ Public Types</h2></td></tr>
 <tr class="memitem:a9bbbd1c2193ee3046f1b0f25035fa616"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616">GameMode</a> { <b>AI_VS_AI</b>, 
 <b>PLAYER_VS_AI</b>
  }</td></tr>
-<tr class="memdesc:a9bbbd1c2193ee3046f1b0f25035fa616"><td class="mdescLeft">&#160;</td><td class="mdescRight">The possible game modes. <br/></td></tr>
+<tr class="memdesc:a9bbbd1c2193ee3046f1b0f25035fa616"><td class="mdescLeft">&#160;</td><td class="mdescRight">The possible game modes to chose. <br/></td></tr>
 <tr class="separator:a9bbbd1c2193ee3046f1b0f25035fa616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4f0ec14fea626fed0829d261589fcd25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a4f0ec14fea626fed0829d261589fcd25">GamePlay</a> (<a class="el" href="class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616">GameMode</a> mode, PlayerColor firstPlayerColor)</td></tr>
-<tr class="memdesc:a4f0ec14fea626fed0829d261589fcd25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new game.  <a href="#a4f0ec14fea626fed0829d261589fcd25">More...</a><br/></td></tr>
-<tr class="separator:a4f0ec14fea626fed0829d261589fcd25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac535480eb47e416b1bb0cd6c566043b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#aac535480eb47e416b1bb0cd6c566043b">GamePlay</a> (<a class="el" href="class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616">GameMode</a> mode, PlayerColor humanPlayerColor, std::string initialFen=&quot;&quot;)</td></tr>
+<tr class="memdesc:aac535480eb47e416b1bb0cd6c566043b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new game.  <a href="#aac535480eb47e416b1bb0cd6c566043b">More...</a><br/></td></tr>
+<tr class="separator:aac535480eb47e416b1bb0cd6c566043b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a265e1c47781f3ab890a648c9811738d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a265e1c47781f3ab890a648c9811738d7">enter</a> () override</td></tr>
 <tr class="memdesc:a265e1c47781f3ab890a648c9811738d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the state for the first time. This will setup all the state related stuff.  <a href="#a265e1c47781f3ab890a648c9811738d7">More...</a><br/></td></tr>
 <tr class="separator:a265e1c47781f3ab890a648c9811738d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,45 +131,38 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af635ce486e5bc9b3bdf21241f6737000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cb5373f35672dd1112e41fd48e46e57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cb5373f35672dd1112e41fd48e46e57"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a4cb5373f35672dd1112e41fd48e46e57">draw</a> ()</td></tr>
-<tr class="memdesc:a4cb5373f35672dd1112e41fd48e46e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws something state related stuff on the screen. <br/></td></tr>
+<tr class="memdesc:a4cb5373f35672dd1112e41fd48e46e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all relevant and state related stuff on the screen. <br/></td></tr>
 <tr class="separator:a4cb5373f35672dd1112e41fd48e46e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cfdf90a24b76b71d01d292337e080ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7cfdf90a24b76b71d01d292337e080ee"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>startShowText</b> (std::string text)</td></tr>
+<tr class="memitem:a7cfdf90a24b76b71d01d292337e080ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a7cfdf90a24b76b71d01d292337e080ee">startShowText</a> (std::string text)</td></tr>
+<tr class="memdesc:a7cfdf90a24b76b71d01d292337e080ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this function to draw text on the right bottom side of the viewport.  <a href="#a7cfdf90a24b76b71d01d292337e080ee">More...</a><br/></td></tr>
 <tr class="separator:a7cfdf90a24b76b71d01d292337e080ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f24d5ef62fec459a516bd4106a67ee4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f24d5ef62fec459a516bd4106a67ee4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>switchToPlayerColor</b> (PlayerColor color)</td></tr>
+<tr class="memitem:a0f24d5ef62fec459a516bd4106a67ee4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a0f24d5ef62fec459a516bd4106a67ee4">switchToPlayerColor</a> (PlayerColor color)</td></tr>
+<tr class="memdesc:a0f24d5ef62fec459a516bd4106a67ee4"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the other player is on turn, this method switched the camera position and shows a small text message which player is on turn.  <a href="#a0f24d5ef62fec459a516bd4106a67ee4">More...</a><br/></td></tr>
 <tr class="separator:a0f24d5ef62fec459a516bd4106a67ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18222d37c08887971467a535226c6b72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18222d37c08887971467a535226c6b72"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a18222d37c08887971467a535226c6b72">setState</a> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state, PlayerColor lastPlayer, <a class="el" href="class_turn.html">Turn</a> lastTurn)</td></tr>
-<tr class="memdesc:a18222d37c08887971467a535226c6b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method for setting the new chess state. This method is non-blocking. <br/></td></tr>
+<tr class="memitem:a18222d37c08887971467a535226c6b72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a18222d37c08887971467a535226c6b72">setState</a> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state, PlayerColor lastPlayer, <a class="el" href="class_turn.html">Turn</a> lastTurn)</td></tr>
+<tr class="memdesc:a18222d37c08887971467a535226c6b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method for setting the new chess state. This method is non-blocking.  <a href="#a18222d37c08887971467a535226c6b72">More...</a><br/></td></tr>
 <tr class="separator:a18222d37c08887971467a535226c6b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a046a12f0d7ceb61f4de3ba4cd1ca9b36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a046a12f0d7ceb61f4de3ba4cd1ca9b36"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setState</b> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state)</td></tr>
+<tr class="memitem:a046a12f0d7ceb61f4de3ba4cd1ca9b36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a046a12f0d7ceb61f4de3ba4cd1ca9b36">setState</a> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state)</td></tr>
+<tr class="memdesc:a046a12f0d7ceb61f4de3ba4cd1ca9b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method for setting the new chess state. This method is non-blocking.  <a href="#a046a12f0d7ceb61f4de3ba4cd1ca9b36">More...</a><br/></td></tr>
 <tr class="separator:a046a12f0d7ceb61f4de3ba4cd1ca9b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a321d7f7c274d4bb581a5531e460e66fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a321d7f7c274d4bb581a5531e460e66fd">setCapturedPiecesList</a> (std::vector&lt; <a class="el" href="struct_piece.html">Piece</a> &gt; piecesList)</td></tr>
-<tr class="memdesc:a321d7f7c274d4bb581a5531e460e66fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method for setting the new turn, which changed the chess state.  <a href="#a321d7f7c274d4bb581a5531e460e66fd">More...</a><br/></td></tr>
-<tr class="separator:a321d7f7c274d4bb581a5531e460e66fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e890718d7d3858e362c63cb0ce2b088"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e890718d7d3858e362c63cb0ce2b088"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onBeforeLoadNextResource</b> (std::string resourceName)</td></tr>
-<tr class="separator:a5e890718d7d3858e362c63cb0ce2b088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a063a413a5c7a2c75e2078179734e82be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a063a413a5c7a2c75e2078179734e82be"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onResumeGame</b> ()</td></tr>
-<tr class="separator:a063a413a5c7a2c75e2078179734e82be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21066f597c360f52bba7f5eef852100a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21066f597c360f52bba7f5eef852100a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onSaveGame</b> ()</td></tr>
-<tr class="separator:a21066f597c360f52bba7f5eef852100a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfd5bcec7ecfe767f3e42617088fd0ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfd5bcec7ecfe767f3e42617088fd0ad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onLeaveGame</b> ()</td></tr>
-<tr class="separator:acfd5bcec7ecfe767f3e42617088fd0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a104dfd2375ad0a53bacd87d0c46d7d54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a104dfd2375ad0a53bacd87d0c46d7d54"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</td></tr>
-<tr class="separator:a104dfd2375ad0a53bacd87d0c46d7d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9a17da80920462436ef112ff66a77d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#ac9a17da80920462436ef112ff66a77d5">setGameState</a> (const <a class="el" href="class_game_state.html">GameState</a> &amp;gameState)</td></tr>
+<tr class="memdesc:ac9a17da80920462436ef112ff66a77d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the game state to the given one.  <a href="#ac9a17da80920462436ef112ff66a77d5">More...</a><br/></td></tr>
+<tr class="separator:ac9a17da80920462436ef112ff66a77d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485bd261cd18ef597db289f129ce7c70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a485bd261cd18ef597db289f129ce7c70">onPlayerIsOnTurn</a> (PlayerColor who)</td></tr>
+<tr class="memdesc:a485bd261cd18ef597db289f129ce7c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method changed the internal state to interact with a human player if the game mode is PLAYER_VS_AI.  <a href="#a485bd261cd18ef597db289f129ce7c70">More...</a><br/></td></tr>
+<tr class="separator:a485bd261cd18ef597db289f129ce7c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f872fda46a5fc467744a1b4c404c47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#a84f872fda46a5fc467744a1b4c404c47">onPlayerAbortTurn</a> ()</td></tr>
+<tr class="memdesc:a84f872fda46a5fc467744a1b4c404c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the human player aborts his current turn, this method switches to the AI player.  <a href="#a84f872fda46a5fc467744a1b4c404c47">More...</a><br/></td></tr>
+<tr class="separator:a84f872fda46a5fc467744a1b4c404c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc1dfc5a3291fac745a7811d36a26ad5"><td class="memItemLeft" align="right" valign="top">std::future&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_play.html#acc1dfc5a3291fac745a7811d36a26ad5">doMakePlayerTurn</a> ()</td></tr>
+<tr class="memdesc:acc1dfc5a3291fac745a7811d36a26ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the human to make a turn.  <a href="#acc1dfc5a3291fac745a7811d36a26ad5">More...</a><br/></td></tr>
+<tr class="separator:acc1dfc5a3291fac745a7811d36a26ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class which holds the state <a class="el" href="class_game_play.html" title="Class which holds the state GamePlay. This state is the essential part of all states. The whole game play is hold in this state. ">GamePlay</a>. This state is the essential part of all states. The whole game play is hold in this state. </p>
 <dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_game_play.html#aa488735535fde3fa3ac41ee94112141e" title="Runs the current state and does all the work. ">run()</a> a state, first <a class="el" href="class_game_play.html#a265e1c47781f3ab890a648c9811738d7" title="Enters the state for the first time. This will setup all the state related stuff. ...">enter()</a> the state. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4f0ec14fea626fed0829d261589fcd25"></a>
+<a class="anchor" id="aac535480eb47e416b1bb0cd6c566043b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -183,7 +176,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">PlayerColor&#160;</td>
-          <td class="paramname"><em>firstPlayerColor</em>&#160;</td>
+          <td class="paramname"><em>humanPlayerColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>initialFen</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -198,6 +197,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
   <table class="params">
     <tr><td class="paramname">mode</td><td>The GameMode (<em>AI vs. AI</em> or <em>Player vs. AI</em>). </td></tr>
     <tr><td class="paramname">firstPlayerColor</td><td>The color of the player which takes the first turn. </td></tr>
+    <tr><td class="paramname">initialFen</td><td>If set overrides the configured initial FEN </td></tr>
   </table>
   </dd>
 </dl>
@@ -205,6 +205,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="acc1dfc5a3291fac745a7811d36a26ad5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::future&lt; <a class="el" href="class_turn.html">Turn</a> &gt; GamePlay::doMakePlayerTurn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tells the human to make a turn. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_turn.html">Turn</a> as a future. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a265e1c47781f3ab890a648c9811738d7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -261,6 +279,49 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
 
 </div>
 </div>
+<a class="anchor" id="a84f872fda46a5fc467744a1b4c404c47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::onPlayerAbortTurn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If the human player aborts his current turn, this method switches to the AI player. </p>
+<dl class="section note"><dt>Note</dt><dd>This method currently only works for PLAYER_VS_AI. If there are in the future other game modes, this must be corrected. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a485bd261cd18ef597db289f129ce7c70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::onPlayerIsOnTurn </td>
+          <td>(</td>
+          <td class="paramtype">PlayerColor&#160;</td>
+          <td class="paramname"><em>who</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method changed the internal state to interact with a human player if the game mode is PLAYER_VS_AI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">who</td><td>The color of the player who's on turn. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method should be called on each turn start. Otherwise the GUI can't react to keyboard input for a human player. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aa488735535fde3fa3ac41ee94112141e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -289,22 +350,143 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
 
 </div>
 </div>
-<a class="anchor" id="a321d7f7c274d4bb581a5531e460e66fd"></a>
+<a class="anchor" id="ac9a17da80920462436ef112ff66a77d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GamePlay::setCapturedPiecesList </td>
+          <td class="memname">void GamePlay::setGameState </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="struct_piece.html">Piece</a> &gt;&#160;</td>
-          <td class="paramname"><em>piecesList</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
+          <td class="paramname"><em>gameState</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Method for setting the new turn, which changed the chess state. </p>
-<dl class="section note"><dt>Note</dt><dd>Be sure to first call this and <em>after</em> call setState. This method is non-blocking. </dd></dl>
+<p>Sets the game state to the given one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gameState</td><td>The new gameState to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a18222d37c08887971467a535226c6b72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::setState </td>
+          <td>(</td>
+          <td class="paramtype">std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PlayerColor&#160;</td>
+          <td class="paramname"><em>lastPlayer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_turn.html">Turn</a>&#160;</td>
+          <td class="paramname"><em>lastTurn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method for setting the new chess state. This method is non-blocking. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The current chess board state to set. </td></tr>
+    <tr><td class="paramname">lastPlayer</td><td>The player which was last on turn. </td></tr>
+    <tr><td class="paramname">lastTurn</td><td>The last turn which was made. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a046a12f0d7ceb61f4de3ba4cd1ca9b36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::setState </td>
+          <td>(</td>
+          <td class="paramtype">std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method for setting the new chess state. This method is non-blocking. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>The current chess board state to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This should only be called one time, when the game starts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7cfdf90a24b76b71d01d292337e080ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::startShowText </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Call this function to draw text on the right bottom side of the viewport. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>The string to show. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0f24d5ef62fec459a516bd4106a67ee4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GamePlay::switchToPlayerColor </td>
+          <td>(</td>
+          <td class="paramtype">PlayerColor&#160;</td>
+          <td class="paramname"><em>color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>When the other player is on turn, this method switched the camera position and shows a small text message which player is on turn. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>The PlayerColor of the current player, which is on turn. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This should always be called to show a message to the user. </dd></dl>
 
 </div>
 </div>
@@ -315,7 +497,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onBackToMenu</b> ()</
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:44 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

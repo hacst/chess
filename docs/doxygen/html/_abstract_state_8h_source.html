@@ -88,32 +88,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">AbstractState.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ABSTRACTSTATE_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ABSTRACTSTATE_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="class_abstract_state.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_abstract_state.html">AbstractState</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_abstract_state.html">AbstractState</a>() {}</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">enter</a>() = 0;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_abstract_state.html">AbstractState</a>* <a class="code" href="class_abstract_state.html#afdda3d13dbad7a41987c9e05b705cd9e">run</a>() = 0;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a">exit</a>() = 0;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a849114d39ed3aeb7be8c137dcd6efd67">draw</a>() = 0;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif // ABSTRACTSTATE_H</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Copyright (c) 2013-2014, Patrick Hillert &lt;silent@gmx.biz&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    All rights reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">    Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    2. Redistributions in binary form must reproduce the above copyright</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    notice, this list of conditions and the following disclaimer in the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    documentation and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    3. Neither the name of the copyright holder nor the names of its</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    contributors may be used to endorse or promote products derived from</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    this software without specific prior written permission.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifndef ABSTRACTSTATE_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ABSTRACTSTATE_H</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_abstract_state.html">   40</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_abstract_state.html">AbstractState</a> {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_abstract_state.html">AbstractState</a>() {}</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">enter</a>() = 0;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_abstract_state.html">AbstractState</a>* <a class="code" href="class_abstract_state.html#afdda3d13dbad7a41987c9e05b705cd9e">run</a>() = 0;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a">exit</a>() = 0;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_abstract_state.html#a849114d39ed3aeb7be8c137dcd6efd67">draw</a>() = 0;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif // ABSTRACTSTATE_H</span></div>
 <div class="ttc" id="class_abstract_state_html_a12e500a1e81bcb710d6b50aa99695e3a"><div class="ttname"><a href="class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a">AbstractState::exit</a></div><div class="ttdeci">virtual void exit()=0</div><div class="ttdoc">Exits the current state and cleans up all allocated resources. </div></div>
 <div class="ttc" id="class_abstract_state_html_afdda3d13dbad7a41987c9e05b705cd9e"><div class="ttname"><a href="class_abstract_state.html#afdda3d13dbad7a41987c9e05b705cd9e">AbstractState::run</a></div><div class="ttdeci">virtual AbstractState * run()=0</div><div class="ttdoc">Runs the current state and does all the work. </div></div>
-<div class="ttc" id="class_abstract_state_html"><div class="ttname"><a href="class_abstract_state.html">AbstractState</a></div><div class="ttdoc">Interface for modelling a game state. </div><div class="ttdef"><b>Definition:</b> AbstractState.h:8</div></div>
+<div class="ttc" id="class_abstract_state_html"><div class="ttname"><a href="class_abstract_state.html">AbstractState</a></div><div class="ttdoc">Interface for modelling a game state. </div><div class="ttdef"><b>Definition:</b> AbstractState.h:40</div></div>
 <div class="ttc" id="class_abstract_state_html_a849114d39ed3aeb7be8c137dcd6efd67"><div class="ttname"><a href="class_abstract_state.html#a849114d39ed3aeb7be8c137dcd6efd67">AbstractState::draw</a></div><div class="ttdeci">virtual void draw()=0</div><div class="ttdoc">Draws something state related stuff on the screen. </div></div>
 <div class="ttc" id="class_abstract_state_html_a6c54a7c162cd2bce6ddb83d5eef8ec4c"><div class="ttname"><a href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">AbstractState::enter</a></div><div class="ttdeci">virtual void enter()=0</div><div class="ttdoc">Enters the state for the first time. This will setup all the state related stuff. ...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:41 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

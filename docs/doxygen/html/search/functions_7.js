@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['join',['join',['../class_abstract_game_logic.html#a2f87090c8542b9f15d3271ddc8b428f3',1,'AbstractGameLogic']]]
+  ['hasblackpieces',['hasBlackPieces',['../class_chess_board.html#ab54fd0c9f3287221eb5d088d637fb2f3',1,'ChessBoard']]],
+  ['hashfullboard',['hashFullBoard',['../class_incremental_zobrist_hasher.html#a33490b31dfc4fb61a983c4fcd3502d32',1,'IncrementalZobristHasher']]],
+  ['hasstopped',['hasStopped',['../class_animation_helper.html#aecc3321ed8fdb198f8e263a4213194e9',1,'AnimationHelper']]],
+  ['haswhitepieces',['hasWhitePieces',['../class_chess_board.html#aa0e0a4215f74f15349b29ef7a8863845',1,'ChessBoard']]]
 ];

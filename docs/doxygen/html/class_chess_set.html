@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_chess_set-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -97,11 +98,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_chess_set_8h_source.html">ChessSet.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a95069b2fabc31ca076a9f9f8219a6b97"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a> { <b>NORMAL</b>, 
+<b>CURSOR</b>, 
+<b>MOVE</b>, 
+<b>CASTLE</b>
+ }</td></tr>
+<tr class="memdesc:a95069b2fabc31ca076a9f9f8219a6b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">The style type for a tile. <br/></td></tr>
+<tr class="separator:a95069b2fabc31ca076a9f9f8219a6b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5d04af40b68e900243871baf71f77f27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d04af40b68e900243871baf71f77f27"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a5d04af40b68e900243871baf71f77f27">ChessSet</a> ()</td></tr>
+<tr class="memdesc:a5d04af40b68e900243871baf71f77f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new chess set. <br/></td></tr>
+<tr class="separator:a5d04af40b68e900243871baf71f77f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163c62da1c890672b3577c9f4f3a667c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a163c62da1c890672b3577c9f4f3a667c">setState</a> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state, PlayerColor lastPlayer, <a class="el" href="class_turn.html">Turn</a> lastTurn)</td></tr>
 <tr class="memdesc:a163c62da1c890672b3577c9f4f3a667c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the new chess state.  <a href="#a163c62da1c890672b3577c9f4f3a667c">More...</a><br/></td></tr>
 <tr class="separator:a163c62da1c890672b3577c9f4f3a667c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dfa063aaac2bd529439064ea1ba5234"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a1dfa063aaac2bd529439064ea1ba5234">drawActionTileAt</a> (Field which, <a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a> style)</td></tr>
+<tr class="memdesc:a1dfa063aaac2bd529439064ea1ba5234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an action tile at a given field with a given style.  <a href="#a1dfa063aaac2bd529439064ea1ba5234">More...</a><br/></td></tr>
+<tr class="separator:a1dfa063aaac2bd529439064ea1ba5234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34038529052aefb5b16813c08d36f1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a34038529052aefb5b16813c08d36f1b9">getResourcesCount</a> ()</td></tr>
 <tr class="memdesc:a34038529052aefb5b16813c08d36f1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of big resources which must be loaded for initializing the <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>.  <a href="#a34038529052aefb5b16813c08d36f1b9">More...</a><br/></td></tr>
 <tr class="separator:a34038529052aefb5b16813c08d36f1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +137,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a> holds all the figures together with the board needed for the chess game. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a1dfa063aaac2bd529439064ea1ba5234"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::drawActionTileAt </td>
+          <td>(</td>
+          <td class="paramtype">Field&#160;</td>
+          <td class="paramname"><em>which</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws an action tile at a given field with a given style. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">which</td><td>The field where the tile should be drawn. </td></tr>
+    <tr><td class="paramname">style</td><td>The action tile's style. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a34038529052aefb5b16813c08d36f1b9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

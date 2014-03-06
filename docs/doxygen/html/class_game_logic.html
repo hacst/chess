@@ -107,9 +107,9 @@ Inheritance diagram for GameLogic:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af44e39ec0e4382183eafa011c9efb2bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#af44e39ec0e4382183eafa011c9efb2bf">GameLogic</a> (AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config)</td></tr>
-<tr class="memdesc:af44e39ec0e4382183eafa011c9efb2bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up a <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> object for one chess game.  <a href="#af44e39ec0e4382183eafa011c9efb2bf">More...</a><br/></td></tr>
-<tr class="separator:af44e39ec0e4382183eafa011c9efb2bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4aa2c551f2bfa79a7a2e90217261018"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#ac4aa2c551f2bfa79a7a2e90217261018">GameLogic</a> (AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config, <a class="el" href="class_game_state.html">GameState</a> initialGameState=<a class="el" href="class_game_state.html">GameState</a>())</td></tr>
+<tr class="memdesc:ac4aa2c551f2bfa79a7a2e90217261018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up a <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> object for one chess game.  <a href="#ac4aa2c551f2bfa79a7a2e90217261018">More...</a><br/></td></tr>
+<tr class="separator:ac4aa2c551f2bfa79a7a2e90217261018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae844f6285e60069594377c6140faf5ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae844f6285e60069594377c6140faf5ef"></a>
 virtual AbstractPlayerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>getWhitePlayer</b> () const override</td></tr>
 <tr class="separator:ae844f6285e60069594377c6140faf5ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +149,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> implementation for a game of chess with observers. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="af44e39ec0e4382183eafa011c9efb2bf"></a>
+<a class="anchor" id="ac4aa2c551f2bfa79a7a2e90217261018"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -169,7 +169,13 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">GameConfigurationPtr&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a>&#160;</td>
+          <td class="paramname"><em>initialGameState</em> = <code><a class="el" href="class_game_state.html">GameState</a>()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -186,6 +192,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
     <tr><td class="paramname">white</td><td>White player reference </td></tr>
     <tr><td class="paramname">black</td><td>Black player reference </td></tr>
     <tr><td class="paramname">config</td><td>Configuration for this game </td></tr>
+    <tr><td class="paramname">initialGameState</td><td>Initial state when starting the game </td></tr>
   </table>
   </dd>
 </dl>
@@ -248,7 +255,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> currently used. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> currently used. </dd></dl>
 
 <p>Implements <a class="el" href="class_abstract_game_logic.html#a7a3d2369e905cbc22cde69f3eb30e47b">AbstractGameLogic</a>.</p>
 
@@ -313,7 +320,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

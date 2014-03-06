@@ -96,10 +96,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a37c32ff26937b1394f85ff8de898922f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>Action</b> { <b>Move</b>, 
+<tr class="memitem:a37c32ff26937b1394f85ff8de898922f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>Action</b> { <br/>
+&#160;&#160;<b>Move</b>, 
 <b>Castle</b>, 
 <b>Forfeit</b>, 
-<b>Pass</b>
+<b>Pass</b>, 
+<br/>
+&#160;&#160;<b>PromotionQueen</b>, 
+<b>PromotionBishop</b>, 
+<b>PromotionKnight</b>, 
+<b>PromotionRook</b>
+<br/>
  }</td></tr>
 <tr class="separator:a37c32ff26937b1394f85ff8de898922f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -108,6 +115,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a28fde668986da6b0153ea09aa25af623"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28fde668986da6b0153ea09aa25af623"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Turn</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to, Action action)</td></tr>
 <tr class="separator:a28fde668986da6b0153ea09aa25af623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abadbaefe20a6245975c0de0fd6b5c2e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abadbaefe20a6245975c0de0fd6b5c2e2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isMove</b> () const </td></tr>
+<tr class="separator:abadbaefe20a6245975c0de0fd6b5c2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab80f8406ebe519148300791fd02af15c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab80f8406ebe519148300791fd02af15c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCastling</b> () const </td></tr>
+<tr class="separator:ab80f8406ebe519148300791fd02af15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5070dcefee0473cc075a60669bea03b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5070dcefee0473cc075a60669bea03b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isPromotion</b> () const </td></tr>
+<tr class="separator:aa5070dcefee0473cc075a60669bea03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f869b1f519554a46abc48726e24dfe7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f869b1f519554a46abc48726e24dfe7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isForfeit</b> () const </td></tr>
+<tr class="separator:a7f869b1f519554a46abc48726e24dfe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba353a3aacf9c6a99904092e6925080"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ba353a3aacf9c6a99904092e6925080"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isPass</b> () const </td></tr>
+<tr class="separator:a0ba353a3aacf9c6a99904092e6925080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5935bd3762e5547cbaecb79cb712b62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5935bd3762e5547cbaecb79cb712b62"></a>
+PieceType&#160;</td><td class="memItemRight" valign="bottom"><b>getPromotionPieceType</b> () const </td></tr>
+<tr class="separator:af5935bd3762e5547cbaecb79cb712b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac855f50310a7bc109ef1043d0d23e20a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac855f50310a7bc109ef1043d0d23e20a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="class_turn.html">Turn</a> &amp;other) const </td></tr>
 <tr class="separator:ac855f50310a7bc109ef1043d0d23e20a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +148,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a08e5c0312464a870b9fdf6bf51c3e912"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08e5c0312464a870b9fdf6bf51c3e912"></a>
 static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>move</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
 <tr class="separator:a08e5c0312464a870b9fdf6bf51c3e912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf0bf8a688e4d1e946618e993ec319c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf0bf8a688e4d1e946618e993ec319c9"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>castle</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
+<tr class="separator:abf0bf8a688e4d1e946618e993ec319c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500d3377d00c8d72d14093369c3ac8ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a500d3377d00c8d72d14093369c3ac8ba"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>promotionQueen</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
+<tr class="separator:a500d3377d00c8d72d14093369c3ac8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9aa054c739e390fd43836002e86e97d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9aa054c739e390fd43836002e86e97d"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>promotionBishop</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
+<tr class="separator:aa9aa054c739e390fd43836002e86e97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a678b150295cd11271733c303ecd33bce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a678b150295cd11271733c303ecd33bce"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>promotionRook</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
+<tr class="separator:a678b150295cd11271733c303ecd33bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5101eeb17690b70f0722147b06a4b135"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5101eeb17690b70f0722147b06a4b135"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>promotionKnight</b> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, Field to)</td></tr>
+<tr class="separator:a5101eeb17690b70f0722147b06a4b135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a163154d82416e264c24a690535b5ff7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a163154d82416e264c24a690535b5ff7b"></a>
+static <a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pass</b> (PlayerColor player)</td></tr>
+<tr class="separator:a163154d82416e264c24a690535b5ff7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -146,7 +189,7 @@ enum Turn::Action&#160;</td><td class="memItemRight" valign="bottom"><b>action</
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

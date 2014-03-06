@@ -79,6 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow4" class="tabs3">
     <ul class="tablist">
       <li><a href="functions.html#index_a"><span>a</span></a></li>
+      <li><a href="functions_b.html#index_b"><span>b</span></a></li>
       <li><a href="functions_c.html#index_c"><span>c</span></a></li>
       <li><a href="functions_d.html#index_d"><span>d</span></a></li>
       <li><a href="functions_e.html#index_e"><span>e</span></a></li>
@@ -87,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_h.html#index_h"><span>h</span></a></li>
       <li><a href="functions_i.html#index_i"><span>i</span></a></li>
       <li><a href="functions_j.html#index_j"><span>j</span></a></li>
+      <li><a href="functions_k.html#index_k"><span>k</span></a></li>
       <li><a href="functions_l.html#index_l"><span>l</span></a></li>
       <li><a href="functions_m.html#index_m"><span>m</span></a></li>
       <li><a href="functions_n.html#index_n"><span>n</span></a></li>
@@ -96,7 +98,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions_s.html#index_s"><span>s</span></a></li>
       <li><a href="functions_t.html#index_t"><span>t</span></a></li>
       <li><a href="functions_u.html#index_u"><span>u</span></a></li>
-      <li><a href="functions_v.html#index_v"><span>v</span></a></li>
       <li><a href="functions_w.html#index_w"><span>w</span></a></li>
       <li><a href="functions_~.html#index_~"><span>~</span></a></li>
     </ul>
@@ -121,13 +122,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>save()
-: <a class="el" href="struct_game_configuration.html#a5c48c5464d3683185e8ddef45949c887">GameConfiguration</a>
+: <a class="el" href="class_game_configuration.html#a7ee83841195312ecabc759b191b0bdd7">GameConfiguration</a>
+, <a class="el" href="class_save_game.html#aa1ec1e1b3b92ebbdf52f0db43edbc8f6">SaveGame</a>
+</li>
+<li>saveToSlot()
+: <a class="el" href="class_save_game.html#a87500785b77ca4cada99c6a7b6840e9e">SaveGame</a>
 </li>
 <li>score
-: <a class="el" href="struct_negamax_1_1_result.html#a20c867b4a343f592d84acf4aeccc3fb6">Negamax::Result</a>
+: <a class="el" href="struct_negamax_result.html#aba9695a07875203aa6c754501e113c3b">NegamaxResult</a>
+, <a class="el" href="struct_transposition_table_entry.html#a21cb85b29cd2ce47beb1dd33142972dd">TranspositionTableEntry</a>
 </li>
 <li>search()
-: <a class="el" href="class_negamax.html#a4e5b416c180be5295fe9ab869ba75c38">Negamax</a>
+: <a class="el" href="class_negamax.html#a98943353b28ca48b5a696993fabd8a39">Negamax&lt; TGameState, AB_CUTOFF_ENABLED, MOVE_ORDERING_ENABLED, TRANSPOSITION_TABLES_ENABLED &gt;</a>
 </li>
 <li>ServiceDispatcherThread()
 : <a class="el" href="class_service_dispatcher_thread.html#a0b3eccc5281c04d103313dd82c27a55b">ServiceDispatcherThread</a>
@@ -138,8 +144,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>set3DMode()
 : <a class="el" href="class_gui_window.html#a94faebc6cc18a9fbace76aa965ffe974">GuiWindow</a>
 </li>
-<li>setCapturedPiecesList()
-: <a class="el" href="class_game_play.html#a321d7f7c274d4bb581a5531e460e66fd">GamePlay</a>
+<li>setCheckmate()
+: <a class="el" href="class_chess_board.html#a38d61076dd7630693f4284db78d16652">ChessBoard</a>
 </li>
 <li>setColor()
 : <a class="el" href="class_model.html#a355b7e9d1ba0b27dd751cc5de09789f2">Model</a>
@@ -147,12 +153,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setCorrectionValues()
 : <a class="el" href="class_model.html#a792de900907e4e86c48e4a660c9fb24b">Model</a>
 </li>
+<li>setGameState()
+: <a class="el" href="class_game_play.html#ac9a17da80920462436ef112ff66a77d5">GamePlay</a>
+</li>
+<li>setKingInCheck()
+: <a class="el" href="class_chess_board.html#ad693b43b092dc20452118a3a7b4d1b5a">ChessBoard</a>
+</li>
 <li>setNextState()
 : <a class="el" href="class_state_machine.html#a471eec25e55ac65fb8f1d1faccdd8a0e">StateMachine</a>
 </li>
 <li>setPosition()
 : <a class="el" href="class_menu2_d_item.html#a5ebd05ac029239426ed6b3c353368178">Menu2DItem</a>
 , <a class="el" href="class_model.html#a8216b9b38a0184e26c879d304086da86">Model</a>
+</li>
+<li>setStalemate()
+: <a class="el" href="class_chess_board.html#a29ae57f7e0c6d57da5d8711262335be6">ChessBoard</a>
 </li>
 <li>setStartNowOrKeepIt()
 : <a class="el" href="class_animation_helper.html#a74d1d1a881eca49206047bb1fad3353c">AnimationHelper</a>
@@ -164,13 +179,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_chess_set.html#a163c62da1c890672b3577c9f4f3a667c">ChessSet</a>
 , <a class="el" href="class_game_play.html#a18222d37c08887971467a535226c6b72">GamePlay</a>
 </li>
-<li>shortCastleRight
-: <a class="el" href="class_chess_board.html#a4eade4ddb147180375efe1486b8de737">ChessBoard</a>
-</li>
 <li>start()
 : <a class="el" href="class_abstract_game_logic.html#a8dd1e091416320558bca6e04b49f88fb">AbstractGameLogic</a>
 , <a class="el" href="class_a_i_player.html#a336f11fe775c5f06275359f1b58d2c66">AIPlayer</a>
 , <a class="el" href="class_service_dispatcher_thread.html#a4767fc26a82b644b3d8650a6036d1b0b">ServiceDispatcherThread</a>
+</li>
+<li>startShowText()
+: <a class="el" href="class_game_play.html#a7cfdf90a24b76b71d01d292337e080ee">GamePlay</a>
 </li>
 <li>States
 : <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">AIPlayer</a>
@@ -186,6 +201,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>swapFrameBufferNow()
 : <a class="el" href="class_gui_window.html#a85e3a1d988c00ed92ce7ae75b12f18b9">GuiWindow</a>
 </li>
+<li>switchToPlayerColor()
+: <a class="el" href="class_game_play.html#a0f24d5ef62fec459a516bd4106a67ee4">GamePlay</a>
+</li>
 <li>switchWindowMode()
 : <a class="el" href="class_gui_window.html#a78c90c42292e90a3d40ac0ff95d75f1a">GuiWindow</a>
 </li>
@@ -193,7 +211,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

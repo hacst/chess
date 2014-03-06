@@ -1,4 +1,4 @@
-#ifndef GAMESTATE_H
+ï»¿#ifndef GAMESTATE_H
 #define GAMESTATE_H
 
 #include "ChessTypes.h"
@@ -42,7 +42,7 @@ public:
     Hash getHash() const;
 
     /**
-    * @brief Create a GameState from a Forsyth–Edwards Notation string.
+    * @brief Create a GameState from a Forsyth-Edwards Notation string.
     * http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
     * @warning This function does no validation. Do not pass invalid FEN.
     * @param fen FEN String.

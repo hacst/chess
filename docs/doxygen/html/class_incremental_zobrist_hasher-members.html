@@ -84,17 +84,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">IncrementalZobristHasher&lt; THASH, SEED &gt; Member List</div>  </div>
+<div class="title">IncrementalZobristHasher Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher&lt; THASH, SEED &gt;</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IncrementalZobristHasher</b>() (defined in <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher&lt; THASH, SEED &gt;</a>)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher&lt; THASH, SEED &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#ad2680c1df10afa1a06567640072a92e9">captureIncrement</a>(Field field, const Piece &amp;capturedPiece)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#a01586dea4454cafca0c37f768345b0fa">clearedEnPassantSquare</a>(Field enPassantSquare)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#a530f18eb0855801b543ea8e36f081981">getHash</a>() const </td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>Hash</b> typedef (defined in <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#a33490b31dfc4fb61a983c4fcd3502d32">hashFullBoard</a>(const ChessBoard &amp;board)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>IncrementalZobristHasher</b>() (defined in <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>IncrementalZobristHasher</b>(const ChessBoard &amp;board) (defined in <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#aa6a276edc1054076124fe5cc571c674b">moveIncrement</a>(const Turn &amp;turn)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#a642419004aa54eac26e34a904fa1a817">newEnPassantPossibility</a>(const Turn &amp;turn, BitBoard opposingPawns)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>operator==</b>(const IncrementalZobristHasher &amp;other) const  (defined in <a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#afb954ffe137b5ce637105524789c14cb">promotionIncrement</a>(const Turn &amp;turn, PieceType targetType)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#a4f29fad21eb8f671880ee786909faf89">turnAppliedIncrement</a>()</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html#acb61d3496b774750303d6d505ac70cba">updateCastlingRights</a>(const std::array&lt; bool, NUM_PLAYERS &gt; &amp;prevShortCastleLeft, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;prevLongCastleRight, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;shortCastleRight, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;longCastleRight)</td><td class="entry"><a class="el" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:44 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

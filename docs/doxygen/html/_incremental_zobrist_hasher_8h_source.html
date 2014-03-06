@@ -88,36 +88,133 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">IncrementalZobristHasher.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef INCREMENTALZOBRISTHASHER_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define INCREMENTALZOBRISTHASHER_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;logic/ChessTypes.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> THASH, u<span class="keywordtype">int</span>64_t SEED = 46170&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_incremental_zobrist_hasher.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a> {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span>Constants {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        Constants();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        std::array&lt;std::array&lt;THASH, NUM_FIELDS&gt;, NUM_PIECETYPES&gt; pieceSquares;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        THASH sideToMove;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        std::array&lt;THASH, 4&gt; castlingRights;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        std::array&lt;THASH, NUM_FILES&gt; enPassantRights;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    } m_constants;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">using</span> <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher64</a> = <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher&lt;uint64_t&gt;</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif INCREMENTALZOBRISTHASHER_H</span></div>
-<div class="ttc" id="class_incremental_zobrist_hasher_html"><div class="ttname"><a href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></div><div class="ttdoc">Zobrist-Hash implementation. Uses mt19937 to initialize from a fixed seed 452134. ...</div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.h:12</div></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Copyright (c) 2013-2014, Stefan Hacker &lt;dd0t@users.sourceforge.net&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    All rights reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">    Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    2. Redistributions in binary form must reproduce the above copyright</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    notice, this list of conditions and the following disclaimer in the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    documentation and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    3. Neither the name of the copyright holder nor the names of its</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    contributors may be used to endorse or promote products derived from</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    this software without specific prior written permission.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef INCREMENTALZOBRISTHASHER_H</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define INCREMENTALZOBRISTHASHER_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;logic/ChessTypes.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">class </span><a class="code" href="class_chess_board.html">ChessBoard</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">class </span><a class="code" href="class_turn.html">Turn</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_incremental_zobrist_hasher.html">   44</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a> {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>(<span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; board);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">using</span> Hash = uint64_t;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">static</span> Hash <a class="code" href="class_incremental_zobrist_hasher.html#a33490b31dfc4fb61a983c4fcd3502d32">hashFullBoard</a>(<span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; board);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    Hash <a class="code" href="class_incremental_zobrist_hasher.html#a530f18eb0855801b543ea8e36f081981">getHash</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#a01586dea4454cafca0c37f768345b0fa">clearedEnPassantSquare</a>(Field enPassantSquare);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#aa6a276edc1054076124fe5cc571c674b">moveIncrement</a>(<span class="keyword">const</span> <a class="code" href="class_turn.html">Turn</a>&amp; turn);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#afb954ffe137b5ce637105524789c14cb">promotionIncrement</a>(<span class="keyword">const</span> <a class="code" href="class_turn.html">Turn</a>&amp; turn, PieceType targetType);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#ad2680c1df10afa1a06567640072a92e9">captureIncrement</a>(Field field, <span class="keyword">const</span> <a class="code" href="struct_piece.html">Piece</a>&amp; capturedPiece);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#a4f29fad21eb8f671880ee786909faf89">turnAppliedIncrement</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#a642419004aa54eac26e34a904fa1a817">newEnPassantPossibility</a>(<span class="keyword">const</span> <a class="code" href="class_turn.html">Turn</a>&amp; turn, BitBoard opposingPawns);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_incremental_zobrist_hasher.html#acb61d3496b774750303d6d505ac70cba">updateCastlingRights</a>(</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">const</span> std::array&lt;bool, NUM_PLAYERS&gt;&amp; prevShortCastleLeft,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">const</span> std::array&lt;bool, NUM_PLAYERS&gt;&amp; prevLongCastleRight,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">const</span> std::array&lt;bool, NUM_PLAYERS&gt;&amp; shortCastleRight,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">const</span> std::array&lt;bool, NUM_PLAYERS&gt;&amp; longCastleRight</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    );</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a>&amp; other) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> isPolyglotEnPassant(<span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; board);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    Hash m_hash;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">bool</span> m_isEnPassantApplied;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">class </span>HashConstants {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        HashConstants();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">inline</span> Hash forPieceSquare(PieceType pieceType, Field field, PlayerColor playerColor)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">return</span> pieceSquares[pieceType][playerColor][field];</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">inline</span> Hash forCastlingRightsShort(PlayerColor player)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> castlingRightsShort[player];</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">inline</span> Hash forCastlingRightsLong(PlayerColor player)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">return</span> castlingRightsLong[player];</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">inline</span> Hash forEnPassantRights(File file)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">return</span> enPassantRights[file];</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">inline</span> Hash forSideToMove(PlayerColor player)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordflow">return</span> player == White ? sideToMove : 0ULL;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        std::array&lt;std::array&lt;std::array&lt;Hash, NUM_FIELDS&gt;, NUM_PLAYERS&gt;, NUM_PIECETYPES&gt; pieceSquares;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        Hash sideToMove;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::array&lt;Hash, NUM_PLAYERS&gt; castlingRightsShort;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        std::array&lt;Hash, NUM_PLAYERS&gt; castlingRightsLong;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        std::array&lt;Hash, NUM_FILES&gt; enPassantRights;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    };</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keyword">const</span> <span class="keyword">static</span> HashConstants m_hashConstants;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;};</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#endif //INCREMENTALZOBRISTHASHER_H</span></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_afb954ffe137b5ce637105524789c14cb"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#afb954ffe137b5ce637105524789c14cb">IncrementalZobristHasher::promotionIncrement</a></div><div class="ttdeci">void promotionIncrement(const Turn &amp;turn, PieceType targetType)</div><div class="ttdoc">Called for the promotion of a pawn. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:266</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_a642419004aa54eac26e34a904fa1a817"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#a642419004aa54eac26e34a904fa1a817">IncrementalZobristHasher::newEnPassantPossibility</a></div><div class="ttdeci">void newEnPassantPossibility(const Turn &amp;turn, BitBoard opposingPawns)</div><div class="ttdoc">Called when turn might give the enemy an en passant possibility. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:276</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_a530f18eb0855801b543ea8e36f081981"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#a530f18eb0855801b543ea8e36f081981">IncrementalZobristHasher::getHash</a></div><div class="ttdeci">Hash getHash() const </div><div class="ttdoc">Returns the current zobrist hash. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:244</div></div>
+<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:6</div></div>
+<div class="ttc" id="struct_piece_html"><div class="ttname"><a href="struct_piece.html">Piece</a></div><div class="ttdef"><b>Definition:</b> ChessTypes.h:108</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_a01586dea4454cafca0c37f768345b0fa"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#a01586dea4454cafca0c37f768345b0fa">IncrementalZobristHasher::clearedEnPassantSquare</a></div><div class="ttdeci">void clearedEnPassantSquare(Field enPassantSquare)</div><div class="ttdoc">Called when the en passant field is cleared. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:250</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html"><div class="ttname"><a href="class_incremental_zobrist_hasher.html">IncrementalZobristHasher</a></div><div class="ttdoc">Incremental polyglot constants based Zobrist-Hash implementation. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.h:44</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_a4f29fad21eb8f671880ee786909faf89"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#a4f29fad21eb8f671880ee786909faf89">IncrementalZobristHasher::turnAppliedIncrement</a></div><div class="ttdeci">void turnAppliedIncrement()</div><div class="ttdoc">Updates hash for now active player. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:271</div></div>
+<div class="ttc" id="class_chess_board_html"><div class="ttname"><a href="class_chess_board.html">ChessBoard</a></div><div class="ttdoc">Chessboard representation and logic implementation. </div><div class="ttdef"><b>Definition:</b> ChessBoard.h:66</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_aa6a276edc1054076124fe5cc571c674b"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#aa6a276edc1054076124fe5cc571c674b">IncrementalZobristHasher::moveIncrement</a></div><div class="ttdeci">void moveIncrement(const Turn &amp;turn)</div><div class="ttdoc">Called for a move update. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:257</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_ad2680c1df10afa1a06567640072a92e9"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#ad2680c1df10afa1a06567640072a92e9">IncrementalZobristHasher::captureIncrement</a></div><div class="ttdeci">void captureIncrement(Field field, const Piece &amp;capturedPiece)</div><div class="ttdoc">Called when a piece is captured. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:262</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_acb61d3496b774750303d6d505ac70cba"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#acb61d3496b774750303d6d505ac70cba">IncrementalZobristHasher::updateCastlingRights</a></div><div class="ttdeci">void updateCastlingRights(const std::array&lt; bool, NUM_PLAYERS &gt; &amp;prevShortCastleLeft, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;prevLongCastleRight, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;shortCastleRight, const std::array&lt; bool, NUM_PLAYERS &gt; &amp;longCastleRight)</div><div class="ttdoc">Called to potentially update castling rights. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:290</div></div>
+<div class="ttc" id="class_incremental_zobrist_hasher_html_a33490b31dfc4fb61a983c4fcd3502d32"><div class="ttname"><a href="class_incremental_zobrist_hasher.html#a33490b31dfc4fb61a983c4fcd3502d32">IncrementalZobristHasher::hashFullBoard</a></div><div class="ttdeci">static Hash hashFullBoard(const ChessBoard &amp;board)</div><div class="ttdoc">Gives a full estimate for the given board. </div><div class="ttdef"><b>Definition:</b> IncrementalZobristHasher.cpp:200</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:41 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

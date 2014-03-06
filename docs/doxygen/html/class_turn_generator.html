@@ -85,78 +85,139 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_turn_generator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">TurnGenerator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="class_turn.html">Turn</a> generation (based on bitboards) and gameover detection.  
+ <a href="class_turn_generator.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_turn_generator_8h_source.html">TurnGenerator.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a73ea151b2815df6c74caae336efb015e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73ea151b2815df6c74caae336efb015e"></a>
-virtual std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>generateTurns</b> (PlayerColor player, const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb) const </td></tr>
-<tr class="separator:a73ea151b2815df6c74caae336efb015e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea3ac1289ab0a4a81a70236aba57c793"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea3ac1289ab0a4a81a70236aba57c793"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcTurns</b> (<a class="el" href="struct_piece.html">Piece</a> piece, BitBoard bbPiece, const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb) const </td></tr>
-<tr class="separator:aea3ac1289ab0a4a81a70236aba57c793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39bab13b2a1266e3b95af36800a90a91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39bab13b2a1266e3b95af36800a90a91"></a>
-virtual std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bitBoardToTurns</b> (<a class="el" href="struct_piece.html">Piece</a> piece, BitBoard bbPiece, BitBoard bbTurns) const </td></tr>
-<tr class="separator:a39bab13b2a1266e3b95af36800a90a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1946cb6d1cc922559bb226003f760673"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1946cb6d1cc922559bb226003f760673"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcKingTurns</b> (BitBoard king, BitBoard allOwnPieces) const </td></tr>
-<tr class="separator:a1946cb6d1cc922559bb226003f760673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a901a67974d00f2dae1ba4bb41125c182"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a901a67974d00f2dae1ba4bb41125c182"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_turn_generator.html#a901a67974d00f2dae1ba4bb41125c182">initFlags</a> (<a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb)</td></tr>
+<tr class="memdesc:a901a67974d00f2dae1ba4bb41125c182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the kingInCheck-Flag, based on the given chessboard. <br/></td></tr>
+<tr class="separator:a901a67974d00f2dae1ba4bb41125c182"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0384eb02e315f54b6067c555d0f4c483"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_turn_generator.html#a0384eb02e315f54b6067c555d0f4c483">getTurnList</a> () const </td></tr>
+<tr class="memdesc:a0384eb02e315f54b6067c555d0f4c483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the generated turns.  <a href="#a0384eb02e315f54b6067c555d0f4c483">More...</a><br/></td></tr>
+<tr class="separator:a0384eb02e315f54b6067c555d0f4c483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318217970ffe693af8421de2e79d6c3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a318217970ffe693af8421de2e79d6c3e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_turn_generator.html#a318217970ffe693af8421de2e79d6c3e">generateTurns</a> (PlayerColor player, <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb)</td></tr>
+<tr class="memdesc:a318217970ffe693af8421de2e79d6c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates turns for the given player color, based on the given chessboard. <br/></td></tr>
+<tr class="separator:a318217970ffe693af8421de2e79d6c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181e5264fcc80321f693d2a2c2537b6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a181e5264fcc80321f693d2a2c2537b6e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_turn_generator.html#a181e5264fcc80321f693d2a2c2537b6e">bitBoardToTurns</a> (<a class="el" href="struct_piece.html">Piece</a> piece, Field from, BitBoard bbTurns, BitBoard bbAllOppTurns, <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb, Turns &amp;turnsOut)</td></tr>
+<tr class="memdesc:a181e5264fcc80321f693d2a2c2537b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates turn objects from bitboards adds it to turnsOut list. <br/></td></tr>
+<tr class="separator:a181e5264fcc80321f693d2a2c2537b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12850a7a31ce7573c1097044cbae42a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af12850a7a31ce7573c1097044cbae42a"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcMoveTurns</b> (<a class="el" href="struct_piece.html">Piece</a> piece, BitBoard bbPiece, BitBoard bbAllOppTurns, const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb)</td></tr>
+<tr class="separator:af12850a7a31ce7573c1097044cbae42a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a224a17e671919ac22dbc35dd6a792d98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a224a17e671919ac22dbc35dd6a792d98"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcUnCheckFields</b> (PlayerColor opp, const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb)</td></tr>
+<tr class="separator:a224a17e671919ac22dbc35dd6a792d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adccfc165f4f7f080beffb234c28960e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adccfc165f4f7f080beffb234c28960e6"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcAllOppTurns</b> (PlayerColor opp, const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;cb)</td></tr>
+<tr class="separator:adccfc165f4f7f080beffb234c28960e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077bac9879610b9ad897cbcca01105c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a077bac9879610b9ad897cbcca01105c2"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcShortCastleTurns</b> (PlayerColor player, BitBoard bbAllPieces, BitBoard bbAllOppTurns)</td></tr>
+<tr class="separator:a077bac9879610b9ad897cbcca01105c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add849200f2254c17e9e8ab987e611148"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add849200f2254c17e9e8ab987e611148"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcLongCastleTurns</b> (PlayerColor player, BitBoard bbAllPieces, BitBoard bbAllOppTurns)</td></tr>
+<tr class="separator:add849200f2254c17e9e8ab987e611148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aaa7762ce20947f3ddf3639b59beb2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5aaa7762ce20947f3ddf3639b59beb2b"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcKingTurns</b> (BitBoard king, BitBoard allOwnPieces, BitBoard allOppTurns) const </td></tr>
+<tr class="separator:a5aaa7762ce20947f3ddf3639b59beb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef51b56a2cf9fb8bb0edb0b32d291430"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef51b56a2cf9fb8bb0edb0b32d291430"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcKnightTurns</b> (BitBoard knights, BitBoard allOwnPieces) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcKnightTurns</b> (BitBoard knights, BitBoard allOwnPieces) const </td></tr>
 <tr class="separator:aef51b56a2cf9fb8bb0edb0b32d291430"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5e6220053f1d268e4d1479baa7ce8b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5e6220053f1d268e4d1479baa7ce8b7"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcPawnTurns</b> (BitBoard pawns, BitBoard allOppPieces, BitBoard allPieces, PlayerColor player) const </td></tr>
-<tr class="separator:ad5e6220053f1d268e4d1479baa7ce8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a386a6d3eedb47d341a5cd0e5e3b9a29a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a386a6d3eedb47d341a5cd0e5e3b9a29a"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcPawnTurns</b> (BitBoard pawns, BitBoard allPieces, BitBoard allOppPieces, PlayerColor player, Field enPassantSquare) const </td></tr>
+<tr class="separator:a386a6d3eedb47d341a5cd0e5e3b9a29a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29167d369084a34b22b2325483b63642"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29167d369084a34b22b2325483b63642"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcPawnMoveTurns</b> (BitBoard pawns, BitBoard allPieces, PlayerColor player) const </td></tr>
+<tr class="separator:a29167d369084a34b22b2325483b63642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaab277f1915430686c0144eaedc8ebf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acaab277f1915430686c0144eaedc8ebf"></a>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcPawnAttackTurns</b> (BitBoard pawns, BitBoard allOppPieces, PlayerColor player, Field enPassantSquare) const </td></tr>
+<tr class="separator:acaab277f1915430686c0144eaedc8ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af269bb21e15aefbfa6ec180c3de939d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af269bb21e15aefbfa6ec180c3de939d1"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcQueenTurns</b> (BitBoard queens, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcQueenTurns</b> (BitBoard queens, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
 <tr class="separator:af269bb21e15aefbfa6ec180c3de939d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22ecf43e72f2f125da5439e67fbe93a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22ecf43e72f2f125da5439e67fbe93a6"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcBishopTurns</b> (BitBoard bishops, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcBishopTurns</b> (BitBoard bishops, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
 <tr class="separator:a22ecf43e72f2f125da5439e67fbe93a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd8d2537613b1610e404d1788e689eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafd8d2537613b1610e404d1788e689eb"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcRookTurns</b> (BitBoard rooks, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>calcRookTurns</b> (BitBoard rooks, BitBoard allOppPieces, BitBoard allPieces) const </td></tr>
 <tr class="separator:aafd8d2537613b1610e404d1788e689eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3e9d756538431e25b61ca8fbd2d8db5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3e9d756538431e25b61ca8fbd2d8db5"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>maskRank</b> (Rank rank) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>maskRank</b> (Rank rank) const </td></tr>
 <tr class="separator:ac3e9d756538431e25b61ca8fbd2d8db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77f0dccee60b9b1fc61a49623a2e3dde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77f0dccee60b9b1fc61a49623a2e3dde"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>clearRank</b> (Rank rank) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>clearRank</b> (Rank rank) const </td></tr>
 <tr class="separator:a77f0dccee60b9b1fc61a49623a2e3dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e6325e815518bf8e12e5a75845c176a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e6325e815518bf8e12e5a75845c176a"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>maskFile</b> (File file) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>maskFile</b> (File file) const </td></tr>
 <tr class="separator:a3e6325e815518bf8e12e5a75845c176a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a673bbf024bd421cc1716b798eca58518"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a673bbf024bd421cc1716b798eca58518"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>clearFile</b> (File file) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>clearFile</b> (File file) const </td></tr>
 <tr class="separator:a673bbf024bd421cc1716b798eca58518"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aff33cf8d8a87769d9200374d95e5ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6aff33cf8d8a87769d9200374d95e5ae"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsE</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsE</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a6aff33cf8d8a87769d9200374d95e5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3cebd08e52bf1841ef773872c842ef6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3cebd08e52bf1841ef773872c842ef6"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsW</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsW</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:aa3cebd08e52bf1841ef773872c842ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4274308449bceb7104a3422d90d7ac32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4274308449bceb7104a3422d90d7ac32"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsN</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsN</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a4274308449bceb7104a3422d90d7ac32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a913a5f193be260a58eef2de39924da0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a913a5f193be260a58eef2de39924da0d"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsS</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsS</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a913a5f193be260a58eef2de39924da0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fc5845cfaa7c822771d31684c8838de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fc5845cfaa7c822771d31684c8838de"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsNE</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsNE</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a3fc5845cfaa7c822771d31684c8838de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34d7f6cc9d06ba8f19ce781b0905e468"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34d7f6cc9d06ba8f19ce781b0905e468"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsNW</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsNW</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a34d7f6cc9d06ba8f19ce781b0905e468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8eb8c3eedb9821775c62ab9b5e5bd222"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8eb8c3eedb9821775c62ab9b5e5bd222"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsSE</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsSE</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a8eb8c3eedb9821775c62ab9b5e5bd222"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82f68c724170a150b9c0f7062facb43e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82f68c724170a150b9c0f7062facb43e"></a>
-virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsSW</b> (BitBoard bbPiece) const </td></tr>
+BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsSW</b> (BitBoard bbPiece) const </td></tr>
 <tr class="separator:a82f68c724170a150b9c0f7062facb43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0a685fa05b4c9cb6c343ec9e9c6e445a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a685fa05b4c9cb6c343ec9e9c6e445a"></a>
+std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_turn_generator.html#a0a685fa05b4c9cb6c343ec9e9c6e445a">turnList</a></td></tr>
+<tr class="memdesc:a0a685fa05b4c9cb6c343ec9e9c6e445a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the generated turns. <br/></td></tr>
+<tr class="separator:a0a685fa05b4c9cb6c343ec9e9c6e445a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="class_turn.html">Turn</a> generation (based on bitboards) and gameover detection. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0384eb02e315f54b6067c555d0f4c483"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt; TurnGenerator::getTurnList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the generated turns. </p>
+<dl class="section warning"><dt>Warning</dt><dd>The generateTurns-function needs to be called previously. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/logic/<a class="el" href="_turn_generator_8h_source.html">TurnGenerator.h</a></li>
 <li>S:/dev/3dchess/src/logic/TurnGenerator.cpp</li>
@@ -164,7 +225,7 @@ virtual BitBoard&#160;</td><td class="memItemRight" valign="bottom"><b>getBitsSW
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

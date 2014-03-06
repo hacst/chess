@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['duration',['duration',['../struct_negamax_1_1_perf_counters.html#a804df96e5d917de470bc9cf1a905c800',1,'Negamax::PerfCounters']]]
+  ['cutoffs',['cutoffs',['../struct_negamax_1_1_perf_counters.html#a4b44de710f2b2baa10d417d70df12205',1,'Negamax::PerfCounters']]]
 ];

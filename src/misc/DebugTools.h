@@ -50,6 +50,12 @@ namespace DebugTools {
  */
 std::string toInitializerList(const std::array<Piece, 64>& board);
 
+/**
+ * @brief Generates a random GameState.
+ * Emulating a games a game with up to maxTurns random moves.
+ * @param maxTurns Limit for number of moves.
+ * @param rng C++ Random number generator to use.
+ */
 template <typename Rng>
 GameState generateRandomState(size_t maxTurns, Rng& rng) {
     std::uniform_int_distribution<size_t> dst(0, maxTurns);
@@ -66,6 +72,10 @@ GameState generateRandomState(size_t maxTurns, Rng& rng) {
     return gs;
 }
 
+/**
+* @brief Generates a random Board.
+* @see generateRandomState
+*/
 template <typename Rng>
 ChessBoard generateRandomBoard(size_t maxTurns, Rng& rng) {
     return generateRandomState(maxTurns, rng).getChessBoard();

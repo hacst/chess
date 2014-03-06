@@ -95,48 +95,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;ChessBoard.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;TurnGenerator.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_game_state.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_game_state.html">GameState</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <a class="code" href="class_game_state.html">GameState</a>();</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="class_game_state.html">GameState</a>(<span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; chessBoard);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="comment">//virtual void init(SaveGame* sg);</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">virtual</span> std::vector&lt;Turn&gt;   getTurnList() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span>                applyTurn(<span class="keyword">const</span> <a class="code" href="class_turn.html">Turn</a>&amp; turn);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">virtual</span> PlayerColor         getNextPlayer() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp;   getChessBoard() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">bool</span> isGameOver() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    PlayerColor getWinner() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Score <a class="code" href="class_game_state.html#aa067eb968cebd1644a2c0cbb06ba60e7">getScore</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="class_game_state.html">GameState</a>&amp; other) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="class_game_state.html">GameState</a>&amp; other) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::string toString() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_chess_board.html">ChessBoard</a>      m_chessBoard;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="class_turn_generator.html">TurnGenerator</a>   m_turnGen;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">// TODO: replace with AbstractTurnGenerator</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//AbstractTurnGenerator m_turnGen;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">using</span> GameStatePtr = std::shared_ptr&lt;GameState&gt;;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif // GAMESTATE_H</span></div>
-<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:9</div></div>
-<div class="ttc" id="class_turn_generator_html"><div class="ttname"><a href="class_turn_generator.html">TurnGenerator</a></div><div class="ttdef"><b>Definition:</b> TurnGenerator.h:12</div></div>
-<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:9</div></div>
-<div class="ttc" id="class_chess_board_html"><div class="ttname"><a href="class_chess_board.html">ChessBoard</a></div><div class="ttdef"><b>Definition:</b> ChessBoard.h:75</div></div>
-<div class="ttc" id="class_game_state_html_aa067eb968cebd1644a2c0cbb06ba60e7"><div class="ttname"><a href="class_game_state.html#aa067eb968cebd1644a2c0cbb06ba60e7">GameState::getScore</a></div><div class="ttdeci">Score getScore() const </div><div class="ttdoc">Returns current score estimate from next players POV. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:68</div></div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="class_game_state.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_game_state.html">GameState</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="class_game_state.html">GameState</a>();</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="class_game_state.html">GameState</a>(<span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; chessBoard);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    std::vector&lt;Turn&gt; <a class="code" href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">getTurnList</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_state.html#a32e44f75df9a6d1adf1518039208ca4f">applyTurn</a>(<span class="keyword">const</span> <a class="code" href="class_turn.html">Turn</a>&amp; turn);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    PlayerColor <a class="code" href="class_game_state.html#a133b05cc437fa2b62896ee7e2b5455fd">getNextPlayer</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_chess_board.html">ChessBoard</a>&amp; <a class="code" href="class_game_state.html#a04d880769e5d7f22e4bd83f91ecf81be">getChessBoard</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="struct_piece.html">Piece</a> <a class="code" href="class_game_state.html#a70ceabd72cd7f59e3d6a499e506068b6">getLastCapturedPiece</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_state.html#a6c37ae37802e9ffbc85b0a7f8e3c16c1">isGameOver</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    PlayerColor <a class="code" href="class_game_state.html#ae40390bce82fffb2feaaea120bfb9fe3">getWinner</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_state.html#a112f6b5f422a4833ed1c6808fbe95267">isDrawDueTo50MovesRule</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    Score <a class="code" href="class_game_state.html#a5df7c9e7511889af5c397cd55713f8d2">getScore</a>(<span class="keywordtype">size_t</span> depth = 0) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    Hash <a class="code" href="class_game_state.html#a00a55833cc596f1036d11386f0fe4c66">getHash</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">static</span> <a class="code" href="class_game_state.html">GameState</a> <a class="code" href="class_game_state.html#abc119a4a9a6180f9396c92916cae29c1">fromFEN</a>(<span class="keyword">const</span> std::string&amp; fen);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    std::string <a class="code" href="class_game_state.html#aee17bb57820b9d4cfce231472e1155e4">toFEN</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="class_game_state.html">GameState</a>&amp; other) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="class_game_state.html">GameState</a>&amp; other) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    std::string toString() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">void</span> init();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="class_chess_board.html">ChessBoard</a> m_chessBoard;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="class_turn_generator.html">TurnGenerator</a> m_turnGen;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif // GAMESTATE_H</span></div>
+<div class="ttc" id="class_game_state_html_ad354cf0cd823324fbb10685eb3366b6f"><div class="ttname"><a href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">GameState::getTurnList</a></div><div class="ttdeci">std::vector&lt; Turn &gt; getTurnList() const </div><div class="ttdoc">Returns a list with all possible and legal turns. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:18</div></div>
+<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:8</div></div>
+<div class="ttc" id="class_game_state_html_a6c37ae37802e9ffbc85b0a7f8e3c16c1"><div class="ttname"><a href="class_game_state.html#a6c37ae37802e9ffbc85b0a7f8e3c16c1">GameState::isGameOver</a></div><div class="ttdeci">bool isGameOver() const </div><div class="ttdoc">Returns true if the game is over. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:35</div></div>
+<div class="ttc" id="class_game_state_html_ae40390bce82fffb2feaaea120bfb9fe3"><div class="ttname"><a href="class_game_state.html#ae40390bce82fffb2feaaea120bfb9fe3">GameState::getWinner</a></div><div class="ttdeci">PlayerColor getWinner() const </div><div class="ttdoc">Returns the winner of the game. Returns Player color or NoPlayer on draw. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:43</div></div>
+<div class="ttc" id="class_turn_generator_html"><div class="ttname"><a href="class_turn_generator.html">TurnGenerator</a></div><div class="ttdoc">Turn generation (based on bitboards) and gameover detection. </div><div class="ttdef"><b>Definition:</b> TurnGenerator.h:10</div></div>
+<div class="ttc" id="class_game_state_html_a32e44f75df9a6d1adf1518039208ca4f"><div class="ttname"><a href="class_game_state.html#a32e44f75df9a6d1adf1518039208ca4f">GameState::applyTurn</a></div><div class="ttdeci">void applyTurn(const Turn &amp;turn)</div><div class="ttdoc">Applies the given turn on current chessboard. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:22</div></div>
+<div class="ttc" id="class_game_state_html_abc119a4a9a6180f9396c92916cae29c1"><div class="ttname"><a href="class_game_state.html#abc119a4a9a6180f9396c92916cae29c1">GameState::fromFEN</a></div><div class="ttdeci">static GameState fromFEN(const std::string &amp;fen)</div><div class="ttdoc">Create a GameState from a Forsyth-Edwards Notation string. http://en.wikipedia.org/wiki/Forsyth%E2%80...</div><div class="ttdef"><b>Definition:</b> GameState.cpp:71</div></div>
+<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:6</div></div>
+<div class="ttc" id="struct_piece_html"><div class="ttname"><a href="struct_piece.html">Piece</a></div><div class="ttdef"><b>Definition:</b> ChessTypes.h:108</div></div>
+<div class="ttc" id="class_game_state_html_a04d880769e5d7f22e4bd83f91ecf81be"><div class="ttname"><a href="class_game_state.html#a04d880769e5d7f22e4bd83f91ecf81be">GameState::getChessBoard</a></div><div class="ttdeci">const ChessBoard &amp; getChessBoard() const </div><div class="ttdoc">Provides access to the chessboard. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:31</div></div>
+<div class="ttc" id="class_game_state_html_a00a55833cc596f1036d11386f0fe4c66"><div class="ttname"><a href="class_game_state.html#a00a55833cc596f1036d11386f0fe4c66">GameState::getHash</a></div><div class="ttdeci">Hash getHash() const </div><div class="ttdoc">Returns hash for current position. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:63</div></div>
+<div class="ttc" id="class_game_state_html_a133b05cc437fa2b62896ee7e2b5455fd"><div class="ttname"><a href="class_game_state.html#a133b05cc437fa2b62896ee7e2b5455fd">GameState::getNextPlayer</a></div><div class="ttdeci">PlayerColor getNextPlayer() const </div><div class="ttdoc">Return next player to make a turn. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:27</div></div>
+<div class="ttc" id="class_game_state_html_a112f6b5f422a4833ed1c6808fbe95267"><div class="ttname"><a href="class_game_state.html#a112f6b5f422a4833ed1c6808fbe95267">GameState::isDrawDueTo50MovesRule</a></div><div class="ttdeci">bool isDrawDueTo50MovesRule() const </div><div class="ttdoc">Returns true if the game is draw due to the 50 moves rule. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:39</div></div>
+<div class="ttc" id="class_chess_board_html"><div class="ttname"><a href="class_chess_board.html">ChessBoard</a></div><div class="ttdoc">Chessboard representation and logic implementation. </div><div class="ttdef"><b>Definition:</b> ChessBoard.h:66</div></div>
+<div class="ttc" id="class_game_state_html_aee17bb57820b9d4cfce231472e1155e4"><div class="ttname"><a href="class_game_state.html#aee17bb57820b9d4cfce231472e1155e4">GameState::toFEN</a></div><div class="ttdeci">std::string toFEN() const </div><div class="ttdoc">Converts the current game state into FEN notation. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:75</div></div>
+<div class="ttc" id="class_game_state_html_a5df7c9e7511889af5c397cd55713f8d2"><div class="ttname"><a href="class_game_state.html#a5df7c9e7511889af5c397cd55713f8d2">GameState::getScore</a></div><div class="ttdeci">Score getScore(size_t depth=0) const </div><div class="ttdoc">Returns current score estimate from next players POV. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:47</div></div>
+<div class="ttc" id="class_game_state_html_a70ceabd72cd7f59e3d6a499e506068b6"><div class="ttname"><a href="class_game_state.html#a70ceabd72cd7f59e3d6a499e506068b6">GameState::getLastCapturedPiece</a></div><div class="ttdeci">Piece getLastCapturedPiece() const </div><div class="ttdoc">Returns the captured piece from the last turn or Piece(NoPlayer, NoType) if no piece was captured...</div><div class="ttdef"><b>Definition:</b> GameState.cpp:51</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:41 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

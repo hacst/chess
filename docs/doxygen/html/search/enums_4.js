@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['windowmode',['WindowMode',['../class_gui_window.html#a79ab3cdd048d53881039d852b1304671',1,'GuiWindow']]]
+  ['gamemode',['GameMode',['../class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616',1,'GamePlay']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['result',['Result',['../struct_negamax_1_1_result.html',1,'Negamax']]]
+  ['resourceinitializer',['ResourceInitializer',['../class_resource_initializer.html',1,'']]]
 ];

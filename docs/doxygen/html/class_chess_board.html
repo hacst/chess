@@ -85,6 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_chess_board-members.html">List of all members</a>  </div>
@@ -92,21 +94,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ChessBoard Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Chessboard representation and logic implementation.  
+ <a href="class_chess_board.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_chess_board_8h_source.html">ChessBoard.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a995af0f3a78140ae0a7186604e1448ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a995af0f3a78140ae0a7186604e1448ed"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ChessBoard</b> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; board, PlayerColor <a class="el" href="class_chess_board.html#af48d862f43f4f0b0d4fdf366aeec0a38">nextPlayer</a>=White)</td></tr>
-<tr class="separator:a995af0f3a78140ae0a7186604e1448ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a881f9e15a01fa01017a1eb7234a1eee8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a881f9e15a01fa01017a1eb7234a1eee8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ChessBoard</b> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; board, PlayerColor nextPlayer, std::array&lt; bool, NUM_PLAYERS &gt; shortCastleRight, std::array&lt; bool, NUM_PLAYERS &gt; longCastleRight, Field enPassantSquare, int halfMoveClock, int fullMoveClock)</td></tr>
+<tr class="separator:a881f9e15a01fa01017a1eb7234a1eee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4aa36299b386ba09c0aaf40ef08a0c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4aa36299b386ba09c0aaf40ef08a0c1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>applyTurn</b> (const <a class="el" href="class_turn.html">Turn</a> &amp;t)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ab4aa36299b386ba09c0aaf40ef08a0c1">applyTurn</a> (const <a class="el" href="class_turn.html">Turn</a> &amp;t)</td></tr>
+<tr class="memdesc:ab4aa36299b386ba09c0aaf40ef08a0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the given turn on current chessboard. <br/></td></tr>
 <tr class="separator:ab4aa36299b386ba09c0aaf40ef08a0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add1b52e7b8ee41a962d59f82792e0666"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add1b52e7b8ee41a962d59f82792e0666"></a>
-std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getBoard</b> () const </td></tr>
+std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#add1b52e7b8ee41a962d59f82792e0666">getBoard</a> () const </td></tr>
+<tr class="memdesc:add1b52e7b8ee41a962d59f82792e0666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the chessboard in array representation. <br/></td></tr>
 <tr class="separator:add1b52e7b8ee41a962d59f82792e0666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80422bbe9e5c085549845da9e5400d5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80422bbe9e5c085549845da9e5400d5c"></a>
-std::vector&lt; <a class="el" href="struct_piece.html">Piece</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCapturedPieces</b> () const </td></tr>
-<tr class="separator:a80422bbe9e5c085549845da9e5400d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab54fd0c9f3287221eb5d088d637fb2f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab54fd0c9f3287221eb5d088d637fb2f3"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ab54fd0c9f3287221eb5d088d637fb2f3">hasBlackPieces</a> () const </td></tr>
 <tr class="memdesc:ab54fd0c9f3287221eb5d088d637fb2f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if black pieces are on the board. <br/></td></tr>
@@ -119,10 +125,65 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a6a8bbf77568617dcc75609861733d114">getNextPlayer</a> () const </td></tr>
 <tr class="memdesc:a6a8bbf77568617dcc75609861733d114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return next player to make a turn. <br/></td></tr>
 <tr class="separator:a6a8bbf77568617dcc75609861733d114"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa62c18a51fdb5e62591e383e28c7efce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa62c18a51fdb5e62591e383e28c7efce"></a>
-Score&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#aa62c18a51fdb5e62591e383e28c7efce">getScore</a> (PlayerColor color) const </td></tr>
-<tr class="memdesc:aa62c18a51fdb5e62591e383e28c7efce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current estimated score according to the internal estimator. <br/></td></tr>
-<tr class="separator:aa62c18a51fdb5e62591e383e28c7efce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d4081d779ec49ac4ea42bc506efe434"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d4081d779ec49ac4ea42bc506efe434"></a>
+Score&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a7d4081d779ec49ac4ea42bc506efe434">getScore</a> (PlayerColor color, size_t depth=0) const </td></tr>
+<tr class="memdesc:a7d4081d779ec49ac4ea42bc506efe434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current estimated score. <br/></td></tr>
+<tr class="separator:a7d4081d779ec49ac4ea42bc506efe434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b26faed1336dee886105a1201b619f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b26faed1336dee886105a1201b619f4"></a>
+Hash&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a1b26faed1336dee886105a1201b619f4">getHash</a> () const </td></tr>
+<tr class="memdesc:a1b26faed1336dee886105a1201b619f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns hash for current position. <br/></td></tr>
+<tr class="separator:a1b26faed1336dee886105a1201b619f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59082f27d8f96fc37de407cb77fd0ea5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59082f27d8f96fc37de407cb77fd0ea5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a59082f27d8f96fc37de407cb77fd0ea5">getHalfMoveClock</a> () const </td></tr>
+<tr class="memdesc:a59082f27d8f96fc37de407cb77fd0ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns half move clock. <br/></td></tr>
+<tr class="separator:a59082f27d8f96fc37de407cb77fd0ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cde9075f0b58d6ec2cff5672fea4bc8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cde9075f0b58d6ec2cff5672fea4bc8"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a5cde9075f0b58d6ec2cff5672fea4bc8">getFullMoveClock</a> () const </td></tr>
+<tr class="memdesc:a5cde9075f0b58d6ec2cff5672fea4bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns full move clock. <br/></td></tr>
+<tr class="separator:a5cde9075f0b58d6ec2cff5672fea4bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d372757f127000773d3cb8696f499b7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a2d372757f127000773d3cb8696f499b7">toFEN</a> () const </td></tr>
+<tr class="memdesc:a2d372757f127000773d3cb8696f499b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the current board state into FEN notation.  <a href="#a2d372757f127000773d3cb8696f499b7">More...</a><br/></td></tr>
+<tr class="separator:a2d372757f127000773d3cb8696f499b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a081989eac9f68b03db955ba68239faaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a081989eac9f68b03db955ba68239faaf"></a>
+Field&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a081989eac9f68b03db955ba68239faaf">getEnPassantSquare</a> () const </td></tr>
+<tr class="memdesc:a081989eac9f68b03db955ba68239faaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the field where en-passant rights exist. ERR if none. <br/></td></tr>
+<tr class="separator:a081989eac9f68b03db955ba68239faaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3aace2ced12ff4a3eaac1e0e3d5432b2"></a>
+std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a3aace2ced12ff4a3eaac1e0e3d5432b2">getShortCastleRights</a> () const </td></tr>
+<tr class="memdesc:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns short castle rights for players. <br/></td></tr>
+<tr class="separator:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1208d7e82f41b8e272d646bf4169c577"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1208d7e82f41b8e272d646bf4169c577"></a>
+std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a1208d7e82f41b8e272d646bf4169c577">getLongCastleRights</a> () const </td></tr>
+<tr class="memdesc:a1208d7e82f41b8e272d646bf4169c577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns long castle rights for players. <br/></td></tr>
+<tr class="separator:a1208d7e82f41b8e272d646bf4169c577"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a567e519cf53ae019112678af8e38b622"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a567e519cf53ae019112678af8e38b622"></a>
+std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a567e519cf53ae019112678af8e38b622">getKingInCheck</a> () const </td></tr>
+<tr class="memdesc:a567e519cf53ae019112678af8e38b622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the king of the player is in check or not. <br/></td></tr>
+<tr class="separator:a567e519cf53ae019112678af8e38b622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a6c01a3e1a0109e135848898025be7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4a6c01a3e1a0109e135848898025be7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ac4a6c01a3e1a0109e135848898025be7">isStalemate</a> () const </td></tr>
+<tr class="memdesc:ac4a6c01a3e1a0109e135848898025be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gameover-Flag for stalemate position (gameover, no winner). <br/></td></tr>
+<tr class="separator:ac4a6c01a3e1a0109e135848898025be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbad856fde411e1def92582c72f163a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbad856fde411e1def92582c72f163a1"></a>
+std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#adbad856fde411e1def92582c72f163a1">getCheckmate</a> () const </td></tr>
+<tr class="memdesc:adbad856fde411e1def92582c72f163a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gameover-Flag for checkmate. <br/></td></tr>
+<tr class="separator:adbad856fde411e1def92582c72f163a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7075b709c7cf0062bcbd3df8fc43f98d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7075b709c7cf0062bcbd3df8fc43f98d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a7075b709c7cf0062bcbd3df8fc43f98d">isGameOver</a> () const </td></tr>
+<tr class="memdesc:a7075b709c7cf0062bcbd3df8fc43f98d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the game is over. <br/></td></tr>
+<tr class="separator:a7075b709c7cf0062bcbd3df8fc43f98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33bf2bb0050730099562e962d69f2419"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33bf2bb0050730099562e962d69f2419"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a33bf2bb0050730099562e962d69f2419">isDrawDueTo50MovesRule</a> () const </td></tr>
+<tr class="memdesc:a33bf2bb0050730099562e962d69f2419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the game is draw due to the 50 moves rule. <br/></td></tr>
+<tr class="separator:a33bf2bb0050730099562e962d69f2419"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e177beabcbcdc6a2f59ec341b8ec4fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e177beabcbcdc6a2f59ec341b8ec4fc"></a>
+PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a4e177beabcbcdc6a2f59ec341b8ec4fc">getWinner</a> () const </td></tr>
+<tr class="memdesc:a4e177beabcbcdc6a2f59ec341b8ec4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the winner of the game. Returns Player color or NoPlayer on draw. <br/></td></tr>
+<tr class="separator:a4e177beabcbcdc6a2f59ec341b8ec4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed18d89038898d1d92f342854c295d57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed18d89038898d1d92f342854c295d57"></a>
+<a class="el" href="struct_piece.html">Piece</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#aed18d89038898d1d92f342854c295d57">getLastCapturedPiece</a> () const </td></tr>
+<tr class="memdesc:aed18d89038898d1d92f342854c295d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the captured piece from the last turn or <a class="el" href="struct_piece.html">Piece(NoPlayer, NoType)</a> if no piece was captured. <br/></td></tr>
+<tr class="separator:aed18d89038898d1d92f342854c295d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2592cf74ba74a67f7af0a24653ff9fb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2592cf74ba74a67f7af0a24653ff9fb5"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;other) const </td></tr>
 <tr class="separator:a2592cf74ba74a67f7af0a24653ff9fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,49 +193,104 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 <tr class="memitem:a415561adfebb788893ff40aaea4502b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a415561adfebb788893ff40aaea4502b4"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const </td></tr>
 <tr class="separator:a415561adfebb788893ff40aaea4502b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7e788287b3c6c7815f02c5dc22dfcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd7e788287b3c6c7815f02c5dc22dfcf"></a>
-File&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#abd7e788287b3c6c7815f02c5dc22dfcf">getEnPassantFile</a> () const </td></tr>
-<tr class="memdesc:abd7e788287b3c6c7815f02c5dc22dfcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the file where en-passant rights exist. NoFile if none. <br/></td></tr>
-<tr class="separator:abd7e788287b3c6c7815f02c5dc22dfcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3aace2ced12ff4a3eaac1e0e3d5432b2"></a>
-std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a3aace2ced12ff4a3eaac1e0e3d5432b2">getShortCastleRights</a> () const </td></tr>
-<tr class="memdesc:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns short castle rights for players. <br/></td></tr>
-<tr class="separator:a3aace2ced12ff4a3eaac1e0e3d5432b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1208d7e82f41b8e272d646bf4169c577"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1208d7e82f41b8e272d646bf4169c577"></a>
-std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a1208d7e82f41b8e272d646bf4169c577">getLongCastleRights</a> () const </td></tr>
-<tr class="memdesc:a1208d7e82f41b8e272d646bf4169c577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns long castle rights for players. <br/></td></tr>
-<tr class="separator:a1208d7e82f41b8e272d646bf4169c577"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a431307acbaaad8bf0e0f1c0afa35a08d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_chess_board.html">ChessBoard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a431307acbaaad8bf0e0f1c0afa35a08d">fromFEN</a> (const std::string &amp;fen)</td></tr>
+<tr class="memdesc:a431307acbaaad8bf0e0f1c0afa35a08d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a chessboard from a Forsyth–Edwards Notation string. <a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a>.  <a href="#a431307acbaaad8bf0e0f1c0afa35a08d">More...</a><br/></td></tr>
+<tr class="separator:a431307acbaaad8bf0e0f1c0afa35a08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ae335d91157ca9f927f171f2e6d6c39c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae335d91157ca9f927f171f2e6d6c39c5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ae335d91157ca9f927f171f2e6d6c39c5">updateBitBoards</a> ()</td></tr>
+<tr class="memdesc:ae335d91157ca9f927f171f2e6d6c39c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the helper bit boards. <br/></td></tr>
+<tr class="separator:ae335d91157ca9f927f171f2e6d6c39c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad693b43b092dc20452118a3a7b4d1b5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad693b43b092dc20452118a3a7b4d1b5a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ad693b43b092dc20452118a3a7b4d1b5a">setKingInCheck</a> (PlayerColor player, bool kingInCheck)</td></tr>
+<tr class="memdesc:ad693b43b092dc20452118a3a7b4d1b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or unset the kingInCheck-Flag. <br/></td></tr>
+<tr class="separator:ad693b43b092dc20452118a3a7b4d1b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29ae57f7e0c6d57da5d8711262335be6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29ae57f7e0c6d57da5d8711262335be6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a29ae57f7e0c6d57da5d8711262335be6">setStalemate</a> ()</td></tr>
+<tr class="memdesc:a29ae57f7e0c6d57da5d8711262335be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stalemate-Flag. <br/></td></tr>
+<tr class="separator:a29ae57f7e0c6d57da5d8711262335be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38d61076dd7630693f4284db78d16652"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38d61076dd7630693f4284db78d16652"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a38d61076dd7630693f4284db78d16652">setCheckmate</a> (PlayerColor player)</td></tr>
+<tr class="memdesc:a38d61076dd7630693f4284db78d16652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the checkmate-Flag. <br/></td></tr>
+<tr class="separator:a38d61076dd7630693f4284db78d16652"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:aa6bccf72c431fa2fc0653dbf9fb1dd6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6bccf72c431fa2fc0653dbf9fb1dd6c"></a>
+<tr class="memitem:ab1d92307774eb87b65c0a731dcb191f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1d92307774eb87b65c0a731dcb191f5"></a>
 std::array&lt; std::array<br class="typebreak"/>
 &lt; BitBoard, NUM_PIECETYPES+1 &gt;<br class="typebreak"/>
-, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bb</b></td></tr>
-<tr class="separator:aa6bccf72c431fa2fc0653dbf9fb1dd6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eade4ddb147180375efe1486b8de737"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4eade4ddb147180375efe1486b8de737"></a>
-std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#a4eade4ddb147180375efe1486b8de737">shortCastleRight</a></td></tr>
-<tr class="memdesc:a4eade4ddb147180375efe1486b8de737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Short castle rights for players. <br/></td></tr>
-<tr class="separator:a4eade4ddb147180375efe1486b8de737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb279753a10dc598265c11e8bd5dba1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb279753a10dc598265c11e8bd5dba1f"></a>
-std::array&lt; bool, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#afb279753a10dc598265c11e8bd5dba1f">longCastleRight</a></td></tr>
-<tr class="memdesc:afb279753a10dc598265c11e8bd5dba1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Long castle rights for players. <br/></td></tr>
-<tr class="separator:afb279753a10dc598265c11e8bd5dba1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfbcc0edc30290e009c6260c6155ea89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfbcc0edc30290e009c6260c6155ea89"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#abfbcc0edc30290e009c6260c6155ea89">enPassantRightForFiles</a></td></tr>
-<tr class="memdesc:abfbcc0edc30290e009c6260c6155ea89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask for enemy en passant rights for a file next turn. <br/></td></tr>
-<tr class="separator:abfbcc0edc30290e009c6260c6155ea89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af48d862f43f4f0b0d4fdf366aeec0a38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af48d862f43f4f0b0d4fdf366aeec0a38"></a>
-PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#af48d862f43f4f0b0d4fdf366aeec0a38">nextPlayer</a></td></tr>
-<tr class="memdesc:af48d862f43f4f0b0d4fdf366aeec0a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Player doing the next turn. <br/></td></tr>
-<tr class="separator:af48d862f43f4f0b0d4fdf366aeec0a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+, NUM_PLAYERS &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_board.html#ab1d92307774eb87b65c0a731dcb191f5">m_bb</a></td></tr>
+<tr class="memdesc:ab1d92307774eb87b65c0a731dcb191f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">We use bit boards for internal turn generation. At least twelve bit boards are needed for complete board representation + some additional helper boards. <br/></td></tr>
+<tr class="separator:ab1d92307774eb87b65c0a731dcb191f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:a6b5e78a959a41fb5e7973f2d93222e7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b5e78a959a41fb5e7973f2d93222e7d"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>TurnGenerator</b></td></tr>
 <tr class="separator:a6b5e78a959a41fb5e7973f2d93222e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a333da1924787cbefab1d4bbd34b22d91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a333da1924787cbefab1d4bbd34b22d91"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>IncrementalZobristHasher</b></td></tr>
+<tr class="separator:a333da1924787cbefab1d4bbd34b22d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Chessboard representation and logic implementation. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a431307acbaaad8bf0e0f1c0afa35a08d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_chess_board.html">ChessBoard</a> ChessBoard::fromFEN </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a chessboard from a Forsyth–Edwards Notation string. <a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a>. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This function does no validation. Do not pass invalid FEN. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fen</td><td>FEN String. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2d372757f127000773d3cb8696f499b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string ChessBoard::toFEN </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts the current board state into FEN notation. </p>
+<dl class="section return"><dt>Returns</dt><dd>State in FEN notation. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/logic/<a class="el" href="_chess_board_8h_source.html">ChessBoard.h</a></li>
 <li>S:/dev/3dchess/src/logic/ChessBoard.cpp</li>
@@ -182,7 +298,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>TurnGenerator</b></t
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

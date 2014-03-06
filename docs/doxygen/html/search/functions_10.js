@@ -1,4 +1,27 @@
 var searchData=
 [
-  ['unclick',['unClick',['../class_menu2_d_item.html#a877abc3c2cf4a9a5c13307bfea0207f2',1,'Menu2DItem']]]
+  ['save',['save',['../class_game_configuration.html#a7ee83841195312ecabc759b191b0bdd7',1,'GameConfiguration::save(const GameConfiguration &amp;config, const std::string &amp;path)'],['../class_game_configuration.html#aadbba5e52fb35dddee58be6b4361fe9e',1,'GameConfiguration::save(const std::string &amp;path) const '],['../class_save_game.html#ab3585dc2d89468bd07bce72a93da9d0e',1,'SaveGame::save(const SaveGame &amp;saveGame, const std::string &amp;path)'],['../class_save_game.html#aa1ec1e1b3b92ebbdf52f0db43edbc8f6',1,'SaveGame::save(const std::string &amp;path) const ']]],
+  ['savetoslot',['saveToSlot',['../class_save_game.html#a87500785b77ca4cada99c6a7b6840e9e',1,'SaveGame']]],
+  ['search',['search',['../class_negamax.html#a98943353b28ca48b5a696993fabd8a39',1,'Negamax']]],
+  ['servicedispatcherthread',['ServiceDispatcherThread',['../class_service_dispatcher_thread.html#a0b3eccc5281c04d103313dd82c27a55b',1,'ServiceDispatcherThread']]],
+  ['set2dmode',['set2DMode',['../class_gui_window.html#a8beaf3554961df36d7a61f28b1726a60',1,'GuiWindow']]],
+  ['set3dmode',['set3DMode',['../class_gui_window.html#a94faebc6cc18a9fbace76aa965ffe974',1,'GuiWindow']]],
+  ['setcheckmate',['setCheckmate',['../class_chess_board.html#a38d61076dd7630693f4284db78d16652',1,'ChessBoard']]],
+  ['setcolor',['setColor',['../class_model.html#a355b7e9d1ba0b27dd751cc5de09789f2',1,'Model']]],
+  ['setcorrectionvalues',['setCorrectionValues',['../class_model.html#a792de900907e4e86c48e4a660c9fb24b',1,'Model']]],
+  ['setgamestate',['setGameState',['../class_game_play.html#ac9a17da80920462436ef112ff66a77d5',1,'GamePlay']]],
+  ['setkingincheck',['setKingInCheck',['../class_chess_board.html#ad693b43b092dc20452118a3a7b4d1b5a',1,'ChessBoard']]],
+  ['setnextstate',['setNextState',['../class_state_machine.html#a471eec25e55ac65fb8f1d1faccdd8a0e',1,'StateMachine']]],
+  ['setposition',['setPosition',['../class_menu2_d_item.html#a5ebd05ac029239426ed6b3c353368178',1,'Menu2DItem::setPosition()'],['../class_model.html#a8216b9b38a0184e26c879d304086da86',1,'Model::setPosition()']]],
+  ['setstalemate',['setStalemate',['../class_chess_board.html#a29ae57f7e0c6d57da5d8711262335be6',1,'ChessBoard']]],
+  ['setstartnoworkeepit',['setStartNowOrKeepIt',['../class_animation_helper.html#a74d1d1a881eca49206047bb1fad3353c',1,'AnimationHelper']]],
+  ['setstartstate',['setStartState',['../class_state_machine.html#ad7b9c9898d81930ae010a7e1116f90b7',1,'StateMachine']]],
+  ['setstate',['setState',['../class_chess_set.html#a163c62da1c890672b3577c9f4f3a667c',1,'ChessSet::setState()'],['../class_game_play.html#a18222d37c08887971467a535226c6b72',1,'GamePlay::setState(std::array&lt; Piece, 64 &gt; state, PlayerColor lastPlayer, Turn lastTurn)'],['../class_game_play.html#a046a12f0d7ceb61f4de3ba4cd1ca9b36',1,'GamePlay::setState(std::array&lt; Piece, 64 &gt; state)']]],
+  ['start',['start',['../class_a_i_player.html#a336f11fe775c5f06275359f1b58d2c66',1,'AIPlayer::start()'],['../class_abstract_game_logic.html#a8dd1e091416320558bca6e04b49f88fb',1,'AbstractGameLogic::start()'],['../class_service_dispatcher_thread.html#a4767fc26a82b644b3d8650a6036d1b0b',1,'ServiceDispatcherThread::start()']]],
+  ['startshowtext',['startShowText',['../class_game_play.html#a7cfdf90a24b76b71d01d292337e080ee',1,'GamePlay']]],
+  ['stop',['stop',['../class_game_logic.html#a9bd1137d1dd4ac474330b0e0c6f38fbe',1,'GameLogic::stop()'],['../class_abstract_game_logic.html#a3483574a5ea9fffdb5037a66641cfc45',1,'AbstractGameLogic::stop()'],['../class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16',1,'ServiceDispatcherThread::stop()']]],
+  ['stopservice',['stopService',['../class_service_dispatcher.html#a7bf54f65ee49a65d344581078d0a61b6',1,'ServiceDispatcher']]],
+  ['swapframebuffernow',['swapFrameBufferNow',['../class_gui_window.html#a85e3a1d988c00ed92ce7ae75b12f18b9',1,'GuiWindow']]],
+  ['switchtoplayercolor',['switchToPlayerColor',['../class_game_play.html#a0f24d5ef62fec459a516bd4106a67ee4',1,'GamePlay']]],
+  ['switchwindowmode',['switchWindowMode',['../class_gui_window.html#a78c90c42292e90a3d40ac0ff95d75f1a',1,'GuiWindow']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rank',['Rank',['../_turn_generator_8h.html#adf74d53cd68bbef55ba510b266ecbbed',1,'TurnGenerator.h']]]
+  ['windowmode',['WindowMode',['../class_gui_window.html#a79ab3cdd048d53881039d852b1304671',1,'GuiWindow']]]
 ];

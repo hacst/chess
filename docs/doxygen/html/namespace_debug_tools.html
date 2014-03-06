@@ -97,21 +97,90 @@ Functions</h2></td></tr>
 string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_debug_tools.html#adbd8a6c748bf9707de55083aada154fa">toInitializerList</a> (const std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; &amp;board)</td></tr>
 <tr class="memdesc:adbd8a6c748bf9707de55083aada154fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the code needed to initialize a board to the given state. <br/></td></tr>
 <tr class="separator:adbd8a6c748bf9707de55083aada154fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54040479d75d0dffab7aa35745f3cf23"><td class="memTemplParams" colspan="2"><a class="anchor" id="a54040479d75d0dffab7aa35745f3cf23"></a>
-template&lt;typename Rng &gt; </td></tr>
-<tr class="memitem:a54040479d75d0dffab7aa35745f3cf23"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generateRandomState</b> (size_t maxTurns, Rng &amp;rng)</td></tr>
+<tr class="memitem:a54040479d75d0dffab7aa35745f3cf23"><td class="memTemplParams" colspan="2">template&lt;typename Rng &gt; </td></tr>
+<tr class="memitem:a54040479d75d0dffab7aa35745f3cf23"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_debug_tools.html#a54040479d75d0dffab7aa35745f3cf23">generateRandomState</a> (size_t maxTurns, Rng &amp;rng)</td></tr>
+<tr class="memdesc:a54040479d75d0dffab7aa35745f3cf23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random <a class="el" href="class_game_state.html">GameState</a>. Emulating a games a game with up to maxTurns random moves.  <a href="#a54040479d75d0dffab7aa35745f3cf23">More...</a><br/></td></tr>
 <tr class="separator:a54040479d75d0dffab7aa35745f3cf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a989b701046c98633306452a8c710a524"><td class="memTemplParams" colspan="2"><a class="anchor" id="a989b701046c98633306452a8c710a524"></a>
-template&lt;typename Rng &gt; </td></tr>
-<tr class="memitem:a989b701046c98633306452a8c710a524"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_chess_board.html">ChessBoard</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generateRandomBoard</b> (size_t maxTurns, Rng &amp;rng)</td></tr>
+<tr class="memitem:a989b701046c98633306452a8c710a524"><td class="memTemplParams" colspan="2">template&lt;typename Rng &gt; </td></tr>
+<tr class="memitem:a989b701046c98633306452a8c710a524"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_chess_board.html">ChessBoard</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_debug_tools.html#a989b701046c98633306452a8c710a524">generateRandomBoard</a> (size_t maxTurns, Rng &amp;rng)</td></tr>
+<tr class="memdesc:a989b701046c98633306452a8c710a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random Board.  <a href="#a989b701046c98633306452a8c710a524">More...</a><br/></td></tr>
 <tr class="separator:a989b701046c98633306452a8c710a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains functions for helping with debugging tasks. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a989b701046c98633306452a8c710a524"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Rng &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_chess_board.html">ChessBoard</a> DebugTools::generateRandomBoard </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxTurns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Rng &amp;&#160;</td>
+          <td class="paramname"><em>rng</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a random Board. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="namespace_debug_tools.html#a54040479d75d0dffab7aa35745f3cf23" title="Generates a random GameState. Emulating a games a game with up to maxTurns random moves...">generateRandomState</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a54040479d75d0dffab7aa35745f3cf23"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Rng &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_game_state.html">GameState</a> DebugTools::generateRandomState </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxTurns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Rng &amp;&#160;</td>
+          <td class="paramname"><em>rng</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a random <a class="el" href="class_game_state.html">GameState</a>. Emulating a games a game with up to maxTurns random moves. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxTurns</td><td>Limit for number of moves. </td></tr>
+    <tr><td class="paramname">rng</td><td>C++ Random number generator to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

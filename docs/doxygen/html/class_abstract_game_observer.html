@@ -101,20 +101,21 @@ Inheritance diagram for AbstractGameObserver:</div>
  <div class="center">
   <img src="class_abstract_game_observer.png" usemap="#AbstractGameObserver_map" alt=""/>
   <map id="AbstractGameObserver_map" name="AbstractGameObserver_map">
-<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb..." alt="AbstractPlayer" shape="rect" coords="255,56,415,80"/>
-<area href="class_gui_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="GuiObserver" shape="rect" coords="425,56,585,80"/>
-<area href="class_logging_game_observer.html" title="AbstractGameObserver which simply logs occuring events. " alt="LoggingGameObserver" shape="rect" coords="595,56,755,80"/>
-<area href="class_observer_dispatcher_proxy.html" title="Proxy for transporting AbstractGameObserver events between threads. " alt="ObserverDispatcherProxy" shape="rect" coords="765,56,925,80"/>
+<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb..." alt="AbstractPlayer" shape="rect" coords="340,56,500,80"/>
+<area href="class_gui_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="GuiObserver" shape="rect" coords="510,56,670,80"/>
+<area href="class_logging_game_observer.html" title="AbstractGameObserver which simply logs occuring events. " alt="LoggingGameObserver" shape="rect" coords="680,56,840,80"/>
+<area href="class_observer_dispatcher_proxy.html" title="Proxy for transporting AbstractGameObserver events between threads. " alt="ObserverDispatcherProxy" shape="rect" coords="850,56,1010,80"/>
 <area href="class_a_i_player.html" title="Artificial intelligence player implementation. " alt="AIPlayer" shape="rect" coords="0,112,160,136"/>
 <area href="class_console_player.html" title="Class which takes human player interaction from a console. " alt="ConsolePlayer" shape="rect" coords="170,112,330,136"/>
 <area href="class_dummy_player.html" title="Player implementation which takes random turns after random amounts of time. " alt="DummyPlayer" shape="rect" coords="340,112,500,136"/>
-<area href="class_player_dispatcher_proxy.html" title="Proxy for transporting AbstractGamePlayer events between threads. " alt="PlayerDispatcherProxy" shape="rect" coords="510,112,670,136"/>
+<area href="class_g_u_i_player.html" title="Player implementation for a real/human user. " alt="GUIPlayer" shape="rect" coords="510,112,670,136"/>
+<area href="class_player_dispatcher_proxy.html" title="Proxy for transporting AbstractGamePlayer events between threads. " alt="PlayerDispatcherProxy" shape="rect" coords="680,112,840,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a34fd2b4c53d3beb7c6bb3edebe185150"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_observer.html#a34fd2b4c53d3beb7c6bb3edebe185150">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="struct_game_configuration.html">GameConfiguration</a> config)</td></tr>
+<tr class="memitem:a34fd2b4c53d3beb7c6bb3edebe185150"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_observer.html#a34fd2b4c53d3beb7c6bb3edebe185150">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="class_game_configuration.html">GameConfiguration</a> config)</td></tr>
 <tr class="memdesc:a34fd2b4c53d3beb7c6bb3edebe185150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the game starts.  <a href="#a34fd2b4c53d3beb7c6bb3edebe185150">More...</a><br/></td></tr>
 <tr class="separator:a34fd2b4c53d3beb7c6bb3edebe185150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64dd519a6445dc104e7387b394c0286e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_observer.html#a64dd519a6445dc104e7387b394c0286e">onTurnStart</a> (PlayerColor who)</td></tr>
@@ -196,7 +197,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_game_configuration.html">GameConfiguration</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_game_configuration.html">GameConfiguration</a>&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -216,12 +217,12 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td><a class="el" href="class_game_state.html">GameState</a> on game start. </td></tr>
-    <tr><td class="paramname">config</td><td>Valid <a class="el" href="struct_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> for this game. </td></tr>
+    <tr><td class="paramname">config</td><td>Valid <a class="el" href="class_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> for this game. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_player_dispatcher_proxy.html#a4331a5225da27c3519faf665a15618f0">PlayerDispatcherProxy</a>, <a class="el" href="class_gui_observer.html#a51629917c7dad975609789161c34bc88">GuiObserver</a>, <a class="el" href="class_a_i_player.html#a622ad402fe79380c8c9bbc3d37fffc0d">AIPlayer</a>, <a class="el" href="class_observer_dispatcher_proxy.html#a9428985de3e6992ceb8a7010a35aa43e">ObserverDispatcherProxy</a>, <a class="el" href="class_console_player.html#a155dbe90c6ae613bf5f37034d496c6f3">ConsolePlayer</a>, and <a class="el" href="class_logging_game_observer.html#a6a64e5cb9223bafec65f64f042e3b50e">LoggingGameObserver</a>.</p>
+<p>Reimplemented in <a class="el" href="class_player_dispatcher_proxy.html#a4331a5225da27c3519faf665a15618f0">PlayerDispatcherProxy</a>, <a class="el" href="class_a_i_player.html#a622ad402fe79380c8c9bbc3d37fffc0d">AIPlayer</a>, <a class="el" href="class_gui_observer.html#a51629917c7dad975609789161c34bc88">GuiObserver</a>, <a class="el" href="class_observer_dispatcher_proxy.html#a9428985de3e6992ceb8a7010a35aa43e">ObserverDispatcherProxy</a>, <a class="el" href="class_console_player.html#a155dbe90c6ae613bf5f37034d496c6f3">ConsolePlayer</a>, and <a class="el" href="class_logging_game_observer.html#a6a64e5cb9223bafec65f64f042e3b50e">LoggingGameObserver</a>.</p>
 
 </div>
 </div>
@@ -362,7 +363,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 6 2014 23:38:42 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
