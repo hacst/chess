@@ -1,6 +1,7 @@
 var searchData=
 [
   ['make_5fdlist',['make_dlist',['../namespacefreetype.html#a9db85ebd3adad5185e1a740ba92ff32e',1,'freetype']]],
+  ['makefrustum',['makeFrustum',['../class_gui_window.html#a4a26e435ba564e5192ce5aa27fcdf53a',1,'GuiWindow']]],
   ['maybeupdate',['maybeUpdate',['../class_transposition_table.html#a5660b5b0b08775bbd270fc9b6f601176',1,'TranspositionTable']]],
   ['menu2ditem',['Menu2DItem',['../class_menu2_d_item.html#aa5f612d93b1fc719ccfd7fe83960ed96',1,'Menu2DItem']]],
   ['menugamemode',['MenuGameMode',['../class_menu_game_mode.html#a4f43bb6d33b759bd55ffd79c244a6c81',1,'MenuGameMode']]],
@@ -14,5 +15,11 @@ var searchData=
   ['mousemoved',['mouseMoved',['../class_menu2_d_item.html#afe4d5156f84b692112fe2f3bb96d0ca9',1,'Menu2DItem']]],
   ['mousepressed',['mousePressed',['../class_menu2_d_item.html#a219a95e8c6af0f0ad6cdd2805e892618',1,'Menu2DItem']]],
   ['mousereleased',['mouseReleased',['../class_menu2_d_item.html#a88d50871f3aa6a4ee0fdc2e70ccfc286',1,'Menu2DItem']]],
+  ['movecursordown',['moveCursorDown',['../class_arrow_navigation_handler.html#ac7a0e85c918b5b79eb4726aebe493553',1,'ArrowNavigationHandler']]],
+  ['movecursorhorizontal',['moveCursorHorizontal',['../class_arrow_navigation_handler.html#a024506848c92bb73854493e84c5f5549',1,'ArrowNavigationHandler']]],
+  ['movecursorleft',['moveCursorLeft',['../class_arrow_navigation_handler.html#a87cd0ed596eb0c1555830ee4e05a1f5b',1,'ArrowNavigationHandler']]],
+  ['movecursorright',['moveCursorRight',['../class_arrow_navigation_handler.html#a260168e7db5ef28d7eef79262dadc9bc',1,'ArrowNavigationHandler']]],
+  ['movecursorup',['moveCursorUp',['../class_arrow_navigation_handler.html#ac3ebfb4efbb06f93dde40fab516be7fa',1,'ArrowNavigationHandler']]],
+  ['movecursorvertical',['moveCursorVertical',['../class_arrow_navigation_handler.html#af5832dfaab4e86390bb82d28b3418741',1,'ArrowNavigationHandler']]],
   ['moveincrement',['moveIncrement',['../class_incremental_material_and_p_s_t_evaluator.html#a6cdfa9c9ebfb4b6a62f90aedf80d59c5',1,'IncrementalMaterialAndPSTEvaluator::moveIncrement()'],['../class_incremental_zobrist_hasher.html#aa6a276edc1054076124fe5cc571c674b',1,'IncrementalZobristHasher::moveIncrement()']]]
 ];

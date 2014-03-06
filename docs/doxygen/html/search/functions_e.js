@@ -1,7 +1,12 @@
 var searchData=
 [
+  ['pathforslot',['pathForSlot',['../class_save_game.html#aab196e667be22c9b7b6ff4bf763c7c3a',1,'SaveGame']]],
+  ['performiterativedeepening',['performIterativeDeepening',['../class_a_i_player.html#a20a4f44cd6a8bbccec3dfeb53a09aba7',1,'AIPlayer']]],
+  ['performsearchiteration',['performSearchIteration',['../class_a_i_player.html#a0de4ef109b29c2a74f70221727284a93',1,'AIPlayer']]],
+  ['play',['play',['../class_a_i_player.html#acc5941729e02bae189f10d3a8448d043',1,'AIPlayer']]],
   ['poll',['poll',['../class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d',1,'ServiceDispatcher']]],
   ['polyglotbook',['PolyglotBook',['../class_polyglot_book.html#aacd9ff51d4a10e2ec3239aa19330f9fe',1,'PolyglotBook']]],
+  ['ponder',['ponder',['../class_a_i_player.html#a044e02a8feb80a90490b5ec2ced61fca',1,'AIPlayer']]],
   ['pop_5fprojection_5fmatrix',['pop_projection_matrix',['../namespacefreetype.html#a64f3927a9b9fe1d58e464ea4556fa0a5',1,'freetype']]],
   ['post',['post',['../class_service_dispatcher.html#a51360fc052cab5a9bad17fd586081091',1,'ServiceDispatcher']]],
   ['postpromise',['postPromise',['../class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52',1,'ServiceDispatcher']]],

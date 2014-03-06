@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,11 +85,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_assimp_helper-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AssimpHelper Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Assimp wrapper class to handle scene modeling in an more comfortable way.  
+ <a href="class_assimp_helper.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_assimp_helper_8h_source.html">AssimpHelper.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -102,10 +107,63 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assimp_helper.html#a338369ba2f224041abec0eb5038bf49f">drawScene</a> ()</td></tr>
 <tr class="memdesc:a338369ba2f224041abec0eb5038bf49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the scene. <br/></td></tr>
 <tr class="separator:a338369ba2f224041abec0eb5038bf49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a670932d02fb0580191817c481f18e4c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assimp_helper.html#a670932d02fb0580191817c481f18e4c3">drawMesh</a> (<a class="el" href="class_mesh.html">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:a670932d02fb0580191817c481f18e4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the given mesh.  <a href="#a670932d02fb0580191817c481f18e4c3">More...</a><br/></td></tr>
+<tr class="separator:a670932d02fb0580191817c481f18e4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a592bbf36768f8c8e116948644953ce78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a592bbf36768f8c8e116948644953ce78"></a>
+const aiScene *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78">scene</a></td></tr>
+<tr class="memdesc:a592bbf36768f8c8e116948644953ce78"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scene object. <br/></td></tr>
+<tr class="separator:a592bbf36768f8c8e116948644953ce78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49d582abcfbe7f0438ec79e4fd7485c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49d582abcfbe7f0438ec79e4fd7485c4"></a>
+Assimp::Importer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assimp_helper.html#a49d582abcfbe7f0438ec79e4fd7485c4">importer</a></td></tr>
+<tr class="memdesc:a49d582abcfbe7f0438ec79e4fd7485c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Assimp Importer pointer. <br/></td></tr>
+<tr class="separator:a49d582abcfbe7f0438ec79e4fd7485c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5c29ad58575e4b75c6097bc99ae531f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5c29ad58575e4b75c6097bc99ae531f"></a>
+std::vector&lt; <a class="el" href="class_mesh.html">Mesh</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_assimp_helper.html#ac5c29ad58575e4b75c6097bc99ae531f">meshes</a></td></tr>
+<tr class="memdesc:ac5c29ad58575e4b75c6097bc99ae531f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scene Meshes. <br/></td></tr>
+<tr class="separator:ac5c29ad58575e4b75c6097bc99ae531f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Assimp wrapper class to handle scene modeling in an more comfortable way. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a670932d02fb0580191817c481f18e4c3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AssimpHelper::drawMesh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_mesh.html">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws the given mesh. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mesh</td><td>The mesh to draw. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a92ff10f369abfb740dce8e88b5e23124"></a>
 <div class="memitem">
 <div class="memproto">
@@ -137,7 +195,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,6 +86,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_animation_helper-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AnimationHelper Class Reference</div>  </div>
@@ -110,9 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaef3357374d479e1a77eb53af71bd6e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#aaef3357374d479e1a77eb53af71bd6e2">AnimationHelper</a> (const int duration)</td></tr>
 <tr class="memdesc:aaef3357374d479e1a77eb53af71bd6e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_animation_helper.html" title="The class helps to create animations by providing time dependent methods. ">AnimationHelper</a> object.  <a href="#aaef3357374d479e1a77eb53af71bd6e2">More...</a><br/></td></tr>
 <tr class="separator:aaef3357374d479e1a77eb53af71bd6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d1d1a881eca49206047bb1fad3353c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74d1d1a881eca49206047bb1fad3353c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a74d1d1a881eca49206047bb1fad3353c">setStartNowOrKeepIt</a> ()</td></tr>
-<tr class="memdesc:a74d1d1a881eca49206047bb1fad3353c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current time as start point for the animation. If this method is called multiple times, only the first call will take effect. <br/></td></tr>
+<tr class="memitem:a74d1d1a881eca49206047bb1fad3353c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a74d1d1a881eca49206047bb1fad3353c">setStartNowOrKeepIt</a> ()</td></tr>
+<tr class="memdesc:a74d1d1a881eca49206047bb1fad3353c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current time as start point for the animation.  <a href="#a74d1d1a881eca49206047bb1fad3353c">More...</a><br/></td></tr>
 <tr class="separator:a74d1d1a881eca49206047bb1fad3353c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a388310d57702714f211fa942acd0bf17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a388310d57702714f211fa942acd0bf17"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a388310d57702714f211fa942acd0bf17">reset</a> ()</td></tr>
@@ -124,6 +125,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aecc3321ed8fdb198f8e263a4213194e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#aecc3321ed8fdb198f8e263a4213194e9">hasStopped</a> ()</td></tr>
 <tr class="memdesc:aecc3321ed8fdb198f8e263a4213194e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status of the animation.  <a href="#aecc3321ed8fdb198f8e263a4213194e9">More...</a><br/></td></tr>
 <tr class="separator:aecc3321ed8fdb198f8e263a4213194e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a5fc6e9337ab0e5b4535b820700e82f86"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a5fc6e9337ab0e5b4535b820700e82f86">getElapsedTime</a> ()</td></tr>
+<tr class="memdesc:a5fc6e9337ab0e5b4535b820700e82f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the elapsed time since the animation was started.  <a href="#a5fc6e9337ab0e5b4535b820700e82f86">More...</a><br/></td></tr>
+<tr class="separator:a5fc6e9337ab0e5b4535b820700e82f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa461e50d142a81a16469871cc6ec3ccc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa461e50d142a81a16469871cc6ec3ccc"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#aa461e50d142a81a16469871cc6ec3ccc">m_duration</a></td></tr>
+<tr class="memdesc:aa461e50d142a81a16469871cc6ec3ccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration of the animation in miliseconds. <br/></td></tr>
+<tr class="separator:aa461e50d142a81a16469871cc6ec3ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee168e545bc449a248d9424433486b21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee168e545bc449a248d9424433486b21"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#aee168e545bc449a248d9424433486b21">m_startTime</a></td></tr>
+<tr class="memdesc:aee168e545bc449a248d9424433486b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">The start time of the animation. <br/></td></tr>
+<tr class="separator:aee168e545bc449a248d9424433486b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a61feecea28ec2034aa9d207ab50684"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a61feecea28ec2034aa9d207ab50684"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a4a61feecea28ec2034aa9d207ab50684">m_completeness</a></td></tr>
+<tr class="memdesc:a4a61feecea28ec2034aa9d207ab50684"><td class="mdescLeft">&#160;</td><td class="mdescRight">The completeness of the animation (1/100 percent, 0.0 - 1.0). <br/></td></tr>
+<tr class="separator:a4a61feecea28ec2034aa9d207ab50684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d6bbae65576765fd9e20e0ca3662c95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d6bbae65576765fd9e20e0ca3662c95"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_helper.html#a6d6bbae65576765fd9e20e0ca3662c95">m_easingResult</a></td></tr>
+<tr class="memdesc:a6d6bbae65576765fd9e20e0ca3662c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">The calculated result of the animation. <br/></td></tr>
+<tr class="separator:a6d6bbae65576765fd9e20e0ca3662c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The class helps to create animations by providing time dependent methods. </p>
@@ -220,6 +246,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a5fc6e9337ab0e5b4535b820700e82f86"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int AnimationHelper::getElapsedTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the elapsed time since the animation was started. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of miliseconds since the animation was started. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aecc3321ed8fdb198f8e263a4213194e9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -238,6 +290,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a74d1d1a881eca49206047bb1fad3353c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AnimationHelper::setStartNowOrKeepIt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the current time as start point for the animation. </p>
+<p>If this method is called multiple times, only the first call will take effect. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/gui/<a class="el" href="_animation_helper_8h_source.html">AnimationHelper.h</a></li>
 <li>S:/dev/3dchess/src/gui/AnimationHelper.cpp</li>
@@ -245,7 +315,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

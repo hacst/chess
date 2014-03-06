@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -95,21 +95,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfreetype_1_1font__data.html">font_data</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This holds all of the information related to any freetype font that we want to create.  <a href="structfreetype_1_1font__data.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a981150240e80575557b231868177c5b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefreetype.html#a981150240e80575557b231868177c5b5">next_p2</a> (int a)</td></tr>
+<tr class="memdesc:a981150240e80575557b231868177c5b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the first power of 2 &gt;= the int that we pass it.  <a href="#a981150240e80575557b231868177c5b5">More...</a><br/></td></tr>
 <tr class="separator:a981150240e80575557b231868177c5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9db85ebd3adad5185e1a740ba92ff32e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9db85ebd3adad5185e1a740ba92ff32e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefreetype.html#a9db85ebd3adad5185e1a740ba92ff32e">make_dlist</a> (FT_Face face, char ch, GLuint list_base, GLuint *tex_base)</td></tr>
 <tr class="memdesc:a9db85ebd3adad5185e1a740ba92ff32e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a display list coresponding to the give character. <br/></td></tr>
 <tr class="separator:a9db85ebd3adad5185e1a740ba92ff32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27b62f2658330a223933978f2c56470d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefreetype.html#a27b62f2658330a223933978f2c56470d">pushScreenCoordinateMatrix</a> ()</td></tr>
+<tr class="memdesc:a27b62f2658330a223933978f2c56470d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fairly straight forward function that pushes a projection matrix that will make object world coordinates identical to window coordinates.  <a href="#a27b62f2658330a223933978f2c56470d">More...</a><br/></td></tr>
 <tr class="separator:a27b62f2658330a223933978f2c56470d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64f3927a9b9fe1d58e464ea4556fa0a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefreetype.html#a64f3927a9b9fe1d58e464ea4556fa0a5">pop_projection_matrix</a> ()</td></tr>
+<tr class="memdesc:a64f3927a9b9fe1d58e464ea4556fa0a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops the projection matrix without changing the current MatrixMode.  <a href="#a64f3927a9b9fe1d58e464ea4556fa0a5">More...</a><br/></td></tr>
 <tr class="separator:a64f3927a9b9fe1d58e464ea4556fa0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6d99f1f71b88d54f4d138f47866d733"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefreetype.html#aa6d99f1f71b88d54f4d138f47866d733">print</a> (const <a class="el" href="structfreetype_1_1font__data.html">font_data</a> &amp;ft_font, float x, float y, const char *fmt,...)</td></tr>
+<tr class="memdesc:aa6d99f1f71b88d54f4d138f47866d733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Much like Nehe's glPrint function, but modified to work with freetype fonts.  <a href="#aa6d99f1f71b88d54f4d138f47866d733">More...</a><br/></td></tr>
 <tr class="separator:aa6d99f1f71b88d54f4d138f47866d733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -137,6 +142,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>This function gets the first power of 2 &gt;= the int that we pass it. </p>
 
 </div>
@@ -161,6 +167,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Pops the projection matrix without changing the current MatrixMode. </p>
 
 </div>
@@ -206,8 +213,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Much like Nehe's glPrint function, but modified to work with freetype fonts.</p>
-<p>The flagship function of the library - this thing will print out text at window coordinates x,y, using the font ft_font. The current modelview matrix will also be applied to the text. </p>
+
+<p>Much like Nehe's glPrint function, but modified to work with freetype fonts. </p>
+<p>The flagship function of the library - this thing will print out text at window coordinates x,y, using the font ft_font.</p>
+<p>The current modelview matrix will also be applied to the text. </p>
 
 </div>
 </div>
@@ -231,6 +240,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>A fairly straight forward function that pushes a projection matrix that will make object world coordinates identical to window coordinates. </p>
 
 </div>
@@ -238,7 +248,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,6 +86,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_game_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GameState Class Reference</div>  </div>
@@ -121,9 +123,8 @@ const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;&#160;</td
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a6c37ae37802e9ffbc85b0a7f8e3c16c1">isGameOver</a> () const </td></tr>
 <tr class="memdesc:a6c37ae37802e9ffbc85b0a7f8e3c16c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the game is over. <br/></td></tr>
 <tr class="separator:a6c37ae37802e9ffbc85b0a7f8e3c16c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae40390bce82fffb2feaaea120bfb9fe3"></a>
-PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ae40390bce82fffb2feaaea120bfb9fe3">getWinner</a> () const </td></tr>
-<tr class="memdesc:ae40390bce82fffb2feaaea120bfb9fe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the winner of the game. Returns Player color or NoPlayer on draw. <br/></td></tr>
+<tr class="memitem:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memItemLeft" align="right" valign="top">PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ae40390bce82fffb2feaaea120bfb9fe3">getWinner</a> () const </td></tr>
+<tr class="memdesc:ae40390bce82fffb2feaaea120bfb9fe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the winner of the game.  <a href="#ae40390bce82fffb2feaaea120bfb9fe3">More...</a><br/></td></tr>
 <tr class="separator:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a112f6b5f422a4833ed1c6808fbe95267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a112f6b5f422a4833ed1c6808fbe95267"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a112f6b5f422a4833ed1c6808fbe95267">isDrawDueTo50MovesRule</a> () const </td></tr>
@@ -153,8 +154,26 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abc119a4a9a6180f9396c92916cae29c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#abc119a4a9a6180f9396c92916cae29c1">fromFEN</a> (const std::string &amp;fen)</td></tr>
-<tr class="memdesc:abc119a4a9a6180f9396c92916cae29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string. <a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a>.  <a href="#abc119a4a9a6180f9396c92916cae29c1">More...</a><br/></td></tr>
+<tr class="memdesc:abc119a4a9a6180f9396c92916cae29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string.  <a href="#abc119a4a9a6180f9396c92916cae29c1">More...</a><br/></td></tr>
 <tr class="separator:abc119a4a9a6180f9396c92916cae29c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa850839f1d8c80b185c3ba944a2c95fd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#aa850839f1d8c80b185c3ba944a2c95fd">init</a> ()</td></tr>
+<tr class="memdesc:aa850839f1d8c80b185c3ba944a2c95fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the turn generator with the given chessboard. <br/></td></tr>
+<tr class="separator:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a48ae4dc619da86358244d73e1c5a126a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48ae4dc619da86358244d73e1c5a126a"></a>
+<a class="el" href="class_chess_board.html">ChessBoard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a48ae4dc619da86358244d73e1c5a126a">m_chessBoard</a></td></tr>
+<tr class="memdesc:a48ae4dc619da86358244d73e1c5a126a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Chessboard representation and logic. <br/></td></tr>
+<tr class="separator:a48ae4dc619da86358244d73e1c5a126a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b4c92826c3baea811c24d49f1fb585"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7b4c92826c3baea811c24d49f1fb585"></a>
+<a class="el" href="class_turn_generator.html">TurnGenerator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ad7b4c92826c3baea811c24d49f1fb585">m_turnGen</a></td></tr>
+<tr class="memdesc:ad7b4c92826c3baea811c24d49f1fb585"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_turn.html">Turn</a> generator and gameover detection. <br/></td></tr>
+<tr class="separator:ad7b4c92826c3baea811c24d49f1fb585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="abc119a4a9a6180f9396c92916cae29c1"></a>
@@ -179,7 +198,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string. <a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a>. </p>
+<p>Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string. </p>
+<p><a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a> </p>
 <dl class="section warning"><dt>Warning</dt><dd>This function does no validation. Do not pass invalid FEN. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -187,6 +207,24 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ae40390bce82fffb2feaaea120bfb9fe3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PlayerColor GameState::getWinner </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the winner of the game. </p>
+<p>Returns Player color or NoPlayer on draw. </p>
 
 </div>
 </div>
@@ -215,7 +253,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:44 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

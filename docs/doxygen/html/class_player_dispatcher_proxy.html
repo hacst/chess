@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_player_dispatcher_proxy-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PlayerDispatcherProxy Class Reference</div>  </div>
@@ -101,9 +102,9 @@ Inheritance diagram for PlayerDispatcherProxy:</div>
  <div class="center">
   <img src="class_player_dispatcher_proxy.png" usemap="#PlayerDispatcherProxy_map" alt=""/>
   <map id="PlayerDispatcherProxy_map" name="PlayerDispatcherProxy_map">
-<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb..." alt="AbstractPlayer" shape="rect" coords="0,56,145,80"/>
+<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. " alt="AbstractPlayer" shape="rect" coords="0,56,145,80"/>
 <area href="class_service_dispatcher.html" title="Provides functionality for safely running operations in a thread. " alt="ServiceDispatcher" shape="rect" coords="155,56,300,80"/>
-<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
+<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. " alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -113,14 +114,13 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>PlayerDispatcherProxy</b> (AbstractPlayerPtr player)</td></tr>
 <tr class="separator:a3e361c66e64afcf38bacc1187cb8ee9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69147934e21adbbcf49ac0759a5bcd16"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player_dispatcher_proxy.html#a69147934e21adbbcf49ac0759a5bcd16">onSetColor</a> (PlayerColor color) override</td></tr>
-<tr class="memdesc:a69147934e21adbbcf49ac0759a5bcd16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies that player what color he will be playing. Called before onGameStart.  <a href="#a69147934e21adbbcf49ac0759a5bcd16">More...</a><br/></td></tr>
+<tr class="memdesc:a69147934e21adbbcf49ac0759a5bcd16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies that player what color he will be playing.  <a href="#a69147934e21adbbcf49ac0759a5bcd16">More...</a><br/></td></tr>
 <tr class="separator:a69147934e21adbbcf49ac0759a5bcd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37c5c3e5d60e074a34570748b0b2a8b7"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player_dispatcher_proxy.html#a37c5c3e5d60e074a34570748b0b2a8b7">doMakeTurn</a> (<a class="el" href="class_game_state.html">GameState</a> state) override</td></tr>
 <tr class="memdesc:a37c5c3e5d60e074a34570748b0b2a8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to make his turn.  <a href="#a37c5c3e5d60e074a34570748b0b2a8b7">More...</a><br/></td></tr>
 <tr class="separator:a37c5c3e5d60e074a34570748b0b2a8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83fe09c22c7baba67628965bcef8d3a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83fe09c22c7baba67628965bcef8d3a0"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player_dispatcher_proxy.html#a83fe09c22c7baba67628965bcef8d3a0">doAbortTurn</a> () override</td></tr>
-<tr class="memdesc:a83fe09c22c7baba67628965bcef8d3a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to abort a turn asked for with doMakeTurn. When this is called the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> will no longer react to the completion of the future for that turn. A use of this function is the abortion of a turn due to timeout. <br/></td></tr>
+<tr class="memitem:a83fe09c22c7baba67628965bcef8d3a0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player_dispatcher_proxy.html#a83fe09c22c7baba67628965bcef8d3a0">doAbortTurn</a> () override</td></tr>
+<tr class="memdesc:a83fe09c22c7baba67628965bcef8d3a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to abort a turn asked for with doMakeTurn.  <a href="#a83fe09c22c7baba67628965bcef8d3a0">More...</a><br/></td></tr>
 <tr class="separator:a83fe09c22c7baba67628965bcef8d3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4331a5225da27c3519faf665a15618f0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_player_dispatcher_proxy.html#a4331a5225da27c3519faf665a15618f0">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="class_game_configuration.html">GameConfiguration</a> config) override</td></tr>
 <tr class="memdesc:a4331a5225da27c3519faf665a15618f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the game starts.  <a href="#a4331a5225da27c3519faf665a15618f0">More...</a><br/></td></tr>
@@ -141,6 +141,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d">poll</a> ()</td></tr>
 <tr class="memdesc:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replays all posted functions in the calling thread.  <a href="#a523e6f7dc4e533b0b7938cec62c55c6d">More...</a><br/></td></tr>
 <tr class="separator:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5f1b174d311793dc838b851dd83c58d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f1b174d311793dc838b851dd83c58d3"></a>
+AbstractPlayerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_player</b></td></tr>
+<tr class="separator:a5f1b174d311793dc838b851dd83c58d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -170,6 +176,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>As the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> and other game components run on different threads it is essential to safely transport game events between them. Without any additional precautions AbstractGamePlayer implementations will have their handlers called on the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> thread they are registered on with all implied thread safety concerns.</p>
 <p>This proxy will serialize calls coming in from the game logic in a thread-safe way and replay them once its poll method is called in the customers thread. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a83fe09c22c7baba67628965bcef8d3a0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void PlayerDispatcherProxy::doAbortTurn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asks the player to abort a turn asked for with doMakeTurn. </p>
+<p>When this is called the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> will no longer react to the completion of the future for that turn. A use of this function is the abortion of a turn due to timeout. </p>
+
+<p>Implements <a class="el" href="class_abstract_player.html#a6f129cba16e36619b7672e633712b89b">AbstractPlayer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a37c5c3e5d60e074a34570748b0b2a8b7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -319,7 +353,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 </div><div class="memdoc">
 
-<p>Notifies that player what color he will be playing. Called before onGameStart. </p>
+<p>Notifies that player what color he will be playing. </p>
+<p>Called before onGameStart. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color the player has. </td></tr>
@@ -468,7 +503,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:50 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

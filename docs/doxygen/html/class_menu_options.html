@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,13 +85,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_menu_options-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">MenuOptions Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class which holds the state MenuOption. This state let the user toggle between the fullscreen view or the windowed mode of the game.  
+<p>Class which holds the state MenuOption.  
  <a href="class_menu_options.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_menu_options_8h_source.html">MenuOptions.h</a>&gt;</code></p>
@@ -112,7 +114,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a87991076f14b172279ce8847b421a1e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new menu Options State object. <br/></td></tr>
 <tr class="separator:a87991076f14b172279ce8847b421a1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8577426043149d0f2b1765c1e321c7c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9">enter</a> () override</td></tr>
-<tr class="memdesc:a8577426043149d0f2b1765c1e321c7c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the state for the first time. This will setup all the state related stuff.  <a href="#a8577426043149d0f2b1765c1e321c7c9">More...</a><br/></td></tr>
+<tr class="memdesc:a8577426043149d0f2b1765c1e321c7c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the state for the first time.  <a href="#a8577426043149d0f2b1765c1e321c7c9">More...</a><br/></td></tr>
 <tr class="separator:a8577426043149d0f2b1765c1e321c7c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25bd2a4751a79948ba536de7bf15c8a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_abstract_state.html">AbstractState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#a25bd2a4751a79948ba536de7bf15c8a2">run</a> () override</td></tr>
 <tr class="memdesc:a25bd2a4751a79948ba536de7bf15c8a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the current state and does all the work.  <a href="#a25bd2a4751a79948ba536de7bf15c8a2">More...</a><br/></td></tr>
@@ -132,10 +134,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#a48290f0da9a5c663e0ecd047c115b1cd">onMenuBack</a> ()</td></tr>
 <tr class="memdesc:a48290f0da9a5c663e0ecd047c115b1cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose to go back to the menu he was, before he get here. <br/></td></tr>
 <tr class="separator:a48290f0da9a5c663e0ecd047c115b1cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:aa1c15ced6010691d14ccb747588bcb47"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#aa1c15ced6010691d14ccb747588bcb47">States</a> { <b>KEEP_CURRENT</b>, 
+<b>MENU_MAIN</b>
+ }</td></tr>
+<tr class="memdesc:aa1c15ced6010691d14ccb747588bcb47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal GameMode states. <br/></td></tr>
+<tr class="separator:aa1c15ced6010691d14ccb747588bcb47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a21726a764c35a861e9cc6ea85313e16a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21726a764c35a861e9cc6ea85313e16a"></a>
+<a class="el" href="class_state_machine.html">StateMachine</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#a21726a764c35a861e9cc6ea85313e16a">fsm</a></td></tr>
+<tr class="memdesc:a21726a764c35a861e9cc6ea85313e16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the <a class="el" href="class_state_machine.html" title="Class which manages the states. ">StateMachine</a>. <br/></td></tr>
+<tr class="separator:a21726a764c35a861e9cc6ea85313e16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd52e2d6b7a21633799462dc4409f90e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd52e2d6b7a21633799462dc4409f90e"></a>
+<a class="el" href="class_menu_options.html#aa1c15ced6010691d14ccb747588bcb47">States</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#afd52e2d6b7a21633799462dc4409f90e">m_nextState</a></td></tr>
+<tr class="memdesc:afd52e2d6b7a21633799462dc4409f90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next State for the <a class="el" href="class_state_machine.html" title="Class which manages the states. ">StateMachine</a> to enter. <br/></td></tr>
+<tr class="separator:afd52e2d6b7a21633799462dc4409f90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28cccfcc5f5e6695122af14736a517f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28cccfcc5f5e6695122af14736a517f7"></a>
+Menu2DPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_options.html#a28cccfcc5f5e6695122af14736a517f7">menu</a></td></tr>
+<tr class="memdesc:a28cccfcc5f5e6695122af14736a517f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer for better garbage handling. <br/></td></tr>
+<tr class="separator:a28cccfcc5f5e6695122af14736a517f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class which holds the state MenuOption. This state let the user toggle between the fullscreen view or the windowed mode of the game. </p>
-<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_options.html#a25bd2a4751a79948ba536de7bf15c8a2" title="Runs the current state and does all the work. ">run()</a> a state, first <a class="el" href="class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9" title="Enters the state for the first time. This will setup all the state related stuff. ...">enter()</a> the state. </dd></dl>
+<div class="textblock"><p>Class which holds the state MenuOption. </p>
+<p>This state let the user toggle between the fullscreen view or the windowed mode of the game.</p>
+<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_options.html#a25bd2a4751a79948ba536de7bf15c8a2" title="Runs the current state and does all the work. ">run()</a> a state, first <a class="el" href="class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9" title="Enters the state for the first time. ">enter()</a> the state. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8577426043149d0f2b1765c1e321c7c9"></a>
 <div class="memitem">
@@ -158,8 +184,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 </div><div class="memdoc">
 
-<p>Enters the state for the first time. This will setup all the state related stuff. </p>
-<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_options.html#a25bd2a4751a79948ba536de7bf15c8a2" title="Runs the current state and does all the work. ">run()</a> the current state, first <a class="el" href="class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9" title="Enters the state for the first time. This will setup all the state related stuff. ...">enter()</a> it. </dd></dl>
+<p>Enters the state for the first time. </p>
+<p>This will setup all the state related stuff. </p>
+<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_options.html#a25bd2a4751a79948ba536de7bf15c8a2" title="Runs the current state and does all the work. ">run()</a> the current state, first <a class="el" href="class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9" title="Enters the state for the first time. ">enter()</a> it. </dd></dl>
 
 <p>Implements <a class="el" href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">AbstractState</a>.</p>
 
@@ -228,7 +255,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:50 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['textures',['textures',['../structfreetype_1_1font__data.html#a32c2d8e23c93a6d38af92808cec6cb18',1,'freetype::font_data']]],
-  ['timebetweenturnsinseconds',['timeBetweenTurnsInSeconds',['../class_game_configuration.html#acd905836d5abcd60f9414cd5be4eee5d',1,'GameConfiguration']]],
-  ['to',['to',['../struct_polyglot_book_entry_1_1_move.html#a2a9b857bc1d92383871455bc9c10f723',1,'PolyglotBookEntry::Move']]],
-  ['transpositiontablehits',['transpositionTableHits',['../struct_negamax_1_1_perf_counters.html#a3d65699a6a64b8d20b9b8e04e041f319',1,'Negamax::PerfCounters']]],
-  ['turn',['turn',['../struct_negamax_result.html#addd03d676951914dde906d3f72c063b4',1,'NegamaxResult::turn()'],['../struct_transposition_table_entry.html#a8bd05e778a4778fa23ff10d2e8e11d0f',1,'TranspositionTableEntry::turn()']]],
-  ['turnlist',['turnList',['../class_turn_generator.html#a0a685fa05b4c9cb6c343ec9e9c6e445a',1,'TurnGenerator']]]
+  ['scene',['scene',['../class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78',1,'AssimpHelper']]],
+  ['score',['score',['../struct_negamax_result.html#aba9695a07875203aa6c754501e113c3b',1,'NegamaxResult::score()'],['../class_negamax_1_1_option.html#a33bfa15db2d737b4d3f6bc8d28d762c5',1,'Negamax::Option::score()'],['../struct_transposition_table_entry.html#a21cb85b29cd2ce47beb1dd33142972dd',1,'TranspositionTableEntry::score()']]],
+  ['showduration',['showDuration',['../struct_game_play_1_1_message_box.html#aacbedfddc00beee62ebc27f91c8accf5',1,'GamePlay::MessageBox']]],
+  ['shownsince',['shownSince',['../struct_game_play_1_1_message_box.html#abcbac659ddffa04ddb8fc4dcb7e0ed28',1,'GamePlay::MessageBox']]]
 ];

@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,6 +88,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_incremental_zobrist_hasher-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">IncrementalZobristHasher Class Reference</div>  </div>
@@ -99,6 +102,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_incremental_zobrist_hasher_8h_source.html">IncrementalZobristHasher.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_incremental_zobrist_hasher_1_1_hash_constants.html">HashConstants</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a5c57a9f1775c7791dd290ae8f1d34680"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c57a9f1775c7791dd290ae8f1d34680"></a>
@@ -152,17 +160,66 @@ Static Public Member Functions</h2></td></tr>
 static Hash&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_incremental_zobrist_hasher.html#a33490b31dfc4fb61a983c4fcd3502d32">hashFullBoard</a> (const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;board)</td></tr>
 <tr class="memdesc:a33490b31dfc4fb61a983c4fcd3502d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives a full estimate for the given board. <br/></td></tr>
 <tr class="separator:a33490b31dfc4fb61a983c4fcd3502d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a28342fd890fd5a8d49714fdbe0d5704d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_incremental_zobrist_hasher.html#a28342fd890fd5a8d49714fdbe0d5704d">isPolyglotEnPassant</a> (const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;board)</td></tr>
+<tr class="memdesc:a28342fd890fd5a8d49714fdbe0d5704d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if en passant according to polyglot rules.  <a href="#a28342fd890fd5a8d49714fdbe0d5704d">More...</a><br/></td></tr>
+<tr class="separator:a28342fd890fd5a8d49714fdbe0d5704d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a8bbfa38ef133a289851985e1e1f60c56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bbfa38ef133a289851985e1e1f60c56"></a>
+Hash&#160;</td><td class="memItemRight" valign="bottom"><b>m_hash</b></td></tr>
+<tr class="separator:a8bbfa38ef133a289851985e1e1f60c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba4ef8f038e36c5964b600ef17497af9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba4ef8f038e36c5964b600ef17497af9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_isEnPassantApplied</b></td></tr>
+<tr class="separator:aba4ef8f038e36c5964b600ef17497af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aad8f668b35d251823cd2c5a0851ed765"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad8f668b35d251823cd2c5a0851ed765"></a>
+static const <a class="el" href="class_incremental_zobrist_hasher_1_1_hash_constants.html">HashConstants</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_hashConstants</b> = <a class="el" href="class_incremental_zobrist_hasher_1_1_hash_constants.html">IncrementalZobristHasher::HashConstants</a>()</td></tr>
+<tr class="separator:aad8f668b35d251823cd2c5a0851ed765"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Incremental polyglot constants based Zobrist-Hash implementation. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a28342fd890fd5a8d49714fdbe0d5704d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IncrementalZobristHasher::isPolyglotEnPassant </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;&#160;</td>
+          <td class="paramname"><em>board</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return true if en passant according to polyglot rules. </p>
+<p>Polyglot uses a en passant definition that differs from FEN. It only integrates the file if there are pawns neighbouring the pawn that opened the en passant possibility. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/logic/<a class="el" href="_incremental_zobrist_hasher_8h_source.html">IncrementalZobristHasher.h</a></li>
 <li>S:/dev/3dchess/src/logic/IncrementalZobristHasher.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:44 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

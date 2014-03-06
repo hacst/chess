@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,6 +86,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_a_i_player-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AIPlayer Class Reference</div>  </div>
@@ -102,19 +104,19 @@ Inheritance diagram for AIPlayer:</div>
  <div class="center">
   <img src="class_a_i_player.png" usemap="#AIPlayer_map" alt=""/>
   <map id="AIPlayer_map" name="AIPlayer_map">
-<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb..." alt="AbstractPlayer" shape="rect" coords="0,56,145,80"/>
-<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
+<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. " alt="AbstractPlayer" shape="rect" coords="0,56,145,80"/>
+<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. " alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae73dfc179e755891224f5e1c474e4c49"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> { <b>PREPARATION</b>, 
-<b>PONDERING</b>, 
-<b>PLAYING</b>, 
-<b>STOPPED</b>
+<tr class="memitem:ae73dfc179e755891224f5e1c474e4c49"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> { <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49a249289b0db864b72a1ae11106059e786">PREPARATION</a>, 
+<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49aa69fe1c54e5531047a05e3cefbdbc9da">PONDERING</a>, 
+<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49a6d239235c0079eeb034a336aa7045d66">PLAYING</a>, 
+<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49a50d12883ac67f10acff9c41fcfbcc445">STOPPED</a>
  }</td></tr>
-<tr class="memdesc:ae73dfc179e755891224f5e1c474e4c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">States for <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a>. <br/></td></tr>
+<tr class="memdesc:ae73dfc179e755891224f5e1c474e4c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">States for <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a>.  <a href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">More...</a><br/></td></tr>
 <tr class="separator:ae73dfc179e755891224f5e1c474e4c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -127,7 +129,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a336f11fe775c5f06275359f1b58d2c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a> thread. <br/></td></tr>
 <tr class="separator:a336f11fe775c5f06275359f1b58d2c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fbcee7ed68698889f139e378a9b0771"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a8fbcee7ed68698889f139e378a9b0771">onSetColor</a> (PlayerColor color) override</td></tr>
-<tr class="memdesc:a8fbcee7ed68698889f139e378a9b0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies that player what color he will be playing. Called before onGameStart.  <a href="#a8fbcee7ed68698889f139e378a9b0771">More...</a><br/></td></tr>
+<tr class="memdesc:a8fbcee7ed68698889f139e378a9b0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies that player what color he will be playing.  <a href="#a8fbcee7ed68698889f139e378a9b0771">More...</a><br/></td></tr>
 <tr class="separator:a8fbcee7ed68698889f139e378a9b0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a622ad402fe79380c8c9bbc3d37fffc0d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a622ad402fe79380c8c9bbc3d37fffc0d">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="class_game_configuration.html">GameConfiguration</a> config) override</td></tr>
 <tr class="memdesc:a622ad402fe79380c8c9bbc3d37fffc0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the game starts.  <a href="#a622ad402fe79380c8c9bbc3d37fffc0d">More...</a><br/></td></tr>
@@ -135,9 +137,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a2cc533895dc35ec8f9be82b82aa15418"><td class="memItemLeft" align="right" valign="top">virtual std::future&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a2cc533895dc35ec8f9be82b82aa15418">doMakeTurn</a> (<a class="el" href="class_game_state.html">GameState</a> state) override</td></tr>
 <tr class="memdesc:a2cc533895dc35ec8f9be82b82aa15418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to make his turn.  <a href="#a2cc533895dc35ec8f9be82b82aa15418">More...</a><br/></td></tr>
 <tr class="separator:a2cc533895dc35ec8f9be82b82aa15418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f7ebdaa567caa1fc07bbe8c700546a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9f7ebdaa567caa1fc07bbe8c700546a2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a9f7ebdaa567caa1fc07bbe8c700546a2">doAbortTurn</a> () override</td></tr>
-<tr class="memdesc:a9f7ebdaa567caa1fc07bbe8c700546a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to abort a turn asked for with doMakeTurn. When this is called the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> will no longer react to the completion of the future for that turn. A use of this function is the abortion of a turn due to timeout. <br/></td></tr>
+<tr class="memitem:a9f7ebdaa567caa1fc07bbe8c700546a2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a9f7ebdaa567caa1fc07bbe8c700546a2">doAbortTurn</a> () override</td></tr>
+<tr class="memdesc:a9f7ebdaa567caa1fc07bbe8c700546a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asks the player to abort a turn asked for with doMakeTurn.  <a href="#a9f7ebdaa567caa1fc07bbe8c700546a2">More...</a><br/></td></tr>
 <tr class="separator:a9f7ebdaa567caa1fc07bbe8c700546a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9bf852bdff2b165a002ace01bfad913"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#aa9bf852bdff2b165a002ace01bfad913">onGameOver</a> (<a class="el" href="class_game_state.html">GameState</a>, PlayerColor) override</td></tr>
 <tr class="memdesc:aa9bf852bdff2b165a002ace01bfad913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a game started with onGameStart is over.  <a href="#aa9bf852bdff2b165a002ace01bfad913">More...</a><br/></td></tr>
@@ -154,10 +155,149 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a74ba4cdca13bb0227722beeeebfd6e12 inherit pub_methods_class_abstract_game_observer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_observer.html#a74ba4cdca13bb0227722beeeebfd6e12">onTurnTimeout</a> (PlayerColor who, std::chrono::seconds timeout)</td></tr>
 <tr class="memdesc:a74ba4cdca13bb0227722beeeebfd6e12 inherit pub_methods_class_abstract_game_observer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if a players turn is aborted due to timeout.  <a href="#a74ba4cdca13bb0227722beeeebfd6e12">More...</a><br/></td></tr>
 <tr class="separator:a74ba4cdca13bb0227722beeeebfd6e12 inherit pub_methods_class_abstract_game_observer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a109b2f4b418e7196a93bc391f20ce081"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a109b2f4b418e7196a93bc391f20ce081"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a109b2f4b418e7196a93bc391f20ce081">run</a> ()</td></tr>
+<tr class="memdesc:a109b2f4b418e7196a93bc391f20ce081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a> state machine choosing to play, ponder or stop. <br/></td></tr>
+<tr class="separator:a109b2f4b418e7196a93bc391f20ce081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5941729e02bae189f10d3a8448d043"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#acc5941729e02bae189f10d3a8448d043">play</a> ()</td></tr>
+<tr class="memdesc:acc5941729e02bae189f10d3a8448d043"><td class="mdescLeft">&#160;</td><td class="mdescRight">State used when asked to make a turn.  <a href="#acc5941729e02bae189f10d3a8448d043">More...</a><br/></td></tr>
+<tr class="separator:acc5941729e02bae189f10d3a8448d043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044e02a8feb80a90490b5ec2ced61fca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a044e02a8feb80a90490b5ec2ced61fca">ponder</a> ()</td></tr>
+<tr class="memdesc:a044e02a8feb80a90490b5ec2ced61fca"><td class="mdescLeft">&#160;</td><td class="mdescRight">State between turns.  <a href="#a044e02a8feb80a90490b5ec2ced61fca">More...</a><br/></td></tr>
+<tr class="separator:a044e02a8feb80a90490b5ec2ced61fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a523158ae141f8c4c454a1b22849098be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a523158ae141f8c4c454a1b22849098be">changeState</a> (<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> newState)</td></tr>
+<tr class="memdesc:a523158ae141f8c4c454a1b22849098be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a> state.  <a href="#a523158ae141f8c4c454a1b22849098be">More...</a><br/></td></tr>
+<tr class="separator:a523158ae141f8c4c454a1b22849098be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf5361ba43ee265214109a6ed83bb683"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf5361ba43ee265214109a6ed83bb683"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#acf5361ba43ee265214109a6ed83bb683">tryFindPromisedTurnInOpeningBook</a> ()</td></tr>
+<tr class="memdesc:acf5361ba43ee265214109a6ed83bb683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search opening book and fulfill promise if possible. If not return false. <br/></td></tr>
+<tr class="separator:acf5361ba43ee265214109a6ed83bb683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac7018369f552328f40ff95fd839e2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ac7018369f552328f40ff95fd839e2e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a8ac7018369f552328f40ff95fd839e2e">searchForPromisedTurn</a> ()</td></tr>
+<tr class="memdesc:a8ac7018369f552328f40ff95fd839e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use negamax to iteratively search for the turn an fulfill with best found. <br/></td></tr>
+<tr class="separator:a8ac7018369f552328f40ff95fd839e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20a4f44cd6a8bbccec3dfeb53a09aba7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20a4f44cd6a8bbccec3dfeb53a09aba7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a20a4f44cd6a8bbccec3dfeb53a09aba7">performIterativeDeepening</a> ()</td></tr>
+<tr class="memdesc:a20a4f44cd6a8bbccec3dfeb53a09aba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use negamax while discarding its results to fill transposition table. <br/></td></tr>
+<tr class="separator:a20a4f44cd6a8bbccec3dfeb53a09aba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17877bce27d5f2d82ede11600acb99eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17877bce27d5f2d82ede11600acb99eb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a17877bce27d5f2d82ede11600acb99eb">completePromiseWith</a> (const <a class="el" href="class_turn.html">Turn</a> &amp;turn)</td></tr>
+<tr class="memdesc:a17877bce27d5f2d82ede11600acb99eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the promise and prepare the AI for pondering. <br/></td></tr>
+<tr class="separator:a17877bce27d5f2d82ede11600acb99eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0de4ef109b29c2a74f70221727284a93"><td class="memItemLeft" align="right" valign="top">boost::optional&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a0de4ef109b29c2a74f70221727284a93">performSearchIteration</a> (size_t depth, <a class="el" href="class_game_state.html">GameState</a> &amp;state, <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> aiState)</td></tr>
+<tr class="memdesc:a0de4ef109b29c2a74f70221727284a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an abortable negamax search up to the given depth.  <a href="#a0de4ef109b29c2a74f70221727284a93">More...</a><br/></td></tr>
+<tr class="separator:a0de4ef109b29c2a74f70221727284a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96ef820fd422af8d553ea31b9e07464b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96ef820fd422af8d553ea31b9e07464b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a96ef820fd422af8d553ea31b9e07464b">canStayInState</a> (<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> currentState)</td></tr>
+<tr class="memdesc:a96ef820fd422af8d553ea31b9e07464b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns false if a time limit expired or the current state must be left. <br/></td></tr>
+<tr class="separator:a96ef820fd422af8d553ea31b9e07464b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacabf05793ca8bc00643a39e7f5e1e64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#aacabf05793ca8bc00643a39e7f5e1e64">setTimeLimit</a> (std::chrono::milliseconds limit)</td></tr>
+<tr class="memdesc:aacabf05793ca8bc00643a39e7f5e1e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a time limit that can be checked with.  <a href="#aacabf05793ca8bc00643a39e7f5e1e64">More...</a><br/></td></tr>
+<tr class="separator:aacabf05793ca8bc00643a39e7f5e1e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a81dacee1ef54bbcbe984073a6e8bfe4e"><td class="memItemLeft" align="right" valign="top">std::promise&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a81dacee1ef54bbcbe984073a6e8bfe4e">m_promisedTurn</a></td></tr>
+<tr class="memdesc:a81dacee1ef54bbcbe984073a6e8bfe4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the promise during fulfillment (.  <a href="#a81dacee1ef54bbcbe984073a6e8bfe4e">More...</a><br/></td></tr>
+<tr class="separator:a81dacee1ef54bbcbe984073a6e8bfe4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a761a3083f8aff7dbe2158146e65d7b5d"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a761a3083f8aff7dbe2158146e65d7b5d">m_playerState</a></td></tr>
+<tr class="memdesc:a761a3083f8aff7dbe2158146e65d7b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of the AI.  <a href="#a761a3083f8aff7dbe2158146e65d7b5d">More...</a><br/></td></tr>
+<tr class="separator:a761a3083f8aff7dbe2158146e65d7b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d7c67a18fb8419399db94768d349e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14d7c67a18fb8419399db94768d349e5"></a>
+std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a14d7c67a18fb8419399db94768d349e5">m_stateMutex</a></td></tr>
+<tr class="memdesc:a14d7c67a18fb8419399db94768d349e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for m_playerState. <br/></td></tr>
+<tr class="separator:a14d7c67a18fb8419399db94768d349e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3572a55bf4b787c84e0380891679ba86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3572a55bf4b787c84e0380891679ba86"></a>
+<a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a3572a55bf4b787c84e0380891679ba86">m_gameState</a></td></tr>
+<tr class="memdesc:a3572a55bf4b787c84e0380891679ba86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last notion of game state for the AI. <br/></td></tr>
+<tr class="separator:a3572a55bf4b787c84e0380891679ba86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d1f4adf011416ed9826787cab330f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88d1f4adf011416ed9826787cab330f0"></a>
+<a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a88d1f4adf011416ed9826787cab330f0">m_ponderGameState</a></td></tr>
+<tr class="memdesc:a88d1f4adf011416ed9826787cab330f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">State for the AI to ponder on between turns. <br/></td></tr>
+<tr class="separator:a88d1f4adf011416ed9826787cab330f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38b6b7486f98ae42c9d0c72a1365d154"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38b6b7486f98ae42c9d0c72a1365d154"></a>
+<a class="el" href="class_game_configuration.html">GameConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a38b6b7486f98ae42c9d0c72a1365d154">m_gameConfig</a></td></tr>
+<tr class="memdesc:a38b6b7486f98ae42c9d0c72a1365d154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Game configuration the AI works with. <br/></td></tr>
+<tr class="separator:a38b6b7486f98ae42c9d0c72a1365d154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d3ec6323cc897822a7caf8b293fd2b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d3ec6323cc897822a7caf8b293fd2b8"></a>
+PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a2d3ec6323cc897822a7caf8b293fd2b8">m_color</a></td></tr>
+<tr class="memdesc:a2d3ec6323cc897822a7caf8b293fd2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Color the AI is playing as. <br/></td></tr>
+<tr class="separator:a2d3ec6323cc897822a7caf8b293fd2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1513b56c0c0bf9c41d1f3b17f075c2c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1513b56c0c0bf9c41d1f3b17f075c2c3"></a>
+<a class="el" href="class_negamax.html">Negamax</a>&lt; <a class="el" href="class_game_state.html">GameState</a>, true, true, <br class="typebreak"/>
+true &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a1513b56c0c0bf9c41d1f3b17f075c2c3">m_negamax</a></td></tr>
+<tr class="memdesc:a1513b56c0c0bf9c41d1f3b17f075c2c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for search. <br/></td></tr>
+<tr class="separator:a1513b56c0c0bf9c41d1f3b17f075c2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf9428bb0dda9a48cc8154dc4011383"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbf9428bb0dda9a48cc8154dc4011383"></a>
+std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#acbf9428bb0dda9a48cc8154dc4011383">m_thread</a></td></tr>
+<tr class="memdesc:acbf9428bb0dda9a48cc8154dc4011383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread the AI is run on. <br/></td></tr>
+<tr class="separator:acbf9428bb0dda9a48cc8154dc4011383"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbfedcaa126c498fb64f626bfb86b36b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbfedcaa126c498fb64f626bfb86b36b"></a>
+<a class="el" href="class_polyglot_book.html">PolyglotBook</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#adbfedcaa126c498fb64f626bfb86b36b">m_openingBook</a></td></tr>
+<tr class="memdesc:adbfedcaa126c498fb64f626bfb86b36b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opening book (potentially unititialized) <br/></td></tr>
+<tr class="separator:adbfedcaa126c498fb64f626bfb86b36b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab14d3cfd5bd43c65ca7b18da36f329a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab14d3cfd5bd43c65ca7b18da36f329a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#aab14d3cfd5bd43c65ca7b18da36f329a">m_outOfBook</a></td></tr>
+<tr class="memdesc:aab14d3cfd5bd43c65ca7b18da36f329a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that we had a miss on the book and no longer use it. <br/></td></tr>
+<tr class="separator:aab14d3cfd5bd43c65ca7b18da36f329a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa68fd341c6194df95277cca158ce072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa68fd341c6194df95277cca158ce072"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#aaa68fd341c6194df95277cca158ce072">m_maxIterationDepth</a></td></tr>
+<tr class="memdesc:aaa68fd341c6194df95277cca158ce072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depth limit for iterative deepening. <br/></td></tr>
+<tr class="separator:aaa68fd341c6194df95277cca158ce072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a208377db74365b4c3caa87ef75740773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a208377db74365b4c3caa87ef75740773"></a>
+std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a208377db74365b4c3caa87ef75740773">m_maxTimeForTurn</a></td></tr>
+<tr class="memdesc:a208377db74365b4c3caa87ef75740773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum time usable for turn. <br/></td></tr>
+<tr class="separator:a208377db74365b4c3caa87ef75740773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6527637a5c7015c1629771fa87643a6"><td class="memItemLeft" align="right" valign="top">std::chrono::high_resolution_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#ad6527637a5c7015c1629771fa87643a6">m_timeoutExpirationTime</a></td></tr>
+<tr class="memdesc:ad6527637a5c7015c1629771fa87643a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout timer (.  <a href="#ad6527637a5c7015c1629771fa87643a6">More...</a><br/></td></tr>
+<tr class="separator:ad6527637a5c7015c1629771fa87643a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e7d916aa3f046ee25ffd72d96fde192"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e7d916aa3f046ee25ffd72d96fde192"></a>
+const <a class="el" href="class_a_i_configuration.html">AIConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#a0e7d916aa3f046ee25ffd72d96fde192">m_config</a></td></tr>
+<tr class="memdesc:a0e7d916aa3f046ee25ffd72d96fde192"><td class="mdescLeft">&#160;</td><td class="mdescRight">AI configuration. <br/></td></tr>
+<tr class="separator:a0e7d916aa3f046ee25ffd72d96fde192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1d120a400063b1a8b374c0a17aa20a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1d120a400063b1a8b374c0a17aa20a3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_i_player.html#af1d120a400063b1a8b374c0a17aa20a3">m_hasWinningMove</a></td></tr>
+<tr class="memdesc:af1d120a400063b1a8b374c0a17aa20a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the AI has found a way to win. <br/></td></tr>
+<tr class="separator:af1d120a400063b1a8b374c0a17aa20a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27cd44d78ab889d3fd557aab882ec47f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27cd44d78ab889d3fd557aab882ec47f"></a>
+Logging::Logger&#160;</td><td class="memItemRight" valign="bottom"><b>m_log</b></td></tr>
+<tr class="separator:a27cd44d78ab889d3fd557aab882ec47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Artificial intelligence player implementation. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="ae73dfc179e755891224f5e1c474e4c49"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">AIPlayer::States</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>States for <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a>. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ae73dfc179e755891224f5e1c474e4c49a249289b0db864b72a1ae11106059e786"></a>PREPARATION</em>&#160;</td><td class="fielddoc">
+<p>Game preparation phase. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ae73dfc179e755891224f5e1c474e4c49aa69fe1c54e5531047a05e3cefbdbc9da"></a>PONDERING</em>&#160;</td><td class="fielddoc">
+<p>Pondering during enemies turn. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ae73dfc179e755891224f5e1c474e4c49a6d239235c0079eeb034a336aa7045d66"></a>PLAYING</em>&#160;</td><td class="fielddoc">
+<p>Playing own turn. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ae73dfc179e755891224f5e1c474e4c49a50d12883ac67f10acff9c41fcfbcc445"></a>STOPPED</em>&#160;</td><td class="fielddoc">
+<p>Stopped operations. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9c0a74b89435461a79db0ff5298cb72a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -202,6 +342,67 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a523158ae141f8c4c454a1b22849098be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPlayer::changeState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a>&#160;</td>
+          <td class="paramname"><em>newState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Changes <a class="el" href="class_a_i_player.html" title="Artificial intelligence player implementation. ">AIPlayer</a> state. </p>
+<dl class="section note"><dt>Note</dt><dd>A STOPPED AI cannot be restarted. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newState</td><td>New state to adopt. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9f7ebdaa567caa1fc07bbe8c700546a2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPlayer::doAbortTurn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asks the player to abort a turn asked for with doMakeTurn. </p>
+<p>When this is called the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> will no longer react to the completion of the future for that turn. A use of this function is the abortion of a turn due to timeout. </p>
+
+<p>Implements <a class="el" href="class_abstract_player.html#a6f129cba16e36619b7672e633712b89b">AbstractPlayer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2cc533895dc35ec8f9be82b82aa15418"></a>
 <div class="memitem">
 <div class="memproto">
@@ -367,7 +568,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table>
 </div><div class="memdoc">
 
-<p>Notifies that player what color he will be playing. Called before onGameStart. </p>
+<p>Notifies that player what color he will be playing. </p>
+<p>Called before onGameStart. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color the player has. </td></tr>
@@ -379,6 +581,208 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 
 </div>
 </div>
+<a class="anchor" id="a0de4ef109b29c2a74f70221727284a93"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::optional&lt; <a class="el" href="class_turn.html">Turn</a> &gt; AIPlayer::performSearchIteration </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>depth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_game_state.html">GameState</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a>&#160;</td>
+          <td class="paramname"><em>aiState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs an abortable negamax search up to the given depth. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">depth</td><td>Depth to search to. </td></tr>
+    <tr><td class="paramname">state</td><td>State to search from. </td></tr>
+    <tr><td class="paramname">aiState</td><td>Current ai state for abortion checks </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_turn.html">Turn</a> if depth was reached. None otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acc5941729e02bae189f10d3a8448d043"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPlayer::play </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>State used when asked to make a turn. </p>
+<p>Employs <a class="el" href="class_negamax.html" title="Implementation of a Negamax algorithm. ">Negamax</a> search to return a reasonable turn to the game logic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a044e02a8feb80a90490b5ec2ced61fca"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPlayer::ponder </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>State between turns. </p>
+<p>Can be used for additional processing (e.g. iterative deepening). </p>
+
+</div>
+</div>
+<a class="anchor" id="aacabf05793ca8bc00643a39e7f5e1e64"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AIPlayer::setTimeLimit </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>limit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets a time limit that can be checked with. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_a_i_player.html#a96ef820fd422af8d553ea31b9e07464b" title="Returns false if a time limit expired or the current state must be left. ">canStayInState</a> </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a761a3083f8aff7dbe2158146e65d7b5d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;<a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">States</a>&gt; AIPlayer::m_playerState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>State of the AI. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Protected by m_stateMutex. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a81dacee1ef54bbcbe984073a6e8bfe4e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::promise&lt;<a class="el" href="class_turn.html">Turn</a>&gt; AIPlayer::m_promisedTurn</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Holds the promise during fulfillment (. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_a_i_player.html#acc5941729e02bae189f10d3a8448d043" title="State used when asked to make a turn. ">play</a>). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad6527637a5c7015c1629771fa87643a6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::high_resolution_clock::time_point AIPlayer::m_timeoutExpirationTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Timeout timer (. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_a_i_player.html#aacabf05793ca8bc00643a39e7f5e1e64" title="Sets a time limit that can be checked with. ">setTimeLimit</a> </dd>
+<dd>
+<a class="el" href="class_a_i_player.html#a96ef820fd422af8d553ea31b9e07464b" title="Returns false if a time limit expired or the current state must be left. ">canStayInState</a>) </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/ai/<a class="el" href="_a_i_player_8h_source.html">AIPlayer.h</a></li>
 <li>S:/dev/3dchess/src/ai/AIPlayer.cpp</li>
@@ -386,7 +790,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

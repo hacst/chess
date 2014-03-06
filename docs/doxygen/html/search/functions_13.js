@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eservicedispatcherthread',['~ServiceDispatcherThread',['../class_service_dispatcher_thread.html#acac4f20b7ea84e406f562a155c375ad0',1,'ServiceDispatcherThread']]]
+  ['wait',['wait',['../class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171',1,'GameLogic']]],
+  ['wait_5ffor',['wait_for',['../class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71',1,'GameLogic']]]
 ];

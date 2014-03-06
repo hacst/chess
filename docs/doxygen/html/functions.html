@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
@@ -108,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -124,6 +125,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>abort()
 : <a class="el" href="class_negamax.html#a66184104466386099085c2a434da9b1e">Negamax&lt; TGameState, AB_CUTOFF_ENABLED, MOVE_ORDERING_ENABLED, TRANSPOSITION_TABLES_ENABLED &gt;</a>
 </li>
+<li>addCapturedPiece()
+: <a class="el" href="class_chess_board.html#afa2ca9d62fbf4c196ecce26d95b8b157">ChessBoard</a>
+</li>
 <li>addObserver()
 : <a class="el" href="class_abstract_game_logic.html#a523af5dd0224a3b368dced118c1d6625">AbstractGameLogic</a>
 , <a class="el" href="class_game_logic.html#adb1079537a901e860b11398d66c50286">GameLogic</a>
@@ -137,8 +141,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>aiSelected
 : <a class="el" href="class_game_configuration.html#aca84fce115e58c035aefd94c288b7c98">GameConfiguration</a>
 </li>
+<li>animateModelStrike()
+: <a class="el" href="class_chess_set.html#a63c9a1d9800658df7b04bd6ed2f4d6e1">ChessSet</a>
+</li>
+<li>animateModelTurn()
+: <a class="el" href="class_chess_set.html#ae2a6cb36b2d31c95a16c9d634671c373">ChessSet</a>
+</li>
 <li>AnimationHelper()
 : <a class="el" href="class_animation_helper.html#aaef3357374d479e1a77eb53af71bd6e2">AnimationHelper</a>
+</li>
+<li>applyCastleTurn()
+: <a class="el" href="class_chess_board.html#ac968c5f1018eb92ca273ef3f2305a1c8">ChessBoard</a>
+</li>
+<li>applyMoveTurn()
+: <a class="el" href="class_chess_board.html#a8822d129d96fd857e954ce371e72c6a3">ChessBoard</a>
+</li>
+<li>applyPromotionTurn()
+: <a class="el" href="class_chess_board.html#af375c6e604cee2fbedb0340f9aacbe4c">ChessBoard</a>
 </li>
 <li>applyTurn()
 : <a class="el" href="class_chess_board.html#ab4aa36299b386ba09c0aaf40ef08a0c1">ChessBoard</a>
@@ -154,7 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

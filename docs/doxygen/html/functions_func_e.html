@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li class="current"><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
@@ -97,6 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_func_s.html#index_s"><span>s</span></a></li>
       <li><a href="functions_func_t.html#index_t"><span>t</span></a></li>
       <li><a href="functions_func_u.html#index_u"><span>u</span></a></li>
+      <li><a href="functions_func_w.html#index_w"><span>w</span></a></li>
       <li><a href="functions_func_~.html#index_~"><span>~</span></a></li>
     </ul>
   </div>
@@ -106,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -122,6 +124,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>ease()
 : <a class="el" href="class_animation_helper.html#a62d475d64fe53339c09a59aadee57332">AnimationHelper</a>
 </li>
+<li>enableLighting()
+: <a class="el" href="class_game_play.html#acf9363543bc52ac3866f4520d695b23a">GamePlay</a>
+</li>
 <li>enter()
 : <a class="el" href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">AbstractState</a>
 , <a class="el" href="class_game_play.html#a265e1c47781f3ab890a648c9811738d7">GamePlay</a>
@@ -134,12 +139,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>estimateFullBoard()
 : <a class="el" href="class_incremental_material_and_p_s_t_evaluator.html#a0bc191761bf2f5f11a4d10babd650518">IncrementalMaterialAndPSTEvaluator</a>
 </li>
+<li>estimateScoreFor()
+: <a class="el" href="class_negamax.html#a975aeca01f30cba138118127f7c541d2">Negamax&lt; TGameState, AB_CUTOFF_ENABLED, MOVE_ORDERING_ENABLED, TRANSPOSITION_TABLES_ENABLED &gt;</a>
+</li>
 <li>exec()
 : <a class="el" href="class_gui_window.html#ad52aa83b09f0a47682b1b1e72a0033a0">GuiWindow</a>
 </li>
 <li>exit()
 : <a class="el" href="class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a">AbstractState</a>
 , <a class="el" href="class_game_play.html#af635ce486e5bc9b3bdf21241f6737000">GamePlay</a>
+, <a class="el" href="class_gui_window.html#a35aa2747a5c156325246c3f5f7f6056d">GuiWindow</a>
 , <a class="el" href="class_menu_game_mode.html#aa6bbd8d91782e68c93407e5763e97934">MenuGameMode</a>
 , <a class="el" href="class_menu_load_game.html#a734f37cb1935f42015869f352f15be97">MenuLoadGame</a>
 , <a class="el" href="class_menu_main.html#af78b171ee4466a53b3fc36d11d486890">MenuMain</a>
@@ -150,7 +159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

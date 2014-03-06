@@ -55,7 +55,7 @@ struct TranspositionTableEntry {
         EXACT  //!< Score is exactly what is attainable by turn.
     } boundType;
 
-    size_t depth; //!< 
+    size_t depth; //!< Search depth used to evaluate position.
     
     //! Returns true if entry score is lower bound to score attainable by turn.
     bool isLowerBound() const { return boundType == LOWER; }

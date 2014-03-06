@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,17 +87,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_model-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Model Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Representing a chess figure (e.g. King, Queen, ...).  
+<p>Representing a chess figure (e.g.  
  <a href="class_model.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_model_8h_source.html">Model.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_model_1_1_position.html">Position</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for the model's world coordinates.  <a href="struct_model_1_1_position.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aacca359f52db22626d236f108da4f087"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#aacca359f52db22626d236f108da4f087">Color</a> { <b>BLACK</b>, 
@@ -128,9 +135,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ac7b168fc3a84f9ac2b558d1019869ca7">draw</a> ()</td></tr>
 <tr class="memdesc:ac7b168fc3a84f9ac2b558d1019869ca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the model at configured world coordinates. <br/></td></tr>
 <tr class="separator:ac7b168fc3a84f9ac2b558d1019869ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aca2e081b66d5111459317072dc533227"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca2e081b66d5111459317072dc533227"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#aca2e081b66d5111459317072dc533227">m_file</a></td></tr>
+<tr class="memdesc:aca2e081b66d5111459317072dc533227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filename (an path) relative to the executable, which contains the meshes. <br/></td></tr>
+<tr class="separator:aca2e081b66d5111459317072dc533227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2abb95bc557c4af99509a47b43c97fed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2abb95bc557c4af99509a47b43c97fed"></a>
+<a class="el" href="class_model.html#aacca359f52db22626d236f108da4f087">Color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a2abb95bc557c4af99509a47b43c97fed">m_color</a></td></tr>
+<tr class="memdesc:a2abb95bc557c4af99509a47b43c97fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Color of the model. <br/></td></tr>
+<tr class="separator:a2abb95bc557c4af99509a47b43c97fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89f2ece5bd704ced1eb2e2235989aa5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89f2ece5bd704ced1eb2e2235989aa5f"></a>
+<a class="el" href="struct_model_1_1_position.html">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a89f2ece5bd704ced1eb2e2235989aa5f">m_position</a></td></tr>
+<tr class="memdesc:a89f2ece5bd704ced1eb2e2235989aa5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The model's position in world coordinates. <br/></td></tr>
+<tr class="separator:a89f2ece5bd704ced1eb2e2235989aa5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d03aac91c9ed42e4f833eac367ac9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3d03aac91c9ed42e4f833eac367ac9b"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ac3d03aac91c9ed42e4f833eac367ac9b">m_correctScaling</a></td></tr>
+<tr class="memdesc:ac3d03aac91c9ed42e4f833eac367ac9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scaling factor of the model. <br/></td></tr>
+<tr class="separator:ac3d03aac91c9ed42e4f833eac367ac9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a6948885f6260def88010036ba4cf34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a6948885f6260def88010036ba4cf34"></a>
+<a class="el" href="struct_model_1_1_position.html">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a3a6948885f6260def88010036ba4cf34">m_correctPosition</a></td></tr>
+<tr class="memdesc:a3a6948885f6260def88010036ba4cf34"><td class="mdescLeft">&#160;</td><td class="mdescRight">The local correction values for correcting unproper model coordinates. <br/></td></tr>
+<tr class="separator:a3a6948885f6260def88010036ba4cf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a932504cc145df6c63d0be308cd0a48a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a932504cc145df6c63d0be308cd0a48a6"></a>
+<a class="el" href="struct_model_1_1_position.html">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a932504cc145df6c63d0be308cd0a48a6">m_correctRotation</a></td></tr>
+<tr class="memdesc:a932504cc145df6c63d0be308cd0a48a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The local correction values for correcting unproper model rotation. <br/></td></tr>
+<tr class="separator:a932504cc145df6c63d0be308cd0a48a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99dda3243f3bc3308b7b89e06df5a8c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99dda3243f3bc3308b7b89e06df5a8c3"></a>
+AssimpHelperPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a99dda3243f3bc3308b7b89e06df5a8c3">model</a></td></tr>
+<tr class="memdesc:a99dda3243f3bc3308b7b89e06df5a8c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the <a class="el" href="class_assimp_helper.html" title="Assimp wrapper class to handle scene modeling in an more comfortable way. ">AssimpHelper</a>, which holds the meshes. <br/></td></tr>
+<tr class="separator:a99dda3243f3bc3308b7b89e06df5a8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Representing a chess figure (e.g. King, Queen, ...). </p>
+<div class="textblock"><p>Representing a chess figure (e.g. </p>
+<p>King, Queen, ...). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="acc072b537a6806019759cd562d80a25e"></a>
 <div class="memitem">
@@ -301,7 +340,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:50 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

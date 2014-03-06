@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -108,26 +108,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_assimp_helper.html#a338369ba2f224041abec0eb5038bf49f">drawScene</a>();</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">const</span> aiScene* scene;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78">   32</a></span>&#160;    <span class="keyword">const</span> aiScene* <a class="code" href="class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78">scene</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    Assimp::Importer* importer;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_assimp_helper.html#a49d582abcfbe7f0438ec79e4fd7485c4">   35</a></span>&#160;    Assimp::Importer* <a class="code" href="class_assimp_helper.html#a49d582abcfbe7f0438ec79e4fd7485c4">importer</a>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::vector&lt;Mesh*&gt; meshes;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="class_assimp_helper.html#ac5c29ad58575e4b75c6097bc99ae531f">   38</a></span>&#160;    std::vector&lt;Mesh*&gt; <a class="code" href="class_assimp_helper.html#ac5c29ad58575e4b75c6097bc99ae531f">meshes</a>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> drawMesh(<a class="code" href="class_mesh.html">Mesh</a>* mesh);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_assimp_helper.html#a670932d02fb0580191817c481f18e4c3">drawMesh</a>(<a class="code" href="class_mesh.html">Mesh</a>* mesh);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;};</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">using</span> AssimpHelperPtr = std::shared_ptr&lt;AssimpHelper&gt;; <span class="comment">// Shared pointer for better garbage handling.</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif // ASSIMPHELPER_H</span></div>
 <div class="ttc" id="class_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdoc">Wrapper class for the Assimp library. </div><div class="ttdef"><b>Definition:</b> Mesh.h:21</div></div>
+<div class="ttc" id="class_assimp_helper_html_a670932d02fb0580191817c481f18e4c3"><div class="ttname"><a href="class_assimp_helper.html#a670932d02fb0580191817c481f18e4c3">AssimpHelper::drawMesh</a></div><div class="ttdeci">void drawMesh(Mesh *mesh)</div><div class="ttdoc">Draws the given mesh. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.cpp:38</div></div>
+<div class="ttc" id="class_assimp_helper_html_a592bbf36768f8c8e116948644953ce78"><div class="ttname"><a href="class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78">AssimpHelper::scene</a></div><div class="ttdeci">const aiScene * scene</div><div class="ttdoc">The scene object. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.h:32</div></div>
 <div class="ttc" id="class_assimp_helper_html_a92ff10f369abfb740dce8e88b5e23124"><div class="ttname"><a href="class_assimp_helper.html#a92ff10f369abfb740dce8e88b5e23124">AssimpHelper::importScene</a></div><div class="ttdeci">void importScene(std::string filename)</div><div class="ttdoc">Imports the scene by filename. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.cpp:12</div></div>
-<div class="ttc" id="class_assimp_helper_html"><div class="ttname"><a href="class_assimp_helper.html">AssimpHelper</a></div><div class="ttdef"><b>Definition:</b> AssimpHelper.h:16</div></div>
+<div class="ttc" id="class_assimp_helper_html_a49d582abcfbe7f0438ec79e4fd7485c4"><div class="ttname"><a href="class_assimp_helper.html#a49d582abcfbe7f0438ec79e4fd7485c4">AssimpHelper::importer</a></div><div class="ttdeci">Assimp::Importer * importer</div><div class="ttdoc">The Assimp Importer pointer. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.h:35</div></div>
+<div class="ttc" id="class_assimp_helper_html"><div class="ttname"><a href="class_assimp_helper.html">AssimpHelper</a></div><div class="ttdoc">Assimp wrapper class to handle scene modeling in an more comfortable way. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.h:16</div></div>
 <div class="ttc" id="class_assimp_helper_html_a338369ba2f224041abec0eb5038bf49f"><div class="ttname"><a href="class_assimp_helper.html#a338369ba2f224041abec0eb5038bf49f">AssimpHelper::drawScene</a></div><div class="ttdeci">void drawScene()</div><div class="ttdoc">Draws the scene. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.cpp:31</div></div>
+<div class="ttc" id="class_assimp_helper_html_ac5c29ad58575e4b75c6097bc99ae531f"><div class="ttname"><a href="class_assimp_helper.html#ac5c29ad58575e4b75c6097bc99ae531f">AssimpHelper::meshes</a></div><div class="ttdeci">std::vector&lt; Mesh * &gt; meshes</div><div class="ttdoc">The scene Meshes. </div><div class="ttdef"><b>Definition:</b> AssimpHelper.h:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:41 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

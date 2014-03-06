@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,13 +85,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_gui_observer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GuiObserver Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events.  
+<p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>.  
  <a href="class_gui_observer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_gui_observer_8h_source.html">GuiObserver.h</a>&gt;</code></p>
@@ -101,7 +102,7 @@ Inheritance diagram for GuiObserver:</div>
  <div class="center">
   <img src="class_gui_observer.png" usemap="#GuiObserver_map" alt=""/>
   <map id="GuiObserver_map" name="GuiObserver_map">
-<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
+<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. " alt="AbstractGameObserver" shape="rect" coords="0,0,145,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -125,9 +126,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1fe98e84fb66f6c0b607a956880c1bfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_observer.html#a1fe98e84fb66f6c0b607a956880c1bfb">onGameOver</a> (<a class="el" href="class_game_state.html">GameState</a> state, PlayerColor winner) override</td></tr>
 <tr class="memdesc:a1fe98e84fb66f6c0b607a956880c1bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a game started with onGameStart is over.  <a href="#a1fe98e84fb66f6c0b607a956880c1bfb">More...</a><br/></td></tr>
 <tr class="separator:a1fe98e84fb66f6c0b607a956880c1bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7b592364ab23f8ae13729e83ffc0d4fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b592364ab23f8ae13729e83ffc0d4fd"></a>
+ChessSetPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_observer.html#a7b592364ab23f8ae13729e83ffc0d4fd">m_chessSetPtr</a></td></tr>
+<tr class="memdesc:a7b592364ab23f8ae13729e83ffc0d4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer to the <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>. <br/></td></tr>
+<tr class="separator:a7b592364ab23f8ae13729e83ffc0d4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa845ebc3943d71ddd6343c55ba12ef47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa845ebc3943d71ddd6343c55ba12ef47"></a>
+<a class="el" href="class_game_play.html">GamePlay</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_observer.html#aa845ebc3943d71ddd6343c55ba12ef47">m_gamePlayState</a></td></tr>
+<tr class="memdesc:aa845ebc3943d71ddd6343c55ba12ef47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer to the <a class="el" href="class_game_play.html" title="Class which holds the state GamePlay. ">GamePlay</a> state. <br/></td></tr>
+<tr class="separator:aa845ebc3943d71ddd6343c55ba12ef47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events. </p>
+<div class="textblock"><p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. </p>
+<p>Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events.</p>
 <dl class="section note"><dt>Note</dt><dd>A Observer is only required to stay in a valid state for one game. It is free to halt its operations after the end of the game.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>None of the functions in the class must block. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -159,7 +172,7 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chessSetPtr</td><td>A shared pointer to the <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a> object. </td></tr>
-    <tr><td class="paramname">gamePlayState</td><td>A reference to the <a class="el" href="class_game_play.html" title="Class which holds the state GamePlay. This state is the essential part of all states. The whole game play is hold in this state. ">GamePlay</a> state. </td></tr>
+    <tr><td class="paramname">gamePlayState</td><td>A reference to the <a class="el" href="class_game_play.html" title="Class which holds the state GamePlay. ">GamePlay</a> state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -395,7 +408,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:44 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -128,19 +128,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html">   48</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_service_dispatcher.html">ServiceDispatcher</a> {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="class_service_dispatcher.html">ServiceDispatcher</a>()</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        : m_service()</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        , m_work(<span class="keyword">new</span> boost::asio::io_service::work(m_service)) { <span class="comment">/* Nothing */</span> }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        : <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>()</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        , <a class="code" href="class_service_dispatcher.html#a530a37d146eb4451741fb35971d69901">m_work</a>(<span class="keyword">new</span> boost::asio::io_service::work(<a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>)) { <span class="comment">/* Nothing */</span> }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_service_dispatcher.html">ServiceDispatcher</a>() { <span class="comment">/* Nothing */</span> }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
 <div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d">   61</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d">poll</a>() {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        m_service.poll();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>.poll();</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Function&gt;</div>
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a51360fc052cab5a9bad17fd586081091">   71</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_service_dispatcher.html#a51360fc052cab5a9bad17fd586081091">post</a>(Function&amp;&amp; <span class="keyword">function</span>) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        m_service.post(<span class="keyword">function</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>.post(<span class="keyword">function</span>);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Function&gt;</div>
@@ -148,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">auto</span> promise(std::make_shared&lt;std::promise&lt;decltype(<span class="keyword">function</span>())&gt;&gt;());</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">auto</span> future = promise-&gt;get_future();</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        m_service.post([<span class="keyword">function</span>, promise]() <span class="keyword">mutable</span> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>.post([<span class="keyword">function</span>, promise]() <span class="keyword">mutable</span> {</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            promise-&gt;set_value(<span class="keyword">function</span>());</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        });</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        </div>
@@ -156,35 +156,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    </div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a92d6309517ea11b6d646e787865c000a">   96</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_service_dispatcher.html#a92d6309517ea11b6d646e787865c000a">run</a>() {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        m_service.run();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>.run();</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    </div>
 <div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#ad8ad1909afe414cd27e21c8cdd214c6c">  101</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_service_dispatcher.html#ad8ad1909afe414cd27e21c8cdd214c6c">resetWork</a>() {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        m_work.reset();</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="class_service_dispatcher.html#a530a37d146eb4451741fb35971d69901">m_work</a>.reset();</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    </div>
 <div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a7bf54f65ee49a65d344581078d0a61b6">  106</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_service_dispatcher.html#a7bf54f65ee49a65d344581078d0a61b6">stopService</a>() {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        m_service.stop();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>.stop();</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    </div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    boost::asio::io_service m_service;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    std::unique_ptr&lt;boost::asio::io_service::work&gt; m_work;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">  113</a></span>&#160;    boost::asio::io_service <a class="code" href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">m_service</a>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="class_service_dispatcher.html#a530a37d146eb4451741fb35971d69901">  115</a></span>&#160;    std::unique_ptr&lt;boost::asio::io_service::work&gt; <a class="code" href="class_service_dispatcher.html#a530a37d146eb4451741fb35971d69901">m_work</a>;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;};</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif // SERVICE_DISPATCHER_H</span></div>
 <div class="ttc" id="class_service_dispatcher_html"><div class="ttname"><a href="class_service_dispatcher.html">ServiceDispatcher</a></div><div class="ttdoc">Provides functionality for safely running operations in a thread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:48</div></div>
+<div class="ttc" id="class_service_dispatcher_html_a530a37d146eb4451741fb35971d69901"><div class="ttname"><a href="class_service_dispatcher.html#a530a37d146eb4451741fb35971d69901">ServiceDispatcher::m_work</a></div><div class="ttdeci">std::unique_ptr&lt; boost::asio::io_service::work &gt; m_work</div><div class="ttdoc">Work object preventing service run loop from exiting on dry queue. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:115</div></div>
 <div class="ttc" id="class_service_dispatcher_html_a51360fc052cab5a9bad17fd586081091"><div class="ttname"><a href="class_service_dispatcher.html#a51360fc052cab5a9bad17fd586081091">ServiceDispatcher::post</a></div><div class="ttdeci">void post(Function &amp;&amp;function)</div><div class="ttdoc">Store a given function. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:71</div></div>
 <div class="ttc" id="class_service_dispatcher_html_a92d6309517ea11b6d646e787865c000a"><div class="ttname"><a href="class_service_dispatcher.html#a92d6309517ea11b6d646e787865c000a">ServiceDispatcher::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Runs underlying boost asio io_service. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:96</div></div>
 <div class="ttc" id="class_service_dispatcher_html_a7bf54f65ee49a65d344581078d0a61b6"><div class="ttname"><a href="class_service_dispatcher.html#a7bf54f65ee49a65d344581078d0a61b6">ServiceDispatcher::stopService</a></div><div class="ttdeci">void stopService()</div><div class="ttdoc">Stops underlying service. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:106</div></div>
 <div class="ttc" id="class_service_dispatcher_html_ad8ad1909afe414cd27e21c8cdd214c6c"><div class="ttname"><a href="class_service_dispatcher.html#ad8ad1909afe414cd27e21c8cdd214c6c">ServiceDispatcher::resetWork</a></div><div class="ttdeci">void resetWork()</div><div class="ttdoc">Drops queued functions. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:101</div></div>
 <div class="ttc" id="class_service_dispatcher_html_a523e6f7dc4e533b0b7938cec62c55c6d"><div class="ttname"><a href="class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d">ServiceDispatcher::poll</a></div><div class="ttdeci">void poll()</div><div class="ttdoc">Replays all posted functions in the calling thread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:61</div></div>
+<div class="ttc" id="class_service_dispatcher_html_a56acce42382609df43dee29818dee81b"><div class="ttname"><a href="class_service_dispatcher.html#a56acce42382609df43dee29818dee81b">ServiceDispatcher::m_service</a></div><div class="ttdeci">boost::asio::io_service m_service</div><div class="ttdoc">Object providing event loop queuing and dispatching functionality. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:113</div></div>
 <div class="ttc" id="class_service_dispatcher_html_a1723f2592299a9bf4ac9e9557929cf52"><div class="ttname"><a href="class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52">ServiceDispatcher::postPromise</a></div><div class="ttdeci">auto postPromise(Function &amp;&amp;function) -&gt; decltype(std::promise&lt; typename std::result_of&lt; Function()&gt;::type &gt;().get_future())</div><div class="ttdoc">Stores a given function and returns a future on its return value. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:41 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

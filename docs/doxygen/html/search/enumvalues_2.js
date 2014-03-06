@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['upper',['UPPER',['../struct_transposition_table_entry.html#adc45c3e738f27e694c924a8df6d12302adb28373902f1e677ebabe3990d92543c',1,'TranspositionTableEntry']]]
+  ['playing',['PLAYING',['../class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49a6d239235c0079eeb034a336aa7045d66',1,'AIPlayer']]],
+  ['pondering',['PONDERING',['../class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49aa69fe1c54e5531047a05e3cefbdbc9da',1,'AIPlayer']]],
+  ['preparation',['PREPARATION',['../class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49a249289b0db864b72a1ae11106059e786',1,'AIPlayer']]]
 ];

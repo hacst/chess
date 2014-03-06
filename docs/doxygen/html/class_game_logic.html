@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,6 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_game_logic-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GameLogic Class Reference</div>  </div>
@@ -133,10 +135,58 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a8dd1e091416320558bca6e04b49f88fb inherit pub_methods_class_abstract_game_logic"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a8dd1e091416320558bca6e04b49f88fb">start</a> ()</td></tr>
 <tr class="memdesc:a8dd1e091416320558bca6e04b49f88fb inherit pub_methods_class_abstract_game_logic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the game logic thread.  <a href="#a8dd1e091416320558bca6e04b49f88fb">More...</a><br/></td></tr>
 <tr class="separator:a8dd1e091416320558bca6e04b49f88fb inherit pub_methods_class_abstract_game_logic"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f87090c8542b9f15d3271ddc8b428f3 inherit pub_methods_class_abstract_game_logic"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f87090c8542b9f15d3271ddc8b428f3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a2f87090c8542b9f15d3271ddc8b428f3">join</a> ()</td></tr>
-<tr class="memdesc:a2f87090c8542b9f15d3271ddc8b428f3 inherit pub_methods_class_abstract_game_logic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will block until the logic thread terminated. Be sure to call stop first to initiate logic thread shutdown. <br/></td></tr>
+<tr class="memitem:a2f87090c8542b9f15d3271ddc8b428f3 inherit pub_methods_class_abstract_game_logic"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a2f87090c8542b9f15d3271ddc8b428f3">join</a> ()</td></tr>
+<tr class="memdesc:a2f87090c8542b9f15d3271ddc8b428f3 inherit pub_methods_class_abstract_game_logic"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will block until the logic thread terminated.  <a href="#a2f87090c8542b9f15d3271ddc8b428f3">More...</a><br/></td></tr>
 <tr class="separator:a2f87090c8542b9f15d3271ddc8b428f3 inherit pub_methods_class_abstract_game_logic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a29927895ae4be5d9d868d362f990274c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">run</a> () override</td></tr>
+<tr class="memdesc:a29927895ae4be5d9d868d362f990274c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a blocking game loop implementation.  <a href="#a29927895ae4be5d9d868d362f990274c">More...</a><br/></td></tr>
+<tr class="separator:a29927895ae4be5d9d868d362f990274c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38628386737b55ef8ef89aa5fa2f8d71"><td class="memTemplParams" colspan="2">template&lt;typename Future &gt; </td></tr>
+<tr class="memitem:a38628386737b55ef8ef89aa5fa2f8d71"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">wait_for</a> (Future &amp;&amp;fut, std::chrono::milliseconds waitInMs)</td></tr>
+<tr class="memdesc:a38628386737b55ef8ef89aa5fa2f8d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for performing an interruptable wait on a future.  <a href="#a38628386737b55ef8ef89aa5fa2f8d71">More...</a><br/></td></tr>
+<tr class="separator:a38628386737b55ef8ef89aa5fa2f8d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3afc88f5016906fe31c2b1d3629bb171"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171">wait</a> (std::chrono::milliseconds waitInMs) const </td></tr>
+<tr class="memdesc:a3afc88f5016906fe31c2b1d3629bb171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for performing an interruptable wait.  <a href="#a3afc88f5016906fe31c2b1d3629bb171">More...</a><br/></td></tr>
+<tr class="separator:a3afc88f5016906fe31c2b1d3629bb171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae780b5568107a0b6a16aab34d53a3ec4"><td class="memTemplParams" colspan="2">template&lt;typename Function &gt; </td></tr>
+<tr class="memitem:ae780b5568107a0b6a16aab34d53a3ec4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">notify</a> (Function &amp;&amp;f)</td></tr>
+<tr class="memdesc:ae780b5568107a0b6a16aab34d53a3ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to call a given function on all attached observers.  <a href="#ae780b5568107a0b6a16aab34d53a3ec4">More...</a><br/></td></tr>
+<tr class="separator:ae780b5568107a0b6a16aab34d53a3ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bc9ab9793c940f0466145e8559e9348"><td class="memItemLeft" align="right" valign="top">AbstractPlayerPtr &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a0bc9ab9793c940f0466145e8559e9348">getCurrentPlayer</a> ()</td></tr>
+<tr class="separator:a0bc9ab9793c940f0466145e8559e9348"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a21a741a5f051f4d1a519485188e13735"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">m_tickLength</a></td></tr>
+<tr class="memdesc:a21a741a5f051f4d1a519485188e13735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval in which the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> should check for aborts (.  <a href="#a21a741a5f051f4d1a519485188e13735">More...</a><br/></td></tr>
+<tr class="separator:a21a741a5f051f4d1a519485188e13735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6999355d95c1f0def70b1731fbaff542"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6999355d95c1f0def70b1731fbaff542"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">m_abort</a></td></tr>
+<tr class="memdesc:a6999355d95c1f0def70b1731fbaff542"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true the running game is aborted. <br/></td></tr>
+<tr class="separator:a6999355d95c1f0def70b1731fbaff542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5653b77b000ccc25ba2043aba3edda0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5653b77b000ccc25ba2043aba3edda0"></a>
+std::vector<br class="typebreak"/>
+&lt; AbstractGameObserverPtr &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">m_observers</a></td></tr>
+<tr class="memdesc:aa5653b77b000ccc25ba2043aba3edda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of observers for the game to be notified of game events (contains players) <br/></td></tr>
+<tr class="separator:aa5653b77b000ccc25ba2043aba3edda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3726e25edd2c9d353ac474dd92e6aa8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3726e25edd2c9d353ac474dd92e6aa8"></a>
+AbstractPlayerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_white</b></td></tr>
+<tr class="separator:ab3726e25edd2c9d353ac474dd92e6aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2135f44858c0ce83c7477420bb00f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa2135f44858c0ce83c7477420bb00f1"></a>
+AbstractPlayerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_black</b></td></tr>
+<tr class="separator:afa2135f44858c0ce83c7477420bb00f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1a59dd4f2a831815b30762d73868337"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1a59dd4f2a831815b30762d73868337"></a>
+<a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_gameState</b></td></tr>
+<tr class="separator:ac1a59dd4f2a831815b30762d73868337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae208a90d3861f73db9a27caff6142600"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae208a90d3861f73db9a27caff6142600"></a>
+GameConfigurationPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_config</b></td></tr>
+<tr class="separator:ae208a90d3861f73db9a27caff6142600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5148ff4cdde3651edb1c62c468740172"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5148ff4cdde3651edb1c62c468740172"></a>
+Logging::Logger&#160;</td><td class="memItemRight" valign="bottom"><b>m_log</b></td></tr>
+<tr class="separator:a5148ff4cdde3651edb1c62c468740172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -223,7 +273,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Registers an observer for game events. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi...">AbstractGameObserver</a> for the available events. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. ">AbstractGameObserver</a> for the available events. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">observer</td><td>Observer to register. </td></tr>
@@ -258,6 +308,30 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> currently used. </dd></dl>
 
 <p>Implements <a class="el" href="class_abstract_game_logic.html#a7a3d2369e905cbc22cde69f3eb30e47b">AbstractGameLogic</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0bc9ab9793c940f0466145e8559e9348"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractPlayerPtr &amp; GameLogic::getCurrentPlayer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Returns a reference to the next player to make his turn. </dd></dl>
 
 </div>
 </div>
@@ -313,6 +387,174 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="ae780b5568107a0b6a16aab34d53a3ec4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Function &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLogic::notify </td>
+          <td>(</td>
+          <td class="paramtype">Function &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to call a given function on all attached observers. </p>
+<p>Basically a observers.map(function).</p>
+<p>Usage: notify([&amp;](AbstractGameObserverPtr&amp; obs) { // This is your function which is handed obs obs-&gt;someObserverFunction(parameters); });</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Function which takes an AbstractGameObserverPtr as an argument. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a29927895ae4be5d9d868d362f990274c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLogic::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Executes a blocking game loop implementation. </p>
+<p>Repeatedly asks the white and black player to take turns until one wins the game or another game terminating event occurs. Notifies registered observer of game state changes and handles timeout events. </p>
+
+<p>Implements <a class="el" href="class_abstract_game_logic.html#a185f9cff8f72348f4805375ec88539b5">AbstractGameLogic</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3afc88f5016906fe31c2b1d3629bb171"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLogic::wait </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>waitInMs</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper function for performing an interruptable wait. </p>
+<p>Splits up a blocking wait into m_tickLength long waits with checks for the m_abort condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">waitInMs</td><td>Time to wait. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a38628386737b55ef8ef89aa5fa2f8d71"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Future &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameLogic::wait_for </td>
+          <td>(</td>
+          <td class="paramtype">Future &amp;&amp;&#160;</td>
+          <td class="paramname"><em>fut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>waitInMs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Helper function for performing an interruptable wait on a future. </p>
+<p>Splits up a usually uninterruptable wait on a future into m_tickLength long waits with checks for the m_abort condition. </p>
+<dl class="section see"><dt>See Also</dt><dd>std::future&lt;&gt;::wait_for </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fut</td><td>Future to wait on </td></tr>
+    <tr><td class="paramname">waitInMs</td><td>Maximum waiting time </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a21a741a5f051f4d1a519485188e13735"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds GameLogic::m_tickLength</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Interval in which the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> should check for aborts (. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542" title="If true the running game is aborted. ">m_abort</a>) </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/logic/<a class="el" href="_game_logic_8h_source.html">GameLogic.h</a></li>
 <li>S:/dev/3dchess/src/logic/GameLogic.cpp</li>
@@ -320,7 +562,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:43 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

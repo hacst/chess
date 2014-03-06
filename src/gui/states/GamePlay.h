@@ -1,4 +1,4 @@
-/*
+ï»¿/*
     Copyright (c) 2013-2014, Patrick Hillert <silent@gmx.biz>
 
     All rights reserved.
@@ -162,7 +162,7 @@ private:
     //! The state machine to access window functions.
     StateMachine& m_fsm;
 
-    //! Number in degree (0-360°) to rotate from/to.
+    //! Number in degree (0-360 deg) to rotate from/to.
     int m_rotateFrom, m_rotateTo;
 
     //! The game mode, one of: PLAYER_VS_AI or AI_VS_AI.
@@ -394,7 +394,7 @@ private:
     void rotateCamera();
 
     /**
-     * @brief Calculates the new camera coordinates from a given degree between 0-360° and
+     * @brief Calculates the new camera coordinates from a given degree between 0-360 deg and
      * positions the camera in the world space with respect to the animated rotation around
      * the Y-axis.
      * @param degree The angle in degree between 0 - 360.

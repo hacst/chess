@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events.  
+<p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>.  
  <a href="class_abstract_game_observer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_abstract_game_observer_8h_source.html">AbstractGameObserver.h</a>&gt;</code></p>
@@ -101,8 +101,8 @@ Inheritance diagram for AbstractGameObserver:</div>
  <div class="center">
   <img src="class_abstract_game_observer.png" usemap="#AbstractGameObserver_map" alt=""/>
   <map id="AbstractGameObserver_map" name="AbstractGameObserver_map">
-<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb..." alt="AbstractPlayer" shape="rect" coords="340,56,500,80"/>
-<area href="class_gui_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="GuiObserver" shape="rect" coords="510,56,670,80"/>
+<area href="class_abstract_player.html" title="Class a player has to implement to interact with the GameLogic. " alt="AbstractPlayer" shape="rect" coords="340,56,500,80"/>
+<area href="class_gui_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. " alt="GuiObserver" shape="rect" coords="510,56,670,80"/>
 <area href="class_logging_game_observer.html" title="AbstractGameObserver which simply logs occuring events. " alt="LoggingGameObserver" shape="rect" coords="680,56,840,80"/>
 <area href="class_observer_dispatcher_proxy.html" title="Proxy for transporting AbstractGameObserver events between threads. " alt="ObserverDispatcherProxy" shape="rect" coords="850,56,1010,80"/>
 <area href="class_a_i_player.html" title="Artificial intelligence player implementation. " alt="AIPlayer" shape="rect" coords="0,112,160,136"/>
@@ -132,7 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac24e139ff56d25fb7e77afdfb35fab5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events. </p>
+<div class="textblock"><p>Allows to observe relevant GameEvents inside the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a>. </p>
+<p>Classes of this type can be registered with the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> to be notified of relevant game events.</p>
 <dl class="section note"><dt>Note</dt><dd>A Observer is only required to stay in a valid state for one game. It is free to halt its operations after the end of the game.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>None of the functions in the class must block. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -363,7 +364,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:42 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

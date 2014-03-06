@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,13 +85,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_menu_game_mode-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">MenuGameMode Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class which holds the state GameMode. This state let the user choose one of two modes. The <em>AI vs. AI</em> mode which shows a chess match between two artificial computer players where the user can only watch the game. In the <em>Player vs. AI</em> mode, the user can play against an artificial computer player.  
+<p>Class which holds the state GameMode.  
  <a href="class_menu_game_mode.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_menu_game_mode_8h_source.html">MenuGameMode.h</a>&gt;</code></p>
@@ -112,7 +114,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4f43bb6d33b759bd55ffd79c244a6c81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new menu GameMode State object. <br/></td></tr>
 <tr class="separator:a4f43bb6d33b759bd55ffd79c244a6c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb10452c6e34d28a6a51b0580e42a0bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf">enter</a> () override</td></tr>
-<tr class="memdesc:afb10452c6e34d28a6a51b0580e42a0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the state for the first time. This will setup all the state related stuff.  <a href="#afb10452c6e34d28a6a51b0580e42a0bf">More...</a><br/></td></tr>
+<tr class="memdesc:afb10452c6e34d28a6a51b0580e42a0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the state for the first time.  <a href="#afb10452c6e34d28a6a51b0580e42a0bf">More...</a><br/></td></tr>
 <tr class="separator:afb10452c6e34d28a6a51b0580e42a0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefba7f005740cda5041bd0bb07bdc2b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_abstract_state.html">AbstractState</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#aefba7f005740cda5041bd0bb07bdc2b4">run</a> () override</td></tr>
 <tr class="memdesc:aefba7f005740cda5041bd0bb07bdc2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the current state and does all the work.  <a href="#aefba7f005740cda5041bd0bb07bdc2b4">More...</a><br/></td></tr>
@@ -124,22 +126,46 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#aaf1652afa91f199b475b1f7d19654e7e">draw</a> ()</td></tr>
 <tr class="memdesc:aaf1652afa91f199b475b1f7d19654e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws something state related stuff on the screen. <br/></td></tr>
 <tr class="separator:aaf1652afa91f199b475b1f7d19654e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a467fae6ac728431e5d9a58cf7175a2a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a467fae6ac728431e5d9a58cf7175a2a0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a467fae6ac728431e5d9a58cf7175a2a0">onModeAIVsAI</a> ()</td></tr>
-<tr class="memdesc:a467fae6ac728431e5d9a58cf7175a2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose the <em>AI vs. AI</em> mode. <br/></td></tr>
+<tr class="memitem:a467fae6ac728431e5d9a58cf7175a2a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a467fae6ac728431e5d9a58cf7175a2a0">onModeAIVsAI</a> ()</td></tr>
+<tr class="memdesc:a467fae6ac728431e5d9a58cf7175a2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose the _AI vs.  <a href="#a467fae6ac728431e5d9a58cf7175a2a0">More...</a><br/></td></tr>
 <tr class="separator:a467fae6ac728431e5d9a58cf7175a2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9021dd0b904230407ab0eab0b7a8ed88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9021dd0b904230407ab0eab0b7a8ed88"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a9021dd0b904230407ab0eab0b7a8ed88">onModePlayerVsAI</a> ()</td></tr>
-<tr class="memdesc:a9021dd0b904230407ab0eab0b7a8ed88"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose the <em>Player vs. AI</em> mode. <br/></td></tr>
+<tr class="memitem:a9021dd0b904230407ab0eab0b7a8ed88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a9021dd0b904230407ab0eab0b7a8ed88">onModePlayerVsAI</a> ()</td></tr>
+<tr class="memdesc:a9021dd0b904230407ab0eab0b7a8ed88"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose the _Player vs.  <a href="#a9021dd0b904230407ab0eab0b7a8ed88">More...</a><br/></td></tr>
 <tr class="separator:a9021dd0b904230407ab0eab0b7a8ed88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8312aab4acd867b0343004ae1870df4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8312aab4acd867b0343004ae1870df4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#ad8312aab4acd867b0343004ae1870df4">onMenuBack</a> ()</td></tr>
 <tr class="memdesc:ad8312aab4acd867b0343004ae1870df4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called if the user chose the back button. <br/></td></tr>
 <tr class="separator:ad8312aab4acd867b0343004ae1870df4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a23ec1c815be4c8d0104c3204e71138af"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a23ec1c815be4c8d0104c3204e71138af">States</a> { <b>KEEP_CURRENT</b>, 
+<b>GAME_PLAY</b>, 
+<b>MENU_PLAYER_COLOR</b>, 
+<b>MENU_MAIN</b>
+ }</td></tr>
+<tr class="memdesc:a23ec1c815be4c8d0104c3204e71138af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal GameMode states. <br/></td></tr>
+<tr class="separator:a23ec1c815be4c8d0104c3204e71138af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac747242f4b905584527e2d8a219ad0f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac747242f4b905584527e2d8a219ad0f1"></a>
+<a class="el" href="class_state_machine.html">StateMachine</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#ac747242f4b905584527e2d8a219ad0f1">fsm</a></td></tr>
+<tr class="memdesc:ac747242f4b905584527e2d8a219ad0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the <a class="el" href="class_state_machine.html" title="Class which manages the states. ">StateMachine</a>. <br/></td></tr>
+<tr class="separator:ac747242f4b905584527e2d8a219ad0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62bed542b1068eb75eb41a2c9199897c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62bed542b1068eb75eb41a2c9199897c"></a>
+<a class="el" href="class_menu_game_mode.html#a23ec1c815be4c8d0104c3204e71138af">States</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a62bed542b1068eb75eb41a2c9199897c">m_nextState</a></td></tr>
+<tr class="memdesc:a62bed542b1068eb75eb41a2c9199897c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next State for the <a class="el" href="class_state_machine.html" title="Class which manages the states. ">StateMachine</a> to enter. <br/></td></tr>
+<tr class="separator:a62bed542b1068eb75eb41a2c9199897c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6719d124e08e816889c08cda33533ff1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6719d124e08e816889c08cda33533ff1"></a>
+Menu2DPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu_game_mode.html#a6719d124e08e816889c08cda33533ff1">menu</a></td></tr>
+<tr class="memdesc:a6719d124e08e816889c08cda33533ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shared pointer for better garbage handling. <br/></td></tr>
+<tr class="separator:a6719d124e08e816889c08cda33533ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class which holds the state GameMode. This state let the user choose one of two modes. The <em>AI vs. AI</em> mode which shows a chess match between two artificial computer players where the user can only watch the game. In the <em>Player vs. AI</em> mode, the user can play against an artificial computer player. </p>
-<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_game_mode.html#aefba7f005740cda5041bd0bb07bdc2b4" title="Runs the current state and does all the work. ">run()</a> a state, first <a class="el" href="class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf" title="Enters the state for the first time. This will setup all the state related stuff. ...">enter()</a> the state. </dd></dl>
+<div class="textblock"><p>Class which holds the state GameMode. </p>
+<p>This state let the user choose one of two modes. The <em>AI vs. AI</em> mode which shows a chess match between two artificial computer players where the user can only watch the game. In the <em>Player vs. AI</em> mode, the user can play against an artificial computer player.</p>
+<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_game_mode.html#aefba7f005740cda5041bd0bb07bdc2b4" title="Runs the current state and does all the work. ">run()</a> a state, first <a class="el" href="class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf" title="Enters the state for the first time. ">enter()</a> the state. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="afb10452c6e34d28a6a51b0580e42a0bf"></a>
 <div class="memitem">
@@ -162,8 +188,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 </div><div class="memdoc">
 
-<p>Enters the state for the first time. This will setup all the state related stuff. </p>
-<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_game_mode.html#aefba7f005740cda5041bd0bb07bdc2b4" title="Runs the current state and does all the work. ">run()</a> the current state, first <a class="el" href="class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf" title="Enters the state for the first time. This will setup all the state related stuff. ...">enter()</a> it. </dd></dl>
+<p>Enters the state for the first time. </p>
+<p>This will setup all the state related stuff. </p>
+<dl class="section note"><dt>Note</dt><dd>To <a class="el" href="class_menu_game_mode.html#aefba7f005740cda5041bd0bb07bdc2b4" title="Runs the current state and does all the work. ">run()</a> the current state, first <a class="el" href="class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf" title="Enters the state for the first time. ">enter()</a> it. </dd></dl>
 
 <p>Implements <a class="el" href="class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c">AbstractState</a>.</p>
 
@@ -194,6 +221,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section note"><dt>Note</dt><dd>This is the last method to call, before the object is deleted. </dd></dl>
 
 <p>Implements <a class="el" href="class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a">AbstractState</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a467fae6ac728431e5d9a58cf7175a2a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MenuGameMode::onModeAIVsAI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is called if the user chose the _AI vs. </p>
+<p>AI_ mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9021dd0b904230407ab0eab0b7a8ed88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MenuGameMode::onModePlayerVsAI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is called if the user chose the _Player vs. </p>
+<p>AI_ mode. </p>
 
 </div>
 </div>
@@ -232,7 +295,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

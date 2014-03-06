@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li class="current"><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
@@ -82,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -102,6 +103,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Color
 : <a class="el" href="class_model.html#aacca359f52db22626d236f108da4f087">Model</a>
 </li>
+<li>Elevation
+: <a class="el" href="class_chess_set.html#a7b26c2f2145a62d34b1bf7b55fddeef0">ChessSet</a>
+</li>
 <li>fontSize
 : <a class="el" href="class_gui_window.html#a30ca64fcfb6724f883763be5ac6ce8be">GuiWindow</a>
 </li>
@@ -111,8 +115,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GameMode
 : <a class="el" href="class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616">GamePlay</a>
 </li>
+<li>InternalState
+: <a class="el" href="class_chess_set.html#a19081a283e108cf308fb52ee4d45b837">ChessSet</a>
+, <a class="el" href="class_game_play.html#a74b1558e794d5ae8e60381c33111f05f">GamePlay</a>
+</li>
+<li>PlayerState
+: <a class="el" href="class_game_play.html#a66aa55b2891b88080aef650bd0a42bdb">GamePlay</a>
+</li>
 <li>States
 : <a class="el" href="class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49">AIPlayer</a>
+, <a class="el" href="class_game_play.html#a5980fe6836e5b78acc8bbbec79d659c6">GamePlay</a>
+, <a class="el" href="class_menu_game_mode.html#a23ec1c815be4c8d0104c3204e71138af">MenuGameMode</a>
+, <a class="el" href="class_menu_load_game.html#a46bb3085d9e3067ce9da9a9d18d1066b">MenuLoadGame</a>
+, <a class="el" href="class_menu_main.html#a65957ece30cb5a87e99928432859879b">MenuMain</a>
+, <a class="el" href="class_menu_options.html#aa1c15ced6010691d14ccb747588bcb47">MenuOptions</a>
+, <a class="el" href="class_menu_player_color.html#aa51b1b87c5fdade27d4ebcde2bd0d798">MenuPlayerColor</a>
 </li>
 <li>TileStyle
 : <a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">ChessSet</a>
@@ -124,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 6 2014 23:38:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['states',['States',['../class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49',1,'AIPlayer']]]
+  ['gamemode',['GameMode',['../class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616',1,'GamePlay']]]
 ];

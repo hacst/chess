@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['windowmode',['WindowMode',['../class_gui_window.html#a79ab3cdd048d53881039d852b1304671',1,'GuiWindow']]]
+  ['tilestyle',['TileStyle',['../class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97',1,'ChessSet']]]
 ];
