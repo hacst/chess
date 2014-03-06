@@ -44,20 +44,24 @@
  * @see TranspositionTable
  */
 struct TranspositionTableEntry {
-    Hash hash;
-    Turn turn;
-    Score score;
+    Hash hash; //!< Hash identifying position (might collide)
+    Turn turn; //!< Best turn from this position
+    Score score; //!< Estimated score (@see boundType, @see depth)
     
+    //! Describes the guarantees for the entry.
     enum BoundType {
-        LOWER,
-        UPPER,
-        EXACT
+        LOWER, //!< Score is lower bound to score attainable by turn.
+        UPPER, //!< Score is upper bound to score attainable by turn.
+        EXACT  //!< Score is exactly what is attainable by turn.
     } boundType;
 
-    size_t depth;
+    size_t depth; //!< 
     
+    //! Returns true if entry score is lower bound to score attainable by turn.
     bool isLowerBound() const { return boundType == LOWER; }
+    //! Returns true if entry score is upper bound to score attainable by turn.
     bool isUpperBound() const { return boundType == UPPER; }
+    //! Returns true if score is exactly what is attainable by turn.
     bool isExactBound() const { return boundType == EXACT; }
     
     std::string toString() const {
@@ -75,22 +79,33 @@ struct TranspositionTableEntry {
 
 /**
  * @brief Transposition table with fixed size.
- * Hashed on hash of transposition table entry. Offers internal
- * collision detection by checking hash in entry before returning.
- * @note Zobrist hash collisions can't be detected
+ * Hashed on hash of transposition table entry. Offers limited internal
+ * collision detection against class 2 errors by checking hash in entry
+ * before returning. Class 1 errors should handled externally if problematic.
  */
-
 class TranspositionTable {
 public:
-    //! Creates an empty transposition table
+    /**
+     * @brief Creates an empty transposition table of given size.
+     * @param tablesize Number of independent spaces in hashtable.
+     * @note To ensure even distribution tablesize should be prime.
+     */
     TranspositionTable(size_t tablesize = 4000037)
         : m_table(tablesize)
         , m_tablesize(tablesize) {
         // Empty
     }
     
-    //! Set entry in table
-    void update(TranspositionTableEntry entry) {
+    /**
+     * @brief Stores the given entry if it meets table replacement criteria.
+     * Stores the given entry either if it belongs to a different position
+     * than the current one or if its depth is greater than the previous
+     * entry for this position. This relies on the assumption that deeper
+     * entries most likely took more positions into account thus representing
+     * a greater investment in compute time.
+     * @param entry Entry to store.
+     */
+    void maybeUpdate(TranspositionTableEntry entry) {
         TranspositionTableEntry &oldEntry = m_table[entry.hash % m_tablesize];
 
         if (oldEntry.hash == entry.hash && oldEntry.depth > entry.depth)
@@ -102,7 +117,7 @@ public:
     /**
      * @brief Lookup hash in table.
      * @note Not secure against zobrist hash collisions.
-     * @return Entry if in table.
+     * @return Option to entry if in table. boost::none otherwise.
      */
     boost::optional<TranspositionTableEntry> lookup(Hash hash) const {
         TranspositionTableEntry entry = m_table[hash % m_tablesize];
@@ -112,6 +127,7 @@ public:
         return entry;
     }
 
+    //! Returns the number of possible independent table entries.
     size_t getTableSize() const {
         return m_tablesize;
     }

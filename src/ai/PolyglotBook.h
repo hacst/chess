@@ -45,17 +45,19 @@
  * @brief Single entry in in polyglot book adjusted for this engine.
  */
 struct PolyglotBookEntry {
-    uint64_t key;
+    uint64_t key; //!< Entry key (Zobrist hash)
 
+    //! Chess move
     struct Move {
-        Field from;
-        Field to;
-        PieceType promotion_piece;
+        Field from; //!< Source field. For castling king source.
+        Field to; //!< Target field. For castling king target.
+        PieceType promotion_piece; //!< If promotion piece type to promote to.
         
         bool operator==(const Move& other) const;
         std::string toString() const;
     } move;
 
+    //! Score for move from book.
     uint16_t weight;
 
     bool isPromotion() const;
