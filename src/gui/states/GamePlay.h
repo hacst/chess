@@ -230,9 +230,6 @@ private:
                 CHOOSE_PROMOTION_TURN
             } m_playerState;
     
-    //! boost::log Logger for universal info, debug and error logging.
-    Logging::Logger m_log;
-
     //! Holds the possible promotion turns for the human player.
     Turn m_promotionTurns[4];
 
@@ -312,6 +309,9 @@ private:
     //! The initial FEN notation string to load the game state from.
     std::string m_initialFen;
 
+    //! boost::log Logger for universal info, debug and error logging.
+    Logging::Logger m_log;
+    
     /**
      * @brief The functions returns the name of the piece/model for the given number.
      * @param pieceNumber A number between 0 and 6 corresponding to the PieceType.
