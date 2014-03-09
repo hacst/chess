@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['texturecoords',['textureCoords',['../class_mesh.html#adcf1d13221798fb9405864131ae824a3',1,'Mesh']]],
-  ['textures',['textures',['../structfreetype_1_1font__data.html#a32c2d8e23c93a6d38af92808cec6cb18',1,'freetype::font_data']]],
-  ['timebetweenturnsinseconds',['timeBetweenTurnsInSeconds',['../struct_game_configuration.html#acd905836d5abcd60f9414cd5be4eee5d',1,'GameConfiguration']]],
-  ['to',['to',['../class_turn.html#af1d6dd41edce44b8312b657089e8c7a6',1,'Turn']]],
-  ['top',['top',['../struct_menu2_d_item_1_1bounding_box.html#ab35a709b9b2afde2abd2ac3c03fe2fda',1,'Menu2DItem::boundingBox']]],
-  ['turn',['turn',['../struct_negamax_1_1_result.html#a6e8631faf6e7c50f7e87892380969cf8',1,'Negamax::Result']]],
-  ['type',['type',['../struct_piece.html#ab8f29312ab7939c96ff03f1fb8957d1c',1,'Piece']]]
+  ['scene',['scene',['../class_assimp_helper.html#a592bbf36768f8c8e116948644953ce78',1,'AssimpHelper']]],
+  ['score',['score',['../struct_negamax_result.html#aba9695a07875203aa6c754501e113c3b',1,'NegamaxResult::score()'],['../class_negamax_1_1_option.html#a33bfa15db2d737b4d3f6bc8d28d762c5',1,'Negamax::Option::score()'],['../struct_transposition_table_entry.html#a21cb85b29cd2ce47beb1dd33142972dd',1,'TranspositionTableEntry::score()']]],
+  ['showduration',['showDuration',['../struct_game_play_1_1_message_box.html#aacbedfddc00beee62ebc27f91c8accf5',1,'GamePlay::MessageBox']]],
+  ['shownsince',['shownSince',['../struct_game_play_1_1_message_box.html#abcbac659ddffa04ddb8fc4dcb7e0ed28',1,'GamePlay::MessageBox']]]
 ];

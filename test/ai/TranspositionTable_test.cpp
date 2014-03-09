@@ -46,7 +46,7 @@ TEST(TranspositionTable, lookup) {
     entry.score = 5;
     entry.depth = 0;
     entry.boundType = TranspositionTableEntry::EXACT;
-    tbl.update(entry);
+    tbl.maybeUpdate(entry);
     
     //TODO: Improve this
 }

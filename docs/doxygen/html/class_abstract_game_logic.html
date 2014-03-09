@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -127,9 +127,8 @@ virtual AbstractPlayerPtr&#160;</td><td class="memItemRight" valign="bottom"><b>
 <tr class="memitem:a8dd1e091416320558bca6e04b49f88fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a8dd1e091416320558bca6e04b49f88fb">start</a> ()</td></tr>
 <tr class="memdesc:a8dd1e091416320558bca6e04b49f88fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the game logic thread.  <a href="#a8dd1e091416320558bca6e04b49f88fb">More...</a><br/></td></tr>
 <tr class="separator:a8dd1e091416320558bca6e04b49f88fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f87090c8542b9f15d3271ddc8b428f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f87090c8542b9f15d3271ddc8b428f3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a2f87090c8542b9f15d3271ddc8b428f3">join</a> ()</td></tr>
-<tr class="memdesc:a2f87090c8542b9f15d3271ddc8b428f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will block until the logic thread terminated. Be sure to call stop first to initiate logic thread shutdown. <br/></td></tr>
+<tr class="memitem:a2f87090c8542b9f15d3271ddc8b428f3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a2f87090c8542b9f15d3271ddc8b428f3">join</a> ()</td></tr>
+<tr class="memdesc:a2f87090c8542b9f15d3271ddc8b428f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will block until the logic thread terminated.  <a href="#a2f87090c8542b9f15d3271ddc8b428f3">More...</a><br/></td></tr>
 <tr class="separator:a2f87090c8542b9f15d3271ddc8b428f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3483574a5ea9fffdb5037a66641cfc45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3483574a5ea9fffdb5037a66641cfc45"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a3483574a5ea9fffdb5037a66641cfc45">stop</a> ()=0</td></tr>
@@ -138,9 +137,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a185f9cff8f72348f4805375ec88539b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a185f9cff8f72348f4805375ec88539b5"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a185f9cff8f72348f4805375ec88539b5">run</a> ()=0</td></tr>
-<tr class="memdesc:a185f9cff8f72348f4805375ec88539b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual game logic function. Called by start function on the game logic thread to run the actual logic. <br/></td></tr>
+<tr class="memitem:a185f9cff8f72348f4805375ec88539b5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_game_logic.html#a185f9cff8f72348f4805375ec88539b5">run</a> ()=0</td></tr>
+<tr class="memdesc:a185f9cff8f72348f4805375ec88539b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual game logic function.  <a href="#a185f9cff8f72348f4805375ec88539b5">More...</a><br/></td></tr>
 <tr class="separator:a185f9cff8f72348f4805375ec88539b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -176,7 +174,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Registers an observer for game events. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi...">AbstractGameObserver</a> for the available events. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. ">AbstractGameObserver</a> for the available events. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">observer</td><td>Observer to register. </td></tr>
@@ -208,7 +206,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> currently used. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> currently used. </dd></dl>
 
 <p>Implemented in <a class="el" href="class_game_logic.html#a6397a2b36a7aa7d60d7ae49da00a9263">GameLogic</a>.</p>
 
@@ -266,6 +264,60 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="a2f87090c8542b9f15d3271ddc8b428f3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AbstractGameLogic::join </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Will block until the logic thread terminated. </p>
+<p>Be sure to call stop first to initiate logic thread shutdown. </p>
+
+</div>
+</div>
+<a class="anchor" id="a185f9cff8f72348f4805375ec88539b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void AbstractGameLogic::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Actual game logic function. </p>
+<p>Called by start function on the game logic thread to run the actual logic. </p>
+
+<p>Implemented in <a class="el" href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">GameLogic</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8dd1e091416320558bca6e04b49f88fb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -288,7 +340,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 
 <p>Starts the game logic thread. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_logic.html#a185f9cff8f72348f4805375ec88539b5" title="Actual game logic function. Called by start function on the game logic thread to run the actual logic...">run</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_game_logic.html#a185f9cff8f72348f4805375ec88539b5" title="Actual game logic function. ">run</a> </dd></dl>
 
 </div>
 </div>
@@ -298,7 +350,7 @@ std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

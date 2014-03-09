@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,6 +85,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_game_state-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GameState Class Reference</div>  </div>
@@ -96,31 +99,48 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ca0d197302c5902eae253571b9e55cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ca0d197302c5902eae253571b9e55cf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>GameState</b> (const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;chessBoard)</td></tr>
 <tr class="separator:a8ca0d197302c5902eae253571b9e55cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa850839f1d8c80b185c3ba944a2c95fd"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> ()</td></tr>
-<tr class="separator:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad354cf0cd823324fbb10685eb3366b6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad354cf0cd823324fbb10685eb3366b6f"></a>
-virtual std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getTurnList</b> () const </td></tr>
+std::vector&lt; <a class="el" href="class_turn.html">Turn</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">getTurnList</a> () const </td></tr>
+<tr class="memdesc:ad354cf0cd823324fbb10685eb3366b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list with all possible and legal turns. <br/></td></tr>
 <tr class="separator:ad354cf0cd823324fbb10685eb3366b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32e44f75df9a6d1adf1518039208ca4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32e44f75df9a6d1adf1518039208ca4f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>applyTurn</b> (const <a class="el" href="class_turn.html">Turn</a> &amp;turn)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a32e44f75df9a6d1adf1518039208ca4f">applyTurn</a> (const <a class="el" href="class_turn.html">Turn</a> &amp;turn)</td></tr>
+<tr class="memdesc:a32e44f75df9a6d1adf1518039208ca4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the given turn on current chessboard. <br/></td></tr>
 <tr class="separator:a32e44f75df9a6d1adf1518039208ca4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a133b05cc437fa2b62896ee7e2b5455fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a133b05cc437fa2b62896ee7e2b5455fd"></a>
-virtual PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><b>getNextPlayer</b> () const </td></tr>
+PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a133b05cc437fa2b62896ee7e2b5455fd">getNextPlayer</a> () const </td></tr>
+<tr class="memdesc:a133b05cc437fa2b62896ee7e2b5455fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return next player to make a turn. <br/></td></tr>
 <tr class="separator:a133b05cc437fa2b62896ee7e2b5455fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04d880769e5d7f22e4bd83f91ecf81be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04d880769e5d7f22e4bd83f91ecf81be"></a>
-virtual const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getChessBoard</b> () const </td></tr>
+const <a class="el" href="class_chess_board.html">ChessBoard</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a04d880769e5d7f22e4bd83f91ecf81be">getChessBoard</a> () const </td></tr>
+<tr class="memdesc:a04d880769e5d7f22e4bd83f91ecf81be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides access to the chessboard. <br/></td></tr>
 <tr class="separator:a04d880769e5d7f22e4bd83f91ecf81be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70ceabd72cd7f59e3d6a499e506068b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70ceabd72cd7f59e3d6a499e506068b6"></a>
+<a class="el" href="struct_piece.html">Piece</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a70ceabd72cd7f59e3d6a499e506068b6">getLastCapturedPiece</a> () const </td></tr>
+<tr class="memdesc:a70ceabd72cd7f59e3d6a499e506068b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the captured piece from the last turn or <a class="el" href="struct_piece.html">Piece(NoPlayer, NoType)</a> if no piece was captured. <br/></td></tr>
+<tr class="separator:a70ceabd72cd7f59e3d6a499e506068b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c37ae37802e9ffbc85b0a7f8e3c16c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c37ae37802e9ffbc85b0a7f8e3c16c1"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isGameOver</b> () const </td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a6c37ae37802e9ffbc85b0a7f8e3c16c1">isGameOver</a> () const </td></tr>
+<tr class="memdesc:a6c37ae37802e9ffbc85b0a7f8e3c16c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the game is over. <br/></td></tr>
 <tr class="separator:a6c37ae37802e9ffbc85b0a7f8e3c16c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae40390bce82fffb2feaaea120bfb9fe3"></a>
-PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><b>getWinner</b> () const </td></tr>
+<tr class="memitem:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memItemLeft" align="right" valign="top">PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ae40390bce82fffb2feaaea120bfb9fe3">getWinner</a> () const </td></tr>
+<tr class="memdesc:ae40390bce82fffb2feaaea120bfb9fe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the winner of the game.  <a href="#ae40390bce82fffb2feaaea120bfb9fe3">More...</a><br/></td></tr>
 <tr class="separator:ae40390bce82fffb2feaaea120bfb9fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa067eb968cebd1644a2c0cbb06ba60e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa067eb968cebd1644a2c0cbb06ba60e7"></a>
-Score&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#aa067eb968cebd1644a2c0cbb06ba60e7">getScore</a> () const </td></tr>
-<tr class="memdesc:aa067eb968cebd1644a2c0cbb06ba60e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current score estimate from next players POV. <br/></td></tr>
-<tr class="separator:aa067eb968cebd1644a2c0cbb06ba60e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a112f6b5f422a4833ed1c6808fbe95267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a112f6b5f422a4833ed1c6808fbe95267"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a112f6b5f422a4833ed1c6808fbe95267">isDrawDueTo50MovesRule</a> () const </td></tr>
+<tr class="memdesc:a112f6b5f422a4833ed1c6808fbe95267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the game is draw due to the 50 moves rule. <br/></td></tr>
+<tr class="separator:a112f6b5f422a4833ed1c6808fbe95267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df7c9e7511889af5c397cd55713f8d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5df7c9e7511889af5c397cd55713f8d2"></a>
+Score&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a5df7c9e7511889af5c397cd55713f8d2">getScore</a> (size_t depth=0) const </td></tr>
+<tr class="memdesc:a5df7c9e7511889af5c397cd55713f8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns current score estimate from next players POV. <br/></td></tr>
+<tr class="separator:a5df7c9e7511889af5c397cd55713f8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00a55833cc596f1036d11386f0fe4c66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00a55833cc596f1036d11386f0fe4c66"></a>
+Hash&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a00a55833cc596f1036d11386f0fe4c66">getHash</a> () const </td></tr>
+<tr class="memdesc:a00a55833cc596f1036d11386f0fe4c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns hash for current position. <br/></td></tr>
+<tr class="separator:a00a55833cc596f1036d11386f0fe4c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee17bb57820b9d4cfce231472e1155e4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#aee17bb57820b9d4cfce231472e1155e4">toFEN</a> () const </td></tr>
+<tr class="memdesc:aee17bb57820b9d4cfce231472e1155e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the current game state into FEN notation.  <a href="#aee17bb57820b9d4cfce231472e1155e4">More...</a><br/></td></tr>
+<tr class="separator:aee17bb57820b9d4cfce231472e1155e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb7cf4c08be0b45e99d546ae27a91708"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb7cf4c08be0b45e99d546ae27a91708"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="class_game_state.html">GameState</a> &amp;other) const </td></tr>
 <tr class="separator:acb7cf4c08be0b45e99d546ae27a91708"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,7 +150,102 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 <tr class="memitem:a80463068f7df886b649ab73fec71d7e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80463068f7df886b649ab73fec71d7e7"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const </td></tr>
 <tr class="separator:a80463068f7df886b649ab73fec71d7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abc119a4a9a6180f9396c92916cae29c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#abc119a4a9a6180f9396c92916cae29c1">fromFEN</a> (const std::string &amp;fen)</td></tr>
+<tr class="memdesc:abc119a4a9a6180f9396c92916cae29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string.  <a href="#abc119a4a9a6180f9396c92916cae29c1">More...</a><br/></td></tr>
+<tr class="separator:abc119a4a9a6180f9396c92916cae29c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa850839f1d8c80b185c3ba944a2c95fd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#aa850839f1d8c80b185c3ba944a2c95fd">init</a> ()</td></tr>
+<tr class="memdesc:aa850839f1d8c80b185c3ba944a2c95fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the turn generator with the given chessboard. <br/></td></tr>
+<tr class="separator:aa850839f1d8c80b185c3ba944a2c95fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a48ae4dc619da86358244d73e1c5a126a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48ae4dc619da86358244d73e1c5a126a"></a>
+<a class="el" href="class_chess_board.html">ChessBoard</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#a48ae4dc619da86358244d73e1c5a126a">m_chessBoard</a></td></tr>
+<tr class="memdesc:a48ae4dc619da86358244d73e1c5a126a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Chessboard representation and logic. <br/></td></tr>
+<tr class="separator:a48ae4dc619da86358244d73e1c5a126a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b4c92826c3baea811c24d49f1fb585"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7b4c92826c3baea811c24d49f1fb585"></a>
+<a class="el" href="class_turn_generator.html">TurnGenerator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ad7b4c92826c3baea811c24d49f1fb585">m_turnGen</a></td></tr>
+<tr class="memdesc:ad7b4c92826c3baea811c24d49f1fb585"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_turn.html">Turn</a> generator and gameover detection. <br/></td></tr>
+<tr class="separator:ad7b4c92826c3baea811c24d49f1fb585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abc119a4a9a6180f9396c92916cae29c1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_game_state.html">GameState</a> GameState::fromFEN </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string. </p>
+<p><a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a> </p>
+<dl class="section warning"><dt>Warning</dt><dd>This function does no validation. Do not pass invalid FEN. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fen</td><td>FEN String. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae40390bce82fffb2feaaea120bfb9fe3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PlayerColor GameState::getWinner </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the winner of the game. </p>
+<p>Returns Player color or NoPlayer on draw. </p>
+
+</div>
+</div>
+<a class="anchor" id="aee17bb57820b9d4cfce231472e1155e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string GameState::toFEN </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts the current game state into FEN notation. </p>
+<dl class="section return"><dt>Returns</dt><dd>State in FEN notation. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/logic/<a class="el" href="_game_state_8h_source.html">GameState.h</a></li>
 <li>S:/dev/3dchess/src/logic/GameState.cpp</li>
@@ -138,7 +253,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

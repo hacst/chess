@@ -1,7 +1,16 @@
 var searchData=
 [
-  ['font_5fdata',['font_data',['../structfreetype_1_1font__data.html',1,'freetype']]],
-  ['fontsize',['fontSize',['../class_gui_window.html#a30ca64fcfb6724f883763be5ac6ce8be',1,'GuiWindow']]],
-  ['freetype',['freetype',['../namespacefreetype.html',1,'']]],
-  ['functiontype',['FunctionType',['../class_animation_helper.html#a624ea97cafa70ccba957bc0a3ab2ca27',1,'AnimationHelper']]]
+  ['ease',['ease',['../class_animation_helper.html#a62d475d64fe53339c09a59aadee57332',1,'AnimationHelper']]],
+  ['ease_5flinear',['EASE_LINEAR',['../class_animation_helper.html#a624ea97cafa70ccba957bc0a3ab2ca27a564584bb2d34a16242ce4dacb3bc1686',1,'AnimationHelper']]],
+  ['ease_5foutsine',['EASE_OUTSINE',['../class_animation_helper.html#a624ea97cafa70ccba957bc0a3ab2ca27a55bd07a7d71db487b17255ba3f019f01',1,'AnimationHelper']]],
+  ['elevation',['Elevation',['../class_chess_set.html#a7b26c2f2145a62d34b1bf7b55fddeef0',1,'ChessSet']]],
+  ['enablelighting',['enableLighting',['../class_game_play.html#acf9363543bc52ac3866f4520d695b23a',1,'GamePlay']]],
+  ['enter',['enter',['../class_abstract_state.html#a6c54a7c162cd2bce6ddb83d5eef8ec4c',1,'AbstractState::enter()'],['../class_game_play.html#a265e1c47781f3ab890a648c9811738d7',1,'GamePlay::enter()'],['../class_menu_game_mode.html#afb10452c6e34d28a6a51b0580e42a0bf',1,'MenuGameMode::enter()'],['../class_menu_load_game.html#a1d1319eb1e74af8c48fb66f918f7c67e',1,'MenuLoadGame::enter()'],['../class_menu_main.html#ad70abaa1eeed0c16fb756fc183847076',1,'MenuMain::enter()'],['../class_menu_options.html#a8577426043149d0f2b1765c1e321c7c9',1,'MenuOptions::enter()'],['../class_menu_player_color.html#a99e851103d0c0d7bde839520fe39aaa5',1,'MenuPlayerColor::enter()']]],
+  ['estimatefullboard',['estimateFullBoard',['../class_incremental_material_and_p_s_t_evaluator.html#a0bc191761bf2f5f11a4d10babd650518',1,'IncrementalMaterialAndPSTEvaluator']]],
+  ['estimatescorefor',['estimateScoreFor',['../class_negamax.html#a975aeca01f30cba138118127f7c541d2',1,'Negamax']]],
+  ['eventmap',['EventMap',['../struct_state_machine_1_1_event_map.html',1,'StateMachine']]],
+  ['evt',['evt',['../class_gui_window.html#ab17845686ae4f9a65a7d139021ff202a',1,'GuiWindow']]],
+  ['exact',['EXACT',['../struct_transposition_table_entry.html#adc45c3e738f27e694c924a8df6d12302a0ce401f3ea88d764db8bd6a2bd5bccb1',1,'TranspositionTableEntry']]],
+  ['exec',['exec',['../class_gui_window.html#ad52aa83b09f0a47682b1b1e72a0033a0',1,'GuiWindow']]],
+  ['exit',['exit',['../class_gui_window.html#a35aa2747a5c156325246c3f5f7f6056d',1,'GuiWindow::exit()'],['../class_abstract_state.html#a12e500a1e81bcb710d6b50aa99695e3a',1,'AbstractState::exit()'],['../class_game_play.html#af635ce486e5bc9b3bdf21241f6737000',1,'GamePlay::exit()'],['../class_menu_game_mode.html#aa6bbd8d91782e68c93407e5763e97934',1,'MenuGameMode::exit()'],['../class_menu_load_game.html#a734f37cb1935f42015869f352f15be97',1,'MenuLoadGame::exit()'],['../class_menu_main.html#af78b171ee4466a53b3fc36d11d486890',1,'MenuMain::exit()'],['../class_menu_options.html#a24cdc138bd33a3029098c9553f68bcde',1,'MenuOptions::exit()'],['../class_menu_player_color.html#aafdef161a30894d1b9f673c06121499b',1,'MenuPlayerColor::exit()']]]
 ];

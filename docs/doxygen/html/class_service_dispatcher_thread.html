@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,9 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0b3eccc5281c04d103313dd82c27a55b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher_thread.html#a0b3eccc5281c04d103313dd82c27a55b">ServiceDispatcherThread</a> ()</td></tr>
 <tr class="memdesc:a0b3eccc5281c04d103313dd82c27a55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="class_service_dispatcher_thread.html" title="Provides functionality for safely running operations in a thread. ">ServiceDispatcherThread</a>.  <a href="#a0b3eccc5281c04d103313dd82c27a55b">More...</a><br/></td></tr>
 <tr class="separator:a0b3eccc5281c04d103313dd82c27a55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acac4f20b7ea84e406f562a155c375ad0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acac4f20b7ea84e406f562a155c375ad0"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher_thread.html#acac4f20b7ea84e406f562a155c375ad0">~ServiceDispatcherThread</a> ()</td></tr>
-<tr class="memdesc:acac4f20b7ea84e406f562a155c375ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy dispatcher. Stops internal thread and discards all remaining calls. <br/></td></tr>
+<tr class="memitem:acac4f20b7ea84e406f562a155c375ad0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher_thread.html#acac4f20b7ea84e406f562a155c375ad0">~ServiceDispatcherThread</a> ()</td></tr>
+<tr class="memdesc:acac4f20b7ea84e406f562a155c375ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy dispatcher.  <a href="#acac4f20b7ea84e406f562a155c375ad0">More...</a><br/></td></tr>
 <tr class="separator:acac4f20b7ea84e406f562a155c375ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4767fc26a82b644b3d8650a6036d1b0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4767fc26a82b644b3d8650a6036d1b0b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher_thread.html#a4767fc26a82b644b3d8650a6036d1b0b">start</a> ()</td></tr>
@@ -189,6 +188,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="acac4f20b7ea84e406f562a155c375ad0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual ServiceDispatcherThread::~ServiceDispatcherThread </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destroy dispatcher. </p>
+<p>Stops internal thread and discards all remaining calls. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ae9054e054414b9e00bb626845845ca16"></a>
 <div class="memitem">
@@ -228,7 +253,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

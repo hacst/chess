@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,7 +85,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_chess_set-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ChessSet Class Reference</div>  </div>
@@ -97,11 +101,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="_chess_set_8h_source.html">ChessSet.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_chess_set_1_1_animation_capsule.html">AnimationCapsule</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct for turn animation.  <a href="struct_chess_set_1_1_animation_capsule.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple 3D Coord container.  <a href="struct_chess_set_1_1_coord3_d.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_chess_set_1_1_correction_value.html">CorrectionValue</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coordination-correction container to statically adjust unproper 3D models.  <a href="struct_chess_set_1_1_correction_value.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_chess_set_1_1_striked_model.html">StrikedModel</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Striked model for animation.  <a href="struct_chess_set_1_1_striked_model.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a95069b2fabc31ca076a9f9f8219a6b97"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a> { <b>NORMAL</b>, 
+<b>CURSOR</b>, 
+<b>MOVE</b>, 
+<b>CASTLE</b>
+ }</td></tr>
+<tr class="memdesc:a95069b2fabc31ca076a9f9f8219a6b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">The style type for a tile. <br/></td></tr>
+<tr class="separator:a95069b2fabc31ca076a9f9f8219a6b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5d04af40b68e900243871baf71f77f27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d04af40b68e900243871baf71f77f27"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a5d04af40b68e900243871baf71f77f27">ChessSet</a> ()</td></tr>
+<tr class="memdesc:a5d04af40b68e900243871baf71f77f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new chess set. <br/></td></tr>
+<tr class="separator:a5d04af40b68e900243871baf71f77f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163c62da1c890672b3577c9f4f3a667c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a163c62da1c890672b3577c9f4f3a667c">setState</a> (std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt; state, PlayerColor lastPlayer, <a class="el" href="class_turn.html">Turn</a> lastTurn)</td></tr>
 <tr class="memdesc:a163c62da1c890672b3577c9f4f3a667c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the new chess state.  <a href="#a163c62da1c890672b3577c9f4f3a667c">More...</a><br/></td></tr>
 <tr class="separator:a163c62da1c890672b3577c9f4f3a667c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dfa063aaac2bd529439064ea1ba5234"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a1dfa063aaac2bd529439064ea1ba5234">drawActionTileAt</a> (Field which, <a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a> style)</td></tr>
+<tr class="memdesc:a1dfa063aaac2bd529439064ea1ba5234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an action tile at a given field with a given style.  <a href="#a1dfa063aaac2bd529439064ea1ba5234">More...</a><br/></td></tr>
+<tr class="separator:a1dfa063aaac2bd529439064ea1ba5234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34038529052aefb5b16813c08d36f1b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a34038529052aefb5b16813c08d36f1b9">getResourcesCount</a> ()</td></tr>
 <tr class="memdesc:a34038529052aefb5b16813c08d36f1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of big resources which must be loaded for initializing the <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>.  <a href="#a34038529052aefb5b16813c08d36f1b9">More...</a><br/></td></tr>
 <tr class="separator:a34038529052aefb5b16813c08d36f1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,14 +147,529 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a962966af3fdca97595dc5ac4c2aedb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a962966af3fdca97595dc5ac4c2aedb84">loadResources</a> ()</td></tr>
 <tr class="memdesc:a962966af3fdca97595dc5ac4c2aedb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all resources, builds the models and the chess board.  <a href="#a962966af3fdca97595dc5ac4c2aedb84">More...</a><br/></td></tr>
 <tr class="separator:a962966af3fdca97595dc5ac4c2aedb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d0fcb6376e3e0f322e2974a343bf1a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d0fcb6376e3e0f322e2974a343bf1a8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a6d0fcb6376e3e0f322e2974a343bf1a8">draw</a> ()</td></tr>
-<tr class="memdesc:a6d0fcb6376e3e0f322e2974a343bf1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the whole <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>. This includes all models and the chess board. Depending in the current state. <br/></td></tr>
+<tr class="memitem:a6d0fcb6376e3e0f322e2974a343bf1a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a6d0fcb6376e3e0f322e2974a343bf1a8">draw</a> ()</td></tr>
+<tr class="memdesc:a6d0fcb6376e3e0f322e2974a343bf1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the whole <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>.  <a href="#a6d0fcb6376e3e0f322e2974a343bf1a8">More...</a><br/></td></tr>
 <tr class="separator:a6d0fcb6376e3e0f322e2974a343bf1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a19081a283e108cf308fb52ee4d45b837"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a19081a283e108cf308fb52ee4d45b837">InternalState</a> { <b>ANIMATING</b>, 
+<b>STATIC</b>
+ }</td></tr>
+<tr class="memdesc:a19081a283e108cf308fb52ee4d45b837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal states. <br/></td></tr>
+<tr class="separator:a19081a283e108cf308fb52ee4d45b837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b26c2f2145a62d34b1bf7b55fddeef0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a7b26c2f2145a62d34b1bf7b55fddeef0">Elevation</a> { <b>UP</b>, 
+<b>DOWN</b>
+ }</td></tr>
+<tr class="memdesc:a7b26c2f2145a62d34b1bf7b55fddeef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The elevation direction. <br/></td></tr>
+<tr class="separator:a7b26c2f2145a62d34b1bf7b55fddeef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f34bdfd9ebb891aca3c9bab8674e9cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f34bdfd9ebb891aca3c9bab8674e9cd"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a1f34bdfd9ebb891aca3c9bab8674e9cd">Signal</a> = boost::signals2::signal&lt; void(std::string)&gt;</td></tr>
+<tr class="memdesc:a1f34bdfd9ebb891aca3c9bab8674e9cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">boost::signals2 callback Signal to call when a resource will be loaded. <br/></td></tr>
+<tr class="separator:a1f34bdfd9ebb891aca3c9bab8674e9cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a12663ad860075c0e0aba59c884305908"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12663ad860075c0e0aba59c884305908"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a12663ad860075c0e0aba59c884305908">createChessBoardList</a> ()</td></tr>
+<tr class="memdesc:a12663ad860075c0e0aba59c884305908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new chess board as OpenGL display list. <br/></td></tr>
+<tr class="separator:a12663ad860075c0e0aba59c884305908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7710de605153f7e61f490a5084ad1eb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a7710de605153f7e61f490a5084ad1eb5">createModelsList</a> (bool withoutTurnDependentModels)</td></tr>
+<tr class="memdesc:a7710de605153f7e61f490a5084ad1eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a OpenGL display list with all models at the positions as saved in the board state.  <a href="#a7710de605153f7e61f490a5084ad1eb5">More...</a><br/></td></tr>
+<tr class="separator:a7710de605153f7e61f490a5084ad1eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3678b5d808ae23458874d6fd5792002c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a3678b5d808ae23458874d6fd5792002c">drawModelAt</a> (Field field, PieceType type, PlayerColor color)</td></tr>
+<tr class="memdesc:a3678b5d808ae23458874d6fd5792002c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a precompiled OpenGL display list model at the given field.  <a href="#a3678b5d808ae23458874d6fd5792002c">More...</a><br/></td></tr>
+<tr class="separator:a3678b5d808ae23458874d6fd5792002c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7f1d5279f7e63ca3b973cedb213d34d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#ac7f1d5279f7e63ca3b973cedb213d34d">drawModelAt</a> (<a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a> coords, PieceType type, PlayerColor color)</td></tr>
+<tr class="memdesc:ac7f1d5279f7e63ca3b973cedb213d34d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a precompiled OpenGL display list model at the given coordinates.  <a href="#ac7f1d5279f7e63ca3b973cedb213d34d">More...</a><br/></td></tr>
+<tr class="separator:ac7f1d5279f7e63ca3b973cedb213d34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2a6cb36b2d31c95a16c9d634671c373"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2a6cb36b2d31c95a16c9d634671c373"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#ae2a6cb36b2d31c95a16c9d634671c373">animateModelTurn</a> ()</td></tr>
+<tr class="memdesc:ae2a6cb36b2d31c95a16c9d634671c373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Animates the turn for the source and destination field. <br/></td></tr>
+<tr class="separator:ae2a6cb36b2d31c95a16c9d634671c373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2026825ed8c4c73dd0cafcd0e281828c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2026825ed8c4c73dd0cafcd0e281828c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a2026825ed8c4c73dd0cafcd0e281828c">drawModels</a> ()</td></tr>
+<tr class="memdesc:a2026825ed8c4c73dd0cafcd0e281828c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the models via the OpenGL display list and checks if turn animations are needed. <br/></td></tr>
+<tr class="separator:a2026825ed8c4c73dd0cafcd0e281828c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e90d6ca51c352b3fe7c265f8d75c476"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e90d6ca51c352b3fe7c265f8d75c476"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a7e90d6ca51c352b3fe7c265f8d75c476">drawBoard</a> ()</td></tr>
+<tr class="memdesc:a7e90d6ca51c352b3fe7c265f8d75c476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the board via the OpenGL display list. <br/></td></tr>
+<tr class="separator:a7e90d6ca51c352b3fe7c265f8d75c476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55cbf93d8f4e75684e5773de46ae3536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a55cbf93d8f4e75684e5773de46ae3536">drawTile</a> (<a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a> coords, bool odd, <a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a> style)</td></tr>
+<tr class="memdesc:a55cbf93d8f4e75684e5773de46ae3536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a tile at the given coordinates.  <a href="#a55cbf93d8f4e75684e5773de46ae3536">More...</a><br/></td></tr>
+<tr class="separator:a55cbf93d8f4e75684e5773de46ae3536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a211f65394e911fd49231431d9da79e5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a211f65394e911fd49231431d9da79e5b">calcCoordinatesForTileAt</a> (Field which)</td></tr>
+<tr class="memdesc:a211f65394e911fd49231431d9da79e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the coordinates for a given field.  <a href="#a211f65394e911fd49231431d9da79e5b">More...</a><br/></td></tr>
+<tr class="separator:a211f65394e911fd49231431d9da79e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c9a1d9800658df7b04bd6ed2f4d6e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a63c9a1d9800658df7b04bd6ed2f4d6e1">animateModelStrike</a> (<a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a> coords, <a class="el" href="struct_piece.html">Piece</a> piece)</td></tr>
+<tr class="memdesc:a63c9a1d9800658df7b04bd6ed2f4d6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Animates the model strike/bash at the given coordinates.  <a href="#a63c9a1d9800658df7b04bd6ed2f4d6e1">More...</a><br/></td></tr>
+<tr class="separator:a63c9a1d9800658df7b04bd6ed2f4d6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8128be97477f61fcaa564d5d4fae524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#aa8128be97477f61fcaa564d5d4fae524">animateModelTurn</a> (<a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a> coords, <a class="el" href="struct_chess_set_1_1_animation_capsule.html">AnimationCapsule</a> animCapsule)</td></tr>
+<tr class="memdesc:aa8128be97477f61fcaa564d5d4fae524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Animates the model turn at the given coordinates.  <a href="#aa8128be97477f61fcaa564d5d4fae524">More...</a><br/></td></tr>
+<tr class="separator:aa8128be97477f61fcaa564d5d4fae524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6c937febce48baf4a9d1163d2b96149f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c937febce48baf4a9d1163d2b96149f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a6c937febce48baf4a9d1163d2b96149f">m_tileWidth</a></td></tr>
+<tr class="memdesc:a6c937febce48baf4a9d1163d2b96149f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The proportions of the tiles. <br/></td></tr>
+<tr class="separator:a6c937febce48baf4a9d1163d2b96149f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad336bc7c5ffeedae84ffe47ebb3962e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad336bc7c5ffeedae84ffe47ebb3962e0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_tileHeight</b></td></tr>
+<tr class="separator:ad336bc7c5ffeedae84ffe47ebb3962e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc68d3a50396f6656ccd26705a0953a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc68d3a50396f6656ccd26705a0953a8"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#abc68d3a50396f6656ccd26705a0953a8">m_turnMoveShowDuration</a></td></tr>
+<tr class="memdesc:abc68d3a50396f6656ccd26705a0953a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration for the animation of a turn. <br/></td></tr>
+<tr class="separator:abc68d3a50396f6656ccd26705a0953a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac13803ccacb848d246caeb6bd09d856a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac13803ccacb848d246caeb6bd09d856a"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#ac13803ccacb848d246caeb6bd09d856a">m_turnMoveShownSince</a></td></tr>
+<tr class="memdesc:ac13803ccacb848d246caeb6bd09d856a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timestamp of when the animation was started. <br/></td></tr>
+<tr class="separator:ac13803ccacb848d246caeb6bd09d856a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3218790afe99337c80f92475f99af2fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3218790afe99337c80f92475f99af2fc"></a>
+enum <a class="el" href="class_chess_set.html#a19081a283e108cf308fb52ee4d45b837">ChessSet::InternalState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_internalState</b></td></tr>
+<tr class="separator:a3218790afe99337c80f92475f99af2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31741f86db19210c051fea1e9724c007"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31741f86db19210c051fea1e9724c007"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a31741f86db19210c051fea1e9724c007">m_animationElevationHeight</a></td></tr>
+<tr class="memdesc:a31741f86db19210c051fea1e9724c007"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum height to lift a model when animating. <br/></td></tr>
+<tr class="separator:a31741f86db19210c051fea1e9724c007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71537d21fbd7e78ca5eebe0bb918b84f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71537d21fbd7e78ca5eebe0bb918b84f"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>m_animationElevationStrikeHeight</b></td></tr>
+<tr class="separator:a71537d21fbd7e78ca5eebe0bb918b84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59f0ea31695088df31448c615b09638f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59f0ea31695088df31448c615b09638f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a59f0ea31695088df31448c615b09638f">m_firstRun</a></td></tr>
+<tr class="memdesc:a59f0ea31695088df31448c615b09638f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag to set if this is the first run. <br/></td></tr>
+<tr class="separator:a59f0ea31695088df31448c615b09638f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a7deeb288121b5197b461419d396a7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a7deeb288121b5197b461419d396a7a"></a>
+std::array&lt; ModelPtr, 6 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a9a7deeb288121b5197b461419d396a7a">m_models</a></td></tr>
+<tr class="memdesc:a9a7deeb288121b5197b461419d396a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple (smart pointer) model array which holds the references to the six model types. <br/></td></tr>
+<tr class="separator:a9a7deeb288121b5197b461419d396a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19beee3dc088393bf189d22d06755435"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19beee3dc088393bf189d22d06755435"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a19beee3dc088393bf189d22d06755435">m_extResources</a></td></tr>
+<tr class="memdesc:a19beee3dc088393bf189d22d06755435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector which hold the resources for all external resources (3D models). <br/></td></tr>
+<tr class="separator:a19beee3dc088393bf189d22d06755435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa134bf25d1aee3f0e44aa2d9a347371e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa134bf25d1aee3f0e44aa2d9a347371e"></a>
+std::array&lt; <a class="el" href="struct_chess_set_1_1_correction_value.html">CorrectionValue</a>, 6 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#aa134bf25d1aee3f0e44aa2d9a347371e">m_extCorrectionValues</a></td></tr>
+<tr class="memdesc:aa134bf25d1aee3f0e44aa2d9a347371e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple array with correction values for each 3D model. <br/></td></tr>
+<tr class="separator:aa134bf25d1aee3f0e44aa2d9a347371e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417bacad74a5d8f6c852b30c4fed8566"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a417bacad74a5d8f6c852b30c4fed8566"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a417bacad74a5d8f6c852b30c4fed8566">m_boardList</a></td></tr>
+<tr class="memdesc:a417bacad74a5d8f6c852b30c4fed8566"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenGL display list index to the 3D board representation. 8x8 fields. <br/></td></tr>
+<tr class="separator:a417bacad74a5d8f6c852b30c4fed8566"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c00bdbc75354c141caa628cc722d644"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a4c00bdbc75354c141caa628cc722d644">m_modelList</a> [12]</td></tr>
+<tr class="memdesc:a4c00bdbc75354c141caa628cc722d644"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenGL display lists indexes to the 3D models representation for black and white color.  <a href="#a4c00bdbc75354c141caa628cc722d644">More...</a><br/></td></tr>
+<tr class="separator:a4c00bdbc75354c141caa628cc722d644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c30931c8d2cc471d7cc4059e9859d0"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a72c30931c8d2cc471d7cc4059e9859d0">m_modelsList</a></td></tr>
+<tr class="memdesc:a72c30931c8d2cc471d7cc4059e9859d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenGL display list index to all 3D models and translation combined.  <a href="#a72c30931c8d2cc471d7cc4059e9859d0">More...</a><br/></td></tr>
+<tr class="separator:a72c30931c8d2cc471d7cc4059e9859d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51fb67f0a0e078cc6c2a3e97354224ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51fb67f0a0e078cc6c2a3e97354224ea"></a>
+std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a51fb67f0a0e078cc6c2a3e97354224ea">m_state</a></td></tr>
+<tr class="memdesc:a51fb67f0a0e078cc6c2a3e97354224ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whole chess state. <br/></td></tr>
+<tr class="separator:a51fb67f0a0e078cc6c2a3e97354224ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a247618608c1a908f2cd642f8abf8acbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a247618608c1a908f2cd642f8abf8acbf"></a>
+std::array&lt; <a class="el" href="struct_piece.html">Piece</a>, 64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_lastState</b></td></tr>
+<tr class="separator:a247618608c1a908f2cd642f8abf8acbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd58c5f99b21d1cb87954fd8496540c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dd58c5f99b21d1cb87954fd8496540c"></a>
+std::vector&lt; <a class="el" href="struct_chess_set_1_1_animation_capsule.html">AnimationCapsule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a4dd58c5f99b21d1cb87954fd8496540c">m_animationCapsules</a></td></tr>
+<tr class="memdesc:a4dd58c5f99b21d1cb87954fd8496540c"><td class="mdescLeft">&#160;</td><td class="mdescRight">One or more turn animation capsules. <br/></td></tr>
+<tr class="separator:a4dd58c5f99b21d1cb87954fd8496540c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c298e5f3b4b3e4388d62f015abe391"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08c298e5f3b4b3e4388d62f015abe391"></a>
+AnimationHelperPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a08c298e5f3b4b3e4388d62f015abe391">m_animationHelperModelX</a></td></tr>
+<tr class="memdesc:a08c298e5f3b4b3e4388d62f015abe391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Animation helper objects. <br/></td></tr>
+<tr class="separator:a08c298e5f3b4b3e4388d62f015abe391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e619d7dd71f0166e730e6847c8753c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62e619d7dd71f0166e730e6847c8753c"></a>
+AnimationHelperPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_animationHelperModelY</b></td></tr>
+<tr class="separator:a62e619d7dd71f0166e730e6847c8753c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af15c5709a26efb6204356366ad3b28f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af15c5709a26efb6204356366ad3b28f6"></a>
+AnimationHelperPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_animationHelperModelZ</b></td></tr>
+<tr class="separator:af15c5709a26efb6204356366ad3b28f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd5ef789af55bcd74319cc8e37af8fbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd5ef789af55bcd74319cc8e37af8fbb"></a>
+AnimationHelperPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_animationHelperModelStrike</b></td></tr>
+<tr class="separator:acd5ef789af55bcd74319cc8e37af8fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c98e3470717f2132a1111d345aa105b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c98e3470717f2132a1111d345aa105b"></a>
+enum <a class="el" href="class_chess_set.html#a7b26c2f2145a62d34b1bf7b55fddeef0">ChessSet::Elevation</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_animationDirectionY</b></td></tr>
+<tr class="separator:a5c98e3470717f2132a1111d345aa105b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b25643381af1d8b29665924578106ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b25643381af1d8b29665924578106ef"></a>
+std::vector&lt; <a class="el" href="struct_chess_set_1_1_striked_model.html">StrikedModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a1b25643381af1d8b29665924578106ef">m_modelStrikes</a></td></tr>
+<tr class="memdesc:a1b25643381af1d8b29665924578106ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Striked model container. <br/></td></tr>
+<tr class="separator:a1b25643381af1d8b29665924578106ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32b306329c66eb9a2b67b4f2cf136c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af32b306329c66eb9a2b67b4f2cf136c3"></a>
+<a class="el" href="class_turn.html">Turn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#af32b306329c66eb9a2b67b4f2cf136c3">m_lastTurn</a></td></tr>
+<tr class="memdesc:af32b306329c66eb9a2b67b4f2cf136c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last player turn. <br/></td></tr>
+<tr class="separator:af32b306329c66eb9a2b67b4f2cf136c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008bda5386fae4f30fc3c7cab1d7a4d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a008bda5386fae4f30fc3c7cab1d7a4d3"></a>
+PlayerColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chess_set.html#a008bda5386fae4f30fc3c7cab1d7a4d3">m_lastPlayer</a></td></tr>
+<tr class="memdesc:a008bda5386fae4f30fc3c7cab1d7a4d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last player color. <br/></td></tr>
+<tr class="separator:a008bda5386fae4f30fc3c7cab1d7a4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b9c86753cb9ed81de52a58f0556993"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25b9c86753cb9ed81de52a58f0556993"></a>
+<a class="el" href="class_chess_set.html#a1f34bdfd9ebb891aca3c9bab8674e9cd">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_loadCallback</b></td></tr>
+<tr class="separator:a25b9c86753cb9ed81de52a58f0556993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a> holds all the figures together with the board needed for the chess game. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a63c9a1d9800658df7b04bd6ed2f4d6e1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::animateModelStrike </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a>&#160;</td>
+          <td class="paramname"><em>coords</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_piece.html">Piece</a>&#160;</td>
+          <td class="paramname"><em>piece</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Animates the model strike/bash at the given coordinates. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is time-dependent and must be called on each loop-step to see any effect. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coords</td><td>The coordinates where to animate the strike. </td></tr>
+    <tr><td class="paramname">piece</td><td>The type of the piece to animate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa8128be97477f61fcaa564d5d4fae524"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::animateModelTurn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a>&#160;</td>
+          <td class="paramname"><em>coords</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_chess_set_1_1_animation_capsule.html">AnimationCapsule</a>&#160;</td>
+          <td class="paramname"><em>animCapsule</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Animates the model turn at the given coordinates. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coords</td><td>The coordinates where to animate the turn. </td></tr>
+    <tr><td class="paramname">animCapsule</td><td>The animation capsule to animate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a211f65394e911fd49231431d9da79e5b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_chess_set_1_1_coord3_d.html">ChessSet::Coord3D</a> ChessSet::calcCoordinatesForTileAt </td>
+          <td>(</td>
+          <td class="paramtype">Field&#160;</td>
+          <td class="paramname"><em>which</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates the coordinates for a given field. </p>
+<p>The chess board is sectioned in the following way.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">which</td><td>The field for which the coordinates are calculated from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 3D coordinates.</dd></dl>
+<p>The origin is in the center of the board.</p>
+<p>x/z:</p>
+<p>-96/-96 +96/-96 +__ __ __ __ __ __ __ __+ |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| __ __ __ <b>0/0</b> __ __ __ |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__| |__|__|__|__|</p>
+<ul>
+<li>+ -96/+96 +96/+96 </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="a7710de605153f7e61f490a5084ad1eb5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::createModelsList </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>withoutTurnDependentModels</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a OpenGL display list with all models at the positions as saved in the board state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">withoutTurnDependentModels</td><td>If true all models are positioned in the display list without those models on the start and destination field of the current turn. If false, all models are precompiled in the OGL list. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6d0fcb6376e3e0f322e2974a343bf1a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::draw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws the whole <a class="el" href="class_chess_set.html" title="The ChessSet holds all the figures together with the board needed for the chess game. ">ChessSet</a>. </p>
+<p>This includes all models and the chess board. Depending in the current state. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1dfa063aaac2bd529439064ea1ba5234"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::drawActionTileAt </td>
+          <td>(</td>
+          <td class="paramtype">Field&#160;</td>
+          <td class="paramname"><em>which</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws an action tile at a given field with a given style. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">which</td><td>The field where the tile should be drawn. </td></tr>
+    <tr><td class="paramname">style</td><td>The action tile's style. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3678b5d808ae23458874d6fd5792002c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::drawModelAt </td>
+          <td>(</td>
+          <td class="paramtype">Field&#160;</td>
+          <td class="paramname"><em>field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PieceType&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PlayerColor&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws a precompiled OpenGL display list model at the given field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>The field where the model will be drawn. </td></tr>
+    <tr><td class="paramname">type</td><td>The model type to draw. </td></tr>
+    <tr><td class="paramname">color</td><td>The color of the model. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7f1d5279f7e63ca3b973cedb213d34d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::drawModelAt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a>&#160;</td>
+          <td class="paramname"><em>coords</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PieceType&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PlayerColor&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws a precompiled OpenGL display list model at the given coordinates. </p>
+<dl class="section note"><dt>Note</dt><dd>This is used for animation purposes only. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coords</td><td>The 3D coordinates where the model will be drawn. </td></tr>
+    <tr><td class="paramname">type</td><td>The model type to draw. </td></tr>
+    <tr><td class="paramname">color</td><td>The color of the model. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a55cbf93d8f4e75684e5773de46ae3536"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessSet::drawTile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_chess_set_1_1_coord3_d.html">Coord3D</a>&#160;</td>
+          <td class="paramname"><em>coords</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>odd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_chess_set.html#a95069b2fabc31ca076a9f9f8219a6b97">TileStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws a tile at the given coordinates. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coords</td><td>The 3D world coordinates to draw the tile at. </td></tr>
+    <tr><td class="paramname">odd</td><td>True if odd, false if even. </td></tr>
+    <tr><td class="paramname">style</td><td>The tile style (e.g. CURSOR). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a34038529052aefb5b16813c08d36f1b9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -221,6 +772,53 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a4c00bdbc75354c141caa628cc722d644"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint ChessSet::m_modelList[12]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>OpenGL display lists indexes to the 3D models representation for black and white color. </p>
+<p>First 6 white, last 6 black. </p>
+
+</div>
+</div>
+<a class="anchor" id="a72c30931c8d2cc471d7cc4059e9859d0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint ChessSet::m_modelsList</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>OpenGL display list index to all 3D models and translation combined. </p>
+<p>Models translated and models itself. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>S:/dev/3dchess/src/gui/<a class="el" href="_chess_set_8h_source.html">ChessSet.h</a></li>
 <li>S:/dev/3dchess/src/gui/ChessSet.cpp</li>
@@ -228,7 +826,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:47 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

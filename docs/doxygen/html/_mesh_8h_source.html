@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,50 +88,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Mesh.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef MESH_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MESH_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span> <span class="comment">// Needed for gl.h</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Taken from http://www.hightech-journal.net/opengl-tutorial-03-3d-modelle-zeichnen-beleuchten-assimp-importieren</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef MESH_H</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MESH_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;GL/gl.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;assimp/Importer.hpp&gt;</span>  <span class="comment">// C++ importer interface</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;assimp/scene.h&gt;</span>       <span class="comment">// Output data structure</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;assimp/postprocess.h&gt;</span> <span class="comment">// Post processing flags</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;windows.h&gt;</span> <span class="comment">// Needed for gl.h</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;GL/gl.h&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_mesh.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_mesh.html">Mesh</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_mesh.html#a749505b238ca00f1c857f382fd947244">Mesh</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_mesh.html#a836778fae9e8c0ae0124422da168db2e">numVertices</a>, aiVector3D* <a class="code" href="class_mesh.html#ad2d599d5353dbe35323a24c8aed026e6">vertices</a>, aiVector3D* <a class="code" href="class_mesh.html#aff75dd57d13c40cc48babb7b35f4774a">normals</a>, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> numFaces, aiFace* faces);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    ~<a class="code" href="class_mesh.html">Mesh</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_mesh.html#ad2d599d5353dbe35323a24c8aed026e6">   31</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#ad2d599d5353dbe35323a24c8aed026e6">vertices</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_mesh.html#aff75dd57d13c40cc48babb7b35f4774a">   34</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#aff75dd57d13c40cc48babb7b35f4774a">normals</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_mesh.html#adcf1d13221798fb9405864131ae824a3">   37</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#adcf1d13221798fb9405864131ae824a3">textureCoords</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_mesh.html#ae188b601346e25ea1bfdd5aca2a0ff29">   40</a></span>&#160;    GLuint* <a class="code" href="class_mesh.html#ae188b601346e25ea1bfdd5aca2a0ff29">indices</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_mesh.html#a836778fae9e8c0ae0124422da168db2e">   43</a></span>&#160;    GLuint <a class="code" href="class_mesh.html#a836778fae9e8c0ae0124422da168db2e">numVertices</a>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_mesh.html#a6792fa687c43752f330044a129b9066f">   46</a></span>&#160;    GLuint <a class="code" href="class_mesh.html#a6792fa687c43752f330044a129b9066f">numIndices</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;assimp/Importer.hpp&gt;</span>  <span class="comment">// C++ importer interface</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;assimp/scene.h&gt;</span>       <span class="comment">// Output data structure</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;assimp/postprocess.h&gt;</span> <span class="comment">// Post processing flags</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_mesh.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_mesh.html">Mesh</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_mesh.html#a749505b238ca00f1c857f382fd947244">Mesh</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> numVertices, aiVector3D* vertices, aiVector3D* normals, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> numFaces, aiFace* faces);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    ~<a class="code" href="class_mesh.html">Mesh</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_mesh.html#a9120fbb1a2e707bf8eb7d254d3ab139f">   35</a></span>&#160;    GLuint <a class="code" href="class_mesh.html#a9120fbb1a2e707bf8eb7d254d3ab139f">m_numVertices</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="class_mesh.html#aec323ef31b57e63dcdb68f451fcc9279">   38</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#aec323ef31b57e63dcdb68f451fcc9279">m_vertices</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_mesh.html#ab505d261d642fa625e9764db5c5733a6">   41</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#ab505d261d642fa625e9764db5c5733a6">m_normals</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_mesh.html#aa7dc904e3480a115aa674b640fcf1c44">   44</a></span>&#160;    aiVector3D* <a class="code" href="class_mesh.html#aa7dc904e3480a115aa674b640fcf1c44">m_textureCoords</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_mesh.html#aa9566d333c387bc32e0bfd907bfa2aa7">   47</a></span>&#160;    GLuint* <a class="code" href="class_mesh.html#aa9566d333c387bc32e0bfd907bfa2aa7">m_indices</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif // MESH_H</span></div>
-<div class="ttc" id="class_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdoc">Wrapper class for the Assimp library. </div><div class="ttdef"><b>Definition:</b> Mesh.h:17</div></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_mesh.html#a7649218645c8319bb8c1ad0c93d18a6b">   50</a></span>&#160;    GLuint <a class="code" href="class_mesh.html#a7649218645c8319bb8c1ad0c93d18a6b">m_numIndices</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif // MESH_H</span></div>
+<div class="ttc" id="class_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdoc">Wrapper class for the Assimp library. </div><div class="ttdef"><b>Definition:</b> Mesh.h:21</div></div>
+<div class="ttc" id="class_mesh_html_a7649218645c8319bb8c1ad0c93d18a6b"><div class="ttname"><a href="class_mesh.html#a7649218645c8319bb8c1ad0c93d18a6b">Mesh::m_numIndices</a></div><div class="ttdeci">GLuint m_numIndices</div><div class="ttdoc">The number of indices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:50</div></div>
+<div class="ttc" id="class_mesh_html_aa9566d333c387bc32e0bfd907bfa2aa7"><div class="ttname"><a href="class_mesh.html#aa9566d333c387bc32e0bfd907bfa2aa7">Mesh::m_indices</a></div><div class="ttdeci">GLuint * m_indices</div><div class="ttdoc">The model&#39;s indices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:47</div></div>
+<div class="ttc" id="class_mesh_html_a9120fbb1a2e707bf8eb7d254d3ab139f"><div class="ttname"><a href="class_mesh.html#a9120fbb1a2e707bf8eb7d254d3ab139f">Mesh::m_numVertices</a></div><div class="ttdeci">GLuint m_numVertices</div><div class="ttdoc">The number of vertices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:35</div></div>
 <div class="ttc" id="class_mesh_html_a749505b238ca00f1c857f382fd947244"><div class="ttname"><a href="class_mesh.html#a749505b238ca00f1c857f382fd947244">Mesh::Mesh</a></div><div class="ttdeci">Mesh(unsigned int numVertices, aiVector3D *vertices, aiVector3D *normals, unsigned int numFaces, aiFace *faces)</div><div class="ttdoc">Creates a new Mesh object. </div><div class="ttdef"><b>Definition:</b> Mesh.cpp:7</div></div>
-<div class="ttc" id="class_mesh_html_a836778fae9e8c0ae0124422da168db2e"><div class="ttname"><a href="class_mesh.html#a836778fae9e8c0ae0124422da168db2e">Mesh::numVertices</a></div><div class="ttdeci">GLuint numVertices</div><div class="ttdoc">The number of vertices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:43</div></div>
-<div class="ttc" id="class_mesh_html_a6792fa687c43752f330044a129b9066f"><div class="ttname"><a href="class_mesh.html#a6792fa687c43752f330044a129b9066f">Mesh::numIndices</a></div><div class="ttdeci">GLuint numIndices</div><div class="ttdoc">The number of indices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:46</div></div>
-<div class="ttc" id="class_mesh_html_aff75dd57d13c40cc48babb7b35f4774a"><div class="ttname"><a href="class_mesh.html#aff75dd57d13c40cc48babb7b35f4774a">Mesh::normals</a></div><div class="ttdeci">aiVector3D * normals</div><div class="ttdoc">The model&#39;s normals. </div><div class="ttdef"><b>Definition:</b> Mesh.h:34</div></div>
-<div class="ttc" id="class_mesh_html_ae188b601346e25ea1bfdd5aca2a0ff29"><div class="ttname"><a href="class_mesh.html#ae188b601346e25ea1bfdd5aca2a0ff29">Mesh::indices</a></div><div class="ttdeci">GLuint * indices</div><div class="ttdoc">The model&#39;s indices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:40</div></div>
-<div class="ttc" id="class_mesh_html_ad2d599d5353dbe35323a24c8aed026e6"><div class="ttname"><a href="class_mesh.html#ad2d599d5353dbe35323a24c8aed026e6">Mesh::vertices</a></div><div class="ttdeci">aiVector3D * vertices</div><div class="ttdoc">The model&#39;s vertices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:31</div></div>
-<div class="ttc" id="class_mesh_html_adcf1d13221798fb9405864131ae824a3"><div class="ttname"><a href="class_mesh.html#adcf1d13221798fb9405864131ae824a3">Mesh::textureCoords</a></div><div class="ttdeci">aiVector3D * textureCoords</div><div class="ttdoc">The model&#39;s texture coordinates. </div><div class="ttdef"><b>Definition:</b> Mesh.h:37</div></div>
+<div class="ttc" id="class_mesh_html_aec323ef31b57e63dcdb68f451fcc9279"><div class="ttname"><a href="class_mesh.html#aec323ef31b57e63dcdb68f451fcc9279">Mesh::m_vertices</a></div><div class="ttdeci">aiVector3D * m_vertices</div><div class="ttdoc">The model&#39;s vertices. </div><div class="ttdef"><b>Definition:</b> Mesh.h:38</div></div>
+<div class="ttc" id="class_mesh_html_ab505d261d642fa625e9764db5c5733a6"><div class="ttname"><a href="class_mesh.html#ab505d261d642fa625e9764db5c5733a6">Mesh::m_normals</a></div><div class="ttdeci">aiVector3D * m_normals</div><div class="ttdoc">The model&#39;s normals. </div><div class="ttdef"><b>Definition:</b> Mesh.h:41</div></div>
+<div class="ttc" id="class_mesh_html_aa7dc904e3480a115aa674b640fcf1c44"><div class="ttname"><a href="class_mesh.html#aa7dc904e3480a115aa674b640fcf1c44">Mesh::m_textureCoords</a></div><div class="ttdeci">aiVector3D * m_textureCoords</div><div class="ttdoc">The model&#39;s texture coordinates. </div><div class="ttdef"><b>Definition:</b> Mesh.h:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

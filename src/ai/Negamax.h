@@ -136,7 +136,7 @@ public:
 
     /**
      * @brief Aborts the currently running calculation.
-     * Call from another thread to  abort currently running search.
+     * Call from another thread to abort currently running search.
      */
     void abort() {
         m_abort = true;
@@ -174,8 +174,17 @@ public:
     } m_counters;
     
 private:
+    /**
+     * @brief Helper class for holding a move option in move ordering.
+     */
     class Option {
     public:
+        /**
+         * @brief Create options for move ordering
+         * @param state State _after_ turn has been applied
+         * @param turn Turn leading to this option.
+         * @param score Score estimation for this option.
+         */
         Option(TGameState& state, Turn& turn, Score score)
             : state(&state)
             , turn(&turn)
@@ -184,8 +193,10 @@ private:
         TGameState* state;
         Turn* turn;
         
+        //! Odering operator which makes sort output descending by score.
         bool operator<(const Option& other) const { return score > other.score; }
     private:
+        //! Score estimation for this option
         Score score;
     };
     
@@ -315,12 +326,21 @@ private:
                 entry.boundType = TranspositionTableEntry::EXACT;
             }
             
-            m_transpositionTable.update(entry);
+            m_transpositionTable.maybeUpdate(entry);
         }
         
         return bestResult;
     }
     
+    /**
+     * @brief Estimates score for given state.
+     * Used for move ordering.
+     * @note Assumes state has opponent as next to move.
+     * @param state State to estimate.
+     * @param depth Depth in plies the given state has. Used to penalize
+     *              deep wins or shallow losses.
+     * @return Estimated score between WIN_SCORE and LOOSE_SCORE
+     */
     Score estimateScoreFor(const TGameState& state, size_t depth) const {
         // Note: Need to negate results as they are from the enemys POV
         if (TRANSPOSITION_TABLES_ENABLED) {

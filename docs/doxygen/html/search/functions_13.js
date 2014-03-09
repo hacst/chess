@@ -1,20 +1,5 @@
 var searchData=
 [
-  ['_7eabstractgamelogic',['~AbstractGameLogic',['../class_abstract_game_logic.html#a67646a74d79152f425f667f67c22c4bc',1,'AbstractGameLogic']]],
-  ['_7eabstractgameobserver',['~AbstractGameObserver',['../class_abstract_game_observer.html#a60380abf41f8fe7a894fb2619b3e202f',1,'AbstractGameObserver']]],
-  ['_7eabstractplayer',['~AbstractPlayer',['../class_abstract_player.html#ab6c99cf3efd07b60720d1f9356412545',1,'AbstractPlayer']]],
-  ['_7eabstractstate',['~AbstractState',['../class_abstract_state.html#a82e9f608c674c8d833af5a4d2a41b675',1,'AbstractState']]],
-  ['_7eaiplayer',['~AIPlayer',['../class_a_i_player.html#a2d879575d692d246da3890b6234104b8',1,'AIPlayer']]],
-  ['_7eanimationhelper',['~AnimationHelper',['../class_animation_helper.html#a339ff62c3cbbbcb7ba6e7c4146d27f5e',1,'AnimationHelper']]],
-  ['_7eassimphelper',['~AssimpHelper',['../class_assimp_helper.html#a432b85d57c3ebcbeea30318fca0d38cf',1,'AssimpHelper']]],
-  ['_7echessset',['~ChessSet',['../class_chess_set.html#aa253f6879cf097debf8b5e9661d88cc1',1,'ChessSet']]],
-  ['_7econsoleplayer',['~ConsolePlayer',['../class_console_player.html#a1f9294ec0bd7d8298c73b6d81c81ea1b',1,'ConsolePlayer']]],
-  ['_7edummyplayer',['~DummyPlayer',['../class_dummy_player.html#a8e991517d081cf329ffe812822222342',1,'DummyPlayer']]],
-  ['_7egamelogic',['~GameLogic',['../class_game_logic.html#a63a7acf778535b5f74d469de2cd39b16',1,'GameLogic']]],
-  ['_7eguiwindow',['~GuiWindow',['../class_gui_window.html#a8de64a807cd70133b1b88208e767ae25',1,'GuiWindow']]],
-  ['_7emenu2d',['~Menu2D',['../class_menu2_d.html#a897bb2e7f8a9f2a36b68a306400ada6c',1,'Menu2D']]],
-  ['_7emenu2ditem',['~Menu2DItem',['../class_menu2_d_item.html#a516ac9df973bd9113dd724e0ed885b0a',1,'Menu2DItem']]],
-  ['_7emesh',['~Mesh',['../class_mesh.html#a5d57b290621dea7bae044a18beac008a',1,'Mesh']]],
-  ['_7eservicedispatcher',['~ServiceDispatcher',['../class_service_dispatcher.html#a26cffd62aaa6fb9216d72977837cfee6',1,'ServiceDispatcher']]],
-  ['_7eservicedispatcherthread',['~ServiceDispatcherThread',['../class_service_dispatcher_thread.html#acac4f20b7ea84e406f562a155c375ad0',1,'ServiceDispatcherThread']]]
+  ['wait',['wait',['../class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171',1,'GameLogic']]],
+  ['wait_5ffor',['wait_for',['../class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71',1,'GameLogic']]]
 ];

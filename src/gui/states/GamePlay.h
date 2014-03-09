@@ -1,4 +1,4 @@
-/*
+ï»¿/*
     Copyright (c) 2013-2014, Patrick Hillert <silent@gmx.biz>
 
     All rights reserved.
@@ -162,7 +162,7 @@ private:
     //! The state machine to access window functions.
     StateMachine& m_fsm;
 
-    //! Number in degree (0-360°) to rotate from/to.
+    //! Number in degree (0-360 deg) to rotate from/to.
     int m_rotateFrom, m_rotateTo;
 
     //! The game mode, one of: PLAYER_VS_AI or AI_VS_AI.
@@ -230,9 +230,6 @@ private:
                 CHOOSE_PROMOTION_TURN
             } m_playerState;
     
-    //! boost::log Logger for universal info, debug and error logging.
-    Logging::Logger m_log;
-
     //! Holds the possible promotion turns for the human player.
     Turn m_promotionTurns[4];
 
@@ -312,6 +309,9 @@ private:
     //! The initial FEN notation string to load the game state from.
     std::string m_initialFen;
 
+    //! boost::log Logger for universal info, debug and error logging.
+    Logging::Logger m_log;
+    
     /**
      * @brief The functions returns the name of the piece/model for the given number.
      * @param pieceNumber A number between 0 and 6 corresponding to the PieceType.
@@ -394,7 +394,7 @@ private:
     void rotateCamera();
 
     /**
-     * @brief Calculates the new camera coordinates from a given degree between 0-360° and
+     * @brief Calculates the new camera coordinates from a given degree between 0-360 deg and
      * positions the camera in the world space with respect to the animated rotation around
      * the Y-axis.
      * @param degree The angle in degree between 0 - 360.

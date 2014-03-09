@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,13 +85,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_menu2_d_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Menu2DItem Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This class describes a button of a menu. The button is a rectangle with textures depending on one of three states (normal, hover, active). The buttons can be used with the mouse cursor.  
+<p>This class describes a button of a menu.  
  <a href="class_menu2_d_item.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_menu2_d_item_8h_source.html">Menu2DItem.h</a>&gt;</code></p>
@@ -105,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5ebd05ac029239426ed6b3c353368178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the buttons position in viewport coordinates.  <a href="#a5ebd05ac029239426ed6b3c353368178">More...</a><br/></td></tr>
 <tr class="separator:a5ebd05ac029239426ed6b3c353368178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84e5e6b2a768a849252b56173ff0d81b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a84e5e6b2a768a849252b56173ff0d81b">draw</a> ()</td></tr>
-<tr class="memdesc:a84e5e6b2a768a849252b56173ff0d81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the button on the previously set position. This method will also consider the button state.  <a href="#a84e5e6b2a768a849252b56173ff0d81b">More...</a><br/></td></tr>
+<tr class="memdesc:a84e5e6b2a768a849252b56173ff0d81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the button on the previously set position.  <a href="#a84e5e6b2a768a849252b56173ff0d81b">More...</a><br/></td></tr>
 <tr class="separator:a84e5e6b2a768a849252b56173ff0d81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe4d5156f84b692112fe2f3bb96d0ca9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#afe4d5156f84b692112fe2f3bb96d0ca9">mouseMoved</a> (int x, int y)</td></tr>
 <tr class="memdesc:afe4d5156f84b692112fe2f3bb96d0ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the mouse's pointer/cursor position.  <a href="#afe4d5156f84b692112fe2f3bb96d0ca9">More...</a><br/></td></tr>
@@ -117,15 +120,75 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a88d50871f3aa6a4ee0fdc2e70ccfc286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the coordinates, where the mouse click was released in the viewport.  <a href="#a88d50871f3aa6a4ee0fdc2e70ccfc286">More...</a><br/></td></tr>
 <tr class="separator:a88d50871f3aa6a4ee0fdc2e70ccfc286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc83ffb400e17c78cb10682c823fd14b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#adc83ffb400e17c78cb10682c823fd14b">onClick</a> (const boost::function&lt; void()&gt; &amp;slot)</td></tr>
-<tr class="memdesc:adc83ffb400e17c78cb10682c823fd14b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a function or method which should be called via boost signals when the button is clicked. So the given method can do something.  <a href="#adc83ffb400e17c78cb10682c823fd14b">More...</a><br/></td></tr>
+<tr class="memdesc:adc83ffb400e17c78cb10682c823fd14b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a function or method which should be called via boost signals when the button is clicked.  <a href="#adc83ffb400e17c78cb10682c823fd14b">More...</a><br/></td></tr>
 <tr class="separator:adc83ffb400e17c78cb10682c823fd14b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a877abc3c2cf4a9a5c13307bfea0207f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a877abc3c2cf4a9a5c13307bfea0207f2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a877abc3c2cf4a9a5c13307bfea0207f2">unClick</a> ()</td></tr>
 <tr class="memdesc:a877abc3c2cf4a9a5c13307bfea0207f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all click signals. <br/></td></tr>
 <tr class="separator:a877abc3c2cf4a9a5c13307bfea0207f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:ae89f99ab52331aa56dca322bd9a24dcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae89f99ab52331aa56dca322bd9a24dcd"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#ae89f99ab52331aa56dca322bd9a24dcd">Signal</a> = boost::signals2::signal&lt; void()&gt;</td></tr>
+<tr class="memdesc:ae89f99ab52331aa56dca322bd9a24dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boost signals2 to provide callback functionality. <br/></td></tr>
+<tr class="separator:ae89f99ab52331aa56dca322bd9a24dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af42943fdc11402f188cfd6cd4166ffbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#af42943fdc11402f188cfd6cd4166ffbe">inBoundingBox</a> ()</td></tr>
+<tr class="memdesc:af42943fdc11402f188cfd6cd4166ffbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the mouse is currently above the button.  <a href="#af42943fdc11402f188cfd6cd4166ffbe">More...</a><br/></td></tr>
+<tr class="separator:af42943fdc11402f188cfd6cd4166ffbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7b953a27d1a5baa49c5005cb6ed717cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b953a27d1a5baa49c5005cb6ed717cf"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a7b953a27d1a5baa49c5005cb6ed717cf">m_width</a></td></tr>
+<tr class="memdesc:a7b953a27d1a5baa49c5005cb6ed717cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width of the button. <br/></td></tr>
+<tr class="separator:a7b953a27d1a5baa49c5005cb6ed717cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb59ba864dae798bf94e1668f265352"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3bb59ba864dae798bf94e1668f265352"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a3bb59ba864dae798bf94e1668f265352">m_height</a></td></tr>
+<tr class="memdesc:a3bb59ba864dae798bf94e1668f265352"><td class="mdescLeft">&#160;</td><td class="mdescRight">The height of the button. <br/></td></tr>
+<tr class="separator:a3bb59ba864dae798bf94e1668f265352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8774a2c967e29e066d165bae8e6b1afa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8774a2c967e29e066d165bae8e6b1afa"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a8774a2c967e29e066d165bae8e6b1afa">m_filename</a></td></tr>
+<tr class="memdesc:a8774a2c967e29e066d165bae8e6b1afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The filename (without prefix) for the three textures. <br/></td></tr>
+<tr class="separator:a8774a2c967e29e066d165bae8e6b1afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad86dc658e4ae414e50b560dd512a864"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad86dc658e4ae414e50b560dd512a864"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#aad86dc658e4ae414e50b560dd512a864">m_positionX</a></td></tr>
+<tr class="memdesc:aad86dc658e4ae414e50b560dd512a864"><td class="mdescLeft">&#160;</td><td class="mdescRight">The button's x position. <br/></td></tr>
+<tr class="separator:aad86dc658e4ae414e50b560dd512a864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a38feb4eb309db8f577b8966c1a01a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a38feb4eb309db8f577b8966c1a01a0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a5a38feb4eb309db8f577b8966c1a01a0">m_positionY</a></td></tr>
+<tr class="memdesc:a5a38feb4eb309db8f577b8966c1a01a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The button's y position. <br/></td></tr>
+<tr class="separator:a5a38feb4eb309db8f577b8966c1a01a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b01877e11d00f5ea01d3a68b9cbc12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25b01877e11d00f5ea01d3a68b9cbc12"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a25b01877e11d00f5ea01d3a68b9cbc12">m_mousePosX</a> = 0</td></tr>
+<tr class="memdesc:a25b01877e11d00f5ea01d3a68b9cbc12"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current mouse's x position. <br/></td></tr>
+<tr class="separator:a25b01877e11d00f5ea01d3a68b9cbc12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a085bdb66064acd1f4603e4fa4a46a15c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a085bdb66064acd1f4603e4fa4a46a15c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a085bdb66064acd1f4603e4fa4a46a15c">m_mousePosY</a> = 0</td></tr>
+<tr class="memdesc:a085bdb66064acd1f4603e4fa4a46a15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current mouse's x position. <br/></td></tr>
+<tr class="separator:a085bdb66064acd1f4603e4fa4a46a15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52cee065a43ca3322222f6ee51e107f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52cee065a43ca3322222f6ee51e107f6"></a>
+GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a52cee065a43ca3322222f6ee51e107f6">m_texture</a> [3]</td></tr>
+<tr class="memdesc:a52cee065a43ca3322222f6ee51e107f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The button's state textures. <br/></td></tr>
+<tr class="separator:a52cee065a43ca3322222f6ee51e107f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94d3c979b0736d262fa4e75445f69bcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94d3c979b0736d262fa4e75445f69bcb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a94d3c979b0736d262fa4e75445f69bcb">m_hovered</a></td></tr>
+<tr class="memdesc:a94d3c979b0736d262fa4e75445f69bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag, if the button is hovered at this moment. <br/></td></tr>
+<tr class="separator:a94d3c979b0736d262fa4e75445f69bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0446e1db762e51095251c561eb9391cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0446e1db762e51095251c561eb9391cc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_menu2_d_item.html#a0446e1db762e51095251c561eb9391cc">m_activated</a> = false</td></tr>
+<tr class="memdesc:a0446e1db762e51095251c561eb9391cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag, if the button is activated at this moment. <br/></td></tr>
+<tr class="separator:a0446e1db762e51095251c561eb9391cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2312fb6aad4db6d9093b6c3117518a65"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2312fb6aad4db6d9093b6c3117518a65"></a>
+<a class="el" href="class_menu2_d_item.html#ae89f99ab52331aa56dca322bd9a24dcd">Signal</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_clicked</b></td></tr>
+<tr class="separator:a2312fb6aad4db6d9093b6c3117518a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class describes a button of a menu. The button is a rectangle with textures depending on one of three states (normal, hover, active). The buttons can be used with the mouse cursor. </p>
+<div class="textblock"><p>This class describes a button of a menu. </p>
+<p>The button is a rectangle with textures depending on one of three states (normal, hover, active). The buttons can be used with the mouse cursor. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa5f612d93b1fc719ccfd7fe83960ed96"></a>
 <div class="memitem">
@@ -191,8 +254,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
 </div><div class="memdoc">
 
-<p>Draws the button on the previously set position. This method will also consider the button state. </p>
+<p>Draws the button on the previously set position. </p>
+<p>This method will also consider the button state. </p>
 <dl class="section note"><dt>Note</dt><dd>To provide the correct button state, you must update the mouse position. See the methods below. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af42943fdc11402f188cfd6cd4166ffbe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Menu2DItem::inBoundingBox </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks whether the mouse is currently above the button. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the mouse is above the button, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -318,7 +408,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
 </div><div class="memdoc">
 
-<p>Add a function or method which should be called via boost signals when the button is clicked. So the given method can do something. </p>
+<p>Add a function or method which should be called via boost signals when the button is clicked. </p>
+<p>So the given method can do something. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">slot</td><td>The function/method to call when the button is clicked. </td></tr>
@@ -371,7 +462,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

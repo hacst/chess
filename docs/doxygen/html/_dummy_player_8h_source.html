@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,82 +88,114 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">DummyPlayer.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DUMMYPLAYER_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DUMMYPLAYER_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;logic/interface/AbstractPlayer.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;logic/threading/ServiceDispatcherThread.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;misc/helper.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;core/Logging.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;random&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_dummy_player.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_dummy_player.html">DummyPlayer</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_player.html">AbstractPlayer</a>, <span class="keyword">public</span> <a class="code" href="class_service_dispatcher_thread.html">ServiceDispatcherThread</a> {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_dummy_player.html">DummyPlayer</a>()</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        : m_seed(std::random_device()())</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        , m_rng(m_seed)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        , m_msDist(0, 5)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        , m_log(Logging::initLogger(<span class="stringliteral">&quot;DummyPlayer&quot;</span>)) {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        LOG(Logging::info) &lt;&lt; <span class="stringliteral">&quot;Seed: &quot;</span> &lt;&lt; m_seed;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_dummy_player.html">DummyPlayer</a>() {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16">stop</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">   33</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">onSetColor</a>(PlayerColor color)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        LOG(Logging::info) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                           &lt;&lt; <span class="stringliteral">&quot;Will be playing &quot;</span> &lt;&lt; color;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">   38</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">doAbortTurn</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        LOG(Logging::warning) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                              &lt;&lt; <span class="stringliteral">&quot;Asked to abort turn. This is not implemented&quot;</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">   43</a></span>&#160;    <span class="keyword">virtual</span> std::future&lt;Turn&gt; <a class="code" href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">doMakeTurn</a>(<a class="code" href="class_game_state.html">GameState</a> state)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52">postPromise</a>([=]() <span class="keyword">mutable</span> {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="comment">// Always choose a random turn after a random amount of time</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="comment">// Obviously can&#39;t be aborted</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">auto</span> turns = state.getTurnList();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">auto</span> turnIt = random_selection(turns, m_rng);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="class_turn.html">Turn</a> turn = (turnIt == std::end(turns)) ? <a class="code" href="class_turn.html">Turn</a>() : (*turnIt);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordtype">int</span> duration = m_msDist(m_rng);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            LOG(Logging::debug) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                                &lt;&lt; <span class="stringliteral">&quot;Will select &quot;</span> &lt;&lt; turn &lt;&lt; <span class="stringliteral">&quot; after &quot;</span> &lt;&lt; duration &lt;&lt; <span class="stringliteral">&quot; seconds sleep&quot;</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            std::this_thread::sleep_for(std::chrono::seconds(duration));</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">return</span> turn;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        });</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_seed;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    std::mt19937 m_rng;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::uniform_int_distribution&lt;int&gt; m_msDist;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    Logging::Logger m_log;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">using</span> DummyPlayerPtr = std::shared_ptr&lt;DummyPlayer&gt;;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif // DUMMYPLAYER_H</span></div>
-<div class="ttc" id="class_dummy_player_html_a9085902f8fbbf0b261b56cb36439875b"><div class="ttname"><a href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">DummyPlayer::onSetColor</a></div><div class="ttdeci">virtual void onSetColor(PlayerColor color) override</div><div class="ttdoc">Notifies that player what color he will be playing. Called before onGameStart. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:33</div></div>
-<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:9</div></div>
-<div class="ttc" id="class_dummy_player_html_a3ba604077071df9c8fbd481e339a77c3"><div class="ttname"><a href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">DummyPlayer::doMakeTurn</a></div><div class="ttdeci">virtual std::future&lt; Turn &gt; doMakeTurn(GameState state) override</div><div class="ttdoc">Asks the player to make his turn. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:43</div></div>
-<div class="ttc" id="class_service_dispatcher_thread_html_ae9054e054414b9e00bb626845845ca16"><div class="ttname"><a href="class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16">ServiceDispatcherThread::stop</a></div><div class="ttdeci">virtual void stop(bool force=false)</div><div class="ttdoc">Stops the execution of this tread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:42</div></div>
-<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:9</div></div>
-<div class="ttc" id="class_abstract_player_html"><div class="ttname"><a href="class_abstract_player.html">AbstractPlayer</a></div><div class="ttdoc">Class a player has to implement to interact with the GameLogic. Every player is also a AbstractGameOb...</div><div class="ttdef"><b>Definition:</b> AbstractPlayer.h:18</div></div>
-<div class="ttc" id="class_service_dispatcher_thread_html"><div class="ttname"><a href="class_service_dispatcher_thread.html">ServiceDispatcherThread</a></div><div class="ttdoc">Provides functionality for safely running operations in a thread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:13</div></div>
-<div class="ttc" id="class_dummy_player_html_a8d9fdcb5c0172edf701da35dae556d43"><div class="ttname"><a href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">DummyPlayer::doAbortTurn</a></div><div class="ttdeci">virtual void doAbortTurn() override</div><div class="ttdoc">Asks the player to abort a turn asked for with doMakeTurn. When this is called the GameLogic will no ...</div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:38</div></div>
-<div class="ttc" id="class_dummy_player_html"><div class="ttname"><a href="class_dummy_player.html">DummyPlayer</a></div><div class="ttdoc">Player implementation which takes random turns after random amounts of time. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:19</div></div>
-<div class="ttc" id="class_service_dispatcher_html_a1723f2592299a9bf4ac9e9557929cf52"><div class="ttname"><a href="class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52">ServiceDispatcher::postPromise</a></div><div class="ttdeci">auto postPromise(Function &amp;&amp;function) -&gt; decltype(std::promise&lt; typename std::result_of&lt; Function()&gt;::type &gt;().get_future())</div><div class="ttdoc">Stores a given function and returns a future on its return value. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:50</div></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Copyright (c) 2013-2014, Stefan Hacker &lt;dd0t@users.sourceforge.net&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    All rights reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">    Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    2. Redistributions in binary form must reproduce the above copyright</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    notice, this list of conditions and the following disclaimer in the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    documentation and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    3. Neither the name of the copyright holder nor the names of its</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    contributors may be used to endorse or promote products derived from</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    this software without specific prior written permission.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef DUMMYPLAYER_H</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define DUMMYPLAYER_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;logic/interface/AbstractPlayer.h&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;logic/threading/ServiceDispatcherThread.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;misc/helper.h&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;core/Logging.h&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_dummy_player.html">   50</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_dummy_player.html">DummyPlayer</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_player.html">AbstractPlayer</a>, <span class="keyword">public</span> <a class="code" href="class_service_dispatcher_thread.html">ServiceDispatcherThread</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="class_dummy_player.html">DummyPlayer</a>(<span class="keywordtype">int</span> seed = 1234)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        : m_seed(seed)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        , m_rng(m_seed)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        , m_msDist(0, 5)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        , m_log(Logging::initLogger(<span class="stringliteral">&quot;DummyPlayer&quot;</span>)) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        LOG(Logging::info) &lt;&lt; <span class="stringliteral">&quot;Seed: &quot;</span> &lt;&lt; m_seed;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_dummy_player.html">DummyPlayer</a>() {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16">stop</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">   64</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">onSetColor</a>(PlayerColor color)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        LOG(Logging::info) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                           &lt;&lt; <span class="stringliteral">&quot;Will be playing &quot;</span> &lt;&lt; color;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">   69</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">doAbortTurn</a>()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        LOG(Logging::warning) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                              &lt;&lt; <span class="stringliteral">&quot;Asked to abort turn. This is not implemented&quot;</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">   74</a></span>&#160;    <span class="keyword">virtual</span> std::future&lt;Turn&gt; <a class="code" href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">doMakeTurn</a>(<a class="code" href="class_game_state.html">GameState</a> state)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52">postPromise</a>([=]() <span class="keyword">mutable</span> {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="comment">// Always choose a random turn after a random amount of time</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="comment">// Obviously can&#39;t be aborted</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keyword">auto</span> turns = state.<a class="code" href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">getTurnList</a>();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keyword">auto</span> turnIt = random_selection(turns, m_rng);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="class_turn.html">Turn</a> turn = (turnIt == std::end(turns)) ? <a class="code" href="class_turn.html">Turn</a>() : (*turnIt);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordtype">int</span> duration = m_msDist(m_rng);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            LOG(Logging::debug) &lt;&lt; <span class="stringliteral">&quot;(&quot;</span> &lt;&lt; m_seed &lt;&lt; <span class="stringliteral">&quot;) &quot;</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                &lt;&lt; <span class="stringliteral">&quot;Will select &quot;</span> &lt;&lt; turn &lt;&lt; <span class="stringliteral">&quot; after &quot;</span> &lt;&lt; duration &lt;&lt; <span class="stringliteral">&quot; seconds sleep&quot;</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            std::this_thread::sleep_for(std::chrono::seconds(duration));</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> turn;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        });</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_seed;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::mt19937 m_rng;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    std::uniform_int_distribution&lt;int&gt; m_msDist;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    Logging::Logger m_log;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">using</span> DummyPlayerPtr = std::shared_ptr&lt;DummyPlayer&gt;;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif // DUMMYPLAYER_H</span></div>
+<div class="ttc" id="class_game_state_html_ad354cf0cd823324fbb10685eb3366b6f"><div class="ttname"><a href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">GameState::getTurnList</a></div><div class="ttdeci">std::vector&lt; Turn &gt; getTurnList() const </div><div class="ttdoc">Returns a list with all possible and legal turns. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:18</div></div>
+<div class="ttc" id="class_dummy_player_html_a9085902f8fbbf0b261b56cb36439875b"><div class="ttname"><a href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">DummyPlayer::onSetColor</a></div><div class="ttdeci">virtual void onSetColor(PlayerColor color) override</div><div class="ttdoc">Notifies that player what color he will be playing. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:64</div></div>
+<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:8</div></div>
+<div class="ttc" id="class_dummy_player_html_a3ba604077071df9c8fbd481e339a77c3"><div class="ttname"><a href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">DummyPlayer::doMakeTurn</a></div><div class="ttdeci">virtual std::future&lt; Turn &gt; doMakeTurn(GameState state) override</div><div class="ttdoc">Asks the player to make his turn. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:74</div></div>
+<div class="ttc" id="class_service_dispatcher_thread_html_ae9054e054414b9e00bb626845845ca16"><div class="ttname"><a href="class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16">ServiceDispatcherThread::stop</a></div><div class="ttdeci">virtual void stop(bool force=false)</div><div class="ttdoc">Stops the execution of this tread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:73</div></div>
+<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:6</div></div>
+<div class="ttc" id="class_abstract_player_html"><div class="ttname"><a href="class_abstract_player.html">AbstractPlayer</a></div><div class="ttdoc">Class a player has to implement to interact with the GameLogic. </div><div class="ttdef"><b>Definition:</b> AbstractPlayer.h:49</div></div>
+<div class="ttc" id="class_service_dispatcher_thread_html"><div class="ttname"><a href="class_service_dispatcher_thread.html">ServiceDispatcherThread</a></div><div class="ttdoc">Provides functionality for safely running operations in a thread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:44</div></div>
+<div class="ttc" id="class_dummy_player_html_a8d9fdcb5c0172edf701da35dae556d43"><div class="ttname"><a href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">DummyPlayer::doAbortTurn</a></div><div class="ttdeci">virtual void doAbortTurn() override</div><div class="ttdoc">Asks the player to abort a turn asked for with doMakeTurn. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:69</div></div>
+<div class="ttc" id="class_dummy_player_html"><div class="ttname"><a href="class_dummy_player.html">DummyPlayer</a></div><div class="ttdoc">Player implementation which takes random turns after random amounts of time. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:50</div></div>
+<div class="ttc" id="class_service_dispatcher_html_a1723f2592299a9bf4ac9e9557929cf52"><div class="ttname"><a href="class_service_dispatcher.html#a1723f2592299a9bf4ac9e9557929cf52">ServiceDispatcher::postPromise</a></div><div class="ttdeci">auto postPromise(Function &amp;&amp;function) -&gt; decltype(std::promise&lt; typename std::result_of&lt; Function()&gt;::type &gt;().get_future())</div><div class="ttdoc">Stores a given function and returns a future on its return value. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcher.h:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

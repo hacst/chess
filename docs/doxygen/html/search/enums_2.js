@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamemode',['GameMode',['../class_game_play.html#a9bbbd1c2193ee3046f1b0f25035fa616',1,'GamePlay']]]
+  ['color',['Color',['../class_model.html#aacca359f52db22626d236f108da4f087',1,'Model']]]
 ];

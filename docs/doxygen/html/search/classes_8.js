@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logginggameobserver',['LoggingGameObserver',['../class_logging_game_observer.html',1,'']]]
+  ['keyboardcounter',['KeyboardCounter',['../struct_game_play_1_1_keyboard_counter.html',1,'GamePlay']]]
 ];

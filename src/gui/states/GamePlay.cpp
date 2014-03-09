@@ -62,11 +62,11 @@ GamePlay::GamePlay(GameMode mode, PlayerColor humanPlayerColor, std::string init
     , m_gameMode(mode)
     , m_humanPlayerColor(humanPlayerColor)
     , m_nextState(States::KEEP_CURRENT)
-    , m_log(initLogger("GUI:GamePlay"))
     , m_playerState(PlayerState::NONE)
     , m_lastPlayer(PlayerColor::NoPlayer)
     , m_lastTurn(Turn())
-    , m_initialFen(initialFen) {
+    , m_initialFen(initialFen)
+    , m_log(initLogger("GUI:GamePlay")) {
 }
 
 void GamePlay::initMessageBox() {
@@ -281,7 +281,8 @@ void GamePlay::onSaveGame() {
 }
 
 void GamePlay::saveGameToSlot(unsigned int slot) {
-    bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor).saveToSlot(slot);
+    bool success = SaveGame(m_gameState.toFEN(), m_gameMode, m_humanPlayerColor)
+            .saveToSlot(slot);
 
     if (success) {
         LOG(info) << "Game saved in slot " << slot;

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vertices',['vertices',['../class_mesh.html#ad2d599d5353dbe35323a24c8aed026e6',1,'Mesh']]]
+  ['name',['name',['../class_a_i_configuration.html#a7685241774f2a05e3fde6098340face3',1,'AIConfiguration']]],
+  ['nodes',['nodes',['../struct_negamax_1_1_perf_counters.html#a790fb24a432ed457b9045a126159ca53',1,'Negamax::PerfCounters']]]
 ];

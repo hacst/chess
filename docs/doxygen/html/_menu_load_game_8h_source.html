@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,60 +88,96 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MenuLoadGame.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef MENULOADGAME_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MENULOADGAME_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;gui/interface/AbstractState.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;gui/states/MenuLoadGame.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;gui/Menu2D.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">class </span><a class="code" href="class_state_machine.html">StateMachine</a>;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_menu_load_game.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_menu_load_game.html">MenuLoadGame</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_state.html">AbstractState</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_menu_load_game.html#a7439982a1478ed24f940015773a70746">MenuLoadGame</a>();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a1d1319eb1e74af8c48fb66f918f7c67e">enter</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_abstract_state.html">AbstractState</a>* <a class="code" href="class_menu_load_game.html#a64e0d14e82a98dc7b4b6c87e5c979487">run</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a734f37cb1935f42015869f352f15be97">exit</a>() <span class="keyword">override</span>;</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Copyright (c) 2013-2014, Patrick Hillert &lt;silent@gmx.biz&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    All rights reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">    Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    2. Redistributions in binary form must reproduce the above copyright</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    notice, this list of conditions and the following disclaimer in the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    documentation and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    3. Neither the name of the copyright holder nor the names of its</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    contributors may be used to endorse or promote products derived from</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    this software without specific prior written permission.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#ifndef MENULOADGAME_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define MENULOADGAME_H</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;gui/interface/AbstractState.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;gui/states/MenuLoadGame.h&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &quot;gui/Menu2D.h&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">class </span><a class="code" href="class_state_machine.html">StateMachine</a>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a5afaa8a6a07ffe16e05a4f0cb942e015">draw</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#ae08b61b61b2d9438aa24e55a2dd0559d">onMenuBack</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="class_state_machine.html">StateMachine</a>&amp; fsm;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">enum</span> States {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        KEEP_CURRENT,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        LOAD_SLOT_A,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        LOAD_SLOT_B,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        LOAD_SLOT_C,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        MENU_MAIN</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    States m_nextState;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    Menu2DPtr menu;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif // MENULOADGAME_H</span></div>
-<div class="ttc" id="class_state_machine_html"><div class="ttname"><a href="class_state_machine.html">StateMachine</a></div><div class="ttdoc">Class which manages the states. </div><div class="ttdef"><b>Definition:</b> StateMachine.h:19</div></div>
-<div class="ttc" id="class_menu_load_game_html_a1d1319eb1e74af8c48fb66f918f7c67e"><div class="ttname"><a href="class_menu_load_game.html#a1d1319eb1e74af8c48fb66f918f7c67e">MenuLoadGame::enter</a></div><div class="ttdeci">void enter() override</div><div class="ttdoc">Enters the state for the first time. This will setup all the state related stuff. ...</div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:15</div></div>
-<div class="ttc" id="class_menu_load_game_html_a5afaa8a6a07ffe16e05a4f0cb942e015"><div class="ttname"><a href="class_menu_load_game.html#a5afaa8a6a07ffe16e05a4f0cb942e015">MenuLoadGame::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draws something state related stuff on the screen. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:70</div></div>
-<div class="ttc" id="class_menu_load_game_html_a7439982a1478ed24f940015773a70746"><div class="ttname"><a href="class_menu_load_game.html#a7439982a1478ed24f940015773a70746">MenuLoadGame::MenuLoadGame</a></div><div class="ttdeci">MenuLoadGame()</div><div class="ttdoc">Creates a new menu LoadGame State object. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:11</div></div>
-<div class="ttc" id="class_abstract_state_html"><div class="ttname"><a href="class_abstract_state.html">AbstractState</a></div><div class="ttdoc">Interface for modelling a game state. </div><div class="ttdef"><b>Definition:</b> AbstractState.h:8</div></div>
-<div class="ttc" id="class_menu_load_game_html"><div class="ttname"><a href="class_menu_load_game.html">MenuLoadGame</a></div><div class="ttdoc">Class which holds the state LoadGame. The user can load a previously saved game from one of three gam...</div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:16</div></div>
-<div class="ttc" id="class_menu_load_game_html_a734f37cb1935f42015869f352f15be97"><div class="ttname"><a href="class_menu_load_game.html#a734f37cb1935f42015869f352f15be97">MenuLoadGame::exit</a></div><div class="ttdeci">void exit() override</div><div class="ttdoc">Exits the current state and cleans up all allocated resources. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:81</div></div>
-<div class="ttc" id="class_menu_load_game_html_ae08b61b61b2d9438aa24e55a2dd0559d"><div class="ttname"><a href="class_menu_load_game.html#ae08b61b61b2d9438aa24e55a2dd0559d">MenuLoadGame::onMenuBack</a></div><div class="ttdeci">void onMenuBack()</div><div class="ttdoc">This method is called if the user chose the back button. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:77</div></div>
-<div class="ttc" id="class_menu_load_game_html_a64e0d14e82a98dc7b4b6c87e5c979487"><div class="ttname"><a href="class_menu_load_game.html#a64e0d14e82a98dc7b4b6c87e5c979487">MenuLoadGame::run</a></div><div class="ttdeci">AbstractState * run() override</div><div class="ttdoc">Runs the current state and does all the work. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:29</div></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_menu_load_game.html">   48</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_menu_load_game.html">MenuLoadGame</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_state.html">AbstractState</a> {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="class_menu_load_game.html#a7439982a1478ed24f940015773a70746">MenuLoadGame</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a1d1319eb1e74af8c48fb66f918f7c67e">enter</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="class_abstract_state.html">AbstractState</a>* <a class="code" href="class_menu_load_game.html#a64e0d14e82a98dc7b4b6c87e5c979487">run</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a734f37cb1935f42015869f352f15be97">exit</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#a5afaa8a6a07ffe16e05a4f0cb942e015">draw</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_menu_load_game.html#ae08b61b61b2d9438aa24e55a2dd0559d">onMenuBack</a>();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="class_menu_load_game.html#a2fe7f7bd1d665c8f51ea0f2c2bc37e4b">   86</a></span>&#160;    <a class="code" href="class_state_machine.html">StateMachine</a>&amp; <a class="code" href="class_menu_load_game.html#a2fe7f7bd1d665c8f51ea0f2c2bc37e4b">fsm</a>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="class_menu_load_game.html#a46bb3085d9e3067ce9da9a9d18d1066b">   89</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="class_menu_load_game.html#a46bb3085d9e3067ce9da9a9d18d1066b">States</a> {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        KEEP_CURRENT,</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        LOAD_SLOT_A,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        LOAD_SLOT_B,</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        LOAD_SLOT_C,</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        MENU_MAIN</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    };</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_menu_load_game.html#a7ad7884a7b565ec3d78b188d887f9433">   99</a></span>&#160;    <a class="code" href="class_menu_load_game.html#a46bb3085d9e3067ce9da9a9d18d1066b">States</a> <a class="code" href="class_menu_load_game.html#a7ad7884a7b565ec3d78b188d887f9433">m_nextState</a>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="class_menu_load_game.html#afdfc1937d6d56bf5e94727258d58b804">  102</a></span>&#160;    Menu2DPtr <a class="code" href="class_menu_load_game.html#afdfc1937d6d56bf5e94727258d58b804">menu</a>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif // MENULOADGAME_H</span></div>
+<div class="ttc" id="class_state_machine_html"><div class="ttname"><a href="class_state_machine.html">StateMachine</a></div><div class="ttdoc">Class which manages the states. </div><div class="ttdef"><b>Definition:</b> StateMachine.h:51</div></div>
+<div class="ttc" id="class_menu_load_game_html_a1d1319eb1e74af8c48fb66f918f7c67e"><div class="ttname"><a href="class_menu_load_game.html#a1d1319eb1e74af8c48fb66f918f7c67e">MenuLoadGame::enter</a></div><div class="ttdeci">void enter() override</div><div class="ttdoc">Enters the state for the first time. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:48</div></div>
+<div class="ttc" id="class_menu_load_game_html_a5afaa8a6a07ffe16e05a4f0cb942e015"><div class="ttname"><a href="class_menu_load_game.html#a5afaa8a6a07ffe16e05a4f0cb942e015">MenuLoadGame::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draws something state related stuff on the screen. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:118</div></div>
+<div class="ttc" id="class_menu_load_game_html_a7439982a1478ed24f940015773a70746"><div class="ttname"><a href="class_menu_load_game.html#a7439982a1478ed24f940015773a70746">MenuLoadGame::MenuLoadGame</a></div><div class="ttdeci">MenuLoadGame()</div><div class="ttdoc">Creates a new menu LoadGame State object. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:44</div></div>
+<div class="ttc" id="class_abstract_state_html"><div class="ttname"><a href="class_abstract_state.html">AbstractState</a></div><div class="ttdoc">Interface for modelling a game state. </div><div class="ttdef"><b>Definition:</b> AbstractState.h:40</div></div>
+<div class="ttc" id="class_menu_load_game_html"><div class="ttname"><a href="class_menu_load_game.html">MenuLoadGame</a></div><div class="ttdoc">Class which holds the state LoadGame. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:48</div></div>
+<div class="ttc" id="class_menu_load_game_html_afdfc1937d6d56bf5e94727258d58b804"><div class="ttname"><a href="class_menu_load_game.html#afdfc1937d6d56bf5e94727258d58b804">MenuLoadGame::menu</a></div><div class="ttdeci">Menu2DPtr menu</div><div class="ttdoc">Shared pointer for better garbage handling. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:102</div></div>
+<div class="ttc" id="class_menu_load_game_html_a7ad7884a7b565ec3d78b188d887f9433"><div class="ttname"><a href="class_menu_load_game.html#a7ad7884a7b565ec3d78b188d887f9433">MenuLoadGame::m_nextState</a></div><div class="ttdeci">States m_nextState</div><div class="ttdoc">The next State for the StateMachine to enter. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:99</div></div>
+<div class="ttc" id="class_menu_load_game_html_a46bb3085d9e3067ce9da9a9d18d1066b"><div class="ttname"><a href="class_menu_load_game.html#a46bb3085d9e3067ce9da9a9d18d1066b">MenuLoadGame::States</a></div><div class="ttdeci">States</div><div class="ttdoc">Internal GameMode states. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:89</div></div>
+<div class="ttc" id="class_menu_load_game_html_a734f37cb1935f42015869f352f15be97"><div class="ttname"><a href="class_menu_load_game.html#a734f37cb1935f42015869f352f15be97">MenuLoadGame::exit</a></div><div class="ttdeci">void exit() override</div><div class="ttdoc">Exits the current state and cleans up all allocated resources. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:129</div></div>
+<div class="ttc" id="class_menu_load_game_html_ae08b61b61b2d9438aa24e55a2dd0559d"><div class="ttname"><a href="class_menu_load_game.html#ae08b61b61b2d9438aa24e55a2dd0559d">MenuLoadGame::onMenuBack</a></div><div class="ttdeci">void onMenuBack()</div><div class="ttdoc">This method is called if the user chose the back button. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:125</div></div>
+<div class="ttc" id="class_menu_load_game_html_a64e0d14e82a98dc7b4b6c87e5c979487"><div class="ttname"><a href="class_menu_load_game.html#a64e0d14e82a98dc7b4b6c87e5c979487">MenuLoadGame::run</a></div><div class="ttdeci">AbstractState * run() override</div><div class="ttdoc">Runs the current state and does all the work. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.cpp:68</div></div>
+<div class="ttc" id="class_menu_load_game_html_a2fe7f7bd1d665c8f51ea0f2c2bc37e4b"><div class="ttname"><a href="class_menu_load_game.html#a2fe7f7bd1d665c8f51ea0f2c2bc37e4b">MenuLoadGame::fsm</a></div><div class="ttdeci">StateMachine &amp; fsm</div><div class="ttdoc">Reference to the StateMachine. </div><div class="ttdef"><b>Definition:</b> MenuLoadGame.h:86</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:46 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

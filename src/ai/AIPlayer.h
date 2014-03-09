@@ -73,10 +73,10 @@ public:
 
     //! States for AIPlayer
     enum States {
-        PREPARATION, // Game preparation phase
-        PONDERING, // Pondering during enemies turn
-        PLAYING, // Playing own turn
-        STOPPED
+        PREPARATION, //!< Game preparation phase
+        PONDERING, //!< Pondering during enemies turn
+        PLAYING, //!< Playing own turn
+        STOPPED //!< Stopped operations
     };
 
     /**

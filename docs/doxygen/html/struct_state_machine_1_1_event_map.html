@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -132,18 +132,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyUp</b> = false</td
 <tr class="memitem:a561b594ef443f95366fd277907d160f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a561b594ef443f95366fd277907d160f2"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyEscape</b> = false</td></tr>
 <tr class="separator:a561b594ef443f95366fd277907d160f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a736a097aa4ca352fff9469a971062db7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a736a097aa4ca352fff9469a971062db7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyReturn</b> = false</td></tr>
+<tr class="separator:a736a097aa4ca352fff9469a971062db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae67ff8ba0f80a67b50cfc324e5c3c3ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae67ff8ba0f80a67b50cfc324e5c3c3ba"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>key0</b> = false</td></tr>
 <tr class="separator:ae67ff8ba0f80a67b50cfc324e5c3c3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4de9bd8287ad126b6b3d21c27e483ef7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4de9bd8287ad126b6b3d21c27e483ef7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>key1</b> = false</td></tr>
 <tr class="separator:a4de9bd8287ad126b6b3d21c27e483ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81241f34695f03c2a15858acb465dc7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81241f34695f03c2a15858acb465dc7d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key2</b> = false</td></tr>
+<tr class="separator:a81241f34695f03c2a15858acb465dc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af43133c870d544cf6cf4c54a4193f7c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af43133c870d544cf6cf4c54a4193f7c1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key3</b> = false</td></tr>
+<tr class="separator:af43133c870d544cf6cf4c54a4193f7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b91bce3e40a248bacadb1e02017a89c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b91bce3e40a248bacadb1e02017a89c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key4</b> = false</td></tr>
+<tr class="separator:a6b91bce3e40a248bacadb1e02017a89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96eca5f537b34e554ce8f4e236a54ba8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96eca5f537b34e554ce8f4e236a54ba8"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyA</b> = false</td></tr>
 <tr class="separator:a96eca5f537b34e554ce8f4e236a54ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab34e0300bdc7a0c59f4d6cac9490ed8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab34e0300bdc7a0c59f4d6cac9490ed8a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyY</b> = false</td></tr>
 <tr class="separator:ab34e0300bdc7a0c59f4d6cac9490ed8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6b23daf7f4de3aec4d2347188131cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b6b23daf7f4de3aec4d2347188131cf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyR</b> = false</td></tr>
+<tr class="separator:a8b6b23daf7f4de3aec4d2347188131cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure for holding user events. </p>
@@ -153,7 +168,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>keyY</b> = false</td>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:52 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

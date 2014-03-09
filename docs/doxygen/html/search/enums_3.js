@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['states',['States',['../class_a_i_player.html#ae73dfc179e755891224f5e1c474e4c49',1,'AIPlayer']]]
+  ['elevation',['Elevation',['../class_chess_set.html#a7b26c2f2145a62d34b1bf7b55fddeef0',1,'ChessSet']]]
 ];

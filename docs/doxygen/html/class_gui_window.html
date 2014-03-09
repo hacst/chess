@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,14 +88,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_gui_window-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GuiWindow Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
+<p>This class is a wrapper which holds the window with the OpenGL context.  
+ <a href="class_gui_window.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_gui_window_8h_source.html">GuiWindow.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_gui_window_1_1font_object.html">fontObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes a whole font object through color, size, position, font type and text.  <a href="struct_gui_window_1_1font_object.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a79ab3cdd048d53881039d852b1304671"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a79ab3cdd048d53881039d852b1304671">WindowMode</a> { <b>FULLSCREEN</b>, 
@@ -140,9 +151,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a94faebc6cc18a9fbace76aa965ffe974">set3DMode</a> ()</td></tr>
 <tr class="memdesc:a94faebc6cc18a9fbace76aa965ffe974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the model view matrix to draw 3D. <br/></td></tr>
 <tr class="separator:a94faebc6cc18a9fbace76aa965ffe974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85e3a1d988c00ed92ce7ae75b12f18b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85e3a1d988c00ed92ce7ae75b12f18b9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a85e3a1d988c00ed92ce7ae75b12f18b9">swapFrameBufferNow</a> ()</td></tr>
-<tr class="memdesc:a85e3a1d988c00ed92ce7ae75b12f18b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame buffer will normally swapped at the end of the execution loop. If you want to swap it earlier, use this method to force a frame buffer swap immediately. <br/></td></tr>
+<tr class="memitem:a85e3a1d988c00ed92ce7ae75b12f18b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a85e3a1d988c00ed92ce7ae75b12f18b9">swapFrameBufferNow</a> ()</td></tr>
+<tr class="memdesc:a85e3a1d988c00ed92ce7ae75b12f18b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame buffer will normally swapped at the end of the execution loop.  <a href="#a85e3a1d988c00ed92ce7ae75b12f18b9">More...</a><br/></td></tr>
 <tr class="separator:a85e3a1d988c00ed92ce7ae75b12f18b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78c90c42292e90a3d40ac0ff95d75f1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a78c90c42292e90a3d40ac0ff95d75f1a">switchWindowMode</a> (<a class="el" href="class_gui_window.html#a79ab3cdd048d53881039d852b1304671">WindowMode</a> mode)</td></tr>
 <tr class="memdesc:a78c90c42292e90a3d40ac0ff95d75f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the window mode to one of the available modes.  <a href="#a78c90c42292e90a3d40ac0ff95d75f1a">More...</a><br/></td></tr>
@@ -189,9 +199,122 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_cameraAngleZ</b></
 float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ab30b29d66a1f84bd567f52c87882c6ae">m_fov</a></td></tr>
 <tr class="memdesc:ab30b29d66a1f84bd567f52c87882c6ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">field of view (is the extent of the observable world that is seen at any given moment) <br/></td></tr>
 <tr class="separator:ab30b29d66a1f84bd567f52c87882c6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac7945e8ab85b4c37d029699de481d787"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7945e8ab85b4c37d029699de481d787"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ac7945e8ab85b4c37d029699de481d787">handleEvents</a> ()</td></tr>
+<tr class="memdesc:ac7945e8ab85b4c37d029699de481d787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles mouse and keyboard events by using the SDL library. <br/></td></tr>
+<tr class="separator:ac7945e8ab85b4c37d029699de481d787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4861b154f7de8eb429aca94e22ea3a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4861b154f7de8eb429aca94e22ea3a0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#af4861b154f7de8eb429aca94e22ea3a0">init</a> ()</td></tr>
+<tr class="memdesc:af4861b154f7de8eb429aca94e22ea3a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits the window by using the SDL, creates the OpenGL context and call <a class="el" href="class_gui_window.html#af529af3e890c177f4cfb536dd49a6843" title="Loads all the fonts. ">loadFonts()</a> to load all the needed fonts. <br/></td></tr>
+<tr class="separator:af4861b154f7de8eb429aca94e22ea3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af529af3e890c177f4cfb536dd49a6843"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#af529af3e890c177f4cfb536dd49a6843">loadFonts</a> ()</td></tr>
+<tr class="memdesc:af529af3e890c177f4cfb536dd49a6843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads all the fonts.  <a href="#af529af3e890c177f4cfb536dd49a6843">More...</a><br/></td></tr>
+<tr class="separator:af529af3e890c177f4cfb536dd49a6843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac86f71aa69cb480a8cee86b93c36a546"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac86f71aa69cb480a8cee86b93c36a546"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ac86f71aa69cb480a8cee86b93c36a546">terminate</a> ()</td></tr>
+<tr class="memdesc:ac86f71aa69cb480a8cee86b93c36a546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the OpenGL context and closes the window. <br/></td></tr>
+<tr class="separator:ac86f71aa69cb480a8cee86b93c36a546"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35aa2747a5c156325246c3f5f7f6056d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a35aa2747a5c156325246c3f5f7f6056d">exit</a> ()</td></tr>
+<tr class="memdesc:a35aa2747a5c156325246c3f5f7f6056d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a flag to close the window.  <a href="#a35aa2747a5c156325246c3f5f7f6056d">More...</a><br/></td></tr>
+<tr class="separator:a35aa2747a5c156325246c3f5f7f6056d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a26e435ba564e5192ce5aa27fcdf53a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a4a26e435ba564e5192ce5aa27fcdf53a">makeFrustum</a> (double fovY, double aspectRatio, double front, double back)</td></tr>
+<tr class="memdesc:a4a26e435ba564e5192ce5aa27fcdf53a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the frustum by providing the field of view (FOV), an aspect ratio and a front and back clipping plane.  <a href="#a4a26e435ba564e5192ce5aa27fcdf53a">More...</a><br/></td></tr>
+<tr class="separator:a4a26e435ba564e5192ce5aa27fcdf53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce57715cdaf405d79f825f9597789e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a6ce57715cdaf405d79f825f9597789e4">drawText</a> (<a class="el" href="struct_gui_window_1_1font_object.html">fontObject</a> fo)</td></tr>
+<tr class="memdesc:a6ce57715cdaf405d79f825f9597789e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the given font object.  <a href="#a6ce57715cdaf405d79f825f9597789e4">More...</a><br/></td></tr>
+<tr class="separator:a6ce57715cdaf405d79f825f9597789e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0ba9723f4d0022b8348b5d7878aba5cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ba9723f4d0022b8348b5d7878aba5cd"></a>
+SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a0ba9723f4d0022b8348b5d7878aba5cd">window</a></td></tr>
+<tr class="memdesc:a0ba9723f4d0022b8348b5d7878aba5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pointer to the SDL window. <br/></td></tr>
+<tr class="separator:a0ba9723f4d0022b8348b5d7878aba5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab17845686ae4f9a65a7d139021ff202a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab17845686ae4f9a65a7d139021ff202a"></a>
+SDL_Event&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ab17845686ae4f9a65a7d139021ff202a">evt</a></td></tr>
+<tr class="memdesc:ab17845686ae4f9a65a7d139021ff202a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDL events. <br/></td></tr>
+<tr class="separator:ab17845686ae4f9a65a7d139021ff202a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91bcc39c911d0010a6b82a5bed7cf137"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91bcc39c911d0010a6b82a5bed7cf137"></a>
+SDL_GLContext&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a91bcc39c911d0010a6b82a5bed7cf137">ogl</a></td></tr>
+<tr class="memdesc:a91bcc39c911d0010a6b82a5bed7cf137"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDL OpenGL context. <br/></td></tr>
+<tr class="separator:a91bcc39c911d0010a6b82a5bed7cf137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c845c56b45467cca71fa2643020f906"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c845c56b45467cca71fa2643020f906"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a1c845c56b45467cca71fa2643020f906">m_oldMouseX</a></td></tr>
+<tr class="memdesc:a1c845c56b45467cca71fa2643020f906"><td class="mdescLeft">&#160;</td><td class="mdescRight">The old mouse coordinates. <br/></td></tr>
+<tr class="separator:a1c845c56b45467cca71fa2643020f906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acda57d37d4595e7c89baf1308adf49c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acda57d37d4595e7c89baf1308adf49c1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_oldMouseY</b></td></tr>
+<tr class="separator:acda57d37d4595e7c89baf1308adf49c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd919f5c4e5b0b8d4eeaab915c76b625"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd919f5c4e5b0b8d4eeaab915c76b625"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#acd919f5c4e5b0b8d4eeaab915c76b625">m_quit</a> = false</td></tr>
+<tr class="memdesc:acd919f5c4e5b0b8d4eeaab915c76b625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag that indicates whether the execution loop should end. <br/></td></tr>
+<tr class="separator:acd919f5c4e5b0b8d4eeaab915c76b625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f3aaab3ba7db5b8e9496009162e0b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3f3aaab3ba7db5b8e9496009162e0b6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#aa3f3aaab3ba7db5b8e9496009162e0b6">m_title</a></td></tr>
+<tr class="memdesc:aa3f3aaab3ba7db5b8e9496009162e0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The window title. <br/></td></tr>
+<tr class="separator:aa3f3aaab3ba7db5b8e9496009162e0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46163535e47a524e8a493d819daeae2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46163535e47a524e8a493d819daeae2d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a46163535e47a524e8a493d819daeae2d">m_fullscreen</a></td></tr>
+<tr class="memdesc:a46163535e47a524e8a493d819daeae2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag, if the window is in fullscreen mode. <br/></td></tr>
+<tr class="separator:a46163535e47a524e8a493d819daeae2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0526ec0496d5e30a36f459cfb616a18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0526ec0496d5e30a36f459cfb616a18"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ab0526ec0496d5e30a36f459cfb616a18">m_width</a></td></tr>
+<tr class="memdesc:ab0526ec0496d5e30a36f459cfb616a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width of the window. <br/></td></tr>
+<tr class="separator:ab0526ec0496d5e30a36f459cfb616a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81fc4d932fd2c5c1291a30238777939"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad81fc4d932fd2c5c1291a30238777939"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ad81fc4d932fd2c5c1291a30238777939">m_height</a></td></tr>
+<tr class="memdesc:ad81fc4d932fd2c5c1291a30238777939"><td class="mdescLeft">&#160;</td><td class="mdescRight">The height of the window. <br/></td></tr>
+<tr class="separator:ad81fc4d932fd2c5c1291a30238777939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a701ca5ca4ba0ef64c5371ec06478ea9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a701ca5ca4ba0ef64c5371ec06478ea9d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a701ca5ca4ba0ef64c5371ec06478ea9d">m_widthOld</a></td></tr>
+<tr class="memdesc:a701ca5ca4ba0ef64c5371ec06478ea9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Old window dimensions (needed when switching window modes). <br/></td></tr>
+<tr class="separator:a701ca5ca4ba0ef64c5371ec06478ea9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7a626855f943c92d25120a536a8ec2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7a626855f943c92d25120a536a8ec2c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>m_heightOld</b></td></tr>
+<tr class="separator:ad7a626855f943c92d25120a536a8ec2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8b55d4956c5726a9e86faac707398d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8b55d4956c5726a9e86faac707398d0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ab8b55d4956c5726a9e86faac707398d0">m_depthBits</a></td></tr>
+<tr class="memdesc:ab8b55d4956c5726a9e86faac707398d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitdepth. <br/></td></tr>
+<tr class="separator:ab8b55d4956c5726a9e86faac707398d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade20100dcc119d4fe3eb8f7bfb7630cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade20100dcc119d4fe3eb8f7bfb7630cd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#ade20100dcc119d4fe3eb8f7bfb7630cd">m_antiAlias</a></td></tr>
+<tr class="memdesc:ade20100dcc119d4fe3eb8f7bfb7630cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Anti-Alis factor. <br/></td></tr>
+<tr class="separator:ade20100dcc119d4fe3eb8f7bfb7630cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe819fe1beef449caf300a52cbfb4840"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe819fe1beef449caf300a52cbfb4840"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#abe819fe1beef449caf300a52cbfb4840">m_reloadState</a></td></tr>
+<tr class="memdesc:abe819fe1beef449caf300a52cbfb4840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag that indicates of the window mode changed, so that all textures must be initialized again. <br/></td></tr>
+<tr class="separator:abe819fe1beef449caf300a52cbfb4840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46441fcf29ab985086d987acdd185737"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46441fcf29ab985086d987acdd185737"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a46441fcf29ab985086d987acdd185737">m_zNear</a></td></tr>
+<tr class="memdesc:a46441fcf29ab985086d987acdd185737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Near and far clipping plane. <br/></td></tr>
+<tr class="separator:a46441fcf29ab985086d987acdd185737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dcfd541ce1872ec127d9b7e1b923acc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dcfd541ce1872ec127d9b7e1b923acc"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>m_zFar</b></td></tr>
+<tr class="separator:a7dcfd541ce1872ec127d9b7e1b923acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a959b15961cf37c684657b17663fa81a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a959b15961cf37c684657b17663fa81a4"></a>
+<a class="el" href="class_state_machine.html">StateMachine</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#a959b15961cf37c684657b17663fa81a4">m_fsm</a></td></tr>
+<tr class="memdesc:a959b15961cf37c684657b17663fa81a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The state machine. <br/></td></tr>
+<tr class="separator:a959b15961cf37c684657b17663fa81a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3582ad28b48fd2d8efc05f0005f5d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf3582ad28b48fd2d8efc05f0005f5d2"></a>
+<a class="el" href="structfreetype_1_1font__data.html">freetype::font_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_window.html#abf3582ad28b48fd2d8efc05f0005f5d2">fontHeadline</a></td></tr>
+<tr class="memdesc:abf3582ad28b48fd2d8efc05f0005f5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The different fonts with different sizes. <br/></td></tr>
+<tr class="separator:abf3582ad28b48fd2d8efc05f0005f5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36c2e77e6cf347d7eacbcba9037d7ff9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36c2e77e6cf347d7eacbcba9037d7ff9"></a>
+<a class="el" href="structfreetype_1_1font__data.html">freetype::font_data</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fontSubHeadline</b></td></tr>
+<tr class="separator:a36c2e77e6cf347d7eacbcba9037d7ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56fcd1ce6618b16654e79bec333ec19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af56fcd1ce6618b16654e79bec333ec19"></a>
+<a class="el" href="structfreetype_1_1font__data.html">freetype::font_data</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fontText</b></td></tr>
+<tr class="separator:af56fcd1ce6618b16654e79bec333ec19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0663362fb2cdc1ba4740517df16eec1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0663362fb2cdc1ba4740517df16eec1"></a>
+<a class="el" href="structfreetype_1_1font__data.html">freetype::font_data</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fontTextSmall</b></td></tr>
+<tr class="separator:af0663362fb2cdc1ba4740517df16eec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class is a wrapper which holds the window with the OpenGL context. The <a class="el" href="class_gui_window.html">GuiWindow</a> will handle keyboard and mouse events and provides methods to switch OpenGL matrix modes and camera position. The window can also toggle between fullscreen and window mode. </p>
+<div class="textblock"><p>This class is a wrapper which holds the window with the OpenGL context. </p>
+<p>The <a class="el" href="class_gui_window.html" title="This class is a wrapper which holds the window with the OpenGL context. ">GuiWindow</a> will handle keyboard and mouse events and provides methods to switch OpenGL matrix modes and camera position. The window can also toggle between fullscreen and window mode. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7ec9f60bb67305d49ddd75820f7da431"></a>
 <div class="memitem">
@@ -243,6 +366,64 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6ce57715cdaf405d79f825f9597789e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiWindow::drawText </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_gui_window_1_1font_object.html">fontObject</a>&#160;</td>
+          <td class="paramname"><em>fo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws the given font object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fo</td><td>The configured font object. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a35aa2747a5c156325246c3f5f7f6056d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiWindow::exit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets a flag to close the window. </p>
+<p>This is a soft quit and will let the execution loop execute the last round softly. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae339b09d9c3775e76828b60b0e35f84c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -312,6 +493,89 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 <p>Checks if the window is currently in fullscreen mode. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the window is in fullscreen mode, false if not. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af529af3e890c177f4cfb536dd49a6843"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiWindow::loadFonts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads all the fonts. </p>
+<dl class="section note"><dt>Note</dt><dd>This method is called by <a class="el" href="class_gui_window.html#af4861b154f7de8eb429aca94e22ea3a0" title="Inits the window by using the SDL, creates the OpenGL context and call loadFonts() to load all the ne...">init()</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4a26e435ba564e5192ce5aa27fcdf53a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiWindow::makeFrustum </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>fovY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>aspectRatio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>front</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>back</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates the frustum by providing the field of view (FOV), an aspect ratio and a front and back clipping plane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fovY</td><td>The field of view in degree. </td></tr>
+    <tr><td class="paramname">aspectRatio</td><td>The ratio between width and height (width/height) </td></tr>
+    <tr><td class="paramname">front</td><td>The position of the front clipping plane. </td></tr>
+    <tr><td class="paramname">back</td><td>The position of the back clipping plane. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -540,6 +804,24 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
+<a class="anchor" id="a85e3a1d988c00ed92ce7ae75b12f18b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiWindow::swapFrameBufferNow </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The frame buffer will normally swapped at the end of the execution loop. </p>
+<p>If you want to swap it earlier, use this method to force a frame buffer swap immediately. </p>
+
+</div>
+</div>
 <a class="anchor" id="a78c90c42292e90a3d40ac0ff95d75f1a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -571,7 +853,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:49 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

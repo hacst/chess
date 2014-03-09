@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['windowmode',['WindowMode',['../class_gui_window.html#a79ab3cdd048d53881039d852b1304671',1,'GuiWindow']]]
+  ['fontsize',['fontSize',['../class_gui_window.html#a30ca64fcfb6724f883763be5ac6ce8be',1,'GuiWindow']]],
+  ['functiontype',['FunctionType',['../class_animation_helper.html#a624ea97cafa70ccba957bc0a3ab2ca27',1,'AnimationHelper']]]
 ];

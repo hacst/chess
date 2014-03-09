@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,13 +85,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_observer_dispatcher_proxy-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ObserverDispatcherProxy Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Proxy for transporting <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi...">AbstractGameObserver</a> events between threads.  
+<p>Proxy for transporting <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. ">AbstractGameObserver</a> events between threads.  
  <a href="class_observer_dispatcher_proxy.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_observer_dispatcher_proxy_8h_source.html">ObserverDispatcherProxy.h</a>&gt;</code></p>
@@ -101,7 +102,7 @@ Inheritance diagram for ObserverDispatcherProxy:</div>
  <div class="center">
   <img src="class_observer_dispatcher_proxy.png" usemap="#ObserverDispatcherProxy_map" alt=""/>
   <map id="ObserverDispatcherProxy_map" name="ObserverDispatcherProxy_map">
-<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi..." alt="AbstractGameObserver" shape="rect" coords="0,0,160,24"/>
+<area href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. " alt="AbstractGameObserver" shape="rect" coords="0,0,160,24"/>
 <area href="class_service_dispatcher.html" title="Provides functionality for safely running operations in a thread. " alt="ServiceDispatcher" shape="rect" coords="170,0,330,24"/>
 </map>
  </div></div>
@@ -111,7 +112,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a372f5a45a1c83bb21971ceffd6e203ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a372f5a45a1c83bb21971ceffd6e203ad"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ObserverDispatcherProxy</b> (AbstractGameObserverPtr observer)</td></tr>
 <tr class="separator:a372f5a45a1c83bb21971ceffd6e203ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9428985de3e6992ceb8a7010a35aa43e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_observer_dispatcher_proxy.html#a9428985de3e6992ceb8a7010a35aa43e">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="struct_game_configuration.html">GameConfiguration</a> config) override</td></tr>
+<tr class="memitem:a9428985de3e6992ceb8a7010a35aa43e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_observer_dispatcher_proxy.html#a9428985de3e6992ceb8a7010a35aa43e">onGameStart</a> (<a class="el" href="class_game_state.html">GameState</a> state, <a class="el" href="class_game_configuration.html">GameConfiguration</a> config) override</td></tr>
 <tr class="memdesc:a9428985de3e6992ceb8a7010a35aa43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the game starts.  <a href="#a9428985de3e6992ceb8a7010a35aa43e">More...</a><br/></td></tr>
 <tr class="separator:a9428985de3e6992ceb8a7010a35aa43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bd8f4a3cd8cb9596df2765e08872e0f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_observer_dispatcher_proxy.html#a4bd8f4a3cd8cb9596df2765e08872e0f">onTurnStart</a> (PlayerColor who) override</td></tr>
@@ -130,6 +131,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_service_dispatcher.html#a523e6f7dc4e533b0b7938cec62c55c6d">poll</a> ()</td></tr>
 <tr class="memdesc:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replays all posted functions in the calling thread.  <a href="#a523e6f7dc4e533b0b7938cec62c55c6d">More...</a><br/></td></tr>
 <tr class="separator:a523e6f7dc4e533b0b7938cec62c55c6d inherit pub_methods_class_service_dispatcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a461bc59d73f42f232b674d7eb00fab0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a461bc59d73f42f232b674d7eb00fab0b"></a>
+AbstractGameObserverPtr&#160;</td><td class="memItemRight" valign="bottom"><b>m_observer</b></td></tr>
+<tr class="separator:a461bc59d73f42f232b674d7eb00fab0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -155,8 +162,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a7bf54f65ee49a65d344581078d0a61b6 inherit pro_methods_class_service_dispatcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Proxy for transporting <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi...">AbstractGameObserver</a> events between threads. </p>
-<p>As the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> and other game components run on different threads it is essential to safely transport game events between them. Without any additional precautions <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. Classes of this type can be registered wi...">AbstractGameObserver</a> implementations will have their handlers called on the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> thread they are registered on with all implied thread safety concerns.</p>
+<div class="textblock"><p>Proxy for transporting <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. ">AbstractGameObserver</a> events between threads. </p>
+<p>As the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> and other game components run on different threads it is essential to safely transport game events between them. Without any additional precautions <a class="el" href="class_abstract_game_observer.html" title="Allows to observe relevant GameEvents inside the GameLogic. ">AbstractGameObserver</a> implementations will have their handlers called on the <a class="el" href="class_game_logic.html" title="GameLogic implementation for a game of chess with observers. ">GameLogic</a> thread they are registered on with all implied thread safety concerns.</p>
 <p>This proxy will serialize calls coming in from the game logic in a thread-safe way and replay them once its poll method is called in the customers thread. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aefd213df076dec8ce60fbf03b09a22f1"></a>
@@ -220,7 +227,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_game_configuration.html">GameConfiguration</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_game_configuration.html">GameConfiguration</a>&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -240,7 +247,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td><a class="el" href="class_game_state.html">GameState</a> on game start. </td></tr>
-    <tr><td class="paramname">config</td><td>Valid <a class="el" href="struct_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> for this game. </td></tr>
+    <tr><td class="paramname">config</td><td>Valid <a class="el" href="class_game_configuration.html" title="Class for holding game configuration parameters. ">GameConfiguration</a> for this game. </td></tr>
   </table>
   </dd>
 </dl>
@@ -386,7 +393,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 6 2014 02:31:51 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 7 2014 00:11:50 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
