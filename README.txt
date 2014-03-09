@@ -18,6 +18,12 @@ Building on Windows:
    files.
  - Open .sln projectfile in build/ and build all
 
+Building on Linux:
+ - Add all git submodules (before running runcmake.sh):
+     - To setup run 'git submodule init' then 'git submodule update'
+ - Run runcmake.sh
+ - Run make in bin/ subfolder
+ 
 Build requirements (Linux):
  - gcc >= 4.8
  - pthreads
@@ -29,4 +35,3 @@ Ubuntu < 13.10:
 
 Ubuntu < 14.04:
  Boost >=1.54 from PPA needed: e.g. ppa:boost-latest/ppa
-
