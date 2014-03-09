@@ -93,6 +93,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">GameState Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Facade class for the game logic, holds the chessboard and the turn generator.  
+ <a href="class_game_state.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_game_state_8h_source.html">GameState.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -154,7 +159,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abc119a4a9a6180f9396c92916cae29c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_game_state.html">GameState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#abc119a4a9a6180f9396c92916cae29c1">fromFEN</a> (const std::string &amp;fen)</td></tr>
-<tr class="memdesc:abc119a4a9a6180f9396c92916cae29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string.  <a href="#abc119a4a9a6180f9396c92916cae29c1">More...</a><br/></td></tr>
+<tr class="memdesc:abc119a4a9a6180f9396c92916cae29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_game_state.html" title="Facade class for the game logic, holds the chessboard and the turn generator. ">GameState</a> from a Forsyth-Edwards Notation string.  <a href="#abc119a4a9a6180f9396c92916cae29c1">More...</a><br/></td></tr>
 <tr class="separator:abc119a4a9a6180f9396c92916cae29c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
@@ -172,10 +177,13 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a48ae4dc619da86358244d73e1c5a126a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7b4c92826c3baea811c24d49f1fb585"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7b4c92826c3baea811c24d49f1fb585"></a>
 <a class="el" href="class_turn_generator.html">TurnGenerator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_state.html#ad7b4c92826c3baea811c24d49f1fb585">m_turnGen</a></td></tr>
-<tr class="memdesc:ad7b4c92826c3baea811c24d49f1fb585"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_turn.html">Turn</a> generator and gameover detection. <br/></td></tr>
+<tr class="memdesc:ad7b4c92826c3baea811c24d49f1fb585"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_turn.html" title="Represents a chess turn. ">Turn</a> generator and gameover detection. <br/></td></tr>
 <tr class="separator:ad7b4c92826c3baea811c24d49f1fb585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Facade class for the game logic, holds the chessboard and the turn generator. </p>
+<p>It's mainly purpose is to provide access to functions relevant for the game. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="abc119a4a9a6180f9396c92916cae29c1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +206,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a <a class="el" href="class_game_state.html">GameState</a> from a Forsyth-Edwards Notation string. </p>
+<p>Create a <a class="el" href="class_game_state.html" title="Facade class for the game logic, holds the chessboard and the turn generator. ">GameState</a> from a Forsyth-Edwards Notation string. </p>
 <p><a href="http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">http://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation</a> </p>
 <dl class="section warning"><dt>Warning</dt><dd>This function does no validation. Do not pass invalid FEN. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -253,7 +261,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 7 2014 00:11:48 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Mar 9 2014 23:12:58 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

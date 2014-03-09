@@ -88,102 +88,133 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">GameLogic.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef GAMELOGIC_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define GAMELOGIC_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;GameState.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;core/GameConfiguration.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;logic/interface/AbstractGameLogic.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;misc/helper.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;core/Logging.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_game_logic.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_game_logic.html">GameLogic</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_game_logic.html">AbstractGameLogic</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_game_logic.html#ac4aa2c551f2bfa79a7a2e90217261018">GameLogic</a>(AbstractPlayerPtr white, AbstractPlayerPtr black,</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        GameConfigurationPtr config,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="class_game_state.html">GameState</a> initialGameState = <a class="code" href="class_game_state.html">GameState</a>());</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    ~<a class="code" href="class_game_logic.html">GameLogic</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">virtual</span> AbstractPlayerPtr getWhitePlayer() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">virtual</span> AbstractPlayerPtr getBlackPlayer() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#adb1079537a901e860b11398d66c50286">addObserver</a>(AbstractGameObserverPtr observer) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a6c26b311430837d51cc7696c8094abbc">isGameOver</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> PlayerColor <a class="code" href="class_game_logic.html#aca3264bf6955426c20712a8216365b57">getWinner</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> GameConfigurationPtr <a class="code" href="class_game_logic.html#a6397a2b36a7aa7d60d7ae49da00a9263">getConfiguration</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a9bd1137d1dd4ac474330b0e0c6f38fbe">stop</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">run</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Future&gt;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">   63</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">wait_for</a>(Future&amp;&amp; fut, std::chrono::milliseconds waitInMs) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        std::chrono::milliseconds waited(0);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">while</span> (waited &lt; waitInMs &amp;&amp; !<a class="code" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">m_abort</a>) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">const</span> <span class="keyword">auto</span> waitLeft = waitInMs - waited;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">const</span> std::chrono::milliseconds iterTime = std::min(waitLeft, <a class="code" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">m_tickLength</a>);</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">    Copyright (c) 2013-2014, Max Stark &lt;max.stark88@googlemail.com&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    All rights reserved.</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">    Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">    modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    2. Redistributions in binary form must reproduce the above copyright</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    notice, this list of conditions and the following disclaimer in the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    documentation and/or other materials provided with the distribution.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    3. Neither the name of the copyright holder nor the names of its</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    contributors may be used to endorse or promote products derived from</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    this software without specific prior written permission.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef GAMELOGIC_H</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define GAMELOGIC_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &quot;GameState.h&quot;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;core/GameConfiguration.h&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &quot;logic/interface/AbstractGameLogic.h&quot;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;misc/helper.h&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;core/Logging.h&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_game_logic.html">   48</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_game_logic.html">GameLogic</a> : <span class="keyword">public</span> <a class="code" href="class_abstract_game_logic.html">AbstractGameLogic</a> {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="class_game_logic.html#ac4aa2c551f2bfa79a7a2e90217261018">GameLogic</a>(AbstractPlayerPtr white, AbstractPlayerPtr black,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        GameConfigurationPtr config,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="class_game_state.html">GameState</a> initialGameState = <a class="code" href="class_game_state.html">GameState</a>());</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    ~<a class="code" href="class_game_logic.html">GameLogic</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">virtual</span> AbstractPlayerPtr getWhitePlayer() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">virtual</span> AbstractPlayerPtr getBlackPlayer() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#adb1079537a901e860b11398d66c50286">addObserver</a>(AbstractGameObserverPtr observer) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">if</span> (fut.wait_for(iterTime) == std::future_status::ready) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a6c26b311430837d51cc7696c8094abbc">isGameOver</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">virtual</span> PlayerColor <a class="code" href="class_game_logic.html#aca3264bf6955426c20712a8216365b57">getWinner</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">virtual</span> GameConfigurationPtr <a class="code" href="class_game_logic.html#a6397a2b36a7aa7d60d7ae49da00a9263">getConfiguration</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            waited += iterTime;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="comment">// Future couldn&#39;t provide result till timeout</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171">wait</a>(std::chrono::milliseconds waitInMs) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Function&gt;</div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">   99</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">notify</a>(Function&amp;&amp; f) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; observer : <a class="code" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">m_observers</a>) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            f(observer);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    AbstractPlayerPtr&amp; <a class="code" href="class_game_logic.html#a0bc9ab9793c940f0466145e8559e9348">getCurrentPlayer</a>();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a9bd1137d1dd4ac474330b0e0c6f38fbe">stop</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">run</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Future&gt;</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">   94</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">wait_for</a>(Future&amp;&amp; fut, std::chrono::milliseconds waitInMs) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        std::chrono::milliseconds waited(0);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">while</span> (waited &lt; waitInMs &amp;&amp; !<a class="code" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">m_abort</a>) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">const</span> <span class="keyword">auto</span> waitLeft = waitInMs - waited;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keyword">const</span> std::chrono::milliseconds iterTime = std::min(waitLeft, <a class="code" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">m_tickLength</a>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">if</span> (fut.wait_for(iterTime) == std::future_status::ready) {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            waited += iterTime;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="comment">// Future couldn&#39;t provide result till timeout</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">  111</a></span>&#160;    std::chrono::milliseconds <a class="code" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">m_tickLength</a>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">  113</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">m_abort</a>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">  116</a></span>&#160;    std::vector&lt;AbstractGameObserverPtr&gt; <a class="code" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">m_observers</a>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    AbstractPlayerPtr m_white;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    AbstractPlayerPtr m_black;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="class_game_state.html">GameState</a> m_gameState;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    GameConfigurationPtr m_config;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    Logging::Logger m_log;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif // GAMELOGIC_H</span></div>
-<div class="ttc" id="class_game_logic_html_aa5653b77b000ccc25ba2043aba3edda0"><div class="ttname"><a href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">GameLogic::m_observers</a></div><div class="ttdeci">std::vector&lt; AbstractGameObserverPtr &gt; m_observers</div><div class="ttdoc">List of observers for the game to be notified of game events (contains players) </div><div class="ttdef"><b>Definition:</b> GameLogic.h:116</div></div>
-<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:8</div></div>
-<div class="ttc" id="class_game_logic_html_a29927895ae4be5d9d868d362f990274c"><div class="ttname"><a href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">GameLogic::run</a></div><div class="ttdeci">virtual void run() override</div><div class="ttdoc">Executes a blocking game loop implementation. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:55</div></div>
-<div class="ttc" id="class_game_logic_html_a6397a2b36a7aa7d60d7ae49da00a9263"><div class="ttname"><a href="class_game_logic.html#a6397a2b36a7aa7d60d7ae49da00a9263">GameLogic::getConfiguration</a></div><div class="ttdeci">virtual GameConfigurationPtr getConfiguration() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:46</div></div>
-<div class="ttc" id="class_game_logic_html_ae780b5568107a0b6a16aab34d53a3ec4"><div class="ttname"><a href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">GameLogic::notify</a></div><div class="ttdeci">void notify(Function &amp;&amp;f)</div><div class="ttdoc">Function to call a given function on all attached observers. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:99</div></div>
-<div class="ttc" id="class_game_logic_html_a6999355d95c1f0def70b1731fbaff542"><div class="ttname"><a href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">GameLogic::m_abort</a></div><div class="ttdeci">bool m_abort</div><div class="ttdoc">If true the running game is aborted. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:113</div></div>
-<div class="ttc" id="class_game_logic_html_a3afc88f5016906fe31c2b1d3629bb171"><div class="ttname"><a href="class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171">GameLogic::wait</a></div><div class="ttdeci">void wait(std::chrono::milliseconds waitInMs) const </div><div class="ttdoc">Helper function for performing an interruptable wait. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:123</div></div>
-<div class="ttc" id="class_game_logic_html_a0bc9ab9793c940f0466145e8559e9348"><div class="ttname"><a href="class_game_logic.html#a0bc9ab9793c940f0466145e8559e9348">GameLogic::getCurrentPlayer</a></div><div class="ttdeci">AbstractPlayerPtr &amp; getCurrentPlayer()</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:145</div></div>
-<div class="ttc" id="class_game_logic_html_a38628386737b55ef8ef89aa5fa2f8d71"><div class="ttname"><a href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">GameLogic::wait_for</a></div><div class="ttdeci">bool wait_for(Future &amp;&amp;fut, std::chrono::milliseconds waitInMs)</div><div class="ttdoc">Helper function for performing an interruptable wait on a future. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:63</div></div>
-<div class="ttc" id="class_game_logic_html_a6c26b311430837d51cc7696c8094abbc"><div class="ttname"><a href="class_game_logic.html#a6c26b311430837d51cc7696c8094abbc">GameLogic::isGameOver</a></div><div class="ttdeci">virtual bool isGameOver() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:135</div></div>
-<div class="ttc" id="class_game_logic_html_adb1079537a901e860b11398d66c50286"><div class="ttname"><a href="class_game_logic.html#adb1079537a901e860b11398d66c50286">GameLogic::addObserver</a></div><div class="ttdeci">virtual void addObserver(AbstractGameObserverPtr observer) override</div><div class="ttdoc">Registers an observer for game events. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:42</div></div>
-<div class="ttc" id="class_game_logic_html_a21a741a5f051f4d1a519485188e13735"><div class="ttname"><a href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">GameLogic::m_tickLength</a></div><div class="ttdeci">std::chrono::milliseconds m_tickLength</div><div class="ttdoc">Interval in which the GameLogic should check for aborts (. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:111</div></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171">wait</a>(std::chrono::milliseconds waitInMs) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Function&gt;</div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">  130</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">notify</a>(Function&amp;&amp; f) {</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; observer : <a class="code" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">m_observers</a>) {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            f(observer);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    AbstractPlayerPtr&amp; <a class="code" href="class_game_logic.html#a0bc9ab9793c940f0466145e8559e9348">getCurrentPlayer</a>();</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">  142</a></span>&#160;    std::chrono::milliseconds <a class="code" href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">m_tickLength</a>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">  144</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">m_abort</a>;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">  147</a></span>&#160;    std::vector&lt;AbstractGameObserverPtr&gt; <a class="code" href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">m_observers</a>;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    AbstractPlayerPtr m_white;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    AbstractPlayerPtr m_black;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="class_game_state.html">GameState</a> m_gameState;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    GameConfigurationPtr m_config;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    Logging::Logger m_log;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;};</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#endif // GAMELOGIC_H</span></div>
+<div class="ttc" id="class_game_logic_html_aa5653b77b000ccc25ba2043aba3edda0"><div class="ttname"><a href="class_game_logic.html#aa5653b77b000ccc25ba2043aba3edda0">GameLogic::m_observers</a></div><div class="ttdeci">std::vector&lt; AbstractGameObserverPtr &gt; m_observers</div><div class="ttdoc">List of observers for the game to be notified of game events (contains players) </div><div class="ttdef"><b>Definition:</b> GameLogic.h:147</div></div>
+<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdoc">Facade class for the game logic, holds the chessboard and the turn generator. </div><div class="ttdef"><b>Definition:</b> GameState.h:44</div></div>
+<div class="ttc" id="class_game_logic_html_a29927895ae4be5d9d868d362f990274c"><div class="ttname"><a href="class_game_logic.html#a29927895ae4be5d9d868d362f990274c">GameLogic::run</a></div><div class="ttdeci">virtual void run() override</div><div class="ttdoc">Executes a blocking game loop implementation. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:86</div></div>
+<div class="ttc" id="class_game_logic_html_a6397a2b36a7aa7d60d7ae49da00a9263"><div class="ttname"><a href="class_game_logic.html#a6397a2b36a7aa7d60d7ae49da00a9263">GameLogic::getConfiguration</a></div><div class="ttdeci">virtual GameConfigurationPtr getConfiguration() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:77</div></div>
+<div class="ttc" id="class_game_logic_html_ae780b5568107a0b6a16aab34d53a3ec4"><div class="ttname"><a href="class_game_logic.html#ae780b5568107a0b6a16aab34d53a3ec4">GameLogic::notify</a></div><div class="ttdeci">void notify(Function &amp;&amp;f)</div><div class="ttdoc">Function to call a given function on all attached observers. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:130</div></div>
+<div class="ttc" id="class_game_logic_html_a6999355d95c1f0def70b1731fbaff542"><div class="ttname"><a href="class_game_logic.html#a6999355d95c1f0def70b1731fbaff542">GameLogic::m_abort</a></div><div class="ttdeci">bool m_abort</div><div class="ttdoc">If true the running game is aborted. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:144</div></div>
+<div class="ttc" id="class_game_logic_html_a3afc88f5016906fe31c2b1d3629bb171"><div class="ttname"><a href="class_game_logic.html#a3afc88f5016906fe31c2b1d3629bb171">GameLogic::wait</a></div><div class="ttdeci">void wait(std::chrono::milliseconds waitInMs) const </div><div class="ttdoc">Helper function for performing an interruptable wait. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:154</div></div>
+<div class="ttc" id="class_game_logic_html_a0bc9ab9793c940f0466145e8559e9348"><div class="ttname"><a href="class_game_logic.html#a0bc9ab9793c940f0466145e8559e9348">GameLogic::getCurrentPlayer</a></div><div class="ttdeci">AbstractPlayerPtr &amp; getCurrentPlayer()</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:176</div></div>
+<div class="ttc" id="class_game_logic_html_a38628386737b55ef8ef89aa5fa2f8d71"><div class="ttname"><a href="class_game_logic.html#a38628386737b55ef8ef89aa5fa2f8d71">GameLogic::wait_for</a></div><div class="ttdeci">bool wait_for(Future &amp;&amp;fut, std::chrono::milliseconds waitInMs)</div><div class="ttdoc">Helper function for performing an interruptable wait on a future. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:94</div></div>
+<div class="ttc" id="class_game_logic_html_a6c26b311430837d51cc7696c8094abbc"><div class="ttname"><a href="class_game_logic.html#a6c26b311430837d51cc7696c8094abbc">GameLogic::isGameOver</a></div><div class="ttdeci">virtual bool isGameOver() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:166</div></div>
+<div class="ttc" id="class_game_logic_html_adb1079537a901e860b11398d66c50286"><div class="ttname"><a href="class_game_logic.html#adb1079537a901e860b11398d66c50286">GameLogic::addObserver</a></div><div class="ttdeci">virtual void addObserver(AbstractGameObserverPtr observer) override</div><div class="ttdoc">Registers an observer for game events. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:73</div></div>
+<div class="ttc" id="class_game_logic_html_a21a741a5f051f4d1a519485188e13735"><div class="ttname"><a href="class_game_logic.html#a21a741a5f051f4d1a519485188e13735">GameLogic::m_tickLength</a></div><div class="ttdeci">std::chrono::milliseconds m_tickLength</div><div class="ttdoc">Interval in which the GameLogic should check for aborts (. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:142</div></div>
 <div class="ttc" id="class_abstract_game_logic_html"><div class="ttname"><a href="class_abstract_game_logic.html">AbstractGameLogic</a></div><div class="ttdoc">Interface for chess game logic implementations. </div><div class="ttdef"><b>Definition:</b> AbstractGameLogic.h:42</div></div>
-<div class="ttc" id="class_game_logic_html_a9bd1137d1dd4ac474330b0e0c6f38fbe"><div class="ttname"><a href="class_game_logic.html#a9bd1137d1dd4ac474330b0e0c6f38fbe">GameLogic::stop</a></div><div class="ttdeci">virtual void stop() override</div><div class="ttdoc">Initiates a shutdown of the game logic. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:50</div></div>
-<div class="ttc" id="class_game_logic_html_aca3264bf6955426c20712a8216365b57"><div class="ttname"><a href="class_game_logic.html#aca3264bf6955426c20712a8216365b57">GameLogic::getWinner</a></div><div class="ttdeci">virtual PlayerColor getWinner() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:139</div></div>
-<div class="ttc" id="class_game_logic_html_ac4aa2c551f2bfa79a7a2e90217261018"><div class="ttname"><a href="class_game_logic.html#ac4aa2c551f2bfa79a7a2e90217261018">GameLogic::GameLogic</a></div><div class="ttdeci">GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config, GameState initialGameState=GameState())</div><div class="ttdoc">Sets up a GameLogic object for one chess game. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:9</div></div>
-<div class="ttc" id="class_game_logic_html"><div class="ttname"><a href="class_game_logic.html">GameLogic</a></div><div class="ttdoc">GameLogic implementation for a game of chess with observers. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:17</div></div>
+<div class="ttc" id="class_game_logic_html_a9bd1137d1dd4ac474330b0e0c6f38fbe"><div class="ttname"><a href="class_game_logic.html#a9bd1137d1dd4ac474330b0e0c6f38fbe">GameLogic::stop</a></div><div class="ttdeci">virtual void stop() override</div><div class="ttdoc">Initiates a shutdown of the game logic. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:81</div></div>
+<div class="ttc" id="class_game_logic_html_aca3264bf6955426c20712a8216365b57"><div class="ttname"><a href="class_game_logic.html#aca3264bf6955426c20712a8216365b57">GameLogic::getWinner</a></div><div class="ttdeci">virtual PlayerColor getWinner() const override</div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:170</div></div>
+<div class="ttc" id="class_game_logic_html_ac4aa2c551f2bfa79a7a2e90217261018"><div class="ttname"><a href="class_game_logic.html#ac4aa2c551f2bfa79a7a2e90217261018">GameLogic::GameLogic</a></div><div class="ttdeci">GameLogic(AbstractPlayerPtr white, AbstractPlayerPtr black, GameConfigurationPtr config, GameState initialGameState=GameState())</div><div class="ttdoc">Sets up a GameLogic object for one chess game. </div><div class="ttdef"><b>Definition:</b> GameLogic.cpp:40</div></div>
+<div class="ttc" id="class_game_logic_html"><div class="ttname"><a href="class_game_logic.html">GameLogic</a></div><div class="ttdoc">GameLogic implementation for a game of chess with observers. </div><div class="ttdef"><b>Definition:</b> GameLogic.h:48</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Mar 9 2014 23:12:55 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -181,12 +181,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">using</span> DummyPlayerPtr = std::shared_ptr&lt;DummyPlayer&gt;;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif // DUMMYPLAYER_H</span></div>
-<div class="ttc" id="class_game_state_html_ad354cf0cd823324fbb10685eb3366b6f"><div class="ttname"><a href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">GameState::getTurnList</a></div><div class="ttdeci">std::vector&lt; Turn &gt; getTurnList() const </div><div class="ttdoc">Returns a list with all possible and legal turns. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:18</div></div>
+<div class="ttc" id="class_game_state_html_ad354cf0cd823324fbb10685eb3366b6f"><div class="ttname"><a href="class_game_state.html#ad354cf0cd823324fbb10685eb3366b6f">GameState::getTurnList</a></div><div class="ttdeci">std::vector&lt; Turn &gt; getTurnList() const </div><div class="ttdoc">Returns a list with all possible and legal turns. </div><div class="ttdef"><b>Definition:</b> GameState.cpp:49</div></div>
 <div class="ttc" id="class_dummy_player_html_a9085902f8fbbf0b261b56cb36439875b"><div class="ttname"><a href="class_dummy_player.html#a9085902f8fbbf0b261b56cb36439875b">DummyPlayer::onSetColor</a></div><div class="ttdeci">virtual void onSetColor(PlayerColor color) override</div><div class="ttdoc">Notifies that player what color he will be playing. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:64</div></div>
-<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:8</div></div>
+<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdoc">Facade class for the game logic, holds the chessboard and the turn generator. </div><div class="ttdef"><b>Definition:</b> GameState.h:44</div></div>
 <div class="ttc" id="class_dummy_player_html_a3ba604077071df9c8fbd481e339a77c3"><div class="ttname"><a href="class_dummy_player.html#a3ba604077071df9c8fbd481e339a77c3">DummyPlayer::doMakeTurn</a></div><div class="ttdeci">virtual std::future&lt; Turn &gt; doMakeTurn(GameState state) override</div><div class="ttdoc">Asks the player to make his turn. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:74</div></div>
 <div class="ttc" id="class_service_dispatcher_thread_html_ae9054e054414b9e00bb626845845ca16"><div class="ttname"><a href="class_service_dispatcher_thread.html#ae9054e054414b9e00bb626845845ca16">ServiceDispatcherThread::stop</a></div><div class="ttdeci">virtual void stop(bool force=false)</div><div class="ttdoc">Stops the execution of this tread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:73</div></div>
-<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:6</div></div>
+<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdoc">Represents a chess turn. </div><div class="ttdef"><b>Definition:</b> Turn.h:40</div></div>
 <div class="ttc" id="class_abstract_player_html"><div class="ttname"><a href="class_abstract_player.html">AbstractPlayer</a></div><div class="ttdoc">Class a player has to implement to interact with the GameLogic. </div><div class="ttdef"><b>Definition:</b> AbstractPlayer.h:49</div></div>
 <div class="ttc" id="class_service_dispatcher_thread_html"><div class="ttname"><a href="class_service_dispatcher_thread.html">ServiceDispatcherThread</a></div><div class="ttdoc">Provides functionality for safely running operations in a thread. </div><div class="ttdef"><b>Definition:</b> ServiceDispatcherThread.h:44</div></div>
 <div class="ttc" id="class_dummy_player_html_a8d9fdcb5c0172edf701da35dae556d43"><div class="ttname"><a href="class_dummy_player.html#a8d9fdcb5c0172edf701da35dae556d43">DummyPlayer::doAbortTurn</a></div><div class="ttdeci">virtual void doAbortTurn() override</div><div class="ttdoc">Asks the player to abort a turn asked for with doMakeTurn. </div><div class="ttdef"><b>Definition:</b> DummyPlayer.h:69</div></div>
@@ -195,7 +195,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Mar 9 2014 23:12:55 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

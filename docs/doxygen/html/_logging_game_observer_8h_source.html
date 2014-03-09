@@ -142,9 +142,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif // LOGGINGGAMEOBSERVER_H</span></div>
 <div class="ttc" id="class_abstract_game_observer_html"><div class="ttname"><a href="class_abstract_game_observer.html">AbstractGameObserver</a></div><div class="ttdoc">Allows to observe relevant GameEvents inside the GameLogic. </div><div class="ttdef"><b>Definition:</b> AbstractGameObserver.h:51</div></div>
 <div class="ttc" id="class_logging_game_observer_html_aba2126a9c359c919282d9a4d49e35ab7"><div class="ttname"><a href="class_logging_game_observer.html#aba2126a9c359c919282d9a4d49e35ab7">LoggingGameObserver::onTurnEnd</a></div><div class="ttdeci">void onTurnEnd(PlayerColor who, Turn turn, GameState newState) override</div><div class="ttdoc">Called if a player ended its turn. </div><div class="ttdef"><b>Definition:</b> LoggingGameObserver.cpp:56</div></div>
-<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdef"><b>Definition:</b> GameState.h:8</div></div>
+<div class="ttc" id="class_game_state_html"><div class="ttname"><a href="class_game_state.html">GameState</a></div><div class="ttdoc">Facade class for the game logic, holds the chessboard and the turn generator. </div><div class="ttdef"><b>Definition:</b> GameState.h:44</div></div>
 <div class="ttc" id="class_game_configuration_html"><div class="ttname"><a href="class_game_configuration.html">GameConfiguration</a></div><div class="ttdoc">Class for holding game configuration parameters. </div><div class="ttdef"><b>Definition:</b> GameConfiguration.h:84</div></div>
-<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdef"><b>Definition:</b> Turn.h:6</div></div>
+<div class="ttc" id="class_turn_html"><div class="ttname"><a href="class_turn.html">Turn</a></div><div class="ttdoc">Represents a chess turn. </div><div class="ttdef"><b>Definition:</b> Turn.h:40</div></div>
 <div class="ttc" id="class_logging_game_observer_html_a6a64e5cb9223bafec65f64f042e3b50e"><div class="ttname"><a href="class_logging_game_observer.html#a6a64e5cb9223bafec65f64f042e3b50e">LoggingGameObserver::onGameStart</a></div><div class="ttdeci">void onGameStart(GameState state, GameConfiguration config) override</div><div class="ttdoc">Called when the game starts. </div><div class="ttdef"><b>Definition:</b> LoggingGameObserver.cpp:46</div></div>
 <div class="ttc" id="class_logging_game_observer_html_a3e6c3a4bb21730d272059518a526bb4e"><div class="ttname"><a href="class_logging_game_observer.html#a3e6c3a4bb21730d272059518a526bb4e">LoggingGameObserver::onTurnStart</a></div><div class="ttdeci">void onTurnStart(PlayerColor who) override</div><div class="ttdoc">Called if a player is asked to perform a turn. </div><div class="ttdef"><b>Definition:</b> LoggingGameObserver.cpp:52</div></div>
 <div class="ttc" id="class_logging_game_observer_html"><div class="ttname"><a href="class_logging_game_observer.html">LoggingGameObserver</a></div><div class="ttdoc">AbstractGameObserver which simply logs occuring events. </div><div class="ttdef"><b>Definition:</b> LoggingGameObserver.h:41</div></div>
@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 7 2014 00:11:45 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Mar 9 2014 23:12:55 for 3dchess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
