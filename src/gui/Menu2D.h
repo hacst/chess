@@ -39,7 +39,7 @@
 
 #include <vector>
 #include <memory>
-#include "boost/bind.hpp"
+
 
 #include "gui/Menu2DItem.h"
 #include "gui/AnimationHelper.h"

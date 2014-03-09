@@ -31,7 +31,6 @@
 */
 
 #include <iostream>
-#include <SDL.h>
 
 #include "gui/states/MenuPlayerColor.h"
 #include "gui/states/GamePlay.h"

@@ -31,7 +31,6 @@
 */
 
 #include <iostream>
-#include <SDL.h>
 
 #include "gui/states/MenuLoadGame.h"
 #include "gui/Menu2DItem.h"

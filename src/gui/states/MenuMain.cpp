@@ -34,7 +34,6 @@
 #include "gui/states/MenuMain.h"
 
 #include <iostream>
-#include <SDL.h>
 
 #include "gui/Menu2DItem.h"
 #include "gui/StateMachine.h"
