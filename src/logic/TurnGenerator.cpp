@@ -1,14 +1,47 @@
+/*
+    Copyright (c) 2013-2014, Max Stark <max.stark88@googlemail.com>
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+    3. Neither the name of the copyright holder nor the names of its
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+*/
 #include "TurnGenerator.h"
 
 void TurnGenerator::initFlags(ChessBoard &cb) {
     BitBoard bbAllOppTurns = calcAllOppTurns(Black, cb);
     BitBoard bbKingInCheck = cb.m_bb[White][King] & bbAllOppTurns;
+
     if (bbKingInCheck == cb.m_bb[White][King]) {
         cb.setKingInCheck(White, true);
     }
 
     bbAllOppTurns = calcAllOppTurns(White, cb);
     bbKingInCheck = cb.m_bb[Black][King] & bbAllOppTurns;
+
     if (bbKingInCheck == cb.m_bb[Black][King]) {
         cb.setKingInCheck(Black, true);
     }
@@ -30,13 +63,15 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 
     turnList.clear();
 
-    // Der gegnerische King kann in keinem (korrekten) Fall im Schach stehen
-    // wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere,
-    // allerdings kann das Flag noch vom vorherigen Halbzug gesetzt sein,
-    // daher zuruecksetzen
+    /* Der gegnerische King kann in keinem (korrekten) Fall im Schach stehen
+       wenn man selbst an der Reihe ist, da sonst das Spiel beendet waere,
+       allerdings kann das Flag noch vom vorherigen Halbzug gesetzt sein,
+       daher zuruecksetzen */
     if (cb.getKingInCheck()[opp]) {
-        // Immernoch im Schach? -> Kann nur der Fall sein, wenn der GameState
-        // aus einem ungueltigen (bereits "beendetem") Chessboard geladen wurde!
+        /* Ist nicht nur das Flag gesetzt, sondern steht der King tatsaechlich
+           im Schach? -> Kann nur der Fall sein, wenn der GameState aus einem
+           ungueltigen (bereits "beendetem") Chessboard geladen wurde, daher
+           Spiel beenden und Zuggeneration abbrechen. */
         BitBoard bb = calcAllOppTurns(player, cb);
         BitBoard bb2 = cb.m_bb[opp][King] & bb;
         if (bb2 == cb.m_bb[opp][King]) {
@@ -48,18 +83,19 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
     }
 
     if (bbKingInCheck == cb.m_bb[player][King]) {
-        // Wenn King im Schach, dann nur Zuege berechnen um aus dem Schach
-        // raus zu kommen. Wenn keine Zuege gefunden -> Schachmatt
+        /* Wenn der King im Schach steht, dann nur Zuege berechnen um das
+         * Schachgebot aufzuheben. Wenn keine Zuege gefunden -> Schachmatt */
         cb.setKingInCheck(player, true);
 
-        // Um die legalen Zuege der Figuren (ausgenommen King) herauszufinden:
-        // Welche gegnerische Figur setzt den King ins Schach?
-        // -> Diese Figur entweder schlagen oder den Weg abschneiden
-        // -> Von dieser Figur wird also die Position benoetigt und (bei einem
-        //    sliding piece) die Turns, die ihm zum King fuehren (der "Weg")
+        /* Um die legalen Zuege der Figuren (ausgenommen King) herauszufinden:
+           Welche gegnerische Figur setzt den King ins Schach?
+           -> Diese Figur entweder schlagen oder den Weg abschneiden
+           -> Von dieser Figur wird daher die Position benoetigt und (bei einem
+              sliding piece) die Turns, die ihm zum King fuehren (der "Weg") */
         BitBoard bbUnCheckFields = calcUnCheckFields(opp, cb);
 
-        // Normale Zugberechnung, ABER: Turns werden mit bbUnCheckFields verundet
+        /* Zunaechst normale Zugberechnung
+           ABER: Turns anschließend mit bbUnCheckFields verunden */
         for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
             piece.type   = (PieceType) pieceType;
             piece.player = player;
@@ -88,8 +124,8 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
         }
 
     } else {
-        // Normale Zugberechnung durchfuehren; werden keine Zuege gefunden
-        // liegt eine Pattstellung vor
+        /* Normale Zugberechnung durchfuehren; werden keine Zuege gefunden
+           liegt eine Pattstellung vor */
         cb.setKingInCheck(player, false);
 
         // short castle turns
@@ -148,22 +184,22 @@ void TurnGenerator::generateTurns(PlayerColor player, ChessBoard &cb) {
 }
 
 void TurnGenerator::bitBoardToTurns(Piece piece,
-                                                 Field from,
-                                                 BitBoard bbTurns,
-                                                 BitBoard bbAllOppTurns,
-                                                 ChessBoard& cb,
-                                                 Turns& turnsOut) {
+                                    Field from,
+                                    BitBoard bbTurns,
+                                    BitBoard bbAllOppTurns,
+                                    ChessBoard& cb,
+                                    Turns& turnsOut) {
     Field to;
 
     while (bbTurns != 0) {
         to = BB_SCAN(bbTurns);
         BIT_CLEAR(bbTurns, to);
 
-        // Pruefung: Eine Figur darf den eigenen King nicht durch einen Zug
-        // in Schach setzen (z.B. "Weg freimachen")
-        // Ist die Position der aktuellen Figur bei den allOppTurns enthalten?
-        // -> Wenn ja, dann verhindert die Figur evtl. dass der King im Schach
-        //    steht.
+        /* Pruefung: Eine Figur darf den eigenen King nicht durch einen Zug
+           in Schach setzen (z.B. "Weg freimachen"). Ist die Position der
+           aktuellen Figur bei den allOppTurns enthalten? -> Wenn ja, dann
+           verhindert die Figur evtl. dass der King im Schach
+           steht. */
         if (BIT_ISSET(bbAllOppTurns, from)) {
             const PlayerColor opp = togglePlayerColor(piece.player);
             bool captured = false;
@@ -197,8 +233,6 @@ void TurnGenerator::bitBoardToTurns(Piece piece,
             }
         }
 
-
-
         if ((rankFor(to) == Eight || rankFor(to) == One) && piece.type == Pawn) {
             turnsOut.push_back(Turn::promotionQueen(piece, from, to));
             turnsOut.push_back(Turn::promotionBishop(piece, from, to));
@@ -211,42 +245,6 @@ void TurnGenerator::bitBoardToTurns(Piece piece,
     }
 }
 
-BitBoard TurnGenerator::calcMoveTurns(Piece piece,
-                                      BitBoard bbPiece,
-                                      BitBoard bbAllOppTurns,
-                                      const ChessBoard& cb) {
-    PlayerColor opp = (piece.player == White) ? Black : White;
-
-    switch (piece.type) {
-    case King:   return calcKingTurns  (bbPiece,
-                                        cb.m_bb[piece.player][AllPieces],
-                                        bbAllOppTurns);
-    case Queen:  return calcQueenTurns (bbPiece,
-                                        cb.m_bb[opp][AllPieces],
-                                        cb.m_bb[piece.player][AllPieces] |
-                                        cb.m_bb[opp][AllPieces]);
-    case Bishop: return calcBishopTurns(bbPiece,
-                                        cb.m_bb[opp][AllPieces],
-                                        cb.m_bb[piece.player][AllPieces] |
-                                        cb.m_bb[opp][AllPieces]);
-    case Knight: return calcKnightTurns(bbPiece,
-                                        cb.m_bb[piece.player][AllPieces]);
-    case Rook:   return calcRookTurns  (bbPiece,
-                                        cb.m_bb[opp][AllPieces],
-                                        cb.m_bb[piece.player][AllPieces] |
-                                        cb.m_bb[opp][AllPieces]);
-    case Pawn:   return calcPawnTurns  (bbPiece,
-                                        cb.m_bb[opp][AllPieces],
-                                        cb.m_bb[piece.player][AllPieces] |
-                                        cb.m_bb[opp][AllPieces],
-                                        piece.player,
-                                        cb.m_enPassantSquare);
-    default:     return 0;
-    }
-}
-
-// Berechnet die Felder, zu denen eine der eigenen Figuren ziehen muss
-// um den King aus dem Schach zu holen
 BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
                                           const ChessBoard& cb) {
     Piece piece;
@@ -269,29 +267,27 @@ BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
             bbTurns = calcMoveTurns(piece, bbCurPiece, 0, cb);
             bbKingInCheck = cb.m_bb[player][King] & bbTurns;
 
-            // Zunaechst herausfinden, welche gegnerische Figur den King
-            // ins Schach setzt
+            /* Zunaechst herausfinden, welche gegnerische Figur den King
+               in Schach setzt */
             if (bbKingInCheck == cb.m_bb[player][King]) {
                 if (pieceType == Pawn || pieceType == Knight || pieceType == King) {
-                    // Bei den nonsliding pieces ist das gesuchte "unCheckField"
-                    // nur die Position der gegnerischen Figur
+                    /* Bei den nonsliding pieces ist das gesuchte "unCheckField"
+                       nur die Position der Figur */
                     BIT_SET(bbUnCheckFields, curPiecePos);
                     return bbUnCheckFields;
 
                 } else {
-                    // Bei den sliding pieces kommen alle Felder in Frage, die der
-                    // gegnerischen Figur, die den King in Schach setzt, den Weg
-                    // "abschneiden" koennen.
+                    /* Bei den sliding pieces kommen alle Felder in Frage, die der
+                       gegnerischen Figur, die den King in Schach setzt, den Weg
+                       "abschneiden" koennen. */
 
-
-                    // TODO: Die Pruefung kann eigentlich entfallen, da die
-                    // King-BitBoards immer != 0 sind. Nur aufgrund der Testfaelle
-                    // vorhanden.
+                    /* TODO: Die Pruefung kann eigentlich entfallen, da die
+                       King-BitBoards immer != 0 sind. Nur aufgrund der Testfaelle
+                       vorhanden. */
                     Field kingPos = ERR;
                     if (cb.m_bb[player][King] != 0) {
                         kingPos = BB_SCAN(cb.m_bb[player][King]);
                     }
-
 
                     Rank kingRank = rankFor(kingPos);
                     File kingFile = fileFor(kingPos);
@@ -369,24 +365,21 @@ BitBoard TurnGenerator::calcUnCheckFields(PlayerColor opp,
     return 0;
 }
 
-// Berechnet alle Felder, die der Gegner momentan ANGREIFEN koennte, d.h.:
-// * Bei den Pawns werden alle potenziellen Angriffszuege benoetigt; die
-//   einfachen Move-Turns der Pawns gehoeren nicht dazu!
-// * Bei den sliding pieces muessen auch die Felder berechnet werden,
-//   die "hinter" dem King liegen
 BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
                                         const ChessBoard& cb) {
+    /* Berechnet alle Felder, die der Gegner momentan ANGREIFEN koennte, d.h.:
+       -> Bei den Pawns werden alle potenziellen Angriffszuege benoetigt; die
+          einfachen Move-Turns der Pawns gehoeren nicht dazu!
+       -> Bei den sliding pieces muessen auch die Felder berechnet werden,
+          die "hinter" gegnerischen Figuren liegen */
     Piece piece;
     Field curPiecePos;
     PlayerColor player = togglePlayerColor(opp);
 
     BitBoard bbAllOppTurns = 0;
     BitBoard bbAllPieces = cb.m_bb[White][AllPieces] | cb.m_bb[Black][AllPieces];
-    //BitBoard bbAllOppPiecesWhitoutKing = cb.m_bb[player][AllPieces] ^ cb.m_bb[player][King];
     BitBoard bbAllPiecesWhitoutKing = bbAllPieces ^ cb.m_bb[player][King];
-
     BitBoard bbCurPieceType, bbCurPiece;
-
 
     // short castle
     if (cb.m_shortCastleRight[opp]) {
@@ -401,9 +394,7 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
     for (int pieceType = King; pieceType <= Pawn ; pieceType++) {
         piece.type   = (PieceType) pieceType;
         piece.player = opp;
-
         bbCurPieceType = cb.m_bb[opp][pieceType];
-
 
         if (pieceType == Pawn) {
             // get all potential attacks of the pawns
@@ -428,15 +419,15 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
 
                 if (pieceType == Rook) {
                     bbAllOppTurns |= calcRookTurns(bbCurPiece,
-                                                   bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
+                                                   bbAllPiecesWhitoutKing,
                                                    bbAllPiecesWhitoutKing);
                 } else if (pieceType == Queen) {
                     bbAllOppTurns |= calcQueenTurns(bbCurPiece,
-                                                    bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
+                                                    bbAllPiecesWhitoutKing,
                                                     bbAllPiecesWhitoutKing);
                 } else if (pieceType == Bishop) {
                     bbAllOppTurns |= calcBishopTurns(bbCurPiece,
-                                                     bbAllPiecesWhitoutKing, //bbAllOppPiecesWhitoutKing,
+                                                     bbAllPiecesWhitoutKing,
                                                      bbAllPiecesWhitoutKing);
                 }
             }
@@ -444,6 +435,40 @@ BitBoard TurnGenerator::calcAllOppTurns(PlayerColor opp,
     }
 
     return bbAllOppTurns;
+}
+
+BitBoard TurnGenerator::calcMoveTurns(Piece piece,
+                                      BitBoard bbPiece,
+                                      BitBoard bbAllOppTurns,
+                                      const ChessBoard& cb) {
+    PlayerColor opp = (piece.player == White) ? Black : White;
+
+    switch (piece.type) {
+    case King:   return calcKingTurns  (bbPiece,
+                                        cb.m_bb[piece.player][AllPieces],
+                                        bbAllOppTurns);
+    case Queen:  return calcQueenTurns (bbPiece,
+                                        cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] |
+                                        cb.m_bb[opp][AllPieces]);
+    case Bishop: return calcBishopTurns(bbPiece,
+                                        cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] |
+                                        cb.m_bb[opp][AllPieces]);
+    case Knight: return calcKnightTurns(bbPiece,
+                                        cb.m_bb[piece.player][AllPieces]);
+    case Rook:   return calcRookTurns  (bbPiece,
+                                        cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] |
+                                        cb.m_bb[opp][AllPieces]);
+    case Pawn:   return calcPawnTurns  (bbPiece,
+                                        cb.m_bb[opp][AllPieces],
+                                        cb.m_bb[piece.player][AllPieces] |
+                                        cb.m_bb[opp][AllPieces],
+                                        piece.player,
+                                        cb.m_enPassantSquare);
+    default:     return 0;
+    }
 }
 
 BitBoard TurnGenerator::calcShortCastleTurns(PlayerColor player,
@@ -492,6 +517,104 @@ BitBoard TurnGenerator::calcLongCastleTurns(PlayerColor player,
     return bbLongCastleKingTurn;
 }
 
+BitBoard TurnGenerator::calcQueenTurns(BitBoard queens,
+                                       BitBoard allOppPieces,
+                                       BitBoard allPieces) const {
+    return calcRookTurns  (queens, allOppPieces, allPieces) |
+           calcBishopTurns(queens, allOppPieces, allPieces);
+}
+
+BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops,
+                                        BitBoard allOppPieces,
+                                        BitBoard allPieces) const {
+    BitBoard bbNE = getBitsNE(bishops);
+    BitBoard bbNW = getBitsNW(bishops);
+    BitBoard bbSE = getBitsSE(bishops);
+    BitBoard bbSW = getBitsSW(bishops);
+
+    // north east moves
+    BitBoard neMoves = bbNE & allPieces;
+    neMoves = (neMoves <<  9) | (neMoves << 18) | (neMoves << 27) |
+              (neMoves << 36) | (neMoves << 45) | (neMoves << 54);
+    neMoves &= bbNE;
+    neMoves ^= bbNE;
+    neMoves &= (allOppPieces | ~(allPieces));
+
+    // north west moves
+    BitBoard nwMoves = bbNW & allPieces;
+    nwMoves = (nwMoves <<  7) | (nwMoves << 14) | (nwMoves << 21) |
+              (nwMoves << 28) | (nwMoves << 35) | (nwMoves << 42);
+    nwMoves &= bbNW;
+    nwMoves ^= bbNW;
+    nwMoves &= (allOppPieces | ~(allPieces));
+
+    // south east movespp
+    BitBoard seMoves = bbSE & allPieces;
+    seMoves = (seMoves >>  7) | (seMoves >> 14) | (seMoves >> 21) |
+              (seMoves >> 28) | (seMoves >> 35) | (seMoves >> 42);
+    seMoves &= bbSE;
+    seMoves ^= bbSE;
+    seMoves &= (allOppPieces | ~(allPieces));
+
+    // south west moves
+    BitBoard swMoves = bbSW & allPieces;
+    swMoves = (swMoves >>  9) | (swMoves >> 18) | (swMoves >> 27) |
+              (swMoves >> 36) | (swMoves >> 45) | (swMoves >> 54);
+    swMoves &= bbSW;
+    swMoves ^= bbSW;
+    swMoves &= (allOppPieces | ~(allPieces));
+
+    return neMoves | nwMoves | seMoves | swMoves;
+}
+
+BitBoard TurnGenerator::calcRookTurns(BitBoard rooks,
+                                      BitBoard allOppPieces,
+                                      BitBoard allPieces) const {
+    BitBoard bbE = getBitsE(rooks);
+    BitBoard bbW = getBitsW(rooks);
+    BitBoard bbN = getBitsN(rooks);
+    BitBoard bbS = getBitsS(rooks);
+
+    // right moves
+    BitBoard eastMoves = bbE & allPieces;
+    eastMoves = (eastMoves << 1) | (eastMoves << 2) | (eastMoves << 3) |
+                (eastMoves << 4) | (eastMoves << 5) | (eastMoves << 6) |
+                (eastMoves << 7);
+    eastMoves &= bbE;
+    eastMoves ^= bbE;
+    eastMoves &= (allOppPieces | ~(allPieces));
+
+    // west moves
+    BitBoard westMoves = bbW & allPieces;
+    westMoves = (westMoves >> 1) | (westMoves >> 2) | (westMoves >> 3) |
+                (westMoves >> 4) | (westMoves >> 5) | (westMoves >> 6) |
+                (westMoves >> 7);
+    westMoves &= bbW;
+    westMoves ^= bbW;
+    westMoves &= (allOppPieces | ~(allPieces));
+
+    // north moves
+    BitBoard northMoves = bbN & allPieces;
+    northMoves = (northMoves <<  8) | (northMoves << 16) | (northMoves << 24) |
+                (northMoves << 32) | (northMoves << 40) | (northMoves << 48) |
+                (northMoves << 56);
+    northMoves &= bbN;
+    northMoves ^= bbN;
+    northMoves &= (allOppPieces | ~(allPieces));
+
+
+    // south moves
+    BitBoard southMoves = bbS & allPieces;
+    southMoves = (southMoves >> 8) | (southMoves >> 16) | (southMoves >> 24) |
+                (southMoves >> 32) | (southMoves >> 40) | (southMoves >> 48) |
+                (southMoves >> 56);
+    southMoves &= bbS;
+    southMoves ^= bbS;
+    southMoves &= (allOppPieces | ~(allPieces));
+
+    return eastMoves | westMoves | northMoves | southMoves;
+}
+
 BitBoard TurnGenerator::calcKingTurns(BitBoard king,
                                       BitBoard allOwnPieces,
                                       BitBoard allOppTurns) const {
@@ -508,9 +631,6 @@ BitBoard TurnGenerator::calcKingTurns(BitBoard king,
     BitBoard kingTurns = turn1 | turn2 | turn3 | turn4 |
                          turn5 | turn6 | turn7 | turn8;
     kingTurns &= ~allOwnPieces;
-
-    // Der King darf auf keine Felder ziehen, auf denen er im Schach
-    // stehen wuerde
     kingTurns ^= (allOppTurns & kingTurns);
 
     return kingTurns;
@@ -585,103 +705,4 @@ BitBoard TurnGenerator::calcPawnAttackTurns(BitBoard pawns,
     BitBoard pawnAttacks = (leftAttacks | rightAttacks) & allOppPieces;
 
     return pawnAttacks;
-}
-
-BitBoard TurnGenerator::calcQueenTurns(BitBoard queens, BitBoard allOppPieces,
-                                       BitBoard allPieces) const {
-    return calcRookTurns  (queens, allOppPieces, allPieces) |
-           calcBishopTurns(queens, allOppPieces, allPieces);
-}
-
-BitBoard TurnGenerator::calcBishopTurns(BitBoard bishops, BitBoard allOppPieces,
-                                        BitBoard allPieces) const {
-    BitBoard bbNE = getBitsNE(bishops);
-    BitBoard bbNW = getBitsNW(bishops);
-    BitBoard bbSE = getBitsSE(bishops);
-    BitBoard bbSW = getBitsSW(bishops);
-
-    // north east moves
-    BitBoard neMoves = bbNE & allPieces;
-    neMoves = (neMoves <<  9) | (neMoves << 18) | (neMoves << 27) |
-              (neMoves << 36) | (neMoves << 45) | (neMoves << 54);
-    neMoves &= bbNE;
-    neMoves ^= bbNE;
-    neMoves &= (allOppPieces | ~(allPieces));
-
-    // north west moves
-    BitBoard nwMoves = bbNW & allPieces;
-    nwMoves = (nwMoves <<  7) | (nwMoves << 14) | (nwMoves << 21) |
-              (nwMoves << 28) | (nwMoves << 35) | (nwMoves << 42);
-    nwMoves &= bbNW;
-    nwMoves ^= bbNW;
-    nwMoves &= (allOppPieces | ~(allPieces));
-
-    // south east movespp
-    BitBoard seMoves = bbSE & allPieces;
-    seMoves = (seMoves >>  7) | (seMoves >> 14) | (seMoves >> 21) |
-              (seMoves >> 28) | (seMoves >> 35) | (seMoves >> 42);
-    seMoves &= bbSE;
-    seMoves ^= bbSE;
-    seMoves &= (allOppPieces | ~(allPieces));
-
-    // south west moves
-    BitBoard swMoves = bbSW & allPieces;
-    swMoves = (swMoves >>  9) | (swMoves >> 18) | (swMoves >> 27) |
-              (swMoves >> 36) | (swMoves >> 45) | (swMoves >> 54);
-    swMoves &= bbSW;
-    swMoves ^= bbSW;
-    swMoves &= (allOppPieces | ~(allPieces));
-
-    return neMoves | nwMoves | seMoves | swMoves;
-}
-
-BitBoard TurnGenerator::calcRookTurns(BitBoard rooks, BitBoard allOppPieces,
-                                      BitBoard allPieces) const {
-    BitBoard bbE = getBitsE(rooks);
-    BitBoard bbW = getBitsW(rooks);
-    BitBoard bbN = getBitsN(rooks);
-    BitBoard bbS = getBitsS(rooks);
-
-    // right moves
-    BitBoard eastMoves = bbE & allPieces;
-    eastMoves = (eastMoves << 1) | (eastMoves << 2) | (eastMoves << 3) |
-                (eastMoves << 4) | (eastMoves << 5) | (eastMoves << 6) |
-                (eastMoves << 7);
-    //rightMoves = 0xFE00000000000000 >> (56-LSB von rightMoves);
-    eastMoves &= bbE;
-    eastMoves ^= bbE;
-    eastMoves &= (allOppPieces | ~(allPieces));
-
-    // west moves
-    BitBoard westMoves = bbW & allPieces;
-    westMoves = (westMoves >> 1) | (westMoves >> 2) | (westMoves >> 3) |
-                (westMoves >> 4) | (westMoves >> 5) | (westMoves >> 6) |
-                (westMoves >> 7);
-    //westMoves = 0xFE00000000000000 >> (64-BB_SCAN(westMoves));
-    westMoves &= bbW;
-    westMoves ^= bbW;
-    westMoves &= (allOppPieces | ~(allPieces));
-
-    // north moves
-    BitBoard northMoves = bbN & allPieces;
-    northMoves = (northMoves <<  8) | (northMoves << 16) | (northMoves << 24) |
-                (northMoves << 32) | (northMoves << 40) | (northMoves << 48) |
-                (northMoves << 56);
-    //upMoves = 0x0101010101010100 << LSB;
-    northMoves &= bbN;
-    northMoves ^= bbN;
-    northMoves &= (allOppPieces | ~(allPieces));
-
-
-    // south moves
-    BitBoard southMoves = bbS & allPieces;
-    southMoves = (southMoves >> 8) | (southMoves >> 16) | (southMoves >> 24) |
-                (southMoves >> 32) | (southMoves >> 40) | (southMoves >> 48) |
-                (southMoves >> 56);
-    //downMoves = 0x0101010101010100 >> (64-BB_SCAN(downMoves));
-    southMoves &= bbS;
-    southMoves ^= bbS;
-    southMoves &= (allOppPieces | ~(allPieces));
-
-    return eastMoves | westMoves | northMoves | southMoves;
 }
